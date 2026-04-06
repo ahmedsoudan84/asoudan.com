@@ -313,44 +313,50 @@ function TimelineSection({ section, color }: { section: CaseStudySection; color:
           <SectionHeading heading={section.heading} />
           {section.timelineSteps && (
             <div className="relative mt-10">
-              <div className="absolute inset-x-0 top-[18px] h-[2px] hidden lg:block">
-                <div className="absolute inset-0 bg-white/10" />
-                <div 
-                  className="h-full w-full" 
-                  style={{ 
-                    background: `linear-gradient(90deg, transparent, ${color}40, ${color}60, ${color}40, transparent)` 
-                  }} 
-                />
+              {/* Connector line - only on lg screens */}
+              <div className="hidden lg:block absolute inset-0 pointer-events-none">
+                <div className="absolute top-[52px] left-0 right-0 h-[2px] bg-white/10">
+                  <div 
+                    className="absolute inset-0" 
+                    style={{ 
+                      background: `linear-gradient(90deg, transparent, ${color}40 10%, ${color}80 50%, ${color}40 90%, transparent)` 
+                    }} 
+                  />
+                </div>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-2 relative">
+              {/* Mobile vertical line */}
+              <div className="lg:hidden absolute left-[28px] top-6 bottom-6 w-[2px] bg-white/10" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 lg:gap-2">
                 {section.timelineSteps.map((step, i) => (
                   <div 
                     key={i} 
-                    className="relative flex flex-col gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-[0_0_30px_-8px_rgba(0,0,0,0.5)] hover:-translate-y-1 group"
+                    className="relative flex flex-col gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-[0_0_30px_-8px_rgba(0,0,0,0.5)] hover:-translate-y-1 group"
                   >
-                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -mt-3 hidden lg:block">
-                      <div className="relative">
-                        <div 
-                          className="absolute inset-0 rounded-full blur-md opacity-40 transition-opacity duration-300 group-hover:opacity-70" 
-                          style={{ background: color }}
-                        />
-                        <div 
-                          className="relative h-[12px] w-[12px] rounded-full border-2 border-white/80" 
-                          style={{ 
-                            background: `linear-gradient(135deg, ${color}, ${color}cc)`,
-                            boxShadow: `0 0 10px ${color}60, inset 0 -2px 4px rgba(0,0,0,0.3)` 
-                          }} 
-                        />
+                    {/* Dot - positioned absolutely on left side */}
+                    <div className="absolute left-0 top-5 -translate-x-1/2 z-10">
+                      <div 
+                        className="absolute inset-0 rounded-full blur-md opacity-40" 
+                        style={{ background: color }}
+                      />
+                      <div 
+                        className="relative w-3 h-3 rounded-full border-2 border-white/80" 
+                        style={{ 
+                          background: `linear-gradient(135deg, ${color}, ${color}cc)`,
+                          boxShadow: `0 0 12px ${color}60, inset 0 -2px 4px rgba(0,0,0,0.3)` 
+                        }} 
+                      />
+                    </div>
+                    {/* Add left padding on mobile to make room for dot */}
+                    <div className="pl-6 lg:pl-0">
+                      <div className="text-[10px] font-semibold uppercase tracking-[2px]" style={{ color }}>
+                        {step.phase}
                       </div>
-                    </div>
-                    <div className="pt-3 lg:pt-4 text-[10px] font-semibold uppercase tracking-[2px]" style={{ color }}>
-                      {step.phase}
-                    </div>
-                    <div className="font-montserrat font-bold text-white text-sm leading-tight">
-                      {step.title}
-                    </div>
-                    <div className="text-white/40 text-xs leading-relaxed">
-                      {step.description}
+                      <div className="font-montserrat font-bold text-white text-sm leading-tight mt-1">
+                        {step.title}
+                      </div>
+                      <div className="text-white/40 text-xs leading-relaxed mt-1">
+                        {step.description}
+                      </div>
                     </div>
                   </div>
                 ))}
