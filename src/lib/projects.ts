@@ -745,15 +745,10 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "showcase",
+        "type": "lean-ux-canvas",
         "label": "Lean UX Canvas",
         "heading": "The problem, hypotheses, and success metrics in one view",
         "body": "The canvas made the team accountable to measurable outcomes before design execution began — not just a prettier layout.",
-        "image": {
-          "src": "/images/projects/org-integration-v2/lean-ux-p1.png",
-          "alt": "Lean UX Canvas for Org Integration"
-        },
-        "caption": "Lean UX Canvas — aligned problem framing, outcomes, and hypothesis validation.",
         "bg": "dark"
       },
       {

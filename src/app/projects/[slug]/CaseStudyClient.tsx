@@ -671,6 +671,106 @@ function ImagePairSection({ section, color }: { section: CaseStudySection; color
   );
 }
 
+/* ─── Lean UX canvas ─── */
+function LeanUXCanvasSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const canvasItems = [
+    { num: "01", label: "Problem", items: ["Users in both T&L and Assessment Orgs hit an invisible wall", "Two separate interfaces, no shared context"] },
+    { num: "02", label: "Solution", items: ["Unified navigation", "Shared context switching", "Consistent UI"] },
+    { num: "03", label: "Users", items: ["Students in both orgs", "Org Admins", "Class Admins"] },
+    { num: "04", label: "Metrics", items: ["T&L adoption of OPT", "User satisfaction", "Reduced support tickets"] },
+    { num: "05", label: "Hypothesis", items: ["Seamless navigation reduces friction", "Unified view increases engagement", "Clear context improves orientation"] },
+    { num: "06", label: "Assumptions", items: ["Users want single sign-on", "Orgs will share data", "Navigation is the root cause"] },
+  ];
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-8">
+            {canvasItems.map((item, i) => (
+              <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-white/80">{item.num}</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider" style={{ color }}>{item.label}</span>
+                </div>
+                <ul className="space-y-1">
+                  {item.items.map((txt, j) => (
+                    <li key={j} className="text-white/50 text-xs">{txt}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          {section.body && <p className="text-white/60 mt-6 text-sm">{section.body}</p>}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Role Matrix ─── */
+function RoleMatrixSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const roles = [
+    { role: "Students", color: "#6366f1", items: ["See [My Tasks] in Assessment Orgs", "Must be explicitly invited", "No cross-org visibility"] },
+    { role: "Org Admin", color: "#8b5cf6", items: ["Invite staff only (not students)", "See [Sessions] tab", "No cross-org view"] },
+    { role: "Class Admin", color: "#06b6d4", items: ["Invited via wizard", "Invited via My Org Staff", "Bridge between both"] },
+  ];
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            {roles.map((r, i) => (
+              <div key={i} className="rounded-xl border p-5" style={{ borderColor: r.color + '40', background: r.color + '10' }}>
+                <div className="font-bold text-white mb-3">{r.role}</div>
+                <ul className="space-y-2">
+                  {r.items.map((item, j) => (
+                    <li key={j} className="text-white/70 text-sm flex gap-2">
+                      <span style={{ color: r.color }}>•</span> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          {section.caption && <p className="text-white/30 text-sm mt-4 text-center">{section.caption}</p>}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Constraint Notes (sticky notes) ─── */
+function ConstraintNotesSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const notes = [
+    { title: "OPT Data Scoping", desc: "Each org shows only its own data" },
+    { title: "Cross-Org Sharing", desc: "Only when student is member of both orgs" },
+    { title: "Teacher Visibility", desc: "Only see results for students in their orgs" },
+  ];
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            {notes.map((note, i) => (
+              <div key={i} className="rounded-lg p-4" style={{ background: '#22c55e20', borderLeft: '3px solid #22c55e' }}>
+                <div className="font-semibold text-white text-sm mb-1">{note.title}</div>
+                <p className="text-white/60 text-xs">{note.desc}</p>
+              </div>
+            ))}
+          </div>
+          {section.caption && <p className="text-white/30 text-sm mt-4 text-center">{section.caption}</p>}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Lean UX canvas / Constraint notes / Role matrix (generic table-like) ─── */
 function GenericSection({ section, color }: { section: CaseStudySection; color: string }) {
   return (
@@ -729,7 +829,7 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
           <SectionHeading heading={section.heading} />
           {section.personas && (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 items-start">
                 {personas.map((persona, i) => (
                   <button
                     key={i}
@@ -857,10 +957,11 @@ function Section({ section, color }: { section: CaseStudySection; color: string 
     case "persona-cards":
       return <PersonaCardsSection section={section} color={color} />;
     case "lean-ux-canvas":
-    case "constraint-notes":
+      return <LeanUXCanvasSection section={section} color={color} />;
     case "role-matrix":
-    default:
-      return <GenericSection section={section} color={color} />;
+      return <RoleMatrixSection section={section} color={color} />;
+    case "constraint-notes":
+      return <ConstraintNotesSection section={section} color={color} />;
   }
 }
 
