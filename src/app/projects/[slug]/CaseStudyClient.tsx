@@ -307,24 +307,49 @@ function QuoteSection({ section, color }: { section: CaseStudySection; color: st
 function TimelineSection({ section, color }: { section: CaseStudySection; color: string }) {
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
-      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+      <div className="max-w-6xl mx-auto px-6 lg:px-0">
         <Reveal>
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
           {section.timelineSteps && (
             <div className="relative mt-10">
-              <div className="absolute inset-x-0 top-8 h-px bg-white/10" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 relative">
+              <div className="absolute inset-x-0 top-[18px] h-[2px] hidden lg:block">
+                <div className="absolute inset-0 bg-white/10" />
+                <div 
+                  className="h-full w-full" 
+                  style={{ 
+                    background: `linear-gradient(90deg, transparent, ${color}40, ${color}60, ${color}40, transparent)` 
+                  }} 
+                />
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-2 relative">
                 {section.timelineSteps.map((step, i) => (
-                  <div key={i} className="relative flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.65)]">
-                    <div className="absolute left-0 top-8 -ml-2.5 h-5 w-5 rounded-full border-2 border-white/10 bg-[#5C6BC0] shadow-[0_0_0_10px_rgba(92,107,192,0.1)]" />
-                    <div className="text-[10px] font-semibold uppercase tracking-[3px]" style={{ color }}>
+                  <div 
+                    key={i} 
+                    className="relative flex flex-col gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-[0_0_30px_-8px_rgba(0,0,0,0.5)] hover:-translate-y-1 group"
+                  >
+                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -mt-3 hidden lg:block">
+                      <div className="relative">
+                        <div 
+                          className="absolute inset-0 rounded-full blur-md opacity-40 transition-opacity duration-300 group-hover:opacity-70" 
+                          style={{ background: color }}
+                        />
+                        <div 
+                          className="relative h-[12px] w-[12px] rounded-full border-2 border-white/80" 
+                          style={{ 
+                            background: `linear-gradient(135deg, ${color}, ${color}cc)`,
+                            boxShadow: `0 0 10px ${color}60, inset 0 -2px 4px rgba(0,0,0,0.3)` 
+                          }} 
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-3 lg:pt-4 text-[10px] font-semibold uppercase tracking-[2px]" style={{ color }}>
                       {step.phase}
                     </div>
-                    <div className="font-montserrat font-bold text-white text-sm">
+                    <div className="font-montserrat font-bold text-white text-sm leading-tight">
                       {step.title}
                     </div>
-                    <div className="text-white/40 text-sm leading-relaxed">
+                    <div className="text-white/40 text-xs leading-relaxed">
                       {step.description}
                     </div>
                   </div>
@@ -486,7 +511,7 @@ function ShowcaseSection({ section, color }: { section: CaseStudySection; color:
 }
 
 /* ─── Screen gallery ─── */
-function ScreenGallerySection({ section, color }: { section: CaseStudySection; color: string }) {
+function ScreenGallerySection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
@@ -514,7 +539,12 @@ function ScreenGallerySection({ section, color }: { section: CaseStudySection; c
                     })()
                   : { src: (screen as { src: string; alt: string }).src, alt: (screen as { src: string; alt: string }).alt };
                 return (
-                  <div key={i} className="relative rounded-xl overflow-hidden bg-[#0f1729]">
+                  <div 
+                    key={i} 
+                    className="relative rounded-xl overflow-hidden bg-[#0f1729] border border-white/[0.08] cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_0_30px_-8px_rgba(0,0,0,0.5)] group"
+                    onClick={() => onImageClick?.(resolved.src)}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
                     <div className="aspect-video relative">
                       <SafeImage
                         src={resolved.src}
@@ -524,7 +554,9 @@ function ScreenGallerySection({ section, color }: { section: CaseStudySection; c
                       />
                     </div>
                     {('label' in resolved) && resolved.label && (
-                      <p className="text-white/30 text-xs mt-2 text-center">{resolved.label}</p>
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent pt-8 pb-3 px-3">
+                        <p className="text-white/70 text-xs text-center font-medium">{resolved.label}</p>
+                      </div>
                     )}
                   </div>
                 );
@@ -743,12 +775,12 @@ function RoleMatrixSection({ section, color }: { section: CaseStudySection; colo
   );
 }
 
-/* ─── Constraint Notes (sticky notes) ─── */
+/* ─── Constraint Notes (UI Solid Color Frames) ─── */
 function ConstraintNotesSection({ section, color }: { section: CaseStudySection; color: string }) {
   const notes = [
-    { title: "OPT Data Scoping", desc: "Each org shows only its own data" },
-    { title: "Cross-Org Sharing", desc: "Only when student is member of both orgs" },
-    { title: "Teacher Visibility", desc: "Only see results for students in their orgs" },
+    { title: "OPT Data Scoping", desc: "Each org shows only its own data", icon: "◈" },
+    { title: "Cross-Org Sharing", desc: "Only when student is member of both orgs", icon: "◈" },
+    { title: "Teacher Visibility", desc: "Only see results for students in their orgs", icon: "◈" },
   ];
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
@@ -758,9 +790,20 @@ function ConstraintNotesSection({ section, color }: { section: CaseStudySection;
           <SectionHeading heading={section.heading} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
             {notes.map((note, i) => (
-              <div key={i} className="rounded-lg p-4" style={{ background: '#22c55e20', borderLeft: '3px solid #22c55e' }}>
-                <div className="font-semibold text-white text-sm mb-1">{note.title}</div>
-                <p className="text-white/60 text-xs">{note.desc}</p>
+              <div 
+                key={i} 
+                className="rounded-xl p-5 border transition-all duration-300 hover:border-white/20"
+                style={{ 
+                  borderColor: color + '30',
+                  background: `linear-gradient(135deg, ${color}08, ${color}12)`,
+                  boxShadow: `0 4px 20px -4px ${color}20`
+                }}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <span style={{ color }}>{note.icon}</span>
+                  <div className="font-semibold text-white text-sm">{note.title}</div>
+                </div>
+                <p className="text-white/60 text-xs leading-relaxed pl-5">{note.desc}</p>
               </div>
             ))}
           </div>
@@ -817,9 +860,8 @@ function GenericSection({ section, color }: { section: CaseStudySection; color: 
 
 /* ─── Persona cards ─── */
 function PersonaCardsSection({ section, color }: { section: CaseStudySection; color: string }) {
-  const [selectedPersona, setSelectedPersona] = useState(0);
+  const [expandedPersona, setExpandedPersona] = useState<number | null>(null);
   const personas = section.personas || [];
-  const active = personas[selectedPersona];
 
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
@@ -829,88 +871,82 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
           <SectionHeading heading={section.heading} />
           {section.personas && (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 items-start">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                 {personas.map((persona, i) => (
-                  <button
+                  <div
                     key={i}
-                    type="button"
-                    onClick={() => setSelectedPersona(i)}
                     className={cls(
-                      "text-left rounded-3xl border p-6 lg:p-8 transition-all duration-300",
-                      selectedPersona === i
-                        ? "border-white/20 bg-white/[0.07] shadow-[0_20px_80px_-40px_rgba(255,255,255,0.35)]"
-                        : "border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.06]"
+                      "rounded-3xl border transition-all duration-300",
+                      expandedPersona === i
+                        ? "border-white/20 bg-white/[0.07]"
+                        : "border-white/10 bg-white/[0.03]"
                     )}
                   >
-                    <div className="flex items-center gap-4 mb-4">
-                      {persona.avatar && (
-                        <div className="w-12 h-12 rounded-full overflow-hidden bg-white/5">
-                          <SafeImage
-                            src={persona.avatar}
-                            alt={persona.name}
-                            width={48}
-                            height={48}
-                            className="object-cover"
-                          />
+                    <button
+                      type="button"
+                      onClick={() => setExpandedPersona(expandedPersona === i ? null : i)}
+                      className="w-full text-left p-6 lg:p-8"
+                    >
+                      <div className="flex items-center gap-4 mb-4">
+                        {persona.avatar && (
+                          <div className="w-12 h-12 rounded-full overflow-hidden bg-white/5">
+                            <SafeImage
+                              src={persona.avatar}
+                              alt={persona.name}
+                              width={48}
+                              height={48}
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                        <div>
+                          <div className="font-montserrat font-bold text-white text-lg">
+                            {persona.name}
+                          </div>
+                          {persona.role && (
+                            <div className="text-xs uppercase tracking-wider text-white/40" style={{ color }}>
+                              {persona.role}
+                            </div>
+                          )}
                         </div>
+                      </div>
+                      {persona.context && (
+                        <p className="text-white/50 text-sm leading-relaxed">{persona.context}</p>
                       )}
-                      <div>
-                        <div className="font-montserrat font-bold text-white text-lg">
-                          {persona.name}
+                    </button>
+                    {expandedPersona === i && persona.painPoints && (
+                      <div className="px-6 lg:px-8 pb-6 border-t border-white/5">
+                        <div className="text-[10px] uppercase tracking-wider text-white/30 mb-2 mt-4">
+                          Pain points
                         </div>
-                        {persona.role && (
-                          <div className="text-xs uppercase tracking-wider text-white/40" style={{ color }}>
-                            {persona.role}
+                        <ul className="space-y-2">
+                          {persona.painPoints.map((item, idx) => (
+                            <li key={idx} className="text-white/50 text-sm leading-relaxed flex gap-2">
+                              <span style={{ color }}>•</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                        {persona.goals && (
+                          <div className="mt-4">
+                            <div className="text-[10px] uppercase tracking-wider text-white/30 mb-2">
+                              Goals
+                            </div>
+                            <ul className="space-y-2">
+                              {persona.goals.map((goal, idx) => (
+                                <li key={idx} className="text-white/50 text-sm leading-relaxed flex gap-2">
+                                  <span style={{ color }}>•</span>
+                                  {goal}
+                                </li>
+                              ))}
+                            </ul>
                           </div>
                         )}
                       </div>
-                    </div>
-                    {persona.context && (
-                      <p className="text-white/50 text-sm leading-relaxed">{persona.context}</p>
                     )}
-                  </button>
+</div>
                 ))}
               </div>
-              {active && (
-                <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-8 lg:p-10">
-                  <div className="font-montserrat font-bold text-white text-xl mb-3">
-                    {active.name} — {active.role}
-                  </div>
-                  {active.context && (
-                    <p className="text-white/60 text-sm leading-relaxed mb-5">{active.context}</p>
-                  )}
-                  {active.painPoints && (
-                    <div className="mb-4">
-                      <div className="text-[10px] uppercase tracking-wider text-white/30 mb-2">
-                        Pain points
-                      </div>
-                      <ul className="space-y-2">
-                        {active.painPoints.map((item, idx) => (
-                          <li key={idx} className="text-white/50 text-sm leading-relaxed flex gap-2">
-                            <span style={{ color }}>•</span>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {active.goals && (
-                    <div>
-                      <div className="text-[10px] uppercase tracking-wider text-white/30 mb-2">
-                        Goals
-                      </div>
-                      <ul className="space-y-2">
-                        {active.goals.map((goal, idx) => (
-                          <li key={idx} className="text-white/50 text-sm leading-relaxed flex gap-2">
-                            <span style={{ color }}>•</span>
-                            {goal}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              )}
             </>
           )}
         </Reveal>
@@ -920,7 +956,7 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
 }
 
 /* ─── Section dispatcher ─── */
-function Section({ section, color }: { section: CaseStudySection; color: string }) {
+function Section({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   switch (section.type) {
     case "tldr":
       return <TldrSection section={section} color={color} />;
@@ -947,7 +983,7 @@ function Section({ section, color }: { section: CaseStudySection; color: string 
     case "showcase":
       return <ShowcaseSection section={section} color={color} />;
     case "screen-gallery":
-      return <ScreenGallerySection section={section} color={color} />;
+      return <ScreenGallerySection section={section} color={color} onImageClick={onImageClick} />;
     case "reflection":
       return <ReflectionSection section={section} color={color} />;
     case "process-step":
@@ -974,6 +1010,7 @@ interface Props {
 
 export default function CaseStudyClient({ project, prevProject, nextProject }: Props) {
   const color = project.color || "#26A69A";
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   return (
     <main className="min-h-screen bg-[#0a0c14]">
@@ -1089,7 +1126,7 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
 
       {/* ── Case study sections ── */}
       {project.caseStudy?.map((section, i) => (
-        <Section key={i} section={section} color={color} />
+        <Section key={i} section={section} color={color} onImageClick={setLightboxImage} />
       ))}
 
       {/* ── Project navigation ── */}
@@ -1176,6 +1213,30 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
           </Link>
         </div>
       </section>
+
+      {/* ─── Lightbox modal ─── */}
+      {lightboxImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white/60 hover:text-white text-4xl"
+            onClick={() => setLightboxImage(null)}
+          >
+            ×
+          </button>
+          <div className="max-w-5xl max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={lightboxImage}
+              alt="Enlarged view"
+              width={1200}
+              height={800}
+              className="object-contain max-h-[90vh]"
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

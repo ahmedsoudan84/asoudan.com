@@ -661,7 +661,7 @@ export const projectsData: ProjectDetail[] = [
       "EdTech"
     ],
     "color": "#5C6BC0",
-    "cover": "/images/projects/org-integration-v2/lean-ux-p1.png",
+    "cover": "/images/projects/org-integration-v2/Assessment  Org - Dashboard.png",
     "images": [
       {
         "src": "/images/projects/org-integration-v2/lean-ux-p1.png",
@@ -695,35 +695,35 @@ export const projectsData: ProjectDetail[] = [
       {
         "type": "timeline",
         "label": "Project Timeline",
-        "heading": "12 weeks of discovery",
+        "heading": "6-week discovery sprint",
         "timelineSteps": [
           {
-            "phase": "Weeks 1–2",
+            "phase": "Week 1",
             "title": "Problem Definition",
             "description": "Stakeholder interviews, org audits, and cross-product mismatch mapping."
           },
           {
-            "phase": "Weeks 3–4",
+            "phase": "Week 2",
             "title": "Lean UX Canvas",
             "description": "Aligned the team around the problem, success metrics, assumptions, and hypotheses."
           },
           {
-            "phase": "Weeks 5–6",
+            "phase": "Week 3",
             "title": "Persona Mapping",
             "description": "Mapped Students, Org Admins, and Class Admins across both org types."
           },
           {
-            "phase": "Weeks 7–8",
+            "phase": "Week 4",
             "title": "System Analysis",
             "description": "Audited the org role matrix, permission rules, and data scoping constraints."
           },
           {
-            "phase": "Weeks 9–10",
+            "phase": "Week 5",
             "title": "Design Solutions",
             "description": "Built the unified navigation, cross-org wizard, mother-child model, and multi-org management concepts."
           },
           {
-            "phase": "Weeks 11–12",
+            "phase": "Week 6",
             "title": "Handoff",
             "description": "Delivered annotated design specs for validation, engineering planning, and QA prep."
           }
@@ -865,12 +865,23 @@ export const projectsData: ProjectDetail[] = [
         "label": "UI Flows",
         "heading": "Prototyping the cross-org experience",
         "screens": [
-          { "image": "/images/projects/org-integration-v2/1.png", "label": "Cross-org Wizard Flow" },
-          { "image": "/images/projects/org-integration-v2/3.png", "label": "Wizard Step 1" },
-          { "image": "/images/projects/org-integration-v2/4.png", "label": "Wizard Step 2" },
-          { "image": "/images/projects/org-integration-v2/5.png", "label": "Success State" }
+          { "image": "/images/projects/org-integration-v2/1.png", "label": "Cross-org Wizard Flow overview" },
+          { "image": "/images/projects/org-integration-v2/3.png", "label": "Step 1: Select students from source org" },
+          { "image": "/images/projects/org-integration-v2/4.png", "label": "Step 2: Choose destination and permissions" },
+          { "image": "/images/projects/org-integration-v2/5.png", "label": "Step 3: Confirmation and success state" }
         ],
         "columns": 2,
+        "bg": "dark"
+      },
+      {
+        "type": "fullwidth-image",
+        "label": "Complete Wizard Flow",
+        "heading": "9-screen cross-org wizard — end-to-end",
+        "image": {
+          "src": "/images/projects/org-integration-v2/wizard-flow.png",
+          "alt": "Complete 9-step wizard flow showing the full cross-org student invitation process"
+        },
+        "caption": "From method selection through confirmation — every screen designed with error states, validation, and accessibility in mind.",
         "bg": "dark"
       },
       {
