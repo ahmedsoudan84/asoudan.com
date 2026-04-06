@@ -306,6 +306,7 @@ function QuoteSection({ section, color }: { section: CaseStudySection; color: st
 /* ─── Timeline section ─── */
 function TimelineSection({ section, color }: { section: CaseStudySection; color: string }) {
   if (!section.timelineSteps) return null;
+  const steps = section.timelineSteps;
   
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
@@ -314,49 +315,45 @@ function TimelineSection({ section, color }: { section: CaseStudySection; color:
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
           
-          {/* Desktop: horizontal timeline */}
-          <div className="hidden lg:block pt-12 pb-8">
-            {/* Background horizontal line - behind all content */}
-            <div 
-              className="h-[2px] mx-12 mb-8"
-              style={{ 
-                background: `linear-gradient(90deg, transparent, ${color}40 10%, ${color}80 50%, ${color}40 90%, transparent)` 
-              }} 
-            />
-            {/* Timeline items */}
-            <div className="flex justify-between px-12 gap-4">
-              {section.timelineSteps.map((step, i) => (
-                <div 
-                  key={i} 
-                  className="flex-1 flex flex-col items-center text-center"
-                >
-                  {/* Dot aligned with background line */}
-                  <div className="relative -mb-4">
-                    <div 
-                      className="absolute inset-0 rounded-full blur-md opacity-40" 
-                      style={{ background: color }}
-                    />
-                    <div 
-                      className="relative w-3 h-3 rounded-full border-2 border-white/80" 
-                      style={{ 
-                        background: `linear-gradient(135deg, ${color}, ${color}cc)`,
-                        boxShadow: `0 0 12px ${color}60, inset 0 -2px 4px rgba(0,0,0,0.3)` 
-                      }} 
-                    />
-                  </div>
-                  {/* Content */}
-                  <div className="text-[10px] font-semibold uppercase tracking-[2px]" style={{ color }}>
-                    {step.phase}
-                  </div>
-                  <div className="font-montserrat font-bold text-white text-sm leading-tight mt-1">
-                    {step.title}
-                  </div>
-                  <div className="text-white/40 text-xs leading-relaxed mt-1 max-w-[140px]">
-                    {step.description}
+          {/* Desktop: horizontal timeline with inline connector segments */}
+          <div className="hidden lg:flex items-start mt-12">
+            {steps.map((step, i) => (
+              <React.Fragment key={i}>
+                {/* Timeline card with integrated dot */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  {/* Dot - part of the card, not separate */}
+                  <div 
+                    className="w-3 h-3 rounded-full mb-4 shrink-0"
+                    style={{ 
+                      background: `linear-gradient(135deg, ${color}, ${color}cc)`,
+                      boxShadow: `0 0 12px ${color}60`
+                    }}
+                  />
+                  {/* Card content */}
+                  <div className="text-center px-2">
+                    <div className="text-[10px] font-semibold uppercase tracking-[2px]" style={{ color }}>
+                      {step.phase}
+                    </div>
+                    <div className="font-montserrat font-bold text-white text-sm leading-tight mt-1">
+                      {step.title}
+                    </div>
+                    <div className="text-white/40 text-xs leading-relaxed mt-1">
+                      {step.description}
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+                
+                {/* Connector line BETWEEN items only - regular div, no absolute positioning */}
+                {i < steps.length - 1 && (
+                  <div 
+                    className="w-16 h-[2px] shrink-0 mt-[6px]"
+                    style={{ 
+                      background: `linear-gradient(90deg, ${color}80, ${color}40)`
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            ))}
           </div>
 
           {/* Mobile: vertical timeline */}
@@ -365,7 +362,7 @@ function TimelineSection({ section, color }: { section: CaseStudySection; color:
             <div className="absolute left-[11px] top-3 bottom-3 w-[2px] bg-white/10" />
             {/* Timeline items */}
             <div className="space-y-6">
-              {section.timelineSteps.map((step, i) => (
+              {steps.map((step, i) => (
                 <div 
                   key={i} 
                   className="relative flex gap-4"
