@@ -315,25 +315,23 @@ function TimelineSection({ section, color }: { section: CaseStudySection; color:
           <SectionHeading heading={section.heading} />
           
           {/* Desktop: horizontal timeline */}
-          <div className="hidden lg:block relative pt-16 pb-8">
-            {/* Horizontal connector line */}
-            <div className="absolute top-[52px] left-[60px] right-[60px] h-[2px] bg-white/10">
-              <div 
-                className="absolute inset-0" 
-                style={{ 
-                  background: `linear-gradient(90deg, transparent, ${color}40 10%, ${color}80 50%, ${color}40 90%, transparent)` 
-                }} 
-              />
-            </div>
+          <div className="hidden lg:block pt-12 pb-8">
+            {/* Background horizontal line - behind all content */}
+            <div 
+              className="h-[2px] mx-12 mb-8"
+              style={{ 
+                background: `linear-gradient(90deg, transparent, ${color}40 10%, ${color}80 50%, ${color}40 90%, transparent)` 
+              }} 
+            />
             {/* Timeline items */}
-            <div className="flex justify-between items-start gap-2">
+            <div className="flex justify-between px-12 gap-4">
               {section.timelineSteps.map((step, i) => (
                 <div 
                   key={i} 
-                  className="flex-1 flex flex-col items-center text-center group"
+                  className="flex-1 flex flex-col items-center text-center"
                 >
-                  {/* Dot */}
-                  <div className="relative mb-4 z-10">
+                  {/* Dot aligned with background line */}
+                  <div className="relative -mb-4">
                     <div 
                       className="absolute inset-0 rounded-full blur-md opacity-40" 
                       style={{ background: color }}
