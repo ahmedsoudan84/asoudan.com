@@ -1,26 +1,170 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/montserrat/v29/JTVSjBV8_OTBrgkfI0bYkZ1Q.woff2') format('woff2');
+}
+
+/* ── Dark theme (default) ───────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg-primary:   #0a0c14;
+  --bg-secondary: #141620;
+  --bg-tertiary:  #111322;
+  --bg-surface:   #1a1d2e;
+  --bg-surface-2: #23273a;
+  --bg-footer:    #0d0f1a;
+
+  --fg-rgb:       255, 255, 255;
+  --fg:           rgba(255,255,255,1);
+  --fg-70:        rgba(255,255,255,0.70);
+  --fg-60:        rgba(255,255,255,0.60);
+  --fg-50:        rgba(255,255,255,0.50);
+  --fg-40:        rgba(255,255,255,0.40);
+  --fg-30:        rgba(255,255,255,0.30);
+  --fg-20:        rgba(255,255,255,0.20);
+  --fg-15:        rgba(255,255,255,0.15);
+  --fg-10:        rgba(255,255,255,0.10);
+  --fg-08:        rgba(255,255,255,0.08);
+  --fg-06:        rgba(255,255,255,0.06);
+  --fg-05:        rgba(255,255,255,0.05);
+
+  --accent:       #00F1F1;
+  --accent-rgb:   0, 241, 241;
+  --accent-hover: #00c8c8;
+
+  --vignette-rgb: 10, 12, 20;
+  --nav-bg:       rgba(10,12,20,0.70);
+  --nav-border:   rgba(255,255,255,0.06);
+  --nav-icon-inactive: #47494F;
+
+  --border-subtle: rgba(255,255,255,0.06);
+  --border-card:   rgba(255,255,255,0.10);
+  --scrollbar-track: #0a0c14;
+
+  --selection-bg:  rgba(0,241,241,0.30);
+  --selection-fg:  white;
+
+  --background: #141620;
+  --foreground: #ffffff;
+}
+
+/* ── Light theme ────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary:   #f4f1ea;
+  --bg-secondary: #ede8de;
+  --bg-tertiary:  #e5dfd3;
+  --bg-surface:   #ffffff;
+  --bg-surface-2: #f0ede6;
+  --bg-footer:    #1a1d2e;   /* footer intentionally stays dark */
+
+  --fg-rgb:       22, 25, 42;
+  --fg:           rgba(22,25,42,1);
+  --fg-70:        rgba(22,25,42,0.70);
+  --fg-60:        rgba(22,25,42,0.60);
+  --fg-50:        rgba(22,25,42,0.50);
+  --fg-40:        rgba(22,25,42,0.40);
+  --fg-30:        rgba(22,25,42,0.30);
+  --fg-20:        rgba(22,25,42,0.20);
+  --fg-15:        rgba(22,25,42,0.15);
+  --fg-10:        rgba(22,25,42,0.10);
+  --fg-08:        rgba(22,25,42,0.08);
+  --fg-06:        rgba(22,25,42,0.06);
+  --fg-05:        rgba(22,25,42,0.05);
+
+  --accent:       #008b8b;
+  --accent-rgb:   0, 139, 139;
+  --accent-hover: #006f6f;
+
+  --vignette-rgb: 244, 241, 234;
+  --nav-bg:       rgba(244,241,234,0.88);
+  --nav-border:   rgba(22,25,42,0.10);
+  --nav-icon-inactive: #6b7280;
+
+  --border-subtle: rgba(22,25,42,0.08);
+  --border-card:   rgba(22,25,42,0.12);
+  --scrollbar-track: #ede8de;
+
+  --selection-bg:  rgba(0,139,139,0.25);
+  --selection-fg:  rgb(22,25,42);
+
+  --background: #f4f1ea;
+  --foreground: rgba(22,25,42,1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+  --font-sans: 'Montserrat', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base ───────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--fg);
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ── Light-mode text overrides for Tailwind text-white classes ── */
+[data-theme="light"] .theme-text { color: var(--fg); }
+[data-theme="light"] .theme-text-muted { color: var(--fg-60); }
+
+/* ── Smooth transitions on theme switch ─────────────────────── */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+/* Don't slow down animations */
+.motion-safe\:transition-none,
+[data-framer-motion],
+[style*="transform"],
+[style*="opacity"] {
+  transition: none !important;
+}
+
+/* ── Hide cursor on desktop ─────────────────────────────────── */
+@media (pointer: fine) {
+  body, a, button, [role="button"], input, textarea, select {
+    cursor: none;
+  }
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ── Utilities ──────────────────────────────────────────────── */
+.font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
 }
