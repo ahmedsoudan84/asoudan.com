@@ -816,6 +816,17 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
+        "type": "showcase",
+        "label": "Personas",
+        "heading": "Three voices mapped in detail",
+        "image": {
+          "src": "/images/projects/org-integration-v2/Personas.png",
+          "alt": "Persona map — Students, Org Admin, and Class Admin with pain points and goals"
+        },
+        "caption": "Each persona mapped with their cross-org pain points and goals — the foundation every design decision was tested against.",
+        "bg": "dark"
+      },
+      {
         "type": "text",
         "label": "Existing State Analysis",
         "heading": "The role matrix revealed why this was genuinely hard",
@@ -857,7 +868,7 @@ export const projectsData: ProjectDetail[] = [
         "heading": "A single design model to connect both org experiences",
         "body": "I used an architecture sketch to show how Assessment and Teaching & Learning could share a navigation layer, org context awareness, and role-specific access without rebuilding the existing platforms.",
         "image": {
-          "src": "/images/projects/org-integration-v2/ideation-p1.png",
+          "src": "/images/projects/org-integration-v2/ideation-full.png",
           "alt": "Org Integration ideation and architecture diagram"
         },
         "caption": "Design model tying Assessment and T&L together with shared org context and role-aware flows.",
@@ -865,13 +876,13 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "screen-gallery",
-        "label": "UI Flows",
-        "heading": "Prototyping the cross-org experience",
+        "label": "Research Artifacts",
+        "heading": "Discovery outputs — the work behind the design",
         "screens": [
-          { "image": "/images/projects/org-integration-v2/1.png", "label": "Cross-org Wizard Flow overview" },
-          { "image": "/images/projects/org-integration-v2/3.png", "label": "Step 1: Select students from source org" },
-          { "image": "/images/projects/org-integration-v2/4.png", "label": "Step 2: Choose destination and permissions" },
-          { "image": "/images/projects/org-integration-v2/5.png", "label": "Step 3: Confirmation and success state" }
+          { "image": "/images/projects/org-integration-v2/1.png", "label": "Org Admin account hierarchy — T&L and Assessment" },
+          { "image": "/images/projects/org-integration-v2/3.png", "label": "Navigation proposals across org types" },
+          { "image": "/images/projects/org-integration-v2/4.png", "label": "Possible solutions — ideation sticky notes" },
+          { "image": "/images/projects/org-integration-v2/5.png", "label": "Role matrix mapping — sticky note audit" }
         ],
         "columns": 2,
         "bg": "dark"

@@ -69,7 +69,7 @@ function SectionLabel({ label, color }: { label?: string; color: string }) {
     <div className="flex items-center gap-3 mb-5">
       <div className="w-8 h-px" style={{ background: color }} />
       <span
-        className="text-[9px] font-semibold uppercase tracking-[4px]"
+        className="text-[9px] font-semibold uppercase tracking-[2px]"
         style={{ color }}
       >
         {label}
@@ -82,7 +82,7 @@ function SectionLabel({ label, color }: { label?: string; color: string }) {
 function SectionHeading({ heading }: { heading?: string }) {
   if (!heading) return null;
   return (
-    <h2 className="font-montserrat font-bold [color:var(--fg)]mb-6 text-2xl lg:text-4xl leading-tight">
+    <h2 className="font-montserrat font-bold [color:var(--fg)] mb-8 text-2xl lg:text-4xl leading-tight">
       {heading}
     </h2>
   );
@@ -753,22 +753,14 @@ function LeanUXCanvasSection({ section, color }: { section: CaseStudySection; co
           <SectionHeading heading={section.heading} />
           {section.body && <p className="[color:var(--fg-60)] text-base mb-8">{section.body}</p>}
           {section.image && (
-            <div
-              className="rounded-2xl overflow-hidden"
-              style={{
-                background: "var(--bg-secondary)",
-                boxShadow: "0 25px 80px -20px rgba(0,0,0,0.5), 0 0 0 1px var(--border-subtle)",
-              }}
-            >
-              <div className="p-4 lg:p-6">
-                <SafeImage
-                  src={resolveImage(section.image).src}
-                  alt={resolveImage(section.image).alt}
-                  width={1200}
-                  height={800}
-                  className="w-full rounded-lg"
-                />
-              </div>
+            <div className="rounded-2xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,0,0,0.2)]">
+              <SafeImage
+                src={resolveImage(section.image).src}
+                alt={resolveImage(section.image).alt}
+                width={1200}
+                height={800}
+                className="w-full"
+              />
             </div>
           )}
         </Reveal>
