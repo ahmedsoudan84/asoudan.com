@@ -127,7 +127,6 @@ export const projectsData: ProjectDetail[] = [
       }
     ],
     "behanceUrl": "",
-    "hidden": true,
     "employer": "Oxford University Press",
     "role": "Lead Product Designer",
     "timeline": "8 weeks",
@@ -675,7 +674,7 @@ export const projectsData: ProjectDetail[] = [
     "behanceUrl": "",
     "employer": "Oxford University Press",
     "role": "Lead Product Designer",
-    "timeline": "12 weeks (Discovery Phase)",
+    "timeline": "6 weeks (Discovery Sprint)",
     "team": "1 Designer, 1 PM, 2 Engineers",
     "tools": "Figma, FigJam, Miro, Confluence",
     "platform": "Web (Responsive)",
@@ -749,6 +748,10 @@ export const projectsData: ProjectDetail[] = [
         "label": "Lean UX Canvas",
         "heading": "The problem, hypotheses, and success metrics in one view",
         "body": "The canvas made the team accountable to measurable outcomes before design execution began — not just a prettier layout.",
+        "image": {
+          "src": "/images/projects/org-integration-v2/lean-ux-p1.png",
+          "alt": "Lean UX Canvas — Org Integration Usability Enhancements"
+        },
         "bg": "dark"
       },
       {
@@ -955,7 +958,6 @@ export const projectsData: ProjectDetail[] = [
     ]
   },
   {
-    "hidden": true,
     "id": "offline-solution",
     "slug": "offline-solution",
     "title": "Offline Solution",
