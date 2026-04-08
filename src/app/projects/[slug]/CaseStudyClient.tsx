@@ -532,15 +532,13 @@ function ShowcaseSection({ section, color }: { section: CaseStudySection; color:
                 "0 25px 80px -20px rgba(0,0,0,0.5), 0 0 0 1px var(--border-subtle)",
             }}
           >
-            <div className="p-4 lg:p-6">
-              <SafeImage
-                src={resolveImage(section.image!).src}
-                alt={section.caption || section.heading || "Showcase"}
-                width={1200}
-                height={800}
-                className="w-full rounded-lg"
-              />
-            </div>
+            <SafeImage
+              src={resolveImage(section.image!).src}
+              alt={section.caption || section.heading || "Showcase"}
+              width={1200}
+              height={800}
+              className="block w-full h-auto"
+            />
           </div>
           {section.caption && (
             <p className="[color:var(--fg-30)] text-sm mt-3 text-center">{section.caption}</p>
@@ -591,14 +589,13 @@ function ScreenGallerySection({ section, color, onImageClick }: { section: CaseS
                       }}
                       onClick={() => onImageClick?.(resolved.src)}
                     >
-                      <div className="aspect-video relative p-2">
-                        <SafeImage
-                          src={resolved.src}
-                          alt={resolved.alt}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
+                      <SafeImage
+                        src={resolved.src}
+                        alt={resolved.alt}
+                        width={1200}
+                        height={900}
+                        className="block w-full h-auto"
+                      />
                     </div>
                     {label && (
                       <p className="[color:var(--fg-40)] text-xs text-center font-medium px-1">{label}</p>
@@ -853,6 +850,230 @@ function ConstraintNotesSection({ section, color }: { section: CaseStudySection;
   );
 }
 
+/* ─── User Role Matrix — native rebuild of the sticky-note board ─── */
+function UserRoleMatrixSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const columns: Array<{
+    role: string;
+    tone: { tint: string; border: string; chip: string; accent: string };
+    notes: Array<{ scope: string; text: string }>;
+  }> = [
+    {
+      role: "Students",
+      tone: { tint: "rgba(251, 191, 36, 0.10)", border: "rgba(251, 191, 36, 0.35)", chip: "rgba(251, 191, 36, 0.18)", accent: "#f59e0b" },
+      notes: [
+        { scope: "My Tasks", text: "Students can only see [My Tasks] in Assessment Orgs." },
+        { scope: "Invitation", text: "Have to be invited to join an Assessment Org separately, even if both Orgs are owned by the same admin." },
+        { scope: "Dashboard", text: "See a different empty-state message depending on the Org type." },
+        { scope: "Dashboard", text: "See a [My Tasks] container in their Assessment Org dashboard alongside [Last Opened] and [WOTD] in their T&L Org." },
+        { scope: "Dashboard", text: "Have to click the [Profile] button and toggle between Orgs through a dropdown." },
+        { scope: "My Courses", text: "Owned learning materials are present across all Orgs owned by different or the same admin." },
+        { scope: "My Progress", text: "Can see all their progress data across all Orgs when logged in to any of them." },
+      ],
+    },
+    {
+      role: "Org Admin",
+      tone: { tint: "rgba(56, 189, 248, 0.10)", border: "rgba(56, 189, 248, 0.35)", chip: "rgba(56, 189, 248, 0.18)", accent: "#38bdf8" },
+      notes: [
+        { scope: "Org Creation Wizard", text: "Org Admins can only invite staff, not students, due to licensing rules." },
+        { scope: "Dashboard", text: "Org Admins see a [Sessions] tab on their Assessment Org dashboard instead of [My Classes]." },
+        { scope: "Progress", text: "Can see class progress in T&L Orgs, and OPT progress in Assessment Orgs only via My Org > Placement Tests." },
+        { scope: "My Org", text: "Draft, active, upcoming and completed OPT sessions can be viewed after creation in a tab inside [My Org] called [Placement Tests]." },
+        { scope: "My Org", text: "Available actions: Continue setup (Draft), View session info (All), Manage session (active/upcoming/completed), Copy joining code (active/upcoming), View progress (active), View results (completed), Download report card (completed)." },
+        {
+          scope: "Control",
+          text: "Can: add students/teachers, import access codes, give a teacher Class Admin role, rename and edit org info, hand off Org Admin role, create classes, add students/teachers/materials to classes, edit class details and remove members.",
+        },
+      ],
+    },
+    {
+      role: "Class Admin",
+      tone: { tint: "rgba(74, 222, 128, 0.10)", border: "rgba(74, 222, 128, 0.35)", chip: "rgba(74, 222, 128, 0.18)", accent: "#4ade80" },
+      notes: [
+        { scope: "Dashboard", text: "Class Admins can be invited to an Assessment Org through the Org creation wizard or within My Org > Staff." },
+        { scope: "Dashboard", text: "See a [Sessions] tab on their Assessment Org dashboard instead of [My Classes]." },
+        { scope: "Progress", text: "Can see class progress in T&L Orgs and OPT progress in Assessment Orgs only via My Org > Placement Tests." },
+        { scope: "My Org", text: "Draft, active, upcoming and completed OPT sessions can be viewed after creation in a tab inside [My Org] called [Placement Tests]." },
+        { scope: "My Org", text: "Available actions: Continue setup (Draft), View session info (All), Manage session (active/upcoming/completed), Copy joining code (active/upcoming), View progress (active), View results (completed), Download report card (completed)." },
+        {
+          scope: "Control",
+          text: "Can: create classes, add students/teachers/materials to any class, remove members and materials, rename classes and view student progress. Cannot: add teachers to the org, remove members from the org, import access codes, change org info, hand off Org/Class Admin role, or edit student/teacher profiles. Only the Org Admin can do those.",
+        },
+      ],
+    },
+  ];
+
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-6xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8 items-start">
+            {columns.map((col, ci) => (
+              <div
+                key={ci}
+                className="rounded-3xl p-5 border self-start"
+                style={{ background: col.tone.tint, borderColor: col.tone.border }}
+              >
+                <div
+                  className="font-montserrat font-bold text-base text-center py-2 px-4 rounded-full mb-4"
+                  style={{ background: col.tone.chip, color: "var(--fg)" }}
+                >
+                  {col.role}
+                </div>
+                <div className="flex flex-col gap-3">
+                  {col.notes.map((note, ni) => (
+                    <div
+                      key={ni}
+                      className="rounded-2xl p-4 border"
+                      style={{
+                        background: "var(--bg-secondary)",
+                        borderColor: "var(--border-card)",
+                      }}
+                    >
+                      <div
+                        className="text-[10px] uppercase tracking-[0.12em] font-semibold mb-1"
+                        style={{ color: col.tone.accent }}
+                      >
+                        {note.scope}
+                      </div>
+                      <p className="[color:var(--fg-70)] text-sm leading-relaxed">{note.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          {section.caption && (
+            <p className="[color:var(--fg-30)] text-sm mt-6 text-center">{section.caption}</p>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Possible Solutions — native rebuild of the ideation sticky-note board ─── */
+function PossibleSolutionsSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const columns: Array<{
+    role: string;
+    tone: { tint: string; border: string; chip: string; accent: string };
+    notes: Array<{ scope: string; text: string }>;
+  }> = [
+    {
+      role: "Students",
+      tone: { tint: "rgba(251, 191, 36, 0.10)", border: "rgba(251, 191, 36, 0.35)", chip: "rgba(251, 191, 36, 0.18)", accent: "#f59e0b" },
+      notes: [
+        { scope: "My Tasks", text: "Students should not feel any change in experience." },
+        { scope: "Org Change", text: "Adding a prominent toggle switch — potentially visible on all main screens — can be a seamless way for users to change orgs." },
+        { scope: "Home", text: "Hero banners can be a great indication of which type of org the user is in." },
+        {
+          scope: "My Tasks",
+          text: "Homework assignments should sit within [My Tasks], which now lives in Assessment Orgs only. Having it visible across Org types provides easy access and less confusion. It would be more confusing if homework sat within a testing Org, or if there were two different tasks areas with different content.",
+        },
+        {
+          scope: "Invitation",
+          text: "Change terminology: 'Invited', 'Org → Test', and make it feel more like a test invitation.",
+        },
+        {
+          scope: "Org Views",
+          text: "Remove [My Classes] and replace it with class badges on each task.",
+        },
+      ],
+    },
+    {
+      role: "Org Admin",
+      tone: { tint: "rgba(56, 189, 248, 0.10)", border: "rgba(56, 189, 248, 0.35)", chip: "rgba(56, 189, 248, 0.18)", accent: "#38bdf8" },
+      notes: [
+        {
+          scope: "OPT Creation Wizard",
+          text: "Org Admins should be able to invite students from other Orgs they created, even T&L ones. A filtering tool can be added.",
+        },
+        {
+          scope: "Org Change",
+          text: "Adding a prominent toggle switch — potentially visible on all main screens — can be a seamless way for users to change orgs.",
+        },
+        {
+          scope: "My Org",
+          text: "It would be less confusing with a prominent 'Change Org' button where they can choose from their different orgs created by the same account. Org Admins choose an org; the hero org title and a slight colour change with the Org type in the main menu button act as an indicator of where the user is.",
+        },
+        {
+          scope: "Org Change",
+          text: "Add a validation message on the orgs list to alert the Org Admin of any needed actions.",
+        },
+        {
+          scope: "My Org",
+          text: "Create a Dashboard tab within My Org that includes insights about the current org and quick actions to reduce click count.",
+        },
+      ],
+    },
+    {
+      role: "Class Admin",
+      tone: { tint: "rgba(74, 222, 128, 0.10)", border: "rgba(74, 222, 128, 0.35)", chip: "rgba(74, 222, 128, 0.18)", accent: "#4ade80" },
+      notes: [
+        {
+          scope: "OPT Creation Wizard",
+          text: "Class Admins should be able to invite students from other Classes they created, even T&L ones. A filtering tool can be added.",
+        },
+        {
+          scope: "Org Change",
+          text: "Adding a prominent toggle switch — potentially visible on all main screens — can be a seamless way for users to change orgs.",
+        },
+      ],
+    },
+  ];
+
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-6xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8 items-start">
+            {columns.map((col, ci) => (
+              <div
+                key={ci}
+                className="rounded-3xl p-5 border self-start"
+                style={{ background: col.tone.tint, borderColor: col.tone.border }}
+              >
+                <div
+                  className="font-montserrat font-bold text-base text-center py-2 px-4 rounded-full mb-4"
+                  style={{ background: col.tone.chip, color: "var(--fg)" }}
+                >
+                  {col.role}
+                </div>
+                <div className="flex flex-col gap-3">
+                  {col.notes.map((note, ni) => (
+                    <div
+                      key={ni}
+                      className="rounded-2xl p-4 border"
+                      style={{
+                        background: "var(--bg-secondary)",
+                        borderColor: "var(--border-card)",
+                      }}
+                    >
+                      <div
+                        className="text-[10px] uppercase tracking-[0.12em] font-semibold mb-1"
+                        style={{ color: col.tone.accent }}
+                      >
+                        {note.scope}
+                      </div>
+                      <p className="[color:var(--fg-70)] text-sm leading-relaxed">{note.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          {section.caption && (
+            <p className="[color:var(--fg-30)] text-sm mt-6 text-center">{section.caption}</p>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Lean UX canvas / Constraint notes / Role matrix (generic table-like) ─── */
 function GenericSection({ section, color }: { section: CaseStudySection; color: string }) {
   return (
@@ -911,11 +1132,11 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
           <SectionHeading heading={section.heading} />
         </Reveal>
         {personas.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 items-start">
             {personas.map((persona, idx) => (
               <div
                 key={idx}
-                className="rounded-3xl border transition-colors duration-300"
+                className="rounded-3xl border transition-colors duration-300 self-start"
                 style={{
                   borderColor: expandedPersona === idx ? "var(--fg-20)" : "var(--border-card)",
                   background: expandedPersona === idx ? "var(--fg-08)" : "var(--fg-05)",
@@ -1035,6 +1256,10 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <RoleMatrixSection section={section} color={color} />;
     case "constraint-notes":
       return <ConstraintNotesSection section={section} color={color} />;
+    case "user-role-matrix":
+      return <UserRoleMatrixSection section={section} color={color} />;
+    case "possible-solutions":
+      return <PossibleSolutionsSection section={section} color={color} />;
   }
 }
 

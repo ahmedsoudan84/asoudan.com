@@ -33,7 +33,9 @@ export interface CaseStudySection {
     | "lean-ux-canvas"
     | "persona-cards"
     | "role-matrix"
-    | "constraint-notes";
+    | "constraint-notes"
+    | "user-role-matrix"
+    | "possible-solutions";
   label?: string;
   heading?: string;
   body?: string;
@@ -823,10 +825,10 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "role-matrix",
-        "label": "Role Matrix",
-        "heading": "Existing role-permission matrix",
-        "caption": "Existing role-permission matrix — the complexity users never see, but always feel",
+        "type": "user-role-matrix",
+        "label": "User Role Matrix",
+        "heading": "Existing role-permission matrix — what each user can and cannot do",
+        "caption": "Mapped from the existing platform behaviour across Students, Org Admins, and Class Admins.",
         "bg": "light"
       },
       {
@@ -850,15 +852,10 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "screen-gallery",
+        "type": "possible-solutions",
         "label": "Ideation Artefacts",
-        "heading": "Sticky notes to solution space",
-        "screens": [
-          { "image": "/images/projects/org-integration-v2/4.png", "label": "Possible solutions — ideation board" },
-          { "image": "/images/projects/org-integration-v2/5.png", "label": "Role matrix — sticky note audit" }
-        ],
-        "columns": 2,
-        "showcaseBg": "#fffbf0",
+        "heading": "From sticky notes to possible solutions",
+        "caption": "Solution ideas mapped per role — kept lightweight so engineering and PM could react fast.",
         "bg": "dark"
       },
       {
