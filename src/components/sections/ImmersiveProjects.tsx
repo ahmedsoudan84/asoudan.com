@@ -341,15 +341,20 @@ export default function ImmersiveProjects() {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
   const progressScale = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
 
-  // Filter chips — derive categories from project data
+  // Filter chips — derive categories from BOTH case studies and Behance projects
   const categories = useMemo(() => {
     const set = new Set<string>();
     caseStudyProjects.forEach((p) => set.add(p.category));
+    behanceProjects.forEach((p) => set.add(p.category));
     return ["All", ...Array.from(set)];
   }, []);
   const [activeCat, setActiveCat] = useState("All");
   const filtered = useMemo(
     () => (activeCat === "All" ? caseStudyProjects : caseStudyProjects.filter((p) => p.category === activeCat)),
+    [activeCat]
+  );
+  const filteredBehance = useMemo(
+    () => (activeCat === "All" ? behanceProjects : behanceProjects.filter((p) => p.category === activeCat)),
     [activeCat]
   );
 
@@ -455,7 +460,7 @@ export default function ImmersiveProjects() {
         </LayoutGroup>
 
         {/* Behance Projects */}
-        {behanceProjects.length > 0 && (
+        {filteredBehance.length > 0 && (
           <div className="pb-20 lg:pb-28">
             <div className="flex items-center gap-4 mb-10">
               <div className="h-px flex-1" style={{ background: "var(--fg-06)" }} />
@@ -474,7 +479,7 @@ export default function ImmersiveProjects() {
               variants={stagger}
               className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
             >
-              {behanceProjects.map((project) => (
+              {filteredBehance.map((project) => (
                 <motion.div key={project.id} variants={fadeUp}>
                   <BehanceCard project={project} />
                 </motion.div>
