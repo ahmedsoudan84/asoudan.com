@@ -341,20 +341,21 @@ export default function ImmersiveProjects() {
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
   const progressScale = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
 
-  // Filter chips — derive categories from BOTH case studies and Behance projects
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    caseStudyProjects.forEach((p) => set.add(p.category));
-    behanceProjects.forEach((p) => set.add(p.category));
-    return ["All", ...Array.from(set)];
-  }, []);
-  const [activeCat, setActiveCat] = useState("All");
+  // Three-bucket category system — map each project's raw category into a bucket
+  const bucketOf = (cat: string): "Product Design" | "Campaign" | "Branding" => {
+    const c = cat.toUpperCase();
+    if (c.includes("BRAND")) return "Branding";
+    if (c.includes("CAMPAIGN")) return "Campaign";
+    return "Product Design"; // PRODUCT DESIGN, UX/UI, UX RESEARCH & DESIGN, DESIGN SYSTEM, etc.
+  };
+  const categories = ["All", "Product Design", "Campaign", "Branding"];
+  const [activeCat, setActiveCat] = useState<string>("All");
   const filtered = useMemo(
-    () => (activeCat === "All" ? caseStudyProjects : caseStudyProjects.filter((p) => p.category === activeCat)),
+    () => (activeCat === "All" ? caseStudyProjects : caseStudyProjects.filter((p) => bucketOf(p.category) === activeCat)),
     [activeCat]
   );
   const filteredBehance = useMemo(
-    () => (activeCat === "All" ? behanceProjects : behanceProjects.filter((p) => p.category === activeCat)),
+    () => (activeCat === "All" ? behanceProjects : behanceProjects.filter((p) => bucketOf(p.category) === activeCat)),
     [activeCat]
   );
 
