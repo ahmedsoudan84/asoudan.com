@@ -578,14 +578,18 @@ function ScreenGallerySection({ section, color, onImageClick }: { section: CaseS
                       return { src: img.src, alt: img.alt, label: s.label };
                     })()
                   : { src: (screen as { src: string; alt: string }).src, alt: (screen as { src: string; alt: string }).alt };
+                const frameBg = section.showcaseBg;
                 return (
-                  <div 
-                    key={i} 
-                    className="relative rounded-xl overflow-hidden [background:var(--bg-secondary)] border [border-color:var(--fg-08)] cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:[border-color:var(--fg-20)] hover:shadow-[0_0_30px_-8px_rgba(0,0,0,0.5)] group"
+                  <div
+                    key={i}
+                    className="relative rounded-xl overflow-hidden border cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_-8px_rgba(0,0,0,0.5)] group"
+                    style={{
+                      background: frameBg || "var(--bg-secondary)",
+                      borderColor: frameBg ? "rgba(0,0,0,0.08)" : "var(--fg-08)",
+                    }}
                     onClick={() => onImageClick?.(resolved.src)}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
-                    <div className="aspect-video relative">
+                    <div className="aspect-video relative p-2">
                       <SafeImage
                         src={resolved.src}
                         alt={resolved.alt}
@@ -753,7 +757,13 @@ function LeanUXCanvasSection({ section, color }: { section: CaseStudySection; co
           <SectionHeading heading={section.heading} />
           {section.body && <p className="[color:var(--fg-60)] text-base mb-8">{section.body}</p>}
           {section.image && (
-            <div className="rounded-2xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,0,0,0.2)]">
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: "#ffffff",
+                boxShadow: "0 24px 64px -12px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.06)",
+              }}
+            >
               <SafeImage
                 src={resolveImage(section.image).src}
                 alt={resolveImage(section.image).alt}
@@ -894,90 +904,89 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        {/* Label + heading in their own Reveal so state changes never touch the motion wrapper */}
         <Reveal>
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
-          {section.personas && (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-                {personas.map((persona, i) => (
-                  <div
-                    key={i}
-                    className={cls(
-                      "rounded-3xl border transition-all duration-300",
-                      expandedPersona === i
-                        ? "[border-color:var(--fg-20)] [background:var(--fg-08)]"
-                        : "[border-color:var(--border-card)] [background:var(--fg-05)]"
-                    )}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setExpandedPersona(expandedPersona === i ? null : i)}
-                      className="w-full text-left p-6 lg:p-8"
-                    >
-                      <div className="flex items-center gap-4 mb-4">
-                        {persona.avatar && (
-                          <div className="w-12 h-12 rounded-full overflow-hidden [background:var(--fg-05)]">
-                            <SafeImage
-                              src={persona.avatar}
-                              alt={persona.name}
-                              width={48}
-                              height={48}
-                              className="object-cover"
-                            />
-                          </div>
-                        )}
-                        <div>
-                          <div className="font-montserrat font-bold [color:var(--fg)]text-lg">
-                            {persona.name}
-                          </div>
-                          {persona.role && (
-                            <div className="text-xs uppercase tracking-wider [color:var(--fg-40)]" style={{ color }}>
-                              {persona.role}
-                            </div>
-                          )}
-                        </div>
+        </Reveal>
+        {personas.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+            {personas.map((persona, idx) => (
+              <div
+                key={idx}
+                className={cls(
+                  "rounded-3xl border transition-all duration-300",
+                  expandedPersona === idx
+                    ? "[border-color:var(--fg-20)] [background:var(--fg-08)]"
+                    : "[border-color:var(--border-card)] [background:var(--fg-05)]"
+                )}
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpandedPersona(expandedPersona === idx ? null : idx)}
+                  className="w-full text-left p-6 lg:p-8"
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    {persona.avatar && (
+                      <div className="w-12 h-12 rounded-full overflow-hidden [background:var(--fg-05)]">
+                        <SafeImage
+                          src={persona.avatar}
+                          alt={persona.name}
+                          width={48}
+                          height={48}
+                          className="object-cover"
+                        />
                       </div>
-                      {persona.context && (
-                        <p className="[color:var(--fg-50)] text-sm leading-relaxed">{persona.context}</p>
+                    )}
+                    <div>
+                      <div className="font-montserrat font-bold [color:var(--fg)] text-lg">
+                        {persona.name}
+                      </div>
+                      {persona.role && (
+                        <div className="text-xs uppercase tracking-wider" style={{ color }}>
+                          {persona.role}
+                        </div>
                       )}
-                    </button>
-                    {expandedPersona === i && persona.painPoints && (
-                      <div className="px-6 lg:px-8 pb-6 border-t [border-color:var(--border-subtle)]">
-                        <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2 mt-4">
-                          Pain points
+                    </div>
+                  </div>
+                  {persona.context && (
+                    <p className="[color:var(--fg-50)] text-sm leading-relaxed">{persona.context}</p>
+                  )}
+                </button>
+                {expandedPersona === idx && persona.painPoints && (
+                  <div className="px-6 lg:px-8 pb-6 border-t [border-color:var(--border-subtle)]">
+                    <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2 mt-4">
+                      Pain points
+                    </div>
+                    <ul className="space-y-2">
+                      {persona.painPoints.map((item, pidx) => (
+                        <li key={pidx} className="[color:var(--fg-50)] text-sm leading-relaxed flex gap-2">
+                          <span style={{ color }}>•</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    {persona.goals && (
+                      <div className="mt-4">
+                        <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2">
+                          Goals
                         </div>
                         <ul className="space-y-2">
-                          {persona.painPoints.map((item, idx) => (
-                            <li key={idx} className="[color:var(--fg-50)] text-sm leading-relaxed flex gap-2">
+                          {persona.goals.map((goal, gidx) => (
+                            <li key={gidx} className="[color:var(--fg-50)] text-sm leading-relaxed flex gap-2">
                               <span style={{ color }}>•</span>
-                              {item}
+                              {goal}
                             </li>
                           ))}
                         </ul>
-                        {persona.goals && (
-                          <div className="mt-4">
-                            <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2">
-                              Goals
-                            </div>
-                            <ul className="space-y-2">
-                              {persona.goals.map((goal, idx) => (
-                                <li key={idx} className="[color:var(--fg-50)] text-sm leading-relaxed flex gap-2">
-                                  <span style={{ color }}>•</span>
-                                  {goal}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
                       </div>
                     )}
-</div>
-                ))}
+                  </div>
+                )}
               </div>
-            </>
-          )}
-        </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -1029,6 +1038,37 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
   }
 }
 
+/* ─── Floating back button ─── */
+function FloatingBackButton() {
+  const [visible, setVisible] = useState(false);
+
+  React.useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 280);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : -6 }}
+      transition={{ duration: 0.22, ease: "easeOut" }}
+      className="fixed top-6 left-6 z-40"
+      style={{ pointerEvents: visible ? "auto" : "none" }}
+    >
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium border backdrop-blur-md [background:var(--nav-bg)] [border-color:var(--nav-border)] [color:var(--fg-60)] hover:[color:var(--fg)] transition-colors"
+      >
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M8.5 1.5L3.5 6.5L8.5 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Back
+      </Link>
+    </motion.div>
+  );
+}
+
 /* ─── Main component ─── */
 interface Props {
   project: ProjectDetail;
@@ -1041,7 +1081,9 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   return (
-    <main className="min-h-screen [background:var(--bg-primary)]">
+    <>
+      <FloatingBackButton />
+      <main className="min-h-screen [background:var(--bg-primary)]">
       {/* ── Hero ── */}
       <div className="relative h-[92vh] overflow-hidden">
         {/* Cover image */}
@@ -1244,11 +1286,11 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
 
       {/* ─── Lightbox modal ─── */}
       {lightboxImage && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
           onClick={() => setLightboxImage(null)}
         >
-          <button 
+          <button
             className="absolute top-4 right-4 [color:var(--fg-60)] hover:[color:var(--fg)] text-4xl"
             onClick={() => setLightboxImage(null)}
           >
@@ -1266,5 +1308,6 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
         </div>
       )}
     </main>
+    </>
   );
 }

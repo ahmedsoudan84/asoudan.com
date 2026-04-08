@@ -136,7 +136,7 @@ export const projectsData: ProjectDetail[] = [
     "caseStudy": [
       {
         "type": "tldr",
-        "label": "TL;DR",
+        "label": "Overview",
         "heading": "Learner Dashboard at a glance",
         "bullets": [
           "Problem: Students found the existing dashboard confusing — no clear entry point to content, no progress visibility, and teachers called the interface 'too busy'.",
@@ -509,7 +509,7 @@ export const projectsData: ProjectDetail[] = [
     "caseStudy": [
       {
         "type": "tldr",
-        "label": "TL;DR",
+        "label": "Overview",
         "heading": "Offline Downloads at a glance",
         "bullets": [
           "Problem: 47% of OUP's priority markets have unreliable or metered internet — students lose access mid-lesson and teachers can only download in narrow bandwidth windows.",
@@ -681,7 +681,7 @@ export const projectsData: ProjectDetail[] = [
     "caseStudy": [
       {
         "type": "tldr",
-        "label": "TL;DR",
+        "label": "Overview",
         "heading": "Org Integration at a glance",
         "bullets": [
           "Problem: Users enrolled in both Teaching & Learning and Assessment Orgs hit an invisible wall — two separate interfaces, no shared context, no way to navigate seamlessly between them.",
@@ -689,6 +689,13 @@ export const projectsData: ProjectDetail[] = [
           "Deliverables: Lean UX canvas, 3 persona maps, full role matrix audit, and 4 design prototypes — student unified view, cross-org wizard, mother-child org hierarchy, and multi-org management.",
           "Status: Discovery complete. Designs handed off for stakeholder validation and engineering sprint planning."
         ],
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "The Problem",
+        "heading": "Two products. One user. Zero continuity.",
+        "body": "Oxford English Hub operates two parallel worlds: a Teaching & Learning platform where teachers run courses and track class progress, and an Assessment Organisation where students take placement tests like OPT (Oxford Placement Test). For thousands of cross-enrolled users — students in both, teachers managing both, admins overseeing both — this separation was invisible but brutal. Switching context meant losing orientation. UI patterns clashed. The same student appeared as a different entity in each system. The platform felt broken, even when it technically wasn't. The brief was clear: design a seamless, unified cross-org experience without rebuilding either platform.",
         "bg": "dark"
       },
       {
@@ -727,14 +734,7 @@ export const projectsData: ProjectDetail[] = [
             "description": "Delivered annotated design specs for validation, engineering planning, and QA prep."
           }
         ],
-        "bg": "dark"
-      },
-      {
-        "type": "text",
-        "label": "The Problem",
-        "heading": "Two products. One user. Zero continuity.",
-        "body": "Oxford English Hub operates two parallel worlds: a Teaching & Learning platform where teachers run courses and track class progress, and an Assessment Organisation where students take placement tests like OPT (Oxford Placement Test). For thousands of cross-enrolled users — students in both, teachers managing both, admins overseeing both — this separation was invisible but brutal. Switching context meant losing orientation. UI patterns clashed. The same student appeared as a different entity in each system. The platform felt broken, even when it technically wasn't. The brief was clear: design a seamless, unified cross-org experience without rebuilding either platform.",
-        "bg": "dark"
+        "bg": "light"
       },
       {
         "type": "text",
@@ -816,17 +816,6 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "showcase",
-        "label": "Personas",
-        "heading": "Three voices mapped in detail",
-        "image": {
-          "src": "/images/projects/org-integration-v2/Personas.png",
-          "alt": "Persona map — Students, Org Admin, and Class Admin with pain points and goals"
-        },
-        "caption": "Each persona mapped with their cross-org pain points and goals — the foundation every design decision was tested against.",
-        "bg": "dark"
-      },
-      {
         "type": "text",
         "label": "Existing State Analysis",
         "heading": "The role matrix revealed why this was genuinely hard",
@@ -849,17 +838,27 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "text",
-        "label": "Design Solutions",
-        "heading": "Four flows to cover every cross-org scenario",
-        "body": "With research complete and constraints fully understood, I designed four distinct flows in high fidelity: (1) A cross-org invitation wizard guiding admins through adding students from one org to another. (2) A mother-child org hierarchy model for administrators managing institutional networks. (3) A multi-org management view for power users overseeing multiple organisations simultaneously. (4) A unified student dashboard aggregating tasks and progress across both org types. Each prototype was fully annotated for development handoff — interaction states, edge cases, error paths, and accessibility notes included.",
-        "bg": "light"
+        "type": "screen-gallery",
+        "label": "Architecture Diagrams",
+        "heading": "How the org accounts actually connect",
+        "screens": [
+          { "image": "/images/projects/org-integration-v2/1.png", "label": "Org Admin account hierarchy — T&L and Assessment" },
+          { "image": "/images/projects/org-integration-v2/3.png", "label": "Navigation proposals across org types" }
+        ],
+        "columns": 2,
+        "showcaseBg": "#ffffff",
+        "bg": "dark"
       },
       {
-        "type": "text",
-        "label": "Assessment Organisation",
-        "heading": "Dashboard, sessions, and placement tests — the Assessment Org experience",
-        "body": "The Assessment Org interface centres around session management. Org Admins land on a dashboard showing sessions, licences, and user counts at a glance. From there, they navigate to My Sessions to create and manage Oxford Placement Tests, Oxford Test of English sessions, and future test types. Each session has a detailed management panel with joining codes, scheduling, and student allocation. The 'Change Organisation' button — a key design addition — sits prominently throughout, enabling seamless switching between org contexts.",
+        "type": "screen-gallery",
+        "label": "Ideation Artefacts",
+        "heading": "Sticky notes to solution space",
+        "screens": [
+          { "image": "/images/projects/org-integration-v2/4.png", "label": "Possible solutions — ideation board" },
+          { "image": "/images/projects/org-integration-v2/5.png", "label": "Role matrix — sticky note audit" }
+        ],
+        "columns": 2,
+        "showcaseBg": "#fffbf0",
         "bg": "dark"
       },
       {
@@ -875,14 +874,26 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
+        "type": "text",
+        "label": "Design Solutions",
+        "heading": "Four flows to cover every cross-org scenario",
+        "body": "With research complete and constraints fully understood, I designed four distinct flows in high fidelity: (1) A cross-org invitation wizard guiding admins through adding students from one org to another. (2) A mother-child org hierarchy model for administrators managing institutional networks. (3) A multi-org management view for power users overseeing multiple organisations simultaneously. (4) A unified student dashboard aggregating tasks and progress across both org types. Each prototype was fully annotated for development handoff — interaction states, edge cases, error paths, and accessibility notes included.",
+        "bg": "light"
+      },
+      {
+        "type": "text",
+        "label": "Assessment Organisation",
+        "heading": "Dashboard, sessions, and placement tests — the Assessment Org experience",
+        "body": "The Assessment Org interface centres around session management. Org Admins land on a dashboard showing sessions, licences, and user counts at a glance. From there, they navigate to My Sessions to create and manage Oxford Placement Tests, Oxford Test of English sessions, and future test types. Each session has a detailed management panel with joining codes, scheduling, and student allocation. The 'Change Organisation' button — a key design addition — sits prominently throughout, enabling seamless switching between org contexts.",
+        "bg": "dark"
+      },
+      {
         "type": "screen-gallery",
-        "label": "Research Artifacts",
-        "heading": "Discovery outputs — the work behind the design",
+        "label": "Dashboard Views",
+        "heading": "Assessment vs Teaching & Learning",
         "screens": [
-          { "image": "/images/projects/org-integration-v2/1.png", "label": "Org Admin account hierarchy — T&L and Assessment" },
-          { "image": "/images/projects/org-integration-v2/3.png", "label": "Navigation proposals across org types" },
-          { "image": "/images/projects/org-integration-v2/4.png", "label": "Possible solutions — ideation sticky notes" },
-          { "image": "/images/projects/org-integration-v2/5.png", "label": "Role matrix mapping — sticky note audit" }
+          { "image": "/images/projects/org-integration-v2/Assessment  Org - Dashboard.png", "label": "Assessment Org" },
+          { "image": "/images/projects/org-integration-v2/T&L Org - Dashboard.png", "label": "Teaching & Learning Org" }
         ],
         "columns": 2,
         "bg": "dark"
@@ -896,17 +907,6 @@ export const projectsData: ProjectDetail[] = [
           "alt": "Complete 9-step wizard flow showing the full cross-org student invitation process"
         },
         "caption": "From method selection through confirmation — every screen designed with error states, validation, and accessibility in mind.",
-        "bg": "dark"
-      },
-      {
-        "type": "screen-gallery",
-        "label": "Dashboard Views",
-        "heading": "Assessment vs Teaching & Learning",
-        "screens": [
-          { "image": "/images/projects/org-integration-v2/Assessment  Org - Dashboard.png", "label": "Assessment Org" },
-          { "image": "/images/projects/org-integration-v2/T&L Org - Dashboard.png", "label": "Teaching & Learning Org" }
-        ],
-        "columns": 2,
         "bg": "dark"
       },
       {
@@ -1010,7 +1010,7 @@ export const projectsData: ProjectDetail[] = [
     "caseStudy": [
       {
         "type": "tldr",
-        "label": "TL;DR",
+        "label": "Overview",
         "heading": "Offline Solution at a glance",
         "bullets": [
           "Problem: Teachers in regions with unreliable internet couldn't use OEH content in class — 47% of OUP's priority markets face connectivity challenges.",
@@ -1419,7 +1419,7 @@ export const projectsData: ProjectDetail[] = [
     "caseStudy": [
       {
         "type": "tldr",
-        "label": "TL;DR",
+        "label": "Overview",
         "heading": "Org-Level Reports at a glance",
         "bullets": [
           "Problem: Rich learner data existed but was completely inaccessible to administrators — renewal decisions were based on anecdote and struggling students went undetected.",
@@ -1654,7 +1654,7 @@ export const projectsData: ProjectDetail[] = [
     "caseStudy": [
       {
         "type": "tldr",
-        "label": "TL;DR",
+        "label": "Overview",
         "heading": "Components Design at a glance",
         "bullets": [
           "Problem: 4 feature teams had 4 competing implementations of the same components — causing 23 WCAG violations and ~35% sprint capacity lost to design ambiguity.",
