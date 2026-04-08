@@ -82,7 +82,7 @@ function SectionLabel({ label, color }: { label?: string; color: string }) {
 function SectionHeading({ heading }: { heading?: string }) {
   if (!heading) return null;
   return (
-    <h2 className="font-montserrat font-bold [color:var(--fg)] mb-8 text-2xl lg:text-4xl leading-tight">
+    <h2 className="font-montserrat font-bold [color:var(--fg)] mb-10 text-2xl lg:text-4xl leading-tight">
       {heading}
     </h2>
   );
@@ -179,12 +179,13 @@ function FullwidthImageSection({ section, color }: { section: CaseStudySection; 
     <section className={cls("py-12", sectionBg(section.bg))}>
       <Reveal>
         <SectionLabel label={section.label} color={color} />
-        <div className="relative w-full" style={{ aspectRatio: "16/7" }}>
+        <div className="max-w-6xl mx-auto px-6 lg:px-0">
           <SafeImage
             src={resolveImage(section.image!).src}
             alt={section.caption || "Full width image"}
-            fill
-            className="object-cover"
+            width={2400}
+            height={900}
+            className="w-full h-auto rounded-2xl"
           />
         </div>
         {section.caption && (
@@ -262,7 +263,7 @@ function StatsSection({ section, color }: { section: CaseStudySection; color: st
               {section.stats.map((s, i) => (
                 <div key={i}>
                   <div
-                    className="font-montserrat font-bold text-4xl lg:text-5xl mb-2"
+                    className={cls("font-montserrat font-bold mb-2", s.value.length > 6 ? "text-2xl lg:text-3xl" : "text-4xl lg:text-5xl")}
                     style={{ color }}
                   >
                     {s.value}
@@ -288,7 +289,7 @@ function QuoteSection({ section, color }: { section: CaseStudySection; color: st
           <SectionLabel label={section.label} color={color} />
           {section.quote && (
             <blockquote
-              className="font-montserrat font-bold text-2xl lg:text-3xl [color:var(--fg)]leading-snug border-l-2 pl-6"
+              className="font-montserrat font-bold text-2xl lg:text-3xl [color:var(--fg)] leading-snug border-l-2 pl-6"
               style={{ borderColor: color }}
             >
               &ldquo;{section.quote}&rdquo;
@@ -579,28 +580,28 @@ function ScreenGallerySection({ section, color, onImageClick }: { section: CaseS
                     })()
                   : { src: (screen as { src: string; alt: string }).src, alt: (screen as { src: string; alt: string }).alt };
                 const frameBg = section.showcaseBg;
+                const label = ('label' in resolved) ? resolved.label : undefined;
                 return (
-                  <div
-                    key={i}
-                    className="relative rounded-xl overflow-hidden border cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_-8px_rgba(0,0,0,0.5)] group"
-                    style={{
-                      background: frameBg || "var(--bg-secondary)",
-                      borderColor: frameBg ? "rgba(0,0,0,0.08)" : "var(--fg-08)",
-                    }}
-                    onClick={() => onImageClick?.(resolved.src)}
-                  >
-                    <div className="aspect-video relative p-2">
-                      <SafeImage
-                        src={resolved.src}
-                        alt={resolved.alt}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    {('label' in resolved) && resolved.label && (
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent pt-8 pb-3 px-3">
-                        <p className="[color:var(--fg-70)] text-xs text-center font-medium">{resolved.label}</p>
+                  <div key={i} className="flex flex-col gap-2">
+                    <div
+                      className="relative rounded-xl overflow-hidden border cursor-pointer transition-transform duration-300 hover:scale-[1.02] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.6)]"
+                      style={{
+                        background: frameBg || "var(--bg-secondary)",
+                        borderColor: frameBg ? "rgba(0,0,0,0.07)" : "var(--fg-08)",
+                      }}
+                      onClick={() => onImageClick?.(resolved.src)}
+                    >
+                      <div className="aspect-video relative p-2">
+                        <SafeImage
+                          src={resolved.src}
+                          alt={resolved.alt}
+                          fill
+                          className="object-contain"
+                        />
                       </div>
+                    </div>
+                    {label && (
+                      <p className="[color:var(--fg-40)] text-xs text-center font-medium px-1">{label}</p>
                     )}
                   </div>
                 );
@@ -795,7 +796,7 @@ function RoleMatrixSection({ section, color }: { section: CaseStudySection; colo
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
             {roles.map((r, i) => (
               <div key={i} className="rounded-xl border p-5" style={{ borderColor: r.color + '40', background: r.color + '10' }}>
-                <div className="font-bold [color:var(--fg)]mb-3">{r.role}</div>
+                <div className="font-bold [color:var(--fg)] mb-3">{r.role}</div>
                 <ul className="space-y-2">
                   {r.items.map((item, j) => (
                     <li key={j} className="[color:var(--fg-70)] text-sm flex gap-2">
@@ -914,12 +915,11 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
             {personas.map((persona, idx) => (
               <div
                 key={idx}
-                className={cls(
-                  "rounded-3xl border transition-all duration-300",
-                  expandedPersona === idx
-                    ? "[border-color:var(--fg-20)] [background:var(--fg-08)]"
-                    : "[border-color:var(--border-card)] [background:var(--fg-05)]"
-                )}
+                className="rounded-3xl border transition-colors duration-300"
+                style={{
+                  borderColor: expandedPersona === idx ? "var(--fg-20)" : "var(--border-card)",
+                  background: expandedPersona === idx ? "var(--fg-08)" : "var(--fg-05)",
+                }}
               >
                 <button
                   type="button"
