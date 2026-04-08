@@ -173,20 +173,27 @@ function ImageSection({ section, color }: { section: CaseStudySection; color: st
 }
 
 /* ─── Full-width image ─── */
-function FullwidthImageSection({ section, color }: { section: CaseStudySection; color: string }) {
+function FullwidthImageSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   if (!section.image) return null;
+  const src = resolveImage(section.image!).src;
   return (
     <section className={cls("py-12", sectionBg(section.bg))}>
       <Reveal>
         <SectionLabel label={section.label} color={color} />
         <div className="max-w-6xl mx-auto px-6 lg:px-0">
-          <SafeImage
-            src={resolveImage(section.image!).src}
-            alt={section.caption || "Full width image"}
-            width={2400}
-            height={900}
-            className="w-full h-auto rounded-2xl"
-          />
+          <button
+            type="button"
+            onClick={() => onImageClick?.(src)}
+            className="block w-full rounded-2xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.01]"
+          >
+            <SafeImage
+              src={src}
+              alt={section.caption || "Full width image"}
+              width={2400}
+              height={900}
+              className="w-full h-auto block"
+            />
+          </button>
         </div>
         {section.caption && (
           <p className="[color:var(--fg-30)] text-sm mt-3 text-center px-6">{section.caption}</p>
@@ -197,8 +204,9 @@ function FullwidthImageSection({ section, color }: { section: CaseStudySection; 
 }
 
 /* ─── Split section ─── */
-function SplitSection({ section, color }: { section: CaseStudySection; color: string }) {
+function SplitSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   const imageLeft = section.imagePosition !== "right";
+  const splitSrc = section.image ? resolveImage(section.image).src : null;
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
@@ -210,13 +218,16 @@ function SplitSection({ section, color }: { section: CaseStudySection; color: st
             )}
           >
             {section.image && (
-              <div className="w-full lg:w-1/2 relative rounded-2xl overflow-hidden shrink-0">
+              <div
+                className="w-full lg:w-1/2 relative rounded-2xl overflow-hidden shrink-0 cursor-pointer transition-transform duration-300 hover:scale-[1.01]"
+                onClick={() => splitSrc && onImageClick?.(splitSrc)}
+              >
                 <SafeImage
-                  src={resolveImage(section.image!).src}
+                  src={splitSrc!}
                   alt={typeof section.image === "string" ? (section.caption || section.heading || "") : (section.image?.alt || section.caption || section.heading || "")}
                   width={700}
                   height={500}
-                  className="w-full object-cover"
+                  className="w-full object-cover block"
                 />
                 {section.caption && (
                   <p className="[color:var(--fg-30)] text-sm mt-2 text-center">{section.caption}</p>
@@ -259,9 +270,9 @@ function StatsSection({ section, color }: { section: CaseStudySection; color: st
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
           {section.stats && (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div className="flex flex-wrap justify-center gap-x-16 gap-y-10 text-center">
               {section.stats.map((s, i) => (
-                <div key={i} className="flex flex-col items-center">
+                <div key={i} className="flex flex-col items-center min-w-[140px] max-w-[220px]">
                   <div
                     className={cls("font-montserrat font-bold mb-2", s.value.length > 6 ? "text-2xl lg:text-3xl" : "text-4xl lg:text-5xl")}
                     style={{ color }}
@@ -1558,9 +1569,9 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
     case "image":
       return <ImageSection section={section} color={color} />;
     case "fullwidth-image":
-      return <FullwidthImageSection section={section} color={color} />;
+      return <FullwidthImageSection section={section} color={color} onImageClick={onImageClick} />;
     case "split":
-      return <SplitSection section={section} color={color} />;
+      return <SplitSection section={section} color={color} onImageClick={onImageClick} />;
     case "stats":
       return <StatsSection section={section} color={color} />;
     case "quote":

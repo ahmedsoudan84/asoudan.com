@@ -627,10 +627,10 @@ export default function ImmersiveCV() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+            className="flex flex-wrap gap-3"
           >
             {tools.map((tool, i) => (
-              <motion.div
+              <motion.span
                 key={tool.name}
                 variants={skillPill}
                 transition={{
@@ -638,31 +638,29 @@ export default function ImmersiveCV() {
                   delay: toolDelays.current[i],
                 }}
                 whileHover={{
-                  backgroundColor: "rgba(61,155,155,0.08)",
+                  backgroundColor: "rgba(61,155,155,0.1)",
                   borderColor: "#3D9B9B",
                 }}
-                className="flex flex-col items-center gap-2.5 rounded-xl border p-4 cursor-default transition-colors"
-                style={{ borderColor: "var(--border-card)", backgroundColor: "var(--bg-surface)" }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm border cursor-default transition-colors"
+                style={{ borderColor: "var(--border-card)", color: "var(--fg-60)" }}
               >
                 {tool.type === "cdn" ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src={`https://cdn.simpleicons.org/${tool.slug}/${logoColor}`}
                     alt={tool.name}
-                    width={28}
-                    height={28}
+                    width={16}
+                    height={16}
                     loading="lazy"
                     className="shrink-0"
                   />
                 ) : (
-                  <span className="shrink-0" style={{ color: theme === "dark" ? "white" : "#1a1a2e" }}>
+                  <span className="shrink-0 inline-flex" style={{ color: "var(--accent)", width: 16, height: 16 }}>
                     {tool.svg}
                   </span>
                 )}
-                <span className="text-xs text-center font-medium" style={{ color: "var(--fg-60)" }}>
-                  {tool.name}
-                </span>
-              </motion.div>
+                {tool.name}
+              </motion.span>
             ))}
           </motion.div>
         </motion.div>
