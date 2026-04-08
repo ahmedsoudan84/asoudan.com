@@ -1,8 +1,8 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, useInView, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useSpring, AnimatePresence, LayoutGroup } from "framer-motion";
 import { projectsData } from "@/lib/projects";
 
 /* ── Build project list ── */
@@ -72,6 +72,9 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       window.open(project.behanceUrl, "_blank");
     }
   };
+  const handleHoverPrefetch = () => {
+    if (project.hasCaseStudy) router.prefetch(`/projects/${project.id}`);
+  };
 
   return (
     <motion.div
@@ -80,8 +83,10 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       animate={isInView ? "visible" : "hidden"}
       variants={fadeUp}
       transition={{ delay: (index % 3) * 0.08 }}
-      className="group cursor-pointer"
+      layout
+      className="group cursor-pointer [content-visibility:auto] [contain-intrinsic-size:800px]"
       onClick={handleClick}
+      onMouseEnter={handleHoverPrefetch}
     >
       {/* Tinted MedDrop-style outer panel */}
       <div
@@ -331,19 +336,123 @@ function ProjectsIntro() {
    MAIN EXPORT — unified project section (always dark background)
 ────────────────────────────────────────────────────────────── */
 export default function ImmersiveProjects() {
+  const router = useRouter();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
+  const progressScale = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
+
+  // Filter chips — derive categories from project data
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    caseStudyProjects.forEach((p) => set.add(p.category));
+    return ["All", ...Array.from(set)];
+  }, []);
+  const [activeCat, setActiveCat] = useState("All");
+  const filtered = useMemo(
+    () => (activeCat === "All" ? caseStudyProjects : caseStudyProjects.filter((p) => p.category === activeCat)),
+    [activeCat]
+  );
+
+  // Keyboard nav: J/K between projects, Enter/→ to open, filter with 1..9
+  const [focused, setFocused] = useState(0);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement)?.tagName === "INPUT") return;
+      if (e.key === "j" || e.key === "ArrowDown") {
+        e.preventDefault();
+        setFocused((i) => Math.min(i + 1, filtered.length - 1));
+      } else if (e.key === "k" || e.key === "ArrowUp") {
+        e.preventDefault();
+        setFocused((i) => Math.max(i - 1, 0));
+      } else if (e.key === "Enter" || e.key === "ArrowRight") {
+        const p = filtered[focused];
+        if (p?.hasCaseStudy) router.push(`/projects/${p.id}`);
+        else if (p?.behanceUrl) window.open(p.behanceUrl, "_blank");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [filtered, focused, router]);
+
+  useEffect(() => {
+    const el = document.getElementById(`project-${filtered[focused]?.id}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [focused, filtered]);
+
   return (
-    <section id="projects" className="font-montserrat" style={{ background: "var(--bg-primary)" }}>
+    <section ref={sectionRef} id="projects" className="font-montserrat relative" style={{ background: "var(--bg-primary)" }}>
+      {/* Reading-progress rail */}
+      <motion.div
+        className="sticky top-0 left-0 right-0 h-[2px] origin-left z-40"
+        style={{ scaleX: progressScale, background: "var(--accent)" }}
+      />
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
         <ProjectsIntro />
 
-        {/* Featured Case Studies */}
-        <div className="flex flex-col gap-16 lg:gap-24 pb-20 lg:pb-28">
-          {caseStudyProjects.map((project, i) => (
-            <div key={project.id} id={`project-${project.id}`}>
-              <FeaturedProjectCard project={project} index={i} />
-            </div>
-          ))}
+        {/* Status pill */}
+        <div className="flex justify-center mb-8">
+          <span
+            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px]"
+            style={{ border: "1px solid rgba(61,155,155,0.35)", background: "rgba(61,155,155,0.08)", color: "#3D9B9B" }}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3D9B9B] opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3D9B9B]" />
+            </span>
+            Currently at Oxford University Press
+          </span>
         </div>
+
+        {/* Filter chips */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {categories.map((cat) => {
+            const active = cat === activeCat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => { setActiveCat(cat); setFocused(0); }}
+                className="relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-colors"
+                style={{
+                  color: active ? "var(--bg-primary)" : "var(--fg-60)",
+                  border: "1px solid var(--border-card)",
+                }}
+              >
+                {active && (
+                  <motion.span
+                    layoutId="filter-chip-active"
+                    className="absolute inset-0 rounded-full"
+                    style={{ background: "var(--accent)" }}
+                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{cat}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Featured Case Studies */}
+        <LayoutGroup>
+          <div className="flex flex-col gap-16 lg:gap-24 pb-20 lg:pb-28">
+            <AnimatePresence mode="popLayout">
+              {filtered.map((project, i) => (
+                <motion.div
+                  key={project.id}
+                  id={`project-${project.id}`}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                  className={focused === i ? "ring-1 ring-[#3D9B9B]/30 rounded-[32px]" : ""}
+                >
+                  <FeaturedProjectCard project={project} index={i} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </LayoutGroup>
 
         {/* Behance Projects */}
         {behanceProjects.length > 0 && (
