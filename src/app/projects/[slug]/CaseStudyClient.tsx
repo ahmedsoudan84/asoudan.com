@@ -1466,13 +1466,13 @@ function GenericSection({ section, color }: { section: CaseStudySection; color: 
 
 /* ─── Persona cards ─── */
 function PersonaCardsSection({ section, color }: { section: CaseStudySection; color: string }) {
-  const [expandedPersona, setExpandedPersona] = useState<number | null>(null);
+  const [activePersona, setActivePersona] = useState<number | null>(null);
   const personas = section.personas || [];
+  const active = activePersona !== null ? personas[activePersona] : null;
 
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
-        {/* Label + heading in their own Reveal so state changes never touch the motion wrapper */}
         <Reveal>
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
@@ -1480,78 +1480,99 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
         {personas.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 items-stretch">
             {personas.map((persona, idx) => (
-              <div
+              <button
                 key={idx}
-                className="rounded-3xl border transition-colors duration-300 h-full flex flex-col"
-                style={{
-                  borderColor: expandedPersona === idx ? "var(--fg-20)" : "var(--border-card)",
-                  background: expandedPersona === idx ? "var(--fg-08)" : "var(--fg-05)",
-                }}
+                type="button"
+                onClick={() => setActivePersona(idx)}
+                className="rounded-3xl border h-full flex flex-col text-left p-6 lg:p-8 transition-colors duration-300 hover:[background:var(--fg-08)]"
+                style={{ borderColor: "var(--border-card)", background: "var(--fg-05)" }}
               >
-                <button
-                  type="button"
-                  onClick={() => setExpandedPersona(expandedPersona === idx ? null : idx)}
-                  className="w-full text-left p-6 lg:p-8"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    {persona.avatar && (
-                      <div className="w-12 h-12 rounded-full overflow-hidden [background:var(--fg-05)]">
-                        <SafeImage
-                          src={persona.avatar}
-                          alt={persona.name}
-                          width={48}
-                          height={48}
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
-                    <div>
-                      <div className="font-montserrat font-bold [color:var(--fg)] text-lg">
-                        {persona.name}
-                      </div>
-                      {persona.role && (
-                        <div className="text-xs uppercase tracking-wider" style={{ color }}>
-                          {persona.role}
-                        </div>
-                      )}
+                <div className="flex items-center gap-4 mb-4">
+                  {persona.avatar && (
+                    <div className="w-12 h-12 rounded-full overflow-hidden [background:var(--fg-05)]">
+                      <SafeImage src={persona.avatar} alt={persona.name} width={48} height={48} className="object-cover" />
                     </div>
-                  </div>
-                  {persona.context && (
-                    <p className="[color:var(--fg-50)] text-sm leading-relaxed">{persona.context}</p>
                   )}
-                </button>
-                {expandedPersona === idx && persona.painPoints && (
-                  <div className="px-6 lg:px-8 pb-6 border-t [border-color:var(--border-subtle)]">
-                    <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2 mt-4">
-                      Pain points
-                    </div>
-                    <ul className="space-y-2">
-                      {persona.painPoints.map((item, pidx) => (
-                        <li key={pidx} className="[color:var(--fg-50)] text-sm leading-relaxed flex gap-2">
-                          <span style={{ color }}>•</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    {persona.goals && (
-                      <div className="mt-4">
-                        <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2">
-                          Goals
-                        </div>
-                        <ul className="space-y-2">
-                          {persona.goals.map((goal, gidx) => (
-                            <li key={gidx} className="[color:var(--fg-50)] text-sm leading-relaxed flex gap-2">
-                              <span style={{ color }}>•</span>
-                              {goal}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  <div>
+                    <div className="font-montserrat font-bold [color:var(--fg)] text-lg">{persona.name}</div>
+                    {persona.role && (
+                      <div className="text-xs uppercase tracking-wider" style={{ color }}>{persona.role}</div>
                     )}
+                  </div>
+                </div>
+                {persona.context && (
+                  <p className="[color:var(--fg-50)] text-sm leading-relaxed">{persona.context}</p>
+                )}
+                {(persona.painPoints || persona.goals) && (
+                  <span className="mt-auto pt-4 text-[11px] uppercase tracking-[0.15em] font-semibold" style={{ color }}>
+                    View details →
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {active && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 [background:rgba(0,0,0,0.7)] backdrop-blur-sm"
+            onClick={() => setActivePersona(null)}
+          >
+            <div
+              className="relative max-w-lg w-full rounded-3xl border p-8 lg:p-10 max-h-[85vh] overflow-y-auto"
+              style={{ background: "var(--bg-secondary)", borderColor: "var(--border-card)" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setActivePersona(null)}
+                aria-label="Close"
+                className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-colors hover:[background:var(--fg-08)]"
+                style={{ color: "var(--fg-60)" }}
+              >
+                ✕
+              </button>
+              <div className="flex items-center gap-4 mb-6">
+                {active.avatar && (
+                  <div className="w-14 h-14 rounded-full overflow-hidden [background:var(--fg-05)]">
+                    <SafeImage src={active.avatar} alt={active.name} width={56} height={56} className="object-cover" />
                   </div>
                 )}
+                <div>
+                  <div className="font-montserrat font-bold [color:var(--fg)] text-xl">{active.name}</div>
+                  {active.role && (
+                    <div className="text-xs uppercase tracking-wider" style={{ color }}>{active.role}</div>
+                  )}
+                </div>
               </div>
-            ))}
+              {active.context && (
+                <p className="[color:var(--fg-60)] text-sm leading-relaxed mb-6">{active.context}</p>
+              )}
+              {active.painPoints && (
+                <div className="mb-5">
+                  <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2">Pain points</div>
+                  <ul className="space-y-2">
+                    {active.painPoints.map((item, pidx) => (
+                      <li key={pidx} className="[color:var(--fg-60)] text-sm leading-relaxed flex gap-2">
+                        <span style={{ color }}>•</span>{item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {active.goals && (
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider [color:var(--fg-30)] mb-2">Goals</div>
+                  <ul className="space-y-2">
+                    {active.goals.map((goal, gidx) => (
+                      <li key={gidx} className="[color:var(--fg-60)] text-sm leading-relaxed flex gap-2">
+                        <span style={{ color }}>•</span>{goal}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
