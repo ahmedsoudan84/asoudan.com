@@ -346,7 +346,7 @@ export default function CinematicEntrance() {
               </motion.div>
 
               {/* CTA buttons */}
-              <motion.div className="mt-10 flex flex-wrap gap-4" variants={slideUp}>
+              <motion.div className="mt-10 hidden lg:flex flex-wrap gap-4" variants={slideUp}>
                 <button
                   onClick={() => scrollTo("#projects")}
                   className="group relative overflow-hidden rounded-full border border-[#3D9B9B]/20 px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500 hover:border-[#3D9B9B]/60"

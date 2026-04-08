@@ -264,7 +264,7 @@ const tools: ToolEntry[] = [
 ];
 
 const stats = [
-  { value: 20, label: "Years Experience" },
+  { value: 20, label: "Years of Experience" },
   { value: 300, label: "Projects", suffix: "+" },
   { value: 100, label: "Clients", suffix: "+" },
 ];
@@ -466,16 +466,19 @@ function StatCard({
 }) {
   const { ref, count } = useCountUp(value, 2000);
   return (
-    <div className="flex flex-col items-center text-center px-6 py-4">
+    <div className="flex flex-col items-center justify-center text-center px-6 py-4 w-full sm:w-auto sm:min-w-[140px]">
       <span
         ref={ref}
-        className="text-4xl md:text-5xl font-bold"
+        className="text-4xl md:text-5xl font-bold leading-none"
         style={{ color: "var(--accent)" }}
       >
         {count}
         {suffix}
       </span>
-      <span className="text-sm mt-2 tracking-wider uppercase" style={{ color: "var(--fg-40)" }}>
+      <span
+        className="text-sm mt-3 tracking-wider uppercase leading-snug max-w-[10ch]"
+        style={{ color: "var(--fg-40)" }}
+      >
         {label}
       </span>
     </div>
@@ -653,32 +656,32 @@ export default function ImmersiveCV() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={fadeUp}
-          className="mt-24 rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-center gap-0"
+          className="mt-24 rounded-2xl p-8 flex flex-col sm:flex-row items-center sm:items-stretch justify-center"
           style={{
             backgroundColor: "var(--bg-surface)",
             border: "1px solid rgba(61,155,155,0.15)",
           }}
         >
           {stats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center">
+            <React.Fragment key={stat.label}>
               {i > 0 && (
-                <div
-                  className="hidden sm:block w-px h-12 mx-6"
-                  style={{ backgroundColor: "rgba(61,155,155,0.3)" }}
-                />
-              )}
-              {i > 0 && (
-                <div
-                  className="block sm:hidden h-px w-16 my-4"
-                  style={{ backgroundColor: "rgba(61,155,155,0.3)" }}
-                />
+                <>
+                  <div
+                    className="hidden sm:block w-px mx-6 self-stretch"
+                    style={{ backgroundColor: "rgba(61,155,155,0.3)" }}
+                  />
+                  <div
+                    className="block sm:hidden h-px w-24 my-6"
+                    style={{ backgroundColor: "rgba(61,155,155,0.3)" }}
+                  />
+                </>
               )}
               <StatCard
                 value={stat.value}
                 label={stat.label}
                 suffix={stat.suffix}
               />
-            </div>
+            </React.Fragment>
           ))}
         </motion.div>
 

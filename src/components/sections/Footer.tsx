@@ -5,8 +5,10 @@ const socials = [
     href: "https://www.linkedin.com/in/ahmedsoudan/",
     label: "LinkedIn",
     icon: (
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      <svg viewBox="0 0 12 12" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path d="M1.25 4.25h2s0.25 0 0.25 0.25v6.5s0 0.25 -0.25 0.25h-2s-0.25 0 -0.25 -0.25V4.5s0 -0.25 0.25 -0.25" />
+        <path d="M2.24 3.25A1.25 1.25 0 1 0 1 2a1.245 1.245 0 0 0 1.24 1.25Z" />
+        <path d="M9.25 11.25h1.5a0.25 0.25 0 0 0 0.25 -0.25v-4.2C11 4.915 9.935 4 8.445 4a2.11 2.11 0 0 0 -1.59 0.64 0.195 0.195 0 0 1 -0.225 0.045A0.2 0.2 0 0 1 6.5 4.5a0.25 0.25 0 0 0 -0.25 -0.25h-1.5A0.25 0.25 0 0 0 4.5 4.5v6.5a0.25 0.25 0 0 0 0.25 0.25h1.5a0.25 0.25 0 0 0 0.25 -0.25v-3.75a1.25 1.25 0 0 1 2.5 0V11a0.25 0.25 0 0 0 0.25 0.25Z" />
       </svg>
     ),
   },
@@ -59,8 +61,8 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:text-[#3D9B9B]"
-                style={{ border: "1px solid var(--border-card)", color: "var(--fg-50)" }}
+                className="group w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:text-[#3D9B9B] hover:border-[#3D9B9B]/60 hover:bg-[#3D9B9B]/10 hover:shadow-[0_6px_24px_-8px_rgba(61,155,155,0.55)]"
+                style={{ border: "1px solid var(--border-card)", color: "var(--fg-60)" }}
               >
                 {icon}
               </a>
