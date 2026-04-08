@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useSpring } from "framer-motion";
 import { projectsData } from "@/lib/projects";
 
 /* ── Build project list ── */
@@ -57,6 +57,14 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
+  // Parallax: cover image drifts as card scrolls through the viewport
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const rawY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const coverY = useSpring(rawY, { stiffness: 120, damping: 30, mass: 0.3 });
+
   const handleClick = () => {
     if (project.hasCaseStudy) {
       router.push(`/projects/${project.id}`);
@@ -71,6 +79,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={fadeUp}
+      transition={{ delay: (index % 3) * 0.08 }}
       className="group cursor-pointer"
       onClick={handleClick}
     >
@@ -101,16 +110,18 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
         className="relative aspect-[16/9] lg:aspect-[2.2/1] rounded-2xl lg:rounded-[24px] overflow-hidden transition-all duration-500"
         style={{ background: `linear-gradient(135deg, ${project.color}20, ${project.color}08)` }}
       >
-        <Image
-          src={project.cover}
-          alt={`${project.title} — ${project.subtitle}`}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-          sizes="(max-width: 768px) 100vw, 1200px"
-          loading={index < 2 ? undefined : "lazy"}
-          priority={index < 2}
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-        />
+        <motion.div className="absolute inset-[-6%]" style={{ y: coverY }}>
+          <Image
+            src={project.cover}
+            alt={`${project.title} — ${project.subtitle}`}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            sizes="(max-width: 768px) 100vw, 1200px"
+            loading={index < 2 ? undefined : "lazy"}
+            priority={index < 2}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          />
+        </motion.div>
 
         {/* Gradient overlay — fades into section background */}
         <div
