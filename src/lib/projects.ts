@@ -35,7 +35,10 @@ export interface CaseStudySection {
     | "role-matrix"
     | "constraint-notes"
     | "user-role-matrix"
-    | "possible-solutions";
+    | "possible-solutions"
+    | "org-architecture"
+    | "nav-proposals"
+    | "concept-model";
   label?: string;
   heading?: string;
   body?: string;
@@ -840,16 +843,18 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "screen-gallery",
-        "label": "Architecture Diagrams",
-        "heading": "How the org accounts actually connect",
-        "screens": [
-          { "image": "/images/projects/org-integration-v2/1.png", "label": "Org Admin account hierarchy — T&L and Assessment" },
-          { "image": "/images/projects/org-integration-v2/3.png", "label": "Navigation proposals across org types" }
-        ],
-        "columns": 2,
-        "showcaseBg": "#ffffff",
+        "type": "org-architecture",
+        "label": "Org Architecture",
+        "heading": "How an Org Admin's accounts actually connect",
+        "caption": "One Org Admin can own multiple Teaching & Learning and Assessment orgs — every org sits in its own data scope.",
         "bg": "dark"
+      },
+      {
+        "type": "nav-proposals",
+        "label": "Navigation Proposals",
+        "heading": "Three navigation models tested across org types",
+        "caption": "Each model handles cross-org switching differently — we tested all three against the role matrix before committing.",
+        "bg": "light"
       },
       {
         "type": "possible-solutions",
@@ -859,15 +864,10 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "showcase",
-        "label": "Concept Sketch",
+        "type": "concept-model",
+        "label": "Concept Model",
         "heading": "A single design model to connect both org experiences",
-        "body": "I used an architecture sketch to show how Assessment and Teaching & Learning could share a navigation layer, org context awareness, and role-specific access without rebuilding the existing platforms.",
-        "image": {
-          "src": "/images/projects/org-integration-v2/ideation-full.png",
-          "alt": "Org Integration ideation and architecture diagram"
-        },
-        "caption": "Design model tying Assessment and T&L together with shared org context and role-aware flows.",
+        "caption": "Shared navigation layer + org context awareness + role-aware access — no platform rewrite required.",
         "bg": "dark"
       },
       {

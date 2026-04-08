@@ -1074,6 +1074,341 @@ function PossibleSolutionsSection({ section, color }: { section: CaseStudySectio
   );
 }
 
+/* ─── Org Architecture — native hierarchy diagram ─── */
+function OrgArchitectureSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const tlOrgs = [
+    { name: "Springfield Primary", type: "T&L" },
+    { name: "Riverside Academy", type: "T&L" },
+  ];
+  const aOrgs = [
+    { name: "Springfield Assessment", type: "Assessment" },
+    { name: "OPT Pilot 2025", type: "Assessment" },
+  ];
+  const tlColor = "#3b82f6";
+  const assessColor = "#a855f7";
+
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+
+          <div
+            className="rounded-3xl border p-8 lg:p-12 mt-8"
+            style={{ borderColor: "var(--border-card)", background: "var(--bg-secondary)" }}
+          >
+            {/* Root Org Admin */}
+            <div className="flex justify-center">
+              <div
+                className="rounded-2xl border px-6 py-4 text-center min-w-[220px]"
+                style={{
+                  borderColor: color + "55",
+                  background: color + "12",
+                  boxShadow: `0 8px 30px -12px ${color}55`,
+                }}
+              >
+                <div className="text-[10px] uppercase tracking-[0.16em] font-semibold mb-1" style={{ color }}>
+                  Org Admin
+                </div>
+                <div className="font-montserrat font-bold text-base [color:var(--fg)]">
+                  Fernando González
+                </div>
+                <div className="[color:var(--fg-50)] text-xs mt-1">Owns 4 organisations</div>
+              </div>
+            </div>
+
+            {/* Connector */}
+            <div className="flex justify-center">
+              <div className="w-px h-8" style={{ background: "var(--border-card)" }} />
+            </div>
+
+            {/* Two columns: T&L | Assessment */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { title: "Teaching & Learning", items: tlOrgs, accent: tlColor },
+                { title: "Assessment", items: aOrgs, accent: assessColor },
+              ].map((branch, bi) => (
+                <div key={bi} className="flex flex-col items-center">
+                  <div
+                    className="rounded-full px-4 py-1.5 text-[10px] uppercase tracking-[0.14em] font-semibold border"
+                    style={{
+                      color: branch.accent,
+                      borderColor: branch.accent + "55",
+                      background: branch.accent + "10",
+                    }}
+                  >
+                    {branch.title}
+                  </div>
+                  <div className="w-px h-6" style={{ background: "var(--border-card)" }} />
+                  <div className="flex flex-col gap-3 w-full">
+                    {branch.items.map((org, oi) => (
+                      <div
+                        key={oi}
+                        className="rounded-xl border px-4 py-3"
+                        style={{
+                          borderColor: branch.accent + "33",
+                          background: branch.accent + "08",
+                        }}
+                      >
+                        <div className="font-semibold [color:var(--fg)] text-sm">{org.name}</div>
+                        <div className="[color:var(--fg-40)] text-[11px] mt-0.5">
+                          Isolated data scope · own roster
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Legend */}
+            <div className="flex flex-wrap items-center justify-center gap-4 mt-8 pt-6 border-t" style={{ borderColor: "var(--border-card)" }}>
+              <LegendDot color={tlColor} label="Teaching & Learning org" />
+              <LegendDot color={assessColor} label="Assessment org" />
+              <LegendDot color={color} label="Org Admin (cross-platform)" />
+            </div>
+          </div>
+
+          {section.caption && (
+            <p className="[color:var(--fg-30)] text-sm mt-4 text-center">{section.caption}</p>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function LegendDot({ color, label }: { color: string; label: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
+      <span className="[color:var(--fg-50)] text-xs">{label}</span>
+    </div>
+  );
+}
+
+/* ─── Navigation Proposals — native side-by-side comparison ─── */
+function NavProposalsSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const proposals = [
+    {
+      name: "Tab-based switcher",
+      summary: "Top-level tabs swap the entire org context.",
+      pros: ["Familiar pattern", "Clear active state"],
+      cons: ["Context loss on switch", "Hides sibling orgs"],
+      mock: ["Springfield Primary", "Riverside Academy", "OPT Pilot"],
+    },
+    {
+      name: "Persistent dropdown",
+      summary: "A single header control lists every org the user owns.",
+      pros: ["Always reachable", "Scales to many orgs"],
+      cons: ["Extra click to switch", "Easy to overlook"],
+      mock: ["⌄ Choose organisation"],
+    },
+    {
+      name: "Sidebar with org context",
+      summary: "Sidebar shows the active org plus a quick-switch list.",
+      pros: ["Spatial awareness", "Switching feels physical"],
+      cons: ["Real estate cost", "Mobile collapse needed"],
+      mock: ["● Springfield", "○ Riverside", "○ OPT Pilot"],
+    },
+  ];
+
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-6xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8 items-start">
+            {proposals.map((p, i) => (
+              <div
+                key={i}
+                className="rounded-3xl border p-6 self-start"
+                style={{ background: "var(--bg-secondary)", borderColor: "var(--border-card)" }}
+              >
+                {/* Mini UI mockup */}
+                <div
+                  className="rounded-xl border p-3 mb-5"
+                  style={{
+                    background: "var(--fg-05)",
+                    borderColor: "var(--border-card)",
+                  }}
+                >
+                  <div className="flex flex-col gap-2">
+                    {p.mock.map((m, mi) => (
+                      <div
+                        key={mi}
+                        className="rounded-md px-3 py-2 text-xs font-medium"
+                        style={{
+                          background: mi === 0 ? color + "18" : "var(--bg-primary)",
+                          color: mi === 0 ? color : "var(--fg-60)",
+                          border: `1px solid ${mi === 0 ? color + "40" : "var(--border-card)"}`,
+                        }}
+                      >
+                        {m}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="font-montserrat font-bold [color:var(--fg)] text-base mb-1">
+                  {p.name}
+                </div>
+                <p className="[color:var(--fg-50)] text-xs leading-relaxed mb-4">{p.summary}</p>
+
+                <div className="space-y-3">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.14em] font-semibold mb-1" style={{ color: "#22c55e" }}>
+                      Pros
+                    </div>
+                    <ul className="space-y-1">
+                      {p.pros.map((pro, pi) => (
+                        <li key={pi} className="[color:var(--fg-70)] text-xs flex gap-2">
+                          <span style={{ color: "#22c55e" }}>+</span>
+                          {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.14em] font-semibold mb-1" style={{ color: "#ef4444" }}>
+                      Trade-offs
+                    </div>
+                    <ul className="space-y-1">
+                      {p.cons.map((con, ci) => (
+                        <li key={ci} className="[color:var(--fg-70)] text-xs flex gap-2">
+                          <span style={{ color: "#ef4444" }}>−</span>
+                          {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {section.caption && (
+            <p className="[color:var(--fg-30)] text-sm mt-6 text-center">{section.caption}</p>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Concept Model — native three-pillar diagram ─── */
+function ConceptModelSection({ section, color }: { section: CaseStudySection; color: string }) {
+  const pillars = [
+    {
+      title: "Shared navigation layer",
+      desc: "One persistent control surface across both platforms — same anatomy, different content.",
+      icon: "▤",
+    },
+    {
+      title: "Org context awareness",
+      desc: "Every screen knows which org you're in and exposes a single, predictable switch.",
+      icon: "◎",
+    },
+    {
+      title: "Role-aware access",
+      desc: "Permissions resolved at the data layer — UI hides what the role can't touch.",
+      icon: "◈",
+    },
+  ];
+
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+
+          <div
+            className="rounded-3xl border p-8 lg:p-12 mt-8"
+            style={{ borderColor: "var(--border-card)", background: "var(--bg-secondary)" }}
+          >
+            {/* Top platforms */}
+            <div className="grid grid-cols-2 gap-6">
+              {[
+                { name: "Teaching & Learning", color: "#3b82f6" },
+                { name: "Assessment", color: "#a855f7" },
+              ].map((plat, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl border px-4 py-5 text-center"
+                  style={{
+                    borderColor: plat.color + "55",
+                    background: plat.color + "10",
+                  }}
+                >
+                  <div className="text-[10px] uppercase tracking-[0.14em] font-semibold mb-1" style={{ color: plat.color }}>
+                    Platform
+                  </div>
+                  <div className="font-montserrat font-bold text-base [color:var(--fg)]">{plat.name}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Connector */}
+            <div className="flex justify-center my-6">
+              <div className="w-px h-10" style={{ background: "var(--border-card)" }} />
+            </div>
+
+            {/* Middle: shared layer */}
+            <div
+              className="rounded-2xl border px-6 py-5 text-center"
+              style={{
+                borderColor: color + "55",
+                background: color + "12",
+                boxShadow: `0 12px 40px -16px ${color}55`,
+              }}
+            >
+              <div className="text-[10px] uppercase tracking-[0.14em] font-semibold mb-1" style={{ color }}>
+                Shared Experience Layer
+              </div>
+              <div className="font-montserrat font-bold text-lg [color:var(--fg)]">
+                Org context · navigation · role resolution
+              </div>
+            </div>
+
+            {/* Connector */}
+            <div className="flex justify-center my-6">
+              <div className="w-px h-10" style={{ background: "var(--border-card)" }} />
+            </div>
+
+            {/* Bottom pillars */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {pillars.map((p, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl border p-5"
+                  style={{
+                    borderColor: "var(--border-card)",
+                    background: "var(--bg-primary)",
+                  }}
+                >
+                  <div className="text-2xl mb-2" style={{ color }}>
+                    {p.icon}
+                  </div>
+                  <div className="font-semibold [color:var(--fg)] text-sm mb-1">{p.title}</div>
+                  <p className="[color:var(--fg-50)] text-xs leading-relaxed">{p.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {section.caption && (
+            <p className="[color:var(--fg-30)] text-sm mt-4 text-center">{section.caption}</p>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Lean UX canvas / Constraint notes / Role matrix (generic table-like) ─── */
 function GenericSection({ section, color }: { section: CaseStudySection; color: string }) {
   return (
@@ -1260,6 +1595,12 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <UserRoleMatrixSection section={section} color={color} />;
     case "possible-solutions":
       return <PossibleSolutionsSection section={section} color={color} />;
+    case "org-architecture":
+      return <OrgArchitectureSection section={section} color={color} />;
+    case "nav-proposals":
+      return <NavProposalsSection section={section} color={color} />;
+    case "concept-model":
+      return <ConceptModelSection section={section} color={color} />;
   }
 }
 
