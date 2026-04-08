@@ -226,7 +226,7 @@ type ToolEntry =
 
 /* Inline SVGs for tools not on Simple Icons (Adobe suite removed for legal reasons) */
 const adobeSvg = (letters: string) => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="1" y="1" width="26" height="26" rx="5" stroke="currentColor" strokeWidth="1.5" />
     <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="11" fontWeight="700" fontFamily="Montserrat, sans-serif">{letters}</text>
   </svg>
@@ -241,7 +241,7 @@ const tools: ToolEntry[] = [
   { name: "After Effects", type: "svg", svg: adobeSvg("Ae") },
   { name: "InDesign", type: "svg", svg: adobeSvg("Id") },
   { name: "InVision", type: "svg", svg: (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="1" width="26" height="26" rx="5" stroke="currentColor" strokeWidth="1.5" />
       <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="11" fontWeight="700" fontFamily="Montserrat, sans-serif">In</text>
     </svg>
@@ -255,7 +255,7 @@ const tools: ToolEntry[] = [
   { name: "Tailwind CSS", type: "cdn", slug: "tailwindcss" },
   { name: "React", type: "cdn", slug: "react" },
   { name: "3ds Max", type: "svg", svg: (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="1" width="26" height="26" rx="5" stroke="currentColor" strokeWidth="1.5" />
       <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="9" fontWeight="700" fontFamily="Montserrat, sans-serif">3ds</text>
     </svg>
@@ -509,8 +509,8 @@ function MentoringCounter({
 /* ─── main component ───────────────────────────────────────────── */
 
 export default function ImmersiveCV() {
-  const { theme } = useTheme();
-  const logoColor = theme === "dark" ? "white" : "1a1a2e";
+  useTheme();
+  const logoColor = "3D9B9B";
   const skillDelays = useRef(designSkills.map(() => Math.random() * 0.6));
   const toolDelays = useRef(tools.map(() => Math.random() * 0.6));
 

@@ -74,10 +74,32 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       className="group cursor-pointer"
       onClick={handleClick}
     >
+      {/* Tinted MedDrop-style outer panel */}
+      <div
+        className="relative rounded-[32px] p-3 lg:p-5 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_30px_80px_-30px_rgba(0,0,0,0.55)]"
+        style={{
+          background: `linear-gradient(135deg, ${project.color}1f, ${project.color}06)`,
+          border: `1px solid ${project.color}1a`,
+        }}
+      >
+        {/* Watermark number */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute top-4 right-6 lg:top-6 lg:right-10 font-montserrat font-black select-none"
+          style={{
+            fontSize: "clamp(60px, 9vw, 140px)",
+            color: project.color,
+            opacity: 0.08,
+            lineHeight: 1,
+          }}
+        >
+          {project.number}
+        </span>
+
       {/* Full-width cover image */}
       <div
-        className="relative aspect-[16/9] lg:aspect-[2.2/1] rounded-2xl lg:rounded-3xl overflow-hidden border transition-all duration-500 group-hover:shadow-[0_8px_60px_-12px_rgba(0,0,0,0.5)]"
-        style={{ borderColor: `${project.color}15`, background: `linear-gradient(135deg, ${project.color}20, ${project.color}08)` }}
+        className="relative aspect-[16/9] lg:aspect-[2.2/1] rounded-2xl lg:rounded-[24px] overflow-hidden transition-all duration-500"
+        style={{ background: `linear-gradient(135deg, ${project.color}20, ${project.color}08)` }}
       >
         <Image
           src={project.cover}
@@ -164,11 +186,12 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
 
       {/* Description below image */}
       <p
-        className="text-[13px] lg:text-[14px] leading-[1.8] mt-4 lg:mt-5 max-w-[700px]"
+        className="text-[13px] lg:text-[14px] leading-[1.8] mt-4 lg:mt-5 max-w-[700px] px-2 lg:px-3"
         style={{ color: "var(--fg-40)" }}
       >
         {project.description}
       </p>
+      </div>
     </motion.div>
   );
 }
