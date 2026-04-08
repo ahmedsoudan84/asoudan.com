@@ -6,8 +6,8 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export default function CustomCursor() {
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 2000, damping: 60, mass: 0.2 });
-  const sy = useSpring(y, { stiffness: 2000, damping: 60, mass: 0.2 });
+  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.15 });
+  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.15 });
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function CustomCursor() {
 
   return (
     <motion.div
-      className="pointer-events-none fixed top-0 left-0 z-[9999]"
+      className="pointer-events-none fixed top-0 left-0 z-[9999] will-change-transform"
       style={{ x: sx, y: sy }}
     >
       <div className="w-5 h-5 rounded-full border" style={{ borderColor: "var(--accent)", opacity: 0.6 }} />
