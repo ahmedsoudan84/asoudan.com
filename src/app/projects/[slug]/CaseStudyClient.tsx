@@ -259,9 +259,9 @@ function StatsSection({ section, color }: { section: CaseStudySection; color: st
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
           {section.stats && (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
               {section.stats.map((s, i) => (
-                <div key={i}>
+                <div key={i} className="flex flex-col items-center">
                   <div
                     className={cls("font-montserrat font-bold mb-2", s.value.length > 6 ? "text-2xl lg:text-3xl" : "text-4xl lg:text-5xl")}
                     style={{ color }}
@@ -1467,11 +1467,11 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
           <SectionHeading heading={section.heading} />
         </Reveal>
         {personas.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 items-stretch">
             {personas.map((persona, idx) => (
               <div
                 key={idx}
-                className="rounded-3xl border transition-colors duration-300 self-start"
+                className="rounded-3xl border transition-colors duration-300 h-full flex flex-col"
                 style={{
                   borderColor: expandedPersona === idx ? "var(--fg-20)" : "var(--border-card)",
                   background: expandedPersona === idx ? "var(--fg-08)" : "var(--fg-05)",
@@ -1651,24 +1651,24 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
       <FloatingBackButton />
       <main className="min-h-screen [background:var(--bg-primary)]">
       {/* ── Hero ── */}
-      <div className="relative h-[92vh] overflow-hidden">
-        {/* Cover image */}
-        {project.cover && (
-          <>
-            <SafeImage
-              src={project.cover}
-              alt={project.title}
-              fill
-              priority
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-[var(--bg-primary)]/60 to-transparent" />
-            <div
-              className="absolute inset-0 mix-blend-color opacity-20"
-              style={{ background: color }}
-            />
-          </>
-        )}
+      <div className="relative h-[92vh] overflow-hidden [background:var(--bg-primary)]">
+        {/* Ambient color composition — replaces blurry cover overlay */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(900px 600px at 85% 20%, ${color}26, transparent 60%), radial-gradient(700px 500px at 15% 85%, ${color}1a, transparent 65%)`,
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full blur-3xl opacity-30"
+          style={{ background: color }}
+        />
+        <div
+          aria-hidden
+          className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[var(--bg-primary)]"
+        />
 
         {/* Hero content */}
         <div className="absolute inset-0 flex flex-col justify-end pb-16 lg:pb-24 px-6 lg:px-0">
@@ -1705,7 +1705,7 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-montserrat font-bold [color:var(--fg)]leading-[0.95]"
+              className="font-montserrat font-bold [color:var(--fg)] leading-[0.95]"
               style={{ fontSize: "clamp(44px, 8vw, 100px)" }}
             >
               {project.title}

@@ -14,8 +14,8 @@ const socials = [
     href: "https://www.behance.net/artlabsoudan",
     label: "Behance",
     icon: (
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-        <path d="M16.969 16.927c-2.395 0-2.554-2.097-2.554-2.097h6.997c0-3.075-1.617-5.851-4.444-5.851-2.85 0-4.929 1.998-4.929 5.087 0 3.144 1.95 5.012 5.069 5.012 2.808 0 4.244-1.927 4.244-1.927l-1.292-1.39s-1.123 1.166-3.091 1.166zm-.18-6.072c1.852 0 1.989 1.738 1.989 1.738h-4.236c-.001-.001.181-1.738 2.247-1.738zM6.347 8.456H.075v11.34h6.5c4.704 0 5.961-2.892 5.961-2.892C13.526 14.43 11.93 12.93 11.93 12.93s.781-1.092.781-2.692c0-1.84-1.405-3.39-3.687-3.39H6.347zm-.108 9.293H2.453V14.49h3.706s2.166-.002 2.166 1.605c-.001 1.638-2.086 1.654-2.086 1.654zm.123-5.42H2.453V8.957h3.81s1.952.072 1.952 1.61c0 1.62-1.853 1.762-1.853 1.762zm9.875-3.872h5.71V6.875h-5.71v1.482z" />
+      <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path d="M6.475555555555555 7.489583333333333c0.8656666666666667 -0.4137777777777778 1.3175555555555556 -1.0398888888888889 1.3175555555555556 -2.014444444444444 0 -1.9218888888888888 -1.4318888888888888 -2.390111111111111 -3.084277777777778 -2.390111111111111H0.15999999999999998v9.647555555555556h4.676777777777778c1.753111111111111 0 3.4000555555555554 -0.8411666666666666 3.4000555555555554 -2.8011666666666666 0 -1.2113888888888888 -0.5743888888888888 -2.107 -1.7612777777777777 -2.4418333333333333ZM2.280611111111111 4.731972222222222h1.9899444444444445c0.7649444444444444 0 1.4536666666666667 0.21505555555555556 1.4536666666666667 1.1024999999999998 0 0.8193888888888888 -0.5362777777777777 1.1487777777777777 -1.2930555555555554 1.1487777777777777h-2.1505555555555556v-2.2512777777777777Zm2.267611111111111 6.361833333333333H2.280611111111111v-2.6568888888888886h2.3111666666666664c0.9337222222222221 0 1.5244444444444445 0.3892777777777777 1.5244444444444445 1.3774444444444445 0 0.9745555555555556 -0.7050555555555555 1.2794444444444444 -1.5679999999999998 1.2794444444444444Zm9.759166666666665 -6.552388888888888H10.395555555555555v-0.9500555555555554h3.911833333333333v0.9500555555555554Zm1.532611111111111 4.799277777777777c0 -2.0661666666666667 -1.2086666666666666 -3.789333333333333 -3.4000555555555554 -3.789333333333333 -2.1287777777777777 0 -3.5742777777777777 1.6006666666666667 -3.5742777777777777 3.6967777777777777 0 2.1750555555555557 1.3692777777777776 3.666833333333333 3.5742777777777777 3.666833333333333 1.668722222222222 0 2.7494444444444444 -0.7513333333333333 3.2693888888888885 -2.3492777777777776H14.01611111111111c-0.18238888888888888 0.5961666666666666 -0.9337222222222221 0.9119444444444443 -1.5162777777777776 0.9119444444444443 -1.1242777777777777 0 -1.7149999999999999 -0.6587777777777778 -1.7149999999999999 -1.777611111111111h5.038833333333333c0.008166666666666666 -0.11433333333333331 0.01633333333333333 -0.2368333333333333 0.01633333333333333 -0.35933333333333334Zm-5.052444444444444 -0.8493333333333333c0.0626111111111111 -0.9173888888888889 0.6723888888888888 -1.4917777777777776 1.5924999999999998 -1.4917777777777776 0.9636666666666667 0 1.4482222222222223 0.5662222222222222 1.5298888888888889 1.4917777777777776H10.787555555555555Z" />
       </svg>
     ),
   },
@@ -32,12 +32,12 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0d0f1a] py-16">
+    <footer className="py-16" style={{ background: "var(--bg-secondary)" }}>
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           {/* Left */}
           <div>
-            <h3 className="text-[28px] font-bold text-white">
+            <h3 className="text-[28px] font-bold" style={{ color: "var(--fg)" }}>
               Let&apos;s work together
             </h3>
             <a
@@ -46,8 +46,8 @@ export default function Footer() {
             >
               ahmedsoudan@gmail.com
             </a>
-            <p className="text-[14px] text-white/30 mt-1">+44 777 492 1967</p>
-            <p className="text-[14px] text-white/30">London, UK</p>
+            <p className="text-[14px] mt-1" style={{ color: "var(--fg-50)" }}>+44 777 492 1967</p>
+            <p className="text-[14px]" style={{ color: "var(--fg-50)" }}>London, UK</p>
           </div>
 
           {/* Socials — uniform 40×40 circle containers keep all icons pixel-aligned */}
@@ -59,7 +59,8 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white/30 hover:text-[#3D9B9B] hover:border-[#3D9B9B]/40 transition-all duration-300"
+                className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:text-[#3D9B9B]"
+                style={{ border: "1px solid var(--border-card)", color: "var(--fg-50)" }}
               >
                 {icon}
               </a>
@@ -68,11 +69,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-white/20">
+        <div
+          className="mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
+          style={{ borderTop: "1px solid var(--border-subtle)" }}
+        >
+          <p className="text-[12px]" style={{ color: "var(--fg-40)" }}>
             &copy; {new Date().getFullYear()} Ahmed Soudan. All rights reserved.
           </p>
-          <p className="text-[12px] text-white/15">
+          <p className="text-[12px]" style={{ color: "var(--fg-30)" }}>
             Digital Product Designer
           </p>
         </div>

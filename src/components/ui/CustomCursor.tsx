@@ -27,11 +27,11 @@ export default function CustomCursor() {
 
   return (
     <motion.div
-      className="pointer-events-none fixed top-0 left-0 z-[9999] mix-blend-difference"
+      className="pointer-events-none fixed top-0 left-0 z-[9999]"
       animate={{ x: pos.x - 10, y: pos.y - 10, opacity: visible ? 1 : 0 }}
-      transition={{ type: "spring", stiffness: 500, damping: 28, mass: 0.5 }}
+      transition={{ type: "spring", stiffness: 2000, damping: 60, mass: 0.2 }}
     >
-      <div className="w-5 h-5 rounded-full border border-white/80" />
+      <div className="w-5 h-5 rounded-full border" style={{ borderColor: "var(--accent)", opacity: 0.6 }} />
     </motion.div>
   );
 }
