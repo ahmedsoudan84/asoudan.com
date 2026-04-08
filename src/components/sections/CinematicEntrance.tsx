@@ -336,8 +336,8 @@ export default function CinematicEntrance() {
 
               {/* Bio */}
               <motion.div className="mt-8 lg:mt-8 max-w-md relative" variants={fadeIn}>
-                <div className="border-l-2 border-[#3D9B9B]/40 pl-5">
-                  <p className="text-[14px] leading-[1.9]" style={{ color: "var(--fg-40)" }}>
+                <div className="border-l-2 border-[#3D9B9B]/50 pl-5">
+                  <p className="text-[15px] leading-[1.65]" style={{ color: "var(--fg-60)" }}>
                     20 years crafting digital experiences — from architecture
                     to product design. 300+ projects delivered across the globe.
                     Currently shaping the future of education at Oxford University Press.

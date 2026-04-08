@@ -531,12 +531,6 @@ export default function ImmersiveCV() {
           variants={fadeUp}
           className="mb-20"
         >
-          <span
-            className="block text-xs tracking-[0.3em] uppercase mb-4"
-            style={{ color: "#3D9B9B" }}
-          >
-            Curriculum Vitae
-          </span>
           <h2 className="text-4xl md:text-[56px] font-bold theme-text leading-tight">
             Experience
           </h2>
@@ -565,12 +559,6 @@ export default function ImmersiveCV() {
           variants={fadeUp}
           className="mt-24"
         >
-          <span
-            className="block text-xs tracking-[0.3em] uppercase mb-4"
-            style={{ color: "#3D9B9B" }}
-          >
-            Expertise
-          </span>
           <h3 className="text-2xl md:text-3xl font-bold theme-text mb-8">
             Skills
           </h3>
@@ -612,12 +600,6 @@ export default function ImmersiveCV() {
           variants={fadeUp}
           className="mt-24"
         >
-          <span
-            className="block text-xs tracking-[0.3em] uppercase mb-4"
-            style={{ color: "#3D9B9B" }}
-          >
-            Toolkit
-          </span>
           <h3 className="text-2xl md:text-3xl font-bold theme-text mb-8">
             Tools
           </h3>
@@ -708,12 +690,6 @@ export default function ImmersiveCV() {
           variants={fadeUp}
           className="mt-24"
         >
-          <span
-            className="block text-xs tracking-[0.3em] uppercase mb-4"
-            style={{ color: "#3D9B9B" }}
-          >
-            Education
-          </span>
           <h3 className="text-2xl md:text-3xl font-bold theme-text mb-8">
             Education &amp; Certifications
           </h3>
@@ -771,12 +747,6 @@ export default function ImmersiveCV() {
             boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05), 0 0 40px rgba(61,155,155,0.06)",
           }}
         >
-          <span
-            className="block text-xs tracking-[0.3em] uppercase mb-2"
-            style={{ color: "#3D9B9B" }}
-          >
-            Mentoring
-          </span>
           <h3 className="text-2xl md:text-3xl font-bold theme-text mb-2">
             ADPList Super Mentor
           </h3>
