@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, Fragment } from "react";
 import {
   motion,
   useInView,
@@ -663,7 +663,7 @@ export default function ImmersiveCV() {
           }}
         >
           {stats.map((stat, i) => (
-            <React.Fragment key={stat.label}>
+            <Fragment key={stat.label}>
               {i > 0 && (
                 <>
                   <div
@@ -681,7 +681,7 @@ export default function ImmersiveCV() {
                 label={stat.label}
                 suffix={stat.suffix}
               />
-            </React.Fragment>
+            </Fragment>
           ))}
         </motion.div>
 
