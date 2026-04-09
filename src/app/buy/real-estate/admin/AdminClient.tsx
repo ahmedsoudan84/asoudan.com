@@ -5,6 +5,48 @@ import { properties } from "@/lib/real-estate/properties";
 
 const ADMIN_PASSWORD = "aiestate2024";
 
+function getStatusStyle(status: string): { bg: string; color: string; border: string } {
+  const isRent = status === "To Let" || status === "Let Agreed";
+  
+  if (isRent) {
+    return {
+      bg: "rgba(16, 185, 129, 0.15)",
+      color: "#10b981",
+      border: "rgba(16, 185, 129, 0.3)",
+    };
+  }
+  
+  if (status === "For Sale") {
+    return {
+      bg: "rgba(0, 241, 241, 0.15)",
+      color: "var(--accent)",
+      border: "rgba(0, 241, 241, 0.3)",
+    };
+  }
+  
+  if (status === "Under Offer") {
+    return {
+      bg: "rgba(251, 191, 36, 0.15)",
+      color: "#fbbf24",
+      border: "rgba(251, 191, 36, 0.3)",
+    };
+  }
+  
+  if (status === "Sold STC") {
+    return {
+      bg: "rgba(239, 68, 68, 0.15)",
+      color: "#ef4444",
+      border: "rgba(239, 68, 68, 0.3)",
+    };
+  }
+  
+  return {
+    bg: "rgba(255, 255, 255, 0.1)",
+    color: "var(--fg-50)",
+    border: "rgba(255, 255, 255, 0.1)",
+  };
+}
+
 interface Lead {
   name: string;
   email: string;
@@ -270,8 +312,9 @@ export default function AdminClient() {
                     <span
                       className="inline-block px-2 py-0.5 rounded text-[10px] font-montserrat font-semibold"
                       style={{
-                        background: p.status === "For Sale" ? "rgba(0,241,241,0.15)" : "rgba(255,180,0,0.15)",
-                        color: p.status === "For Sale" ? "var(--accent)" : "#ffb400",
+                        background: getStatusStyle(p.status).bg,
+                        color: getStatusStyle(p.status).color,
+                        border: `1px solid ${getStatusStyle(p.status).border}`,
                       }}
                     >
                       {p.status}

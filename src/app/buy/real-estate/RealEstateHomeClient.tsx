@@ -4,6 +4,48 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
 
+function getStatusStyle(status: string): { bg: string; color: string; border: string } {
+  const isRent = status === "To Let" || status === "Let Agreed";
+  
+  if (isRent) {
+    return {
+      bg: "rgba(16, 185, 129, 0.15)",
+      color: "#10b981",
+      border: "rgba(16, 185, 129, 0.3)",
+    };
+  }
+  
+  if (status === "For Sale") {
+    return {
+      bg: "rgba(0, 241, 241, 0.15)",
+      color: "var(--accent)",
+      border: "rgba(0, 241, 241, 0.3)",
+    };
+  }
+  
+  if (status === "Under Offer") {
+    return {
+      bg: "rgba(251, 191, 36, 0.15)",
+      color: "#fbbf24",
+      border: "rgba(251, 191, 36, 0.3)",
+    };
+  }
+  
+  if (status === "Sold STC") {
+    return {
+      bg: "rgba(239, 68, 68, 0.15)",
+      color: "#ef4444",
+      border: "rgba(239, 68, 68, 0.3)",
+    };
+  }
+  
+  return {
+    bg: "rgba(255, 255, 255, 0.1)",
+    color: "var(--fg-50)",
+    border: "rgba(255, 255, 255, 0.1)",
+  };
+}
+
 const EMOTIONS = [
   { label: "Family-friendly", query: "family schools garden" },
   { label: "City buzz", query: "central vibrant nightlife" },
@@ -212,8 +254,9 @@ export default function RealEstateHomeClient() {
                     <div
                       className="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-montserrat uppercase tracking-wider font-semibold"
                       style={{
-                        background: p.status === "For Sale" ? "rgba(0,241,241,0.9)" : "rgba(255,180,0,0.9)",
-                        color: "#0a0c14",
+                        background: getStatusStyle(p.status).bg,
+                        color: getStatusStyle(p.status).color,
+                        border: `1px solid ${getStatusStyle(p.status).border}`,
                       }}
                     >
                       {p.status}

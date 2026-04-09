@@ -33,10 +33,12 @@ export default function TopNav() {
         {/* Logo / Back to portfolio */}
         <Link
           href="/"
-          className="font-montserrat text-sm font-semibold tracking-wider uppercase transition-colors duration-300 hover:opacity-80"
-          style={{ color: "var(--accent)" }}
+          className="flex items-center gap-2"
         >
-          AS
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
         </Link>
 
         {/* Breadcrumb */}

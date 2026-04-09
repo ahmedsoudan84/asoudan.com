@@ -13,6 +13,48 @@ import {
   getScarcityMessage,
 } from "@/lib/real-estate/smart-logic";
 
+function getStatusStyle(status: string): { bg: string; color: string; border: string } {
+  const isRent = status === "To Let" || status === "Let Agreed";
+  
+  if (isRent) {
+    return {
+      bg: "rgba(16, 185, 129, 0.15)",
+      color: "#10b981",
+      border: "rgba(16, 185, 129, 0.3)",
+    };
+  }
+  
+  if (status === "For Sale") {
+    return {
+      bg: "rgba(0, 241, 241, 0.15)",
+      color: "var(--accent)",
+      border: "rgba(0, 241, 241, 0.3)",
+    };
+  }
+  
+  if (status === "Under Offer") {
+    return {
+      bg: "rgba(251, 191, 36, 0.15)",
+      color: "#fbbf24",
+      border: "rgba(251, 191, 36, 0.3)",
+    };
+  }
+  
+  if (status === "Sold STC") {
+    return {
+      bg: "rgba(239, 68, 68, 0.15)",
+      color: "#ef4444",
+      border: "rgba(239, 68, 68, 0.3)",
+    };
+  }
+  
+  return {
+    bg: "rgba(255, 255, 255, 0.1)",
+    color: "var(--fg-50)",
+    border: "rgba(255, 255, 255, 0.1)",
+  };
+}
+
 const TIME_SLOTS = [
   "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
   "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
@@ -344,13 +386,9 @@ export default function PropertyDetailClient({ property }: { property: Property 
             <div
               className="absolute top-4 right-4 px-3 py-1.5 rounded-xl text-xs font-montserrat font-semibold"
               style={{
-                background:
-                  property.status === "For Sale"
-                    ? "rgba(0,241,241,0.9)"
-                    : property.status === "Under Offer"
-                    ? "rgba(255,180,0,0.9)"
-                    : "rgba(255,100,100,0.9)",
-                color: "#0a0c14",
+                background: getStatusStyle(property.status).bg,
+                color: getStatusStyle(property.status).color,
+                border: `1px solid ${getStatusStyle(property.status).border}`,
               }}
             >
               {property.status}

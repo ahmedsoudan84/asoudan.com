@@ -10,6 +10,48 @@ type ListingMode = "sale" | "rent" | "all";
 type PropertyType = "All" | "Flat" | "House" | "Penthouse" | "Townhouse" | "Maisonette";
 type BedFilter = "Any" | "1+" | "2+" | "3+" | "4+" | "5+";
 
+function getStatusStyle(status: string): { bg: string; color: string; label: string } {
+  const isRent = status === "To Let" || status === "Let Agreed";
+  
+  if (isRent) {
+    return {
+      bg: "rgba(16, 185, 129, 0.15)",
+      color: "var(--accent)",
+      label: status === "To Let" ? "To Let" : "Let Agreed",
+    };
+  }
+  
+  if (status === "For Sale") {
+    return {
+      bg: "rgba(0, 241, 241, 0.15)",
+      color: "var(--accent)",
+      label: "For Sale",
+    };
+  }
+  
+  if (status === "Under Offer") {
+    return {
+      bg: "rgba(251, 191, 36, 0.15)",
+      color: "#fbbf24",
+      label: "Under Offer",
+    };
+  }
+  
+  if (status === "Sold STC") {
+    return {
+      bg: "rgba(239, 68, 68, 0.15)",
+      color: "#ef4444",
+      label: "Sold STC",
+    };
+  }
+  
+  return {
+    bg: "rgba(255, 255, 255, 0.1)",
+    color: "var(--fg-50)",
+    label: status,
+  };
+}
+
 const PROPERTY_TYPES: PropertyType[] = ["All", "Flat", "House", "Penthouse", "Townhouse", "Maisonette"];
 const BED_OPTIONS: BedFilter[] = ["Any", "1+", "2+", "3+", "4+"];
 const SORT_OPTIONS = [
@@ -401,9 +443,17 @@ export default function ListingsClient() {
                       <div className="relative h-44 overflow-hidden">
                         <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                         <div className="absolute top-3 left-3 flex gap-2">
-                          <span className="px-2.5 py-1 rounded-lg text-[10px] font-montserrat uppercase tracking-wider font-semibold" style={{ background: isRent ? "#10b981" : "var(--accent)", color: "#0a0c14" }}>
-                            {isRent ? "To Let" : p.status}
-                          </span>
+                          {(() => {
+                            const statusStyle = getStatusStyle(p.status);
+                            return (
+                              <span 
+                                className="px-2.5 py-1 rounded-lg text-[10px] font-montserrat uppercase tracking-wider font-semibold"
+                                style={{ background: statusStyle.bg, color: statusStyle.color, border: `1px solid ${statusStyle.color}33` }}
+                              >
+                                {statusStyle.label}
+                              </span>
+                            );
+                          })()}
                         </div>
                         {/* AI Badge - subtle */}
                         <div className="absolute top-3 right-3 px-2 py-1 rounded-lg text-[9px] font-montserrat font-medium bg-black/40 backdrop-blur-sm text-white">
