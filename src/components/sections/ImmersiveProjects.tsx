@@ -366,9 +366,11 @@ export default function ImmersiveProjects() {
       if ((e.target as HTMLElement)?.tagName === "INPUT") return;
       if (e.key === "j" || e.key === "ArrowDown") {
         e.preventDefault();
+        keyNavRef.current = true;
         setFocused((i) => Math.min(i + 1, filtered.length - 1));
       } else if (e.key === "k" || e.key === "ArrowUp") {
         e.preventDefault();
+        keyNavRef.current = true;
         setFocused((i) => Math.max(i - 1, 0));
       } else if (e.key === "Enter" || e.key === "ArrowRight") {
         const p = filtered[focused];
@@ -380,7 +382,10 @@ export default function ImmersiveProjects() {
     return () => window.removeEventListener("keydown", onKey);
   }, [filtered, focused, router]);
 
+  const keyNavRef = useRef(false);
   useEffect(() => {
+    if (!keyNavRef.current) return;
+    keyNavRef.current = false;
     const el = document.getElementById(`project-${filtered[focused]?.id}`);
     el?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [focused, filtered]);
@@ -417,13 +422,7 @@ export default function ImmersiveProjects() {
               <button
                 key={cat}
                 type="button"
-                onClick={() => {
-                setActiveCat(cat);
-                setFocused(0);
-                requestAnimationFrame(() => {
-                  document.getElementById("projects-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
-                });
-              }}
+                onClick={() => { setActiveCat(cat); setFocused(0); }}
                 className="relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-colors"
                 style={{
                   color: active ? "var(--bg-primary)" : "var(--fg-60)",
@@ -486,9 +485,10 @@ export default function ImmersiveProjects() {
             </div>
             )}
             <motion.div
+              key={activeCat}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ margin: "-60px" }}
               variants={stagger}
               className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
             >
