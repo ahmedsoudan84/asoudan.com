@@ -1,9 +1,18 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
-const NAV_ITEMS = [
+interface NavItem {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  href?: string; // if set, renders as a Link instead of scroll button
+}
+
+const NAV_ITEMS: NavItem[] = [
   {
     id: "hero",
     label: "Home",
@@ -22,6 +31,18 @@ const NAV_ITEMS = [
         <rect x="14" y="3" width="7" height="7" rx="1" />
         <rect x="3" y="14" width="7" height="7" rx="1" />
         <rect x="14" y="14" width="7" height="7" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    id: "real-estate",
+    label: "Real Estate",
+    href: "/buy",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18" />
+        <path d="M9 21V9" />
       </svg>
     ),
   },
@@ -50,9 +71,12 @@ const NAV_ITEMS = [
 ];
 
 export default function FloatingNav() {
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("hero");
   const [visible, setVisible] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  const isOnBuyPages = pathname.startsWith("/buy");
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -72,7 +96,7 @@ export default function FloatingNav() {
   }, []);
 
   useEffect(() => {
-    const ids = NAV_ITEMS.map((item) => item.id);
+    const ids = NAV_ITEMS.filter((i) => !i.href).map((item) => item.id);
     const elements = ids
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
@@ -120,13 +144,12 @@ export default function FloatingNav() {
           }}
         >
           {NAV_ITEMS.map((item) => {
-            const isActive = activeSection === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className="relative flex flex-col items-center gap-1.5 cursor-pointer group"
-              >
+            const isActive = item.href
+              ? isOnBuyPages
+              : !isOnBuyPages && activeSection === item.id;
+
+            const inner = (
+              <>
                 <span
                   className={`absolute -top-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300 ${
                     isActive ? "opacity-100" : "opacity-0"
@@ -149,6 +172,28 @@ export default function FloatingNav() {
                 >
                   {item.label}
                 </span>
+              </>
+            );
+
+            if (item.href) {
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className="relative flex flex-col items-center gap-1.5 cursor-pointer group"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="relative flex flex-col items-center gap-1.5 cursor-pointer group"
+              >
+                {inner}
               </button>
             );
           })}
