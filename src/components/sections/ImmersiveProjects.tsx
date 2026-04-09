@@ -145,7 +145,14 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
                 {project.number}
               </span>
               <div className="h-px w-4" style={{ background: `${project.color}60` }} />
-              <span className="text-[10px] font-semibold uppercase tracking-[3px]" style={{ color: "var(--fg-40)" }}>
+              <span
+                className="text-[10px] font-semibold uppercase tracking-[2px] px-2.5 py-1 rounded-full backdrop-blur-md"
+                style={{
+                  color: project.color,
+                  background: `${project.color}15`,
+                  border: `1px solid ${project.color}25`,
+                }}
+              >
                 {project.category}
               </span>
             </div>

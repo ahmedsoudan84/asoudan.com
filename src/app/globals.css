@@ -54,11 +54,11 @@
 
 /* ── Light theme ────────────────────────────────────────────── */
 [data-theme="light"] {
-  --bg-primary:   #f4f1ea;
-  --bg-secondary: #ede8de;
-  --bg-tertiary:  #e5dfd3;
+  --bg-primary:   #f8f6f1;
+  --bg-secondary: #f4f1ea;
+  --bg-tertiary:  #ede8de;
   --bg-surface:   #ffffff;
-  --bg-surface-2: #f0ede6;
+  --bg-surface-2: #f6f3ed;
   --bg-footer:    #1a1d2e;   /* footer intentionally stays dark */
 
   --fg-rgb:       22, 25, 42;

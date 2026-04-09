@@ -48,7 +48,13 @@ export default function Footer() {
             >
               ahmedsoudan@gmail.com
             </a>
-            <p className="text-[14px] mt-1" style={{ color: "var(--fg-50)" }}>+44 777 492 1967</p>
+            <a
+              href="tel:+447774921967"
+              className="text-[14px] mt-1 inline-block hover:text-[#3D9B9B] transition-colors"
+              style={{ color: "var(--fg-50)" }}
+            >
+              +44 777 492 1967
+            </a>
             <p className="text-[14px]" style={{ color: "var(--fg-50)" }}>London, UK</p>
           </div>
 

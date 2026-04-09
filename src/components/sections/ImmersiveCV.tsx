@@ -227,7 +227,7 @@ type ToolEntry =
 /* Inline SVGs for tools not on Simple Icons (Adobe suite removed for legal reasons) */
 const adobeSvg = (letters: string) => (
   <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="1" y="1" width="26" height="26" rx="5" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="0" y="0" width="28" height="28" rx="6" fill="currentColor" opacity="0.15" />
     <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="11" fontWeight="700" fontFamily="Montserrat, sans-serif">{letters}</text>
   </svg>
 );
@@ -242,7 +242,7 @@ const tools: ToolEntry[] = [
   { name: "InDesign", type: "svg", svg: adobeSvg("Id") },
   { name: "InVision", type: "svg", svg: (
     <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="26" height="26" rx="5" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="0" y="0" width="28" height="28" rx="6" fill="currentColor" opacity="0.15" />
       <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="11" fontWeight="700" fontFamily="Montserrat, sans-serif">In</text>
     </svg>
   )},
@@ -256,7 +256,7 @@ const tools: ToolEntry[] = [
   { name: "React", type: "cdn", slug: "react" },
   { name: "3ds Max", type: "svg", svg: (
     <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="26" height="26" rx="5" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="0" y="0" width="28" height="28" rx="6" fill="currentColor" opacity="0.15" />
       <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="9" fontWeight="700" fontFamily="Montserrat, sans-serif">3ds</text>
     </svg>
   )},
@@ -765,6 +765,35 @@ export default function ImmersiveCV() {
             />
             <MentoringCounter value={82} label="Reviews" />
           </div>
+
+          <a
+            href="https://adplist.org/mentors/ahmed-soudan"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 mt-8 px-6 py-3 rounded-full text-[12px] font-semibold uppercase tracking-[2px] transition-all duration-300 hover:-translate-y-0.5"
+            style={{
+              color: "#3D9B9B",
+              border: "1px solid rgba(61,155,155,0.35)",
+              background: "rgba(61,155,155,0.1)",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget;
+              el.style.background = "rgba(61,155,155,0.2)";
+              el.style.borderColor = "rgba(61,155,155,0.6)";
+              el.style.boxShadow = "0 8px 30px -10px rgba(61,155,155,0.4)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget;
+              el.style.background = "rgba(61,155,155,0.1)";
+              el.style.borderColor = "rgba(61,155,155,0.35)";
+              el.style.boxShadow = "none";
+            }}
+          >
+            Book a session
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 12L12 4M12 4H6M12 4v6" />
+            </svg>
+          </a>
         </motion.div>
       </div>
     </section>
