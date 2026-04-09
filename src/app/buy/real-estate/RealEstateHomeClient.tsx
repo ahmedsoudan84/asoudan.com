@@ -66,7 +66,7 @@ export default function RealEstateHomeClient() {
                 border: "1px solid rgba(0,241,241,0.2)",
               }}
             >
-              Next.js Template
+              Real Estate
             </span>
             <h1
               className="font-montserrat text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
