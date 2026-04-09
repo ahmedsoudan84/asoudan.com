@@ -1768,9 +1768,14 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
       </div>
 
       {/* ── Project metadata ── */}
-      <section className="border-b [border-color:var(--border-subtle)]">
+      <section className="relative overflow-hidden">
+        {/* Subtle accent glow behind the bar */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{ background: `radial-gradient(ellipse at 50% 0%, ${color}, transparent 70%)` }}
+        />
         <div className="max-w-5xl mx-auto px-6 lg:px-0 py-10 lg:py-14">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="flex flex-wrap justify-center gap-3">
             {[
               { label: "Role", value: project.role },
               { label: "Employer", value: project.employer },
@@ -1781,15 +1786,27 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
             ]
               .filter((m) => m.value)
               .map((m, i) => (
-                <div key={i}>
-                  <div className="text-[9px] uppercase tracking-[3px] [color:var(--fg-30)] mb-1">
+                <div
+                  key={i}
+                  className="flex flex-col items-center text-center px-5 py-4 rounded-2xl min-w-[130px] max-w-[200px] flex-1 backdrop-blur-sm transition-colors duration-300"
+                  style={{
+                    background: "var(--fg-05)",
+                    border: "1px solid var(--border-card)",
+                  }}
+                >
+                  <div
+                    className="text-[9px] uppercase tracking-[3px] mb-2 font-medium"
+                    style={{ color }}
+                  >
                     {m.label}
                   </div>
-                  <div className="[color:var(--fg-70)] text-sm">{m.value}</div>
+                  <div className="[color:var(--fg-70)] text-[13px] leading-snug">{m.value}</div>
                 </div>
               ))}
           </div>
         </div>
+        {/* Bottom border */}
+        <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "var(--border-subtle)" }} />
       </section>
 
       {/* ── Case study sections ── */}
