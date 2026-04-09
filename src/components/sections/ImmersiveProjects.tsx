@@ -417,7 +417,13 @@ export default function ImmersiveProjects() {
               <button
                 key={cat}
                 type="button"
-                onClick={() => { setActiveCat(cat); setFocused(0); }}
+                onClick={() => {
+                setActiveCat(cat);
+                setFocused(0);
+                requestAnimationFrame(() => {
+                  document.getElementById("projects-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                });
+              }}
                 className="relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-colors"
                 style={{
                   color: active ? "var(--bg-primary)" : "var(--fg-60)",
@@ -439,6 +445,8 @@ export default function ImmersiveProjects() {
         </div>
 
         {/* Featured Case Studies */}
+        <div id="projects-results">
+        {filtered.length > 0 && (
         <LayoutGroup>
           <div className="flex flex-col gap-16 lg:gap-24 pb-20 lg:pb-28">
             <AnimatePresence mode="popLayout">
@@ -459,10 +467,13 @@ export default function ImmersiveProjects() {
             </AnimatePresence>
           </div>
         </LayoutGroup>
+        )}
 
         {/* Behance Projects */}
         {filteredBehance.length > 0 && (
           <div className="pb-20 lg:pb-28">
+            {/* Only show divider when both sections have content */}
+            {filtered.length > 0 && (
             <div className="flex items-center gap-4 mb-10">
               <div className="h-px flex-1" style={{ background: "var(--fg-06)" }} />
               <span
@@ -473,6 +484,7 @@ export default function ImmersiveProjects() {
               </span>
               <div className="h-px flex-1" style={{ background: "var(--fg-06)" }} />
             </div>
+            )}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -517,6 +529,7 @@ export default function ImmersiveProjects() {
             </div>
           </div>
         )}
+        </div>
       </div>
     </section>
   );
