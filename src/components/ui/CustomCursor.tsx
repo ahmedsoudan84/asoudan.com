@@ -6,8 +6,8 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export default function CustomCursor() {
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.15 });
-  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.15 });
+  const sx = useSpring(x, { stiffness: 800, damping: 50, mass: 0.08 });
+  const sy = useSpring(y, { stiffness: 800, damping: 50, mass: 0.08 });
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
