@@ -2,7 +2,7 @@
 import React, { useRef, useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, useInView, useScroll, useTransform, useSpring, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, useInView, useScroll, AnimatePresence } from "framer-motion";
 import { projectsData } from "@/lib/projects";
 
 /* ── Build project list ── */
@@ -57,14 +57,6 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
-  // Parallax: cover image drifts as card scrolls through the viewport
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const rawY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-  const coverY = useSpring(rawY, { stiffness: 120, damping: 30, mass: 0.3 });
-
   const handleClick = () => {
     if (project.hasCaseStudy) {
       router.push(`/projects/${project.id}`);
@@ -83,7 +75,6 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       animate={isInView ? "visible" : "hidden"}
       variants={fadeUp}
       transition={{ delay: (index % 3) * 0.08 }}
-      layout
       className="group cursor-pointer [content-visibility:auto] [contain-intrinsic-size:800px]"
       onClick={handleClick}
       onMouseEnter={handleHoverPrefetch}
@@ -115,7 +106,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
         className="relative aspect-[16/9] lg:aspect-[2.2/1] rounded-2xl lg:rounded-[24px] overflow-hidden transition-all duration-500"
         style={{ background: `linear-gradient(135deg, ${project.color}20, ${project.color}08)` }}
       >
-        <motion.div className="absolute inset-[-6%]" style={{ y: coverY }}>
+        <div className="absolute inset-[-6%]">
           <Image
             src={project.cover}
             alt={`${project.title} — ${project.subtitle}`}
@@ -126,7 +117,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
             priority={index < 2}
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
           />
-        </motion.div>
+        </div>
 
         {/* Gradient overlay — fades into section background */}
         <div
@@ -339,7 +330,6 @@ export default function ImmersiveProjects() {
   const router = useRouter();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  const progressScale = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
 
   // Three-bucket category system — map each project's raw category into a bucket
   const bucketOf = (cat: string): "Product Design" | "Campaign" | "Branding" => {
@@ -395,24 +385,10 @@ export default function ImmersiveProjects() {
       {/* Reading-progress rail */}
       <motion.div
         className="sticky top-0 left-0 right-0 h-[2px] origin-left z-40"
-        style={{ scaleX: progressScale, background: "var(--accent)" }}
+        style={{ scaleX: scrollYProgress, background: "var(--accent)" }}
       />
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
         <ProjectsIntro />
-
-        {/* Status pill */}
-        <div className="flex justify-center mb-8">
-          <span
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px]"
-            style={{ border: "1px solid rgba(61,155,155,0.35)", background: "rgba(61,155,155,0.08)", color: "#3D9B9B" }}
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3D9B9B] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3D9B9B]" />
-            </span>
-            Currently at Oxford University Press
-          </span>
-        </div>
 
         {/* Filter chips */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">
@@ -446,14 +422,12 @@ export default function ImmersiveProjects() {
         {/* Featured Case Studies */}
         <div id="projects-results">
         {filtered.length > 0 && (
-        <LayoutGroup>
           <div className="flex flex-col gap-16 lg:gap-24 pb-20 lg:pb-28">
             <AnimatePresence mode="popLayout">
               {filtered.map((project, i) => (
                 <motion.div
                   key={project.id}
                   id={`project-${project.id}`}
-                  layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
@@ -465,7 +439,6 @@ export default function ImmersiveProjects() {
               ))}
             </AnimatePresence>
           </div>
-        </LayoutGroup>
         )}
 
         {/* Behance Projects */}
