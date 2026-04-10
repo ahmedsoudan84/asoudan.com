@@ -1627,6 +1627,7 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
   if (!section.image) return null;
   const imgRes = resolveImage(section.image);
   const isSvg = imgRes.src.toLowerCase().endsWith('.svg');
+  const isJourney = imgRes.src.includes('journey');
   
   return (
     <section className={cls("py-16 lg:py-24 overflow-hidden relative", sectionBg(section.bg))}>
@@ -1642,6 +1643,24 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
       
       {/* Full Bleed Scroller */}
       <div className="relative w-full group">
+        {/* Scroll hint - appears on hover */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+            Scroll
+          </div>
+        </div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium">
+            Scroll
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </div>
+        </div>
+        
         <div className="overflow-x-auto overflow-y-hidden pb-8 pt-4 w-full cursor-grab active:cursor-grabbing no-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div className="px-[5vw] lg:px-[10vw] inline-flex">
             <div 
@@ -1652,7 +1671,11 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
                 <img 
                   src={imgRes.src} 
                   alt={imgRes.alt} 
-                  className="h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain" 
+                  className={isJourney 
+                    ? "h-[70vh] md:h-[75vh] lg:h-[90vh] w-auto max-w-none object-contain dark:brightness-90 dark:contrast-110" 
+                    : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"
+                  }
+                  style={{ minWidth: isJourney ? '120vw' : 'auto' }}
                 />
               ) : (
                 <SafeImage 
@@ -1660,15 +1683,21 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
                   alt={imgRes.alt} 
                   width={3000} 
                   height={1200} 
-                  className="h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain" 
+                  className={isJourney 
+                    ? "h-[70vh] md:h-[75vh] lg:h-[90vh] w-auto max-w-none object-contain dark:brightness-90 dark:contrast-110" 
+                    : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"
+                  }
                 />
               )}
             </div>
           </div>
         </div>
         
-        {/* Visual Cue for Scrollability */}
+        {/* Visual Cue for Scrollability - drag indicator */}
         <div className="absolute right-0 top-0 bottom-8 w-24 pointer-events-none bg-gradient-to-l from-black/5 dark:from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        {/* Bottom scroll progress indicator */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/5 dark:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
     </section>
   );
