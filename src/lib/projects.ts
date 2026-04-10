@@ -153,9 +153,12 @@ export const projectsData: ProjectDetail[] = [
         "heading": "Product Direction Parameters",
         "body": "Before moving to high-fidelity design, several key assumptions and MVP requirements had to be validated to shape the reporting logic.",
         "bullets": [
-          "[MVP Requirement: Add text from your screenshots here]",
-          "[Assumption 1: Add text from your screenshots here]",
-          "[Assumption 2: Add text from your screenshots here]"
+          "**MVP 1:** Based upon VST functionality — download a basic Excel doc containing information about multiple classes (supporting market needs for Link It and Brighter Ideas).",
+          "**MVP 2:** An area in the Org to house the download button.",
+          "**MVP 3:** Customization options: classes, products (informed by selected classes), fractions/percentages, first/latest attempt.",
+          "**Assumption 1:** A limit on the number of classes/products may be needed so the Excel file remains manageable.",
+          "**Assumption 2:** The MVP approach is to email the Excel file rather than a direct UI download, avoiding pending state UI complexities.",
+          "**Assumption 3:** The output spreadsheet will be raw data with no styling."
         ]
       },
       {
@@ -181,16 +184,6 @@ export const projectsData: ProjectDetail[] = [
         "bg": "accent"
       },
       {
-        "type": "split",
-        "label": "Analysis",
-        "heading": "Problems to solve & Findings",
-        "body": "Our analysis pointed to a need for exact CSV export parity and solving specific scaling issues.",
-        "bullets": [
-          "[Problem to solve 1: Fill in from PNG]",
-          "[Findings 1: Fill in from PNG]"
-        ]
-      },
-      {
         "type": "process-step",
         "label": "Synthesis",
         "stepNumber": 1,
@@ -208,17 +201,16 @@ export const projectsData: ProjectDetail[] = [
         "type": "horizontal-scroll-gallery",
         "label": "Final MVP",
         "heading": "User Journey Mapping",
-        "caption": "Export your Figma User Journey map slices and place them at public/images/projects/org-reports/journey-1.png, etc.",
+        "caption": "Mapping the path from configuration to report delivery.",
         "screens": [
-          { "image": { "src": "/images/projects/org-reports/journey-1.png", "alt": "Journey Step 1" }, "label": "Step 1" },
-          { "image": { "src": "/images/projects/org-reports/journey-2.png", "alt": "Journey Step 2" }, "label": "Step 2" }
+          { "image": { "src": "/images/projects/org-reports/journey-1.png", "alt": "MVP User Journey" }, "label": "End-to-End Journey" }
         ]
       },
       {
         "type": "browser-frame",
         "label": "Final Polish",
         "heading": "Admin Report Dashboard",
-        "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Report configuration UI" },
+        "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Responsive Screens" },
         "bg": "light"
       },
       {
