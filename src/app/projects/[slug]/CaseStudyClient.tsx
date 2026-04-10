@@ -234,7 +234,7 @@ function SplitSection({ section, color, onImageClick }: { section: CaseStudySect
                 )}
               </div>
             )}
-            <div className="w-full lg:w-1/2">
+            <div className={section.image ? "w-full lg:w-1/2" : "w-full max-w-4xl"}>
               <SectionLabel label={section.label} color={color} />
               <SectionHeading heading={section.heading} />
               {section.body && (
@@ -1644,7 +1644,7 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
         <div className="overflow-x-auto overflow-y-hidden pb-8 pt-4 w-full cursor-grab active:cursor-grabbing no-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div className="px-[5vw] lg:px-[10vw] inline-flex">
             <div 
-              className="relative shadow-2xl lg:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden bg-white border [border-color:var(--border-subtle)] flex flex-col justify-center transition-transform hover:opacity-95" 
+              className="relative rounded-2xl overflow-hidden flex flex-col justify-center transition-transform hover:opacity-95" 
               onClick={() => onImageClick?.(imgRes.src)}
             >
               <SafeImage 

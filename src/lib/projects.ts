@@ -208,7 +208,7 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "panorama",
-        "label": "Final Polish",
+        "label": "Output",
         "heading": "Responsive Mobile Screens",
         "caption": "The journey components optimized for mobile and responsive displays.",
         "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Responsive Screens" },
