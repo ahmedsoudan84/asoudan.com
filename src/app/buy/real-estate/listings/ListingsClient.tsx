@@ -97,29 +97,29 @@ function simpleSearch(query: string, property: Property): number {
   return words.length > 0 ? matched / words.length : 1;
 }
 
-// Icons as components
+// Icons as components - larger for better visibility
 const BedIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" />
   </svg>
 );
 const BathIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-3a1 1 0 0 1 1-1z" /><path d="M6 12V5a2 2 0 0 1 2-2h3v2.25" /><ellipse cx="12" cy="5" rx="2" ry="1" />
   </svg>
 );
 const AreaIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M9 21V9" />
   </svg>
 );
 const WalkIcon = ({ style }: { style?: React.CSSProperties }) => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={style}>
     <circle cx="12" cy="5" r="3" /><path d="M12 8v4" /><path d="M8 22l4-4 4 4" /><path d="M9.5 14.5L7 17" />
   </svg>
 );
 const StationIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 11V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6" /><path d="M4 15v6" /><path d="M20 15v6" /><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M12 4v6" />
   </svg>
 );
@@ -471,26 +471,26 @@ export default function ListingsClient() {
                         <h3 className="font-montserrat text-base font-bold line-clamp-1" style={{ color: "var(--fg)" }}>{p.title}</h3>
                         <p className="font-montserrat text-xs mt-1 line-clamp-1" style={{ color: "var(--fg-40)" }}>{p.address}</p>
 
-                        {/* Quick Info Grid - Icon-based */}
+                        {/* Quick Info Grid - Icon-based, no borders */}
                         <div className="grid grid-cols-4 gap-2 mt-4">
-                          <div className="flex flex-col items-center gap-1 p-2 rounded-lg" style={{ background: "var(--fg-06)" }}>
+                          <div className="flex flex-col items-center gap-1">
                             <BedIcon />
-                            <span className="text-[10px] font-montserrat font-bold" style={{ color: "var(--fg-70)" }}>{p.beds}</span>
+                            <span className="text-[12px] font-montserrat font-bold" style={{ color: "var(--fg-70)" }}>{p.beds}</span>
                             <span className="text-[8px] font-montserrat" style={{ color: "var(--fg-30)" }}>beds</span>
                           </div>
-                          <div className="flex flex-col items-center gap-1 p-2 rounded-lg" style={{ background: "var(--fg-06)" }}>
+                          <div className="flex flex-col items-center gap-1">
                             <BathIcon />
-                            <span className="text-[10px] font-montserrat font-bold" style={{ color: "var(--fg-70)" }}>{p.baths}</span>
+                            <span className="text-[12px] font-montserrat font-bold" style={{ color: "var(--fg-70)" }}>{p.baths}</span>
                             <span className="text-[8px] font-montserrat" style={{ color: "var(--fg-30)" }}>baths</span>
                           </div>
-                          <div className="flex flex-col items-center gap-1 p-2 rounded-lg" style={{ background: "var(--fg-06)" }}>
+                          <div className="flex flex-col items-center gap-1">
                             <AreaIcon />
-                            <span className="text-[10px] font-montserrat font-bold" style={{ color: "var(--fg-70)" }}>{p.sqft}</span>
+                            <span className="text-[12px] font-montserrat font-bold" style={{ color: "var(--fg-70)" }}>{p.sqft}</span>
                             <span className="text-[8px] font-montserrat" style={{ color: "var(--fg-30)" }}>sqft</span>
                           </div>
-                          <div className="flex flex-col items-center gap-1 p-2 rounded-lg" style={{ background: walkScore >= 70 ? "rgba(0,241,241,0.1)" : "var(--fg-06)" }}>
+                          <div className="flex flex-col items-center gap-1">
                             <WalkIcon style={{ color: walkScore >= 70 ? "var(--accent)" : "var(--fg-40)" }} />
-                            <span className="text-[10px] font-montserrat font-bold" style={{ color: walkScore >= 70 ? "var(--accent)" : "var(--fg-70)" }}>{walkScore}</span>
+                            <span className="text-[12px] font-montserrat font-bold" style={{ color: walkScore >= 70 ? "var(--accent)" : "var(--fg-70)" }}>{walkScore}</span>
                             <span className="text-[8px] font-montserrat" style={{ color: "var(--fg-30)" }}>walk</span>
                           </div>
                         </div>

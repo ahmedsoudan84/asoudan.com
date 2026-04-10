@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import RealEstateHomeClient from "./RealEstateHomeClient";
 
 export const metadata: Metadata = {
-  title: "AI Estate — London Property Template",
+  title: "Real Estate — London Property Template",
   description:
     "A premium London estate agent website template with AI-powered semantic search, chatbot, and area insights. Built with Next.js 15.",
 };

@@ -47,7 +47,7 @@ export default function TopNav() {
             Portfolio
           </Link>
           <span className="mx-1">/</span>
-          <span style={{ color: "var(--accent)" }}>AI Estate</span>
+          <span style={{ color: "var(--accent)" }}>Real Estate</span>
         </nav>
 
         {/* Template sub-nav (desktop) */}
