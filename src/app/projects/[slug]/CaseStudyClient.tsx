@@ -1643,19 +1643,17 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
       
       {/* Full Bleed Scroller */}
       <div className="relative w-full group">
-        {/* Scroll hint - appears on hover */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        {/* Scroll hint icons - appears on hover, transparent */}
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeOpacity="0.8">
               <path d="M15 18l-6-6 6-6" />
             </svg>
-            Scroll
           </div>
         </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium">
-            Scroll
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeOpacity="0.8">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </div>
