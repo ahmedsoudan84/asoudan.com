@@ -1669,11 +1669,10 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
                 <img 
                   src={imgRes.src} 
                   alt={imgRes.alt} 
-                  className={isJourney 
-                    ? "h-[85vh] md:h-[90vh] lg:h-[95vh] w-auto max-w-none object-contain dark:invert dark:brightness-80 dark:contrast-125" 
-                    : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"
-                  }
-                  style={{ minWidth: isJourney ? '150vw' : 'auto' }}
+                  className={`${isJourney ? "h-[85vh] md:h-[90vh] lg:h-[95vh] w-auto max-w-none object-contain" : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"}`}
+                  style={{ 
+                    minWidth: isJourney ? '150vw' : 'auto',
+                  }}
                 />
               ) : (
                 <SafeImage 
@@ -1681,11 +1680,10 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
                   alt={imgRes.alt} 
                   width={3000} 
                   height={1200} 
-                  className={isJourney 
-                    ? "h-[85vh] md:h-[90vh] lg:h-[95vh] w-auto max-w-none object-contain dark:invert dark:brightness-80 dark:contrast-125" 
-                    : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"
-                  }
-                  style={{ minWidth: isJourney ? '150vw' : 'auto' }}
+                  className={`${isJourney ? "h-[85vh] md:h-[90vh] lg:h-[95vh] w-auto max-w-none object-contain" : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"}`}
+                  style={{ 
+                    minWidth: isJourney ? '150vw' : 'auto',
+                  }}
                 />
               )}
             </div>
