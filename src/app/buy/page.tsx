@@ -17,6 +17,19 @@ export default function BuyPage() {
         "position": 1,
         "item": {
           "@type": "Product",
+          "name": "Elite Diner Restaurant Template",
+          "description": "AI menu recommender, semantic search, chatbot, online ordering, table booking. Fully client-side.",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Product",
           "name": "Real Estate London Estate Agent Template",
           "description": "Semantic property search, AI chatbot, area insights, admin portal. Fully client-side.",
           "offers": {

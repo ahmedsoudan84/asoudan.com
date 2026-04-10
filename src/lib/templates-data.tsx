@@ -15,6 +15,23 @@ export interface TemplateCategory {
 
 export const categories: TemplateCategory[] = [
   {
+    slug: "restaurants",
+    title: "Elite Diner",
+    subtitle: "Premium Restaurant Template with AI Features",
+    description:
+      "AI menu recommender, semantic search, chatbot, online ordering, table booking. Fully client-side — no API keys required.",
+    tags: ["Next.js 15", "AI-Powered", "Menu System", "Online Ordering"],
+    status: "live",
+    coverImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2" />
+        <path d="M7 2v20" />
+        <path d="M21 15V2v0a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+      </svg>
+    ),
+  },
+  {
     slug: "real-estate",
     title: "Real Estate",
     subtitle: "London Estate Agent Template with AI Features",
