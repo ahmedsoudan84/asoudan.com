@@ -1622,6 +1622,49 @@ function HorizontalScrollGallerySection({ section, color, onImageClick }: { sect
   );
 }
 
+/* ─── Panorama Section ─── */
+function PanoramaSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
+  if (!section.image) return null;
+  const imgRes = resolveImage(section.image);
+  
+  return (
+    <section className={cls("py-16 lg:py-24 overflow-hidden relative", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0 mb-6 lg:mb-10 text-center lg:text-left">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          {section.caption && (
+            <p className="[color:var(--fg-60)] text-sm mt-3 lg:mt-0 font-medium tracking-wide opacity-80">{section.caption}</p>
+          )}
+        </Reveal>
+      </div>
+      
+      {/* Full Bleed Scroller */}
+      <div className="relative w-full group">
+        <div className="overflow-x-auto overflow-y-hidden pb-8 pt-4 w-full cursor-grab active:cursor-grabbing no-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="px-[5vw] lg:px-[10vw] inline-flex">
+            <div 
+              className="relative shadow-2xl lg:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden bg-white border [border-color:var(--border-subtle)] flex flex-col justify-center transition-transform hover:opacity-95" 
+              onClick={() => onImageClick?.(imgRes.src)}
+            >
+              <SafeImage 
+                src={imgRes.src} 
+                alt={imgRes.alt} 
+                width={3000} 
+                height={1200} 
+                className="h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain" 
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* Visual Cue for Scrollability */}
+        <div className="absolute right-0 top-0 bottom-8 w-24 pointer-events-none bg-gradient-to-l from-black/5 dark:from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      </div>
+    </section>
+  );
+}
+
 /* ─── Section dispatcher ─── */
 function Section({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   switch (section.type) {
@@ -1677,6 +1720,8 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <ConceptModelSection section={section} color={color} />;
     case "horizontal-scroll-gallery":
       return <HorizontalScrollGallerySection section={section} color={color} onImageClick={onImageClick} />;
+    case "panorama":
+      return <PanoramaSection section={section} color={color} onImageClick={onImageClick} />;
   }
 }
 

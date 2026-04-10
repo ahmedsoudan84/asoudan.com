@@ -39,7 +39,8 @@ export interface CaseStudySection {
     | "org-architecture"
     | "nav-proposals"
     | "concept-model"
-    | "horizontal-scroll-gallery";
+    | "horizontal-scroll-gallery"
+    | "panorama";
   label?: string;
   heading?: string;
   body?: string;
@@ -198,20 +199,20 @@ export const projectsData: ProjectDetail[] = [
         "body": "Re-engineering the final CSV outputs to correctly structure the 30% grade contributions, minimizing human error during external LMS ingestion."
       },
       {
-        "type": "horizontal-scroll-gallery",
+        "type": "panorama",
         "label": "Final MVP",
         "heading": "User Journey Mapping",
-        "caption": "Mapping the path from configuration to report delivery.",
-        "screens": [
-          { "image": { "src": "/images/projects/org-reports/journey-1.png", "alt": "MVP User Journey" }, "label": "End-to-End Journey" }
-        ]
+        "caption": "Pinch or drag to explore the complete end-to-end admin workflow.",
+        "image": { "src": "/images/projects/org-reports/journey-1.png", "alt": "MVP User Journey" },
+        "bg": "light"
       },
       {
-        "type": "browser-frame",
+        "type": "panorama",
         "label": "Final Polish",
-        "heading": "Admin Report Dashboard",
+        "heading": "Responsive Mobile Screens",
+        "caption": "The journey components optimized for mobile and responsive displays.",
         "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Responsive Screens" },
-        "bg": "light"
+        "bg": "dark"
       },
       {
         "type": "reflection",
