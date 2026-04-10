@@ -203,7 +203,7 @@ export const projectsData: ProjectDetail[] = [
         "label": "Final MVP",
         "heading": "User Journey Mapping",
         "caption": "Pinch or drag to explore the complete end-to-end admin workflow.",
-        "image": { "src": "/images/projects/org-reports/journey-1.svg", "alt": "MVP User Journey", "darkSrc": "/images/projects/org-reports/journey-2-dark.svg" },
+        "image": { "src": "/images/projects/org-reports/journey-1.svg", "alt": "MVP User Journey", "darkSrc": "/images/projects/org-reports/User journey-dark.svg" },
         "bg": "light"
       },
       {
