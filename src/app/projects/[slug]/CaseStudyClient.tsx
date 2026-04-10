@@ -267,24 +267,29 @@ function StatsSection({ section, color }: { section: CaseStudySection; color: st
     <section className={cls("py-16 lg:py-24 border-t border-b [border-color:var(--border-subtle)]", sectionBg(section.bg))}>
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
         <Reveal>
-          <SectionLabel label={section.label} color={color} />
-          <SectionHeading heading={section.heading} />
-          {section.stats && (
-            <div className="flex flex-wrap justify-center gap-x-16 gap-y-10 text-center">
-              {section.stats.map((s, i) => (
-                <div key={i} className="flex flex-col items-center min-w-[140px] max-w-[220px]">
-                  <div
-                    className={cls("font-montserrat font-bold mb-2", s.value.length > 6 ? "text-2xl lg:text-3xl" : "text-4xl lg:text-5xl")}
-                    style={{ color }}
-                  >
-                    {s.value}
+          <div className="flex flex-col items-center text-center">
+            <SectionLabel label={section.label} color={color} />
+            <SectionHeading heading={section.heading} />
+            {section.caption && (
+              <p className="text-sm font-medium tracking-wide opacity-70 mb-10 mt-[-1rem]">{section.caption}</p>
+            )}
+            {section.stats && (
+              <div className="flex flex-wrap justify-center gap-x-16 gap-y-10 text-center w-full">
+                {section.stats.map((s, i) => (
+                  <div key={i} className="flex flex-col items-center min-w-[140px] max-w-[220px]">
+                    <div
+                      className={cls("font-montserrat font-bold mb-2", s.value.length > 6 ? "text-2xl lg:text-3xl" : "text-4xl lg:text-5xl")}
+                      style={{ color }}
+                    >
+                      {s.value}
+                    </div>
+                    <div className="[color:var(--fg-60)] text-sm">{s.label}</div>
+                    {s.note && <div className="[color:var(--fg-30)] text-xs mt-1">{s.note}</div>}
                   </div>
-                  <div className="[color:var(--fg-60)] text-sm">{s.label}</div>
-                  {s.note && <div className="[color:var(--fg-30)] text-xs mt-1">{s.note}</div>}
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </Reveal>
       </div>
     </section>

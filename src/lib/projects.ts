@@ -133,13 +133,19 @@ export const projectsData: ProjectDetail[] = [
     "caseStudy": [
       {
         "type": "tldr",
-        "label": "The Problem",
-        "heading": "End-of-term grade calculation",
+        "label": "Context",
+        "heading": "Problem Statement & Foundation",
         "bullets": [
           "Org admins use Org reports currently on VST to calculate end-of-term grades for students, typically making up between 10-30% of their final grade.",
           "Occasionally, admin reports are downloaded to retrieve a list of student UUIDs to match platform progress records with institution’s master systems, using third-party software linking the UUID back to the student."
         ],
         "bg": "light"
+      },
+      {
+        "type": "quote",
+        "quote": "If our integration fails to match UUIDs, we have hundreds of blank grades and no graceful fallback.",
+        "attribution": "— Key Admin Stakeholder, VST Platform",
+        "bg": "dark"
       },
       {
         "type": "split",
@@ -166,7 +172,8 @@ export const projectsData: ProjectDetail[] = [
       {
         "type": "stats",
         "label": "Scale",
-        "heading": "Data Validated (1/9/23–18/11/24)",
+        "heading": "Data Validated",
+        "caption": "(1/9/23–18/11/24)",
         "stats": [
           { "value": "1,140", "label": "Reports Generated" },
           { "value": "3,076", "label": "Total Admin Accounts" }
@@ -184,6 +191,20 @@ export const projectsData: ProjectDetail[] = [
         ]
       },
       {
+        "type": "process-step",
+        "label": "Synthesis",
+        "stepNumber": 1,
+        "heading": "Aligning data models",
+        "body": "Mapping the exact data structures exported from the legacy platform with the new capabilities provided by our unified reporting APIs."
+      },
+      {
+        "type": "process-step",
+        "label": "Execution",
+        "stepNumber": 2,
+        "heading": "Optimized export formatting",
+        "body": "Re-engineering the final CSV outputs to correctly structure the 30% grade contributions, minimizing human error during external LMS ingestion."
+      },
+      {
         "type": "horizontal-scroll-gallery",
         "label": "Final MVP",
         "heading": "User Journey Mapping",
@@ -194,14 +215,18 @@ export const projectsData: ProjectDetail[] = [
         ]
       },
       {
-        "type": "screen-gallery",
-        "label": "UI Screens",
-        "heading": "Reports Output",
-        "columns": 2,
-        "screens": [
-          { "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Report configuration" }, "label": "Configuration Placeholder" },
-          { "image": { "src": "/images/projects/org-reports/screen-2.png", "alt": "Report Output" }, "label": "Output Display Placeholder" }
-        ]
+        "type": "browser-frame",
+        "label": "Final Polish",
+        "heading": "Admin Report Dashboard",
+        "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Report configuration UI" },
+        "bg": "light"
+      },
+      {
+        "type": "reflection",
+        "label": "Conclusion",
+        "heading": "What we learned",
+        "body": "By systematically matching edge cases with the engineering squad before drawing the first wireframe, we prevented major regressions. The seamless integration of the tool proves that prioritizing 'boring' administrative workflows delivers outsized value in scale.",
+        "bg": "accent"
       }
     ]
   },
