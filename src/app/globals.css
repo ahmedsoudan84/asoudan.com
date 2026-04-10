@@ -135,12 +135,6 @@ body {
   transition: none !important;
 }
 
-/* ── Hide cursor on desktop ─────────────────────────────────── */
-@media (pointer: fine) {
-  body, a, button, [role="button"], input, textarea, select {
-    cursor: none;
-  }
-}
 
 /* ── Scrollbar ──────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }

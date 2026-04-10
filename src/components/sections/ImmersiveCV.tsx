@@ -226,9 +226,8 @@ type ToolEntry =
 
 /* Inline SVGs for tools not on Simple Icons (Adobe suite removed for legal reasons) */
 const adobeSvg = (letters: string) => (
-  <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="28" height="28" rx="6" fill="currentColor" opacity="0.15" />
-    <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="11" fontWeight="700" fontFamily="Montserrat, sans-serif">{letters}</text>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text x="12" y="18" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="700" fontFamily="Montserrat, sans-serif" letterSpacing="-0.05em">{letters}</text>
   </svg>
 );
 
@@ -241,9 +240,8 @@ const tools: ToolEntry[] = [
   { name: "After Effects", type: "svg", svg: adobeSvg("Ae") },
   { name: "InDesign", type: "svg", svg: adobeSvg("Id") },
   { name: "InVision", type: "svg", svg: (
-    <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="28" height="28" rx="6" fill="currentColor" opacity="0.15" />
-      <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="11" fontWeight="700" fontFamily="Montserrat, sans-serif">In</text>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="12" y="18" textAnchor="middle" fill="currentColor" fontSize="16" fontWeight="700" fontFamily="Montserrat, sans-serif" letterSpacing="-0.05em">In</text>
     </svg>
   )},
   { name: "Miro", type: "cdn", slug: "miro" },
@@ -255,9 +253,8 @@ const tools: ToolEntry[] = [
   { name: "Tailwind CSS", type: "cdn", slug: "tailwindcss" },
   { name: "React", type: "cdn", slug: "react" },
   { name: "3ds Max", type: "svg", svg: (
-    <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="28" height="28" rx="6" fill="currentColor" opacity="0.15" />
-      <text x="14" y="19" textAnchor="middle" fill="currentColor" fontSize="9" fontWeight="700" fontFamily="Montserrat, sans-serif">3ds</text>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="12" y="17" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="700" fontFamily="Montserrat, sans-serif" letterSpacing="-0.05em">3ds</text>
     </svg>
   )},
   { name: "AutoCAD", type: "cdn", slug: "autodesk" },
@@ -640,7 +637,7 @@ export default function ImmersiveCV() {
                     className="shrink-0"
                   />
                 ) : (
-                  <span className="shrink-0 inline-flex" style={{ color: "var(--accent)", width: 16, height: 16 }}>
+                  <span className="shrink-0 inline-flex items-center justify-center" style={{ color: `#${logoColor}`, width: 16, height: 16 }}>
                     {tool.svg}
                   </span>
                 )}

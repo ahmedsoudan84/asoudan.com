@@ -1580,6 +1580,43 @@ function PersonaCardsSection({ section, color }: { section: CaseStudySection; co
   );
 }
 
+/* ─── Horizontal Scroll Gallery ─── */
+function HorizontalScrollGallerySection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
+  if (!section.screens || section.screens.length === 0) return null;
+  return (
+    <section className={cls("py-16 lg:py-24 overflow-hidden", sectionBg(section.bg))}>
+      <div className="max-w-[95vw] lg:max-w-max mx-auto px-6 lg:px-10">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 overflow-x-auto pb-8 snap-x snap-mandatory pt-4 lg:pr-[10vw] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            {section.screens.map((screen, i) => {
+              const res = typeof screen === 'string'
+                ? { src: screen, alt: `Screen ${i + 1}` }
+                : 'image' in (screen as any)
+                ? (() => {
+                    const s = screen as any;
+                    const img = typeof s.image === 'string' ? { src: s.image, alt: s.label || `Screen ${i + 1}` } : s.image;
+                    return { src: img.src, alt: img.alt, label: s.label };
+                  })()
+                : { src: (screen as any).src, alt: (screen as any).alt };
+              
+              return (
+                <div key={i} className="flex-none w-full lg:w-auto lg:snap-center shadow-xl lg:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.5)] rounded-2xl overflow-hidden cursor-pointer relative border [border-color:var(--border-subtle)] flex flex-col justify-center max-h-[85vh] transition-transform duration-300 hover:scale-[1.01]" onClick={() => onImageClick?.(res.src)}>
+                  <SafeImage src={res.src} alt={res.alt} width={1200} height={1800} className="w-full lg:w-auto h-auto lg:max-h-full object-contain" />
+                </div>
+              );
+            })}
+          </div>
+          {section.caption && (
+            <p className="[color:var(--fg-30)] text-sm mt-3 text-center">{section.caption}</p>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Section dispatcher ─── */
 function Section({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   switch (section.type) {
@@ -1633,6 +1670,8 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <NavProposalsSection section={section} color={color} />;
     case "concept-model":
       return <ConceptModelSection section={section} color={color} />;
+    case "horizontal-scroll-gallery":
+      return <HorizontalScrollGallerySection section={section} color={color} onImageClick={onImageClick} />;
   }
 }
 

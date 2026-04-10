@@ -38,7 +38,8 @@ export interface CaseStudySection {
     | "possible-solutions"
     | "org-architecture"
     | "nav-proposals"
-    | "concept-model";
+    | "concept-model"
+    | "horizontal-scroll-gallery";
   label?: string;
   heading?: string;
   body?: string;
@@ -100,6 +101,110 @@ export interface ProjectDetail {
 }
 
 export const projectsData: ProjectDetail[] = [
+  {
+    "id": "org-reports",
+    "slug": "org-reports",
+    "title": "Org level reports",
+    "subtitle": "Oxford English Hub",
+    "category": "PRODUCT DESIGN",
+    "number": "00",
+    "description": "Defined a streamlined product direction balancing scalability with immediate value for admins generating Org-level grades.",
+    "tags": [
+      "Product Design",
+      "User Journey Mapping",
+      "UX Research",
+      "Testing"
+    ],
+    "color": "#3D9B9B",
+    "cover": "/images/projects/org-reports/cover.png",
+    "images": [
+      {
+        "src": "/images/projects/org-reports/cover.png",
+        "alt": "Org Level Reports Cover"
+      }
+    ],
+    "behanceUrl": "",
+    "employer": "Oxford University Press",
+    "role": "Product design, User journey mapping, UX research & Testing",
+    "timeline": "20 weeks",
+    "team": "Cross-functional team",
+    "tools": "Figma, Miro, Maze",
+    "platform": "Web",
+    "caseStudy": [
+      {
+        "type": "tldr",
+        "label": "The Problem",
+        "heading": "End-of-term grade calculation",
+        "bullets": [
+          "Org admins use Org reports currently on VST to calculate end-of-term grades for students, typically making up between 10-30% of their final grade.",
+          "Occasionally, admin reports are downloaded to retrieve a list of student UUIDs to match platform progress records with institution’s master systems, using third-party software linking the UUID back to the student."
+        ],
+        "bg": "light"
+      },
+      {
+        "type": "split",
+        "label": "Constraints & Assumptions",
+        "heading": "Product Direction Parameters",
+        "body": "Before moving to high-fidelity design, several key assumptions and MVP requirements had to be validated to shape the reporting logic.",
+        "bullets": [
+          "[MVP Requirement: Add text from your screenshots here]",
+          "[Assumption 1: Add text from your screenshots here]",
+          "[Assumption 2: Add text from your screenshots here]"
+        ]
+      },
+      {
+        "type": "timeline",
+        "label": "Process",
+        "heading": "Discovery to Delivery",
+        "timelineSteps": [
+          { "phase": "Weeks 1-4", "title": "Discovery", "description": "Analyzing VST reports and aligning with business KPIs." },
+          { "phase": "Weeks 5-10", "title": "User Journey", "description": "Mapping admin workflows and matching student UUID criteria." },
+          { "phase": "Weeks 11-16", "title": "Wireframing", "description": "Rapid prototyping of report generation and edge cases." },
+          { "phase": "Weeks 17-20", "title": "Delivery", "description": "Testing, validation, and final MVP handover." }
+        ]
+      },
+      {
+        "type": "stats",
+        "label": "Scale",
+        "heading": "Data Validated (1/9/23–18/11/24)",
+        "stats": [
+          { "value": "1,140", "label": "Reports Generated" },
+          { "value": "3,076", "label": "Total Admin Accounts" }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "split",
+        "label": "Analysis",
+        "heading": "Problems to solve & Findings",
+        "body": "Our analysis pointed to a need for exact CSV export parity and solving specific scaling issues.",
+        "bullets": [
+          "[Problem to solve 1: Fill in from PNG]",
+          "[Findings 1: Fill in from PNG]"
+        ]
+      },
+      {
+        "type": "horizontal-scroll-gallery",
+        "label": "Final MVP",
+        "heading": "User Journey Mapping",
+        "caption": "Export your Figma User Journey map slices and place them at public/images/projects/org-reports/journey-1.png, etc.",
+        "screens": [
+          { "image": { "src": "/images/projects/org-reports/journey-1.png", "alt": "Journey Step 1" }, "label": "Step 1" },
+          { "image": { "src": "/images/projects/org-reports/journey-2.png", "alt": "Journey Step 2" }, "label": "Step 2" }
+        ]
+      },
+      {
+        "type": "screen-gallery",
+        "label": "UI Screens",
+        "heading": "Reports Output",
+        "columns": 2,
+        "screens": [
+          { "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Report configuration" }, "label": "Configuration Placeholder" },
+          { "image": { "src": "/images/projects/org-reports/screen-2.png", "alt": "Report Output" }, "label": "Output Display Placeholder" }
+        ]
+      }
+    ]
+  },
   {
     "id": "learner-dashboard",
     "slug": "learner-dashboard",
