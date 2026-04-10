@@ -5,6 +5,10 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import FixedThemeToggle from "@/components/ui/FixedThemeToggle";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   metadataBase: new URL("https://asoudan.com"),
   title: {
     default: "Ahmed Soudan — Digital Product Designer",
