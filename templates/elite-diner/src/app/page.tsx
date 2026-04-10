@@ -35,7 +35,7 @@ export default function HomePage() {
             <p className="text-muted-foreground">Tell us what you're craving — our AI finds your perfect dish</p>
           </div>
           <div className="max-w-2xl mx-auto flex gap-2">
-            <input type="text" placeholder='e.g., "vegetarian under £20 for date night"' className="flex-1 h-12 px-4 rounded-lg border bg-background" />
+            <input type="text" placeholder='e.g., "vegetarian under £20 for date night"' className="flex-1 h-12 px-4 rounded-lg border bg-background dark:bg-gray-900" />
             <Button size="lg" className="h-12"><Sparkles className="mr-2 h-4 w-4" />Get Recommendations</Button>
           </div>
           <div className="flex flex-wrap gap-2 justify-center mt-4 text-sm text-muted-foreground">
