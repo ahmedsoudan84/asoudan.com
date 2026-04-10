@@ -41,14 +41,7 @@ export default function TopNav() {
           </svg>
         </Link>
 
-        {/* Breadcrumb */}
-        <nav className="hidden md:flex items-center gap-1 text-xs font-montserrat" style={{ color: "var(--fg-50)" }}>
-          <Link href="/" className="hover:text-[var(--accent)] transition-colors">
-            Portfolio
-          </Link>
-          <span className="mx-1">/</span>
-          <span style={{ color: "var(--accent)" }}>Real Estate</span>
-        </nav>
+        {/* Breadcrumb removed */}
 
         {/* Template sub-nav (desktop) */}
         <nav className="hidden md:flex items-center gap-6">

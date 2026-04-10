@@ -113,9 +113,11 @@ const AreaIcon = () => (
     <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M9 21V9" />
   </svg>
 );
+// Clearer walk score icon - location pin style
 const WalkIcon = ({ style }: { style?: React.CSSProperties }) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={style}>
-    <circle cx="12" cy="5" r="3" /><path d="M12 8v4" /><path d="M8 22l4-4 4 4" /><path d="M9.5 14.5L7 17" />
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
   </svg>
 );
 const StationIcon = () => (
@@ -310,6 +312,26 @@ export default function ListingsClient() {
                 <button onClick={() => setShowFilters(false)} className="p-2 rounded-full hover:bg-white/5">
                   <CloseIcon />
                 </button>
+              </div>
+
+              {/* Property Type */}
+              <div className="mb-6">
+                <label className="block text-xs font-montserrat uppercase tracking-wider mb-3" style={{ color: "var(--fg-40)" }}>Sale / Rent</label>
+                <div className="flex flex-wrap gap-2">
+                  {(["all", "sale", "rent"] as const).map((m) => (
+                    <button
+                      key={m}
+                      onClick={() => { setListingMode(m); setPriceIdx(0); }}
+                      className="px-3 py-2 rounded-lg text-xs font-montserrat transition-all duration-200"
+                      style={{
+                        background: listingMode === m ? "var(--accent)" : "var(--bg-surface)",
+                        color: listingMode === m ? "var(--bg-primary)" : "var(--fg-50)",
+                      }}
+                    >
+                      {m === "all" ? "All" : m === "sale" ? "For Sale" : "To Rent"}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Property Type */}
