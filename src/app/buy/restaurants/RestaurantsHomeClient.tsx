@@ -101,7 +101,7 @@ export default function RestaurantsHomeClient() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href="https://feature-elite-diner-template.asoudan-com.vercel.app"
+                href="https://elite-diner-demo.asoudan-com.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group px-8 py-4 rounded-xl font-montserrat font-semibold text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_rgba(0,241,241,0.3)]"
@@ -347,7 +347,7 @@ export default function RestaurantsHomeClient() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://feature-elite-diner-template.asoudan-com.vercel.app"
+                href="https://elite-diner-demo.asoudan-com.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 rounded-xl font-montserrat font-semibold text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_rgba(0,241,241,0.3)]"
