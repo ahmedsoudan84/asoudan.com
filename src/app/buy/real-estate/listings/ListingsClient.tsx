@@ -318,7 +318,7 @@ export default function ListingsClient() {
               <div className="mb-6">
                 <label className="block text-xs font-montserrat uppercase tracking-wider mb-3" style={{ color: "var(--fg-40)" }}>Sale / Rent</label>
                 <div className="flex flex-wrap gap-2">
-                  {(["all", "sale", "rent"] as const).map((m) => (
+                  {(["sale", "rent"] as const).map((m) => (
                     <button
                       key={m}
                       onClick={() => { setListingMode(m); setPriceIdx(0); }}
@@ -328,7 +328,7 @@ export default function ListingsClient() {
                         color: listingMode === m ? "var(--bg-primary)" : "var(--fg-50)",
                       }}
                     >
-                      {m === "all" ? "All" : m === "sale" ? "For Sale" : "To Rent"}
+                      {m === "sale" ? "For Sale" : "To Rent"}
                     </button>
                   ))}
                 </div>
