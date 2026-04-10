@@ -25,9 +25,9 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Links</h4>
             <div className="flex flex-col gap-2 text-sm">
-              <Link href="/book" className="text-muted-foreground hover:text-primary">Reservations</Link>
-              <Link href="/menu" className="text-muted-foreground hover:text-primary">Menu</Link>
-              <Link href="/contact" className="text-muted-foreground hover:text-primary">Contact</Link>
+              <Link href="/buy/elite-diner/book" className="text-muted-foreground hover:text-primary">Reservations</Link>
+              <Link href="/buy/elite-diner/menu" className="text-muted-foreground hover:text-primary">Menu</Link>
+              <Link href="/buy/elite-diner/contact" className="text-muted-foreground hover:text-primary">Contact</Link>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function OrderPage() {
         <ShoppingBag className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
         <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
         <p className="text-muted-foreground mb-8">Browse our menu and add delicious dishes.</p>
-        <Button asChild><Link href="/menu">View Menu</Link></Button>
+        <Button asChild><Link href="/buy/elite-diner/menu">View Menu</Link></Button>
       </div>
     );
   }
@@ -50,7 +50,7 @@ export default function OrderPage() {
             </div>
           </CardContent>
         </Card>
-        <Button asChild><Link href="/">Back to Home</Link></Button>
+        <Button asChild><Link href="/buy/elite-diner">Back to Home</Link></Button>
       </div>
     );
   }

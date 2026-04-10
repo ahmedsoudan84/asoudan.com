@@ -21,8 +21,8 @@ export default function HomePage() {
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Fine Dining<br /><span className="text-primary">Redefined</span></h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">Experience culinary excellence in Mayfair. Our AI helps you discover your perfect meal.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="text-base"><Link href="/book"><Calendar className="mr-2 h-5 w-5" />Book a Table</Link></Button>
-            <Button asChild size="lg" variant="outline" className="text-base"><Link href="/order"><ShoppingBag className="mr-2 h-5 w-5" />Order Delivery</Link></Button>
+            <Button asChild size="lg" className="text-base"><Link href="/buy/elite-diner/book"><Calendar className="mr-2 h-5 w-5" />Book a Table</Link></Button>
+            <Button asChild size="lg" variant="outline" className="text-base"><Link href="/buy/elite-diner/order"><ShoppingBag className="mr-2 h-5 w-5" />Order Delivery</Link></Button>
           </div>
         </div>
       </section>
@@ -40,9 +40,9 @@ export default function HomePage() {
           </div>
           <div className="flex flex-wrap gap-2 justify-center mt-4 text-sm text-muted-foreground">
             <span>Try:</span>
-            <Link href="/menu?search=spicy" className="hover:text-primary underline">spicy</Link>
-            <Link href="/menu?search=vegetarian" className="hover:text-primary underline">vegetarian</Link>
-            <Link href="/menu?search=gluten-free" className="hover:text-primary underline">gluten-free</Link>
+            <Link href="/buy/elite-diner/menu?search=spicy" className="hover:text-primary underline">spicy</Link>
+            <Link href="/buy/elite-diner/menu?search=vegetarian" className="hover:text-primary underline">vegetarian</Link>
+            <Link href="/buy/elite-diner/menu?search=gluten-free" className="hover:text-primary underline">gluten-free</Link>
           </div>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default function HomePage() {
         <div className="container">
           <div className="flex items-end justify-between mb-8">
             <div><h2 className="text-3xl font-bold mb-2">Featured Dishes</h2><p className="text-muted-foreground">Hand-picked favourites</p></div>
-            <Button asChild variant="ghost"><Link href="/menu">View All <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+            <Button asChild variant="ghost"><Link href="/buy/elite-diner/menu">View All <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.map(dish => (
@@ -99,8 +99,8 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold mb-4">Ready for an Unforgettable Experience?</h2>
           <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">Book your table and let our AI help you discover your perfect meal.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="secondary" className="text-primary"><Link href="/book">Reserve a Table</Link></Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link href="/menu">View Menu</Link></Button>
+            <Button asChild size="lg" variant="secondary" className="text-primary"><Link href="/buy/elite-diner/book">Reserve a Table</Link></Button>
+            <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link href="/buy/elite-diner/menu">View Menu</Link></Button>
           </div>
         </div>
       </section>

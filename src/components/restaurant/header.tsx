@@ -8,13 +8,13 @@ import { cn } from '@/lib/restaurant/utils';
 import { useCart } from '@/lib/restaurant/cart-store';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/menu', label: 'Menu' },
-  { href: '/order', label: 'Order' },
-  { href: '/book', label: 'Book a Table' },
-  { href: '/ai-tools', label: 'AI Tools' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/buy/elite-diner', label: 'Home' },
+  { href: '/buy/elite-diner/menu', label: 'Menu' },
+  { href: '/buy/elite-diner/order', label: 'Order' },
+  { href: '/buy/elite-diner/book', label: 'Book a Table' },
+  { href: '/buy/elite-diner/ai-tools', label: 'AI Tools' },
+  { href: '/buy/elite-diner/about', label: 'About' },
+  { href: '/buy/elite-diner/contact', label: 'Contact' },
 ];
 
 export function Header() {
@@ -26,7 +26,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="font-bold text-xl"><span className="text-primary">Elite</span> Diner</Link>
+        <Link href="/buy/elite-diner" className="font-bold text-xl"><span className="text-primary">Elite</span> Diner</Link>
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map(link => (
             <Link key={link.href} href={link.href} className={cn("text-sm font-medium hover:text-primary", pathname === link.href ? "text-primary" : "text-muted-foreground")}>
@@ -35,7 +35,7 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/order" className="relative">
+          <Link href="/buy/elite-diner/order" className="relative">
             <Button variant="ghost" size="icon"><ShoppingBag className="h-5 w-5" /></Button>
             {itemCount > 0 && <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">{itemCount}</span>}
           </Link>
