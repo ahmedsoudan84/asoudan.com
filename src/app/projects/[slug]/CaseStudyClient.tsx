@@ -5,11 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { ProjectDetail, CaseStudySection, ImageRef, ScreenItem } from "@/lib/projects";
+import { useTheme } from "@/contexts/ThemeContext";
 
-/* Resolve ImageRef to {src, alt} */
-function resolveImage(img: ImageRef, fallbackAlt = ""): { src: string; alt: string } {
+/* Resolve ImageRef to {src, alt, darkSrc?} */
+function resolveImage(img: ImageRef, fallbackAlt = ""): { src: string; alt: string; darkSrc?: string } {
   if (typeof img === "string") return { src: img, alt: fallbackAlt };
-  return { src: img.src, alt: img.alt };
+  return { src: img.src, alt: img.alt, darkSrc: (img as { src: string; alt: string; darkSrc?: string }).darkSrc };
 }
 
 /* ─── helpers ─── */
@@ -1625,9 +1626,12 @@ function HorizontalScrollGallerySection({ section, color, onImageClick }: { sect
 /* ─── Panorama Section ─── */
 function PanoramaSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   if (!section.image) return null;
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const imgRes = resolveImage(section.image);
   const isSvg = imgRes.src.toLowerCase().endsWith('.svg');
   const isJourney = imgRes.src.includes('journey');
+  const activeSrc = isJourney && imgRes.darkSrc ? (isDark ? imgRes.darkSrc : imgRes.src) : imgRes.src;
   
   return (
     <section className={cls("py-16 lg:py-24 overflow-hidden relative", sectionBg(section.bg))}>
@@ -1663,27 +1667,23 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
           <div className="px-[5vw] lg:px-[10vw] inline-flex">
             <div 
               className="relative rounded-2xl overflow-hidden flex flex-col justify-center transition-transform hover:opacity-95" 
-              onClick={() => onImageClick?.(imgRes.src)}
+              onClick={() => onImageClick?.(activeSrc)}
             >
               {isSvg ? (
                 <img 
-                  src={imgRes.src} 
+                  src={activeSrc} 
                   alt={imgRes.alt} 
                   className={`${isJourney ? "h-[85vh] md:h-[90vh] lg:h-[95vh] w-auto max-w-none object-contain" : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"}`}
-                  style={{ 
-                    minWidth: isJourney ? '150vw' : 'auto',
-                  }}
+                  style={{ minWidth: isJourney ? '150vw' : 'auto' }}
                 />
               ) : (
                 <SafeImage 
-                  src={imgRes.src} 
+                  src={activeSrc} 
                   alt={imgRes.alt} 
                   width={3000} 
                   height={1200} 
                   className={`${isJourney ? "h-[85vh] md:h-[90vh] lg:h-[95vh] w-auto max-w-none object-contain" : "h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain"}`}
-                  style={{ 
-                    minWidth: isJourney ? '150vw' : 'auto',
-                  }}
+                  style={{ minWidth: isJourney ? '150vw' : 'auto' }}
                 />
               )}
             </div>
