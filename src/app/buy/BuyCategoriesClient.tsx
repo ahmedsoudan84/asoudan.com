@@ -13,6 +13,13 @@ const categories = [
       "Semantic property search, AI chatbot, area insights, admin portal. Fully client-side — no API keys required.",
     tags: ["Next.js 15", "AI-Powered", "Admin Portal", "12 Listings"],
     status: "live" as const,
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+        <rect x="7" y="4" width="10" height="5" rx="1" />
+      </svg>
+    ),
   },
   {
     slug: null,
@@ -22,6 +29,14 @@ const categories = [
       "Charts, user management, billing integration, dark mode. Built with Recharts and Tailwind.",
     tags: ["Next.js", "Dashboard", "Charts"],
     status: "coming-soon" as const,
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18" />
+        <path d="M9 21V9" />
+        <path d="M12 14v7" />
+      </svg>
+    ),
   },
   {
     slug: null,
@@ -31,6 +46,13 @@ const categories = [
       "Masonry galleries, lightbox, client proofing, e-commerce integration for prints.",
     tags: ["Next.js", "Gallery", "E-commerce"],
     status: "coming-soon" as const,
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <path d="M21 15l-5-5L5 21" />
+      </svg>
+    ),
   },
 ];
 
@@ -88,18 +110,15 @@ export default function BuyCategoriesClient() {
                   style={{ background: "var(--bg-tertiary)" }}
                 >
                   {isLive ? (
-                    <div className="text-center">
-                      <div
-                        className="text-5xl font-bold font-montserrat opacity-20"
-                        style={{ color: "var(--accent)" }}
-                      >
-                        AI
+                    <div className="text-center p-6">
+                      <div className="mb-3" style={{ color: "var(--accent)", opacity: 0.3 }}>
+                        {cat.icon}
                       </div>
                       <div
-                        className="text-xs font-montserrat uppercase tracking-[4px] mt-2 opacity-40"
-                        style={{ color: "var(--accent)" }}
+                        className="text-2xl font-bold font-montserrat"
+                        style={{ color: "var(--accent)", opacity: 0.15 }}
                       >
-                        Estate
+                        PREVIEW
                       </div>
                     </div>
                   ) : (

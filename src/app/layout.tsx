@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ClientShell from "@/components/layout/ClientShell";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import FixedThemeToggle from "@/components/ui/FixedThemeToggle";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://asoudan.com"),
@@ -107,6 +108,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col font-montserrat">
         <ThemeProvider>
+          <FixedThemeToggle />
           <ClientShell>{children}</ClientShell>
         </ThemeProvider>
       </body>

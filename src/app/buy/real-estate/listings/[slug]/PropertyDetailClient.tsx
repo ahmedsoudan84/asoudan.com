@@ -18,40 +18,40 @@ function getStatusStyle(status: string): { bg: string; color: string; border: st
   
   if (isRent) {
     return {
-      bg: "rgba(16, 185, 129, 0.15)",
-      color: "#10b981",
-      border: "rgba(16, 185, 129, 0.3)",
+      bg: "rgba(16, 185, 129, 0.9)",
+      color: "#ffffff",
+      border: "rgba(16, 185, 129, 0.5)",
     };
   }
   
   if (status === "For Sale") {
     return {
-      bg: "rgba(0, 241, 241, 0.15)",
-      color: "var(--accent)",
-      border: "rgba(0, 241, 241, 0.3)",
+      bg: "rgba(0, 241, 241, 0.95)",
+      color: "#0a0c14",
+      border: "rgba(0, 241, 241, 0.5)",
     };
   }
   
   if (status === "Under Offer") {
     return {
-      bg: "rgba(251, 191, 36, 0.15)",
-      color: "#fbbf24",
-      border: "rgba(251, 191, 36, 0.3)",
+      bg: "rgba(251, 191, 36, 0.9)",
+      color: "#1a1a1a",
+      border: "rgba(251, 191, 36, 0.5)",
     };
   }
   
   if (status === "Sold STC") {
     return {
-      bg: "rgba(239, 68, 68, 0.15)",
-      color: "#ef4444",
-      border: "rgba(239, 68, 68, 0.3)",
+      bg: "rgba(239, 68, 68, 0.9)",
+      color: "#ffffff",
+      border: "rgba(239, 68, 68, 0.5)",
     };
   }
   
   return {
-    bg: "rgba(255, 255, 255, 0.1)",
-    color: "var(--fg-50)",
-    border: "rgba(255, 255, 255, 0.1)",
+    bg: "rgba(255, 255, 255, 0.9)",
+    color: "#1a1a1a",
+    border: "rgba(255, 255, 255, 0.3)",
   };
 }
 

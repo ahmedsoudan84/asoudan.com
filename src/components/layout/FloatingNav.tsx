@@ -198,14 +198,7 @@ export default function FloatingNav() {
             );
           })}
 
-          {/* Divider */}
-          <div
-            className="w-px h-8 shrink-0"
-            style={{ backgroundColor: "var(--border-subtle)" }}
-          />
-
-          {/* Theme toggle */}
-          <ThemeToggle />
+          {/* Theme toggle removed - now in fixed position top-right */}
         </motion.nav>
       )}
     </AnimatePresence>

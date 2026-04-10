@@ -10,44 +10,49 @@ type ListingMode = "sale" | "rent" | "all";
 type PropertyType = "All" | "Flat" | "House" | "Penthouse" | "Townhouse" | "Maisonette";
 type BedFilter = "Any" | "1+" | "2+" | "3+" | "4+" | "5+";
 
-function getStatusStyle(status: string): { bg: string; color: string; label: string } {
+function getStatusStyle(status: string): { bg: string; color: string; border: string; label: string } {
   const isRent = status === "To Let" || status === "Let Agreed";
   
   if (isRent) {
     return {
-      bg: "rgba(16, 185, 129, 0.15)",
-      color: "var(--accent)",
+      bg: "rgba(16, 185, 129, 0.9)",
+      color: "#ffffff",
+      border: "rgba(16, 185, 129, 0.5)",
       label: status === "To Let" ? "To Let" : "Let Agreed",
     };
   }
   
   if (status === "For Sale") {
     return {
-      bg: "rgba(0, 241, 241, 0.15)",
-      color: "var(--accent)",
+      bg: "rgba(0, 241, 241, 0.95)",
+      color: "#0a0c14",
+      border: "rgba(0, 241, 241, 0.5)",
       label: "For Sale",
     };
   }
   
   if (status === "Under Offer") {
     return {
-      bg: "rgba(251, 191, 36, 0.15)",
-      color: "#fbbf24",
+      bg: "rgba(251, 191, 36, 0.9)",
+      color: "#1a1a1a",
+      border: "rgba(251, 191, 36, 0.5)",
       label: "Under Offer",
     };
   }
   
   if (status === "Sold STC") {
     return {
-      bg: "rgba(239, 68, 68, 0.15)",
-      color: "#ef4444",
+      bg: "rgba(239, 68, 68, 0.9)",
+      color: "#ffffff",
+      border: "rgba(239, 68, 68, 0.5)",
       label: "Sold STC",
     };
   }
   
   return {
-    bg: "rgba(255, 255, 255, 0.1)",
-    color: "var(--fg-50)",
+    bg: "rgba(255, 255, 255, 0.9)",
+    color: "#1a1a1a",
+    border: "rgba(255, 255, 255, 0.3)",
     label: status,
   };
 }
