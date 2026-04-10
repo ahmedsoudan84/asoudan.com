@@ -54,7 +54,7 @@
 
 /* ── Light theme ────────────────────────────────────────────── */
 [data-theme="light"] {
-  --bg-primary:   #f8f6f1;
+  --bg-primary:   #f8f8f8;
   --bg-secondary: #f4f1ea;
   --bg-tertiary:  #ede8de;
   --bg-surface:   #ffffff;
