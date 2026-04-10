@@ -203,7 +203,7 @@ export const projectsData: ProjectDetail[] = [
         "label": "Final MVP",
         "heading": "User Journey Mapping",
         "caption": "Pinch or drag to explore the complete end-to-end admin workflow.",
-        "image": { "src": "/images/projects/org-reports/journey-1.png", "alt": "MVP User Journey" },
+        "image": { "src": "/images/projects/org-reports/journey-1.svg", "alt": "MVP User Journey" },
         "bg": "light"
       },
       {
@@ -211,7 +211,7 @@ export const projectsData: ProjectDetail[] = [
         "label": "Output",
         "heading": "Responsive Mobile Screens",
         "caption": "The journey components optimized for mobile and responsive displays.",
-        "image": { "src": "/images/projects/org-reports/screen-1.png", "alt": "Responsive Screens" },
+        "image": { "src": "/images/projects/org-reports/screen-1.svg", "alt": "Responsive Screens" },
         "bg": "dark"
       },
       {

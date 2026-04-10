@@ -1626,6 +1626,7 @@ function HorizontalScrollGallerySection({ section, color, onImageClick }: { sect
 function PanoramaSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   if (!section.image) return null;
   const imgRes = resolveImage(section.image);
+  const isSvg = imgRes.src.toLowerCase().endsWith('.svg');
   
   return (
     <section className={cls("py-16 lg:py-24 overflow-hidden relative", sectionBg(section.bg))}>
@@ -1647,13 +1648,21 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
               className="relative rounded-2xl overflow-hidden flex flex-col justify-center transition-transform hover:opacity-95" 
               onClick={() => onImageClick?.(imgRes.src)}
             >
-              <SafeImage 
-                src={imgRes.src} 
-                alt={imgRes.alt} 
-                width={3000} 
-                height={1200} 
-                className="h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain" 
-              />
+              {isSvg ? (
+                <img 
+                  src={imgRes.src} 
+                  alt={imgRes.alt} 
+                  className="h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain" 
+                />
+              ) : (
+                <SafeImage 
+                  src={imgRes.src} 
+                  alt={imgRes.alt} 
+                  width={3000} 
+                  height={1200} 
+                  className="h-[50vh] md:h-[65vh] lg:h-[80vh] w-auto max-w-none object-contain" 
+                />
+              )}
             </div>
           </div>
         </div>
