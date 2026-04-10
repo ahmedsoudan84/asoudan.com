@@ -15,7 +15,7 @@ export interface TemplateCategory {
 
 export const categories: TemplateCategory[] = [
   {
-    slug: "restaurants",
+    slug: "elite-diner",
     title: "Elite Diner",
     subtitle: "Premium Restaurant Template with AI Features",
     description:
