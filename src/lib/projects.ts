@@ -117,10 +117,10 @@ export const projectsData: ProjectDetail[] = [
       "Testing"
     ],
     "color": "#3D9B9B",
-    "cover": "/images/projects/org-reports/cover.png",
+    "cover": "/images/projects/org-reports/org-reports-cover.png",
     "images": [
       {
-        "src": "/images/projects/org-reports/cover.png",
+        "src": "/images/projects/org-reports/org-reports-cover.png",
         "alt": "Org Level Reports Cover"
       }
     ],
