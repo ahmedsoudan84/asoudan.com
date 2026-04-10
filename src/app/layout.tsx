@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s | Ahmed Soudan"
   },
   description: "Portfolio of Ahmed Soudan, a Digital Product Designer with 20 years of experience delivering 300+ projects globally. Specializing in UX research, product design, and EdTech solutions.",
-  keywords: ["product designer", "ux designer", "ui designer", "digital product design", "ux research", "edtech", "portfolio", "Ahmed Soudan"],
+  keywords: ["product designer", "ux designer", "ui designer", "digital product design", "ux research", "edtech", "portfolio", "Ahmed Soudan", "next.js templates", "premium website templates", "buy templates"],
   authors: [{ name: "Ahmed Soudan" }],
   creator: "Ahmed Soudan",
   publisher: "Ahmed Soudan",
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-site-verification-code", // Replace with actual code
-  },
+  // verification: {
+  //   google: "your-google-site-verification-code",
+  // },
 };
 
 export default function RootLayout({
@@ -92,7 +92,8 @@ export default function RootLayout({
                 "EdTech",
                 "Design Systems",
                 "Prototyping",
-                "Usability Testing"
+                "Usability Testing",
+                "Next.js Templates"
               ],
               "hasOccupation": {
                 "@type": "Occupation",
@@ -101,6 +102,11 @@ export default function RootLayout({
                   "@type": "Country",
                   "name": "United Kingdom"
                 }
+              },
+              "offers": {
+                "@type": "OfferCatalog",
+                "name": "Premium Website Templates",
+                "url": "https://asoudan.com/buy"
               }
             }),
           }}

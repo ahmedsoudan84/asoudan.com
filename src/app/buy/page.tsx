@@ -8,5 +8,33 @@ export const metadata: Metadata = {
 };
 
 export default function BuyPage() {
-  return <BuyCategoriesClient />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Product",
+          "name": "Real Estate London Estate Agent Template",
+          "description": "Semantic property search, AI chatbot, area insights, admin portal. Fully client-side.",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      }
+    ]
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BuyCategoriesClient />
+    </>
+  );
 }
