@@ -187,6 +187,22 @@ export default function FloatingNav() {
               );
             }
 
+            const targetHref = isOnBuyPages && item.id !== "hero" && item.id !== "real-estate" 
+              ? (item.id === "projects" ? "/" : `/#${item.id}`) 
+              : undefined;
+
+            if (targetHref) {
+              return (
+                <Link
+                  key={item.id}
+                  href={targetHref}
+                  className="relative flex flex-col items-center gap-1.5 cursor-pointer group"
+                >
+                  {inner}
+                </Link>
+              );
+            }
+
             return (
               <button
                 key={item.id}
