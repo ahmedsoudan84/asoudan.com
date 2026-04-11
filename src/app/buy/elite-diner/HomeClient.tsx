@@ -132,16 +132,7 @@ export default function HomeClient() {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-[10px] uppercase tracking-[3px] font-bold" style={{ color: "var(--fg-30)" }}>Discover</span>
-          <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, var(--accent), transparent)" }} />
-        </motion.div>
+        
       </section>
 
       {/* ── Introduction ─────────────────────────────────── */}
