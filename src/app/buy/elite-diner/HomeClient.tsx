@@ -56,8 +56,8 @@ export default function HomeClient() {
             className="w-full h-full object-cover scale-105"
           />
           {/* Theme-aware overlay */}
-          <div className="absolute inset-0 bg-bg-primary/40 dark:bg-bg-primary/85 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/60 via-transparent to-transparent dark:from-bg-primary dark:to-bg-primary/40" />
+          <div className="absolute inset-0 backdrop-blur-[1px]" style={{ background: "var(--bg-primary)", opacity: 0.5 }} />
+          <div className="absolute inset-0 bg-gradient-to-t" style={{ background: "linear-gradient(to top, var(--bg-primary) 0%, transparent 60%)" }} />
         </div>
 
         <div className="max-w-[1000px] w-full mx-auto relative z-10 text-center">
@@ -67,17 +67,17 @@ export default function HomeClient() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <div className="flex items-center justify-center gap-2 mb-8">
-              <span className="w-12 h-px bg-accent/30" />
+              <span className="w-12 h-px" style={{ background: "var(--accent)", opacity: 0.3 }} />
               <span className="text-accent text-[11px] font-bold uppercase tracking-[4px]">Fine Dining Redefined</span>
-              <span className="w-12 h-px bg-accent/30" />
+              <span className="w-12 h-px" style={{ background: "var(--accent)", opacity: 0.3 }} />
             </div>
 
-            <h1 className="font-montserrat text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] text-fg-primary mb-8" style={{ color: "var(--fg)" }}>
+            <h1 className="font-montserrat text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] mb-8" style={{ color: "var(--fg)" }}>
               Savour the <br />
-              <span className="text-accent">Future</span>
+              <span style={{ color: "var(--accent)" }}>Future</span>
             </h1>
 
-            <p className="max-w-xl mx-auto text-fg-60 text-lg md:text-xl font-montserrat leading-relaxed mb-12">
+            <p className="max-w-xl mx-auto text-lg md:text-xl font-montserrat leading-relaxed mb-12" style={{ color: "var(--fg-60)" }}>
               The premium London restaurant template powered by invisible AI. 
               Built for conversion, designed for elegance.
             </p>
@@ -85,16 +85,17 @@ export default function HomeClient() {
             {/* AI Search Bar */}
             <div className="max-w-2xl mx-auto relative mb-6">
               <div 
-                className="flex items-center gap-3 p-2 pl-6 rounded-2xl border backdrop-blur-xl group transition-all"
-                style={{ background: "rgba(255,255,255,0.08)", borderColor: "rgba(255,255,255,0.15)" }}
+                className="flex items-center gap-3 px-5 py-4 rounded-2xl border group transition-all"
+                style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
               >
-                <Icons.Search className="w-5 h-5 text-accent opacity-50 transition-opacity group-focus-within:opacity-100" />
+                <Icons.Search className="w-5 h-5 shrink-0" style={{ color: "var(--fg-40)" }} />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Tell us what you crave... 'something spicy' or 'date night'"
-                  className="flex-1 bg-transparent py-4 text-white font-montserrat outline-none placeholder:text-white/30"
+                  className="flex-1 bg-transparent py-3 font-montserrat text-sm outline-none"
+                  style={{ color: "var(--fg)" }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && searchQuery.trim()) {
                       window.location.href = `/buy/elite-diner/menu?q=${encodeURIComponent(searchQuery)}`;
@@ -103,7 +104,7 @@ export default function HomeClient() {
                 />
                 <Link
                   href={`/buy/elite-diner/menu?q=${encodeURIComponent(searchQuery)}`}
-                  className="px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] active:scale-95"
+                  className="px-6 py-3 rounded-xl font-montserrat text-xs font-bold uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] active:scale-95"
                   style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                 >
                   Explore
@@ -116,7 +117,12 @@ export default function HomeClient() {
                   <button
                     key={chip.label}
                     onClick={() => setSearchQuery(chip.query)}
-                    className="px-3.5 py-1.5 rounded-full border border-border-subtle bg-fg-05 text-fg-40 text-[10px] uppercase font-bold tracking-wider hover:border-accent hover:text-accent transition-all animate-in fade-in slide-in-from-bottom-2"
+                    className="px-3.5 py-1.5 rounded-full border text-[10px] uppercase font-bold tracking-wider hover:border-accent hover:text-accent transition-all animate-in fade-in slide-in-from-bottom-2"
+                    style={{
+                      background: "var(--fg-06)",
+                      borderColor: "var(--border-subtle)",
+                      color: "var(--fg-50)",
+                    }}
                   >
                     {chip.label}
                   </button>
@@ -133,8 +139,8 @@ export default function HomeClient() {
           transition={{ delay: 1 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-[10px] uppercase tracking-[3px] text-white/30 font-bold">Discover</span>
-          <div className="w-px h-10 bg-gradient-to-b from-accent to-transparent" />
+          <span className="text-[10px] uppercase tracking-[3px] font-bold" style={{ color: "var(--fg-30)" }}>Discover</span>
+          <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, var(--accent), transparent)" }} />
         </motion.div>
       </section>
 
@@ -256,14 +262,14 @@ export default function HomeClient() {
       </section>
 
       {/* ── Trust Signals ────────────────────────────────── */}
-      <section className="py-24 px-6 border-y" style={{ background: "var(--bg-primary)", borderColor: "var(--border-subtle)" }}>
+      <section className="py-24 px-6 border-y" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-subtle)" }}>
         <div className="max-w-[1200px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-12">
           {TRUST_STATS.map((stat, i) => (
             <div key={i} className="text-center group">
-              <div className="text-5xl font-black text-accent mb-4 transition-transform group-hover:scale-110">
+              <div className="text-5xl font-black mb-4 transition-transform group-hover:scale-110" style={{ color: "var(--accent)" }}>
                 {stat.value}
               </div>
-              <div className="text-[11px] uppercase tracking-[3px] font-bold opacity-40">
+              <div className="text-[11px] uppercase tracking-[3px] font-bold" style={{ color: "var(--fg-50)" }}>
                 {stat.label}
               </div>
             </div>
