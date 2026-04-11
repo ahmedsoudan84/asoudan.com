@@ -1,26 +1,27 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import { Header } from '@/components/restaurant/header';
-import { Footer } from '@/components/restaurant/footer';
-import { AIChatWidget } from '@/components/restaurant/chat-widget';
-
-const inter = Inter({ subsets: ['latin'] });
+import type { Metadata } from "next";
+import { EliteDinerNav } from "@/components/elite-diner/EliteDinerNav";
+import { AIChatWidget } from "@/components/elite-diner/AIChatWidget";
+import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
-  title: 'Elite Diner | Premium Fine Dining in London',
-  description: 'Experience fine dining redefined at Elite Diner. AI-powered recommendations, premium ingredients, exceptional service.',
+  title: "Elite Diner | premium Fine Dining in London",
+  description:
+    "A high-end restaurant template with AI-powered semantic search, chatbot, and full ordering system. Built with Next.js 15.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function EliteDinerLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <AIChatWidget />
-      </body>
-    </html>
+    <>
+      <EliteDinerNav />
+      <div className="min-h-screen">
+        {children}
+      </div>
+      <Footer />
+      <AIChatWidget />
+    </>
   );
 }
