@@ -33,7 +33,12 @@ export default function AboutClient() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-accent text-[11px] font-bold uppercase tracking-[4px] block mb-6">Our Legacy</span>
+             <button 
+               className="px-5 py-2.5 rounded-xl bg-accent text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-accent/20 mb-6"
+               style={{ color: "var(--bg-primary)" }}
+             >
+               Our Legacy
+             </button>
             <h1 className="font-montserrat text-4xl md:text-6xl font-black mb-8 leading-[0.95]">
               Passion on <span className="text-accent">Every Plate.</span>
             </h1>
@@ -63,7 +68,10 @@ export default function AboutClient() {
               />
             </div>
             {/* Absolute element */}
-            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-accent rounded-full flex items-center justify-center p-8 text-center text-[#0a0c10] font-montserrat shadow-2xl">
+            <div 
+              className="absolute -bottom-10 -right-10 w-48 h-48 bg-accent rounded-full flex items-center justify-center p-8 text-center font-montserrat shadow-2xl z-20"
+              style={{ color: "var(--bg-primary)" }}
+            >
                <span className="text-xs uppercase font-bold tracking-widest leading-tight">Celebrating 15 Years of Excellence</span>
             </div>
           </motion.div>
@@ -81,7 +89,7 @@ export default function AboutClient() {
               className="p-10 rounded-[2.5rem] border text-center group"
               style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
             >
-              <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-8 transition-transform group-hover:scale-110 group-hover:rotate-6">
+              <div className="mb-8 p-6 rounded-3xl bg-accent shadow-2xl shadow-accent/20 mx-auto w-fit transition-transform group-hover:scale-110 group-hover:rotate-6" style={{ color: "var(--bg-primary)" }}>
                 {val.icon}
               </div>
               <h3 className="font-montserrat font-bold text-xl mb-4">{val.title}</h3>

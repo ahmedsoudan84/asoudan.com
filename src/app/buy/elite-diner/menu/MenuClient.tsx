@@ -79,9 +79,10 @@ export default function MenuClient() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setActiveCategory("all")}
-                className={`px-6 py-2 rounded-xl text-[10px] uppercase font-bold tracking-[2px] transition-all ${
-                  activeCategory === "all" ? "bg-accent text-white shadow-lg shadow-accent/20" : "bg-fg-05 text-fg-60 border border-border-subtle"
+                className={`px-6 py-2 rounded-xl text-[10px] uppercase font-bold tracking-[2px] transition-all shadow-md active:scale-95 ${
+                  activeCategory === "all" ? "bg-accent shadow-accent/20" : "bg-fg-05 text-fg-60 border border-border-subtle"
                 }`}
+                style={{ color: activeCategory === "all" ? "var(--bg-primary)" : "var(--fg-60)" }}
               >
                 All
               </button>
@@ -89,9 +90,10 @@ export default function MenuClient() {
                 <button
                   key={id}
                   onClick={() => setActiveCategory(id)}
-                  className={`whitespace-nowrap px-6 py-2 rounded-xl text-[10px] uppercase font-bold tracking-[2px] transition-all ${
-                    activeCategory === id ? "bg-accent text-white shadow-lg shadow-accent/20" : "bg-fg-05 text-fg-60 border border-border-subtle hover:bg-fg-10"
+                  className={`whitespace-nowrap px-6 py-2 rounded-xl text-[10px] uppercase font-bold tracking-[2px] transition-all shadow-md active:scale-95 ${
+                    activeCategory === id ? "bg-accent shadow-accent/20" : "bg-fg-05 text-fg-60 border border-border-subtle hover:bg-fg-10"
                   }`}
+                  style={{ color: activeCategory === id ? "var(--bg-primary)" : "var(--fg-60)" }}
                 >
                   {label}
                 </button>
@@ -135,7 +137,11 @@ export default function MenuClient() {
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     {item.dietaryTags.map((tag) => (
-                      <span key={tag} className="px-2.5 py-1 rounded-lg bg-accent/90 backdrop-blur-md border border-white/10 text-[8px] uppercase font-bold tracking-widest text-white shadow-sm">
+                      <span 
+                        key={tag} 
+                        className="px-2.5 py-1 rounded-lg bg-accent/90 backdrop-blur-md border border-white/10 text-[8px] uppercase font-bold tracking-widest shadow-sm"
+                        style={{ color: "var(--bg-primary)" }}
+                      >
                         {tag}
                       </span>
                     ))}
@@ -158,7 +164,8 @@ export default function MenuClient() {
                     </div>
                     <button
                       onClick={() => addItem(item)}
-                      className="w-11 h-11 rounded-xl bg-accent text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg shadow-accent/20 group/btn"
+                      className="w-11 h-11 rounded-xl bg-accent flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg shadow-accent/20 group/btn"
+                      style={{ color: "var(--bg-primary)" }}
                     >
                       <Icons.ShoppingCart className="w-5 h-5 transition-transform group-active/btn:scale-125" />
                     </button>
@@ -186,7 +193,9 @@ export default function MenuClient() {
             </p>
             <button
               onClick={() => { setQuery(""); setActiveCategory("all"); setActiveDietary([]); }}
-              className="mt-8 px-8 py-3 rounded-xl border border-accent text-accent text-xs font-bold uppercase tracking-wider hover:bg-accent hover:text-white transition-all"
+              className="mt-8 px-8 py-3 rounded-xl border border-accent text-accent text-[11px] font-bold uppercase tracking-[2px] hover:bg-accent transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]"
+              onMouseEnter={(e: any) => e.target.style.color = "var(--bg-primary)"}
+              onMouseLeave={(e: any) => e.target.style.color = "var(--accent)"}
             >
               Reset Filters
             </button>

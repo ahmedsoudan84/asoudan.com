@@ -75,7 +75,10 @@ export default function ContactClient() {
             
             {submitted ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-20">
-                <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center text-accent mb-8">
+                <div 
+              className="absolute -bottom-10 -right-10 w-48 h-48 bg-accent rounded-full flex items-center justify-center p-8 text-center font-montserrat shadow-2xl z-20"
+              style={{ color: "var(--bg-primary)" }}
+            >
                   <Icons.Check className="w-10 h-10" />
                 </div>
                 <h2 className="font-montserrat font-bold text-3xl mb-4">Message Received</h2>
@@ -138,7 +141,7 @@ export default function ContactClient() {
                 <button
                   type="submit"
                   className="w-full py-5 rounded-2xl font-montserrat text-xs font-bold uppercase tracking-[2px] shadow-2xl shadow-accent/20 transition-all hover:scale-[1.02] active:scale-95"
-                  style={{ background: "var(--accent)", color: "#0a0c10" }}
+                  style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                 >
                   Send Inquiry
                 </button>

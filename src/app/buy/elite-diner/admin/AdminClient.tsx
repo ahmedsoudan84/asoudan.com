@@ -32,9 +32,9 @@ export default function AdminClient() {
              <button className="px-5 py-2.5 rounded-xl border border-border-subtle text-[10px] font-bold uppercase tracking-widest hover:bg-fg-05 transition-all">
                 Export Data
              </button>
-             <button className="px-5 py-2.5 rounded-xl bg-accent text-[#0a0c10] text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-accent/20">
-                Menu Editor
-             </button>
+              <button className="px-5 py-2.5 rounded-xl bg-accent text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-accent/20" style={{ color: "var(--bg-primary)" }}>
+                 Menu Editor
+              </button>
           </div>
         </div>
 
@@ -101,17 +101,17 @@ export default function AdminClient() {
           <div className="lg:col-span-1">
             <div className="p-10 rounded-[2.5rem] border h-full flex flex-col" style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}>
               <h2 className="font-montserrat font-bold text-xl mb-8">AI Spotlight</h2>
-              <div className="mb-8 p-6 rounded-3xl bg-accent text-[#0a0c10] shadow-2xl shadow-accent/20">
-                 <div className="flex items-center gap-2 mb-4">
-                    <Icons.Sparkles className="w-4 h-4" />
-                    <span className="text-[10px] uppercase font-bold tracking-[2px]">Trending Now</span>
-                 </div>
-                 <h3 className="text-2xl font-black mb-2">Truffle Pasta</h3>
-                 <p className="text-xs opacity-80 leading-relaxed mb-6">Trending among 'romantic occasion' searchers in the last 6 hours.</p>
-                 <button className="w-full py-3 rounded-xl bg-black/10 font-bold uppercase tracking-widest text-[9px] hover:bg-black/20 transition-all">
-                    Boost visibility
-                 </button>
-              </div>
+               <div className="mb-8 p-6 rounded-3xl bg-accent shadow-2xl shadow-accent/20" style={{ color: "var(--bg-primary)" }}>
+                  <div className="flex items-center gap-2 mb-4">
+                     <Icons.Sparkles className="w-4 h-4" />
+                     <span className="text-[10px] uppercase font-bold tracking-[2px]">Trending Now</span>
+                  </div>
+                  <h3 className="text-2xl font-black mb-2">Truffle Pasta</h3>
+                  <p className="text-xs opacity-80 leading-relaxed mb-6">Trending among 'romantic occasion' searchers in the last 6 hours.</p>
+                  <button className="w-full py-3 rounded-xl bg-fg-10 font-bold uppercase tracking-widest text-[9px] hover:bg-fg-20 transition-all">
+                     Boost visibility
+                  </button>
+               </div>
 
               <div className="flex-1">
                 <h4 className="text-[10px] uppercase font-bold tracking-widest opacity-30 mb-6">Popular Tag Mix</h4>

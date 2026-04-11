@@ -99,6 +99,9 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-fg-primary: var(--fg);
   --font-sans: 'Montserrat', sans-serif;
   --font-montserrat: 'Montserrat', sans-serif;
 }

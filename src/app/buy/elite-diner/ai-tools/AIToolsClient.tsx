@@ -42,16 +42,16 @@ export default function AIToolsClient() {
           <button
             onClick={() => setActiveTab("recommend")}
             className={`flex-1 py-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
-              activeTab === "recommend" ? "bg-accent text-[#0a0c10] shadow-lg" : "text-fg-40 hover:text-fg"
-            }`}
+              activeTab === "recommend" ? "bg-accent shadow-lg" : "text-fg-40 hover:text-fg"}`}
+              style={{ color: activeTab === "recommend" ? "var(--bg-primary)" : "var(--fg-40)" }}
           >
             Meal Recommender
           </button>
           <button
             onClick={() => setActiveTab("pairing")}
             className={`flex-1 py-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
-              activeTab === "pairing" ? "bg-accent text-[#0a0c10] shadow-lg" : "text-fg-40 hover:text-fg"
-            }`}
+              activeTab === "pairing" ? "bg-accent shadow-lg" : "text-fg-40 hover:text-fg"}`}
+              style={{ color: activeTab === "pairing" ? "var(--bg-primary)" : "var(--fg-40)" }}
           >
             Occasion Pairing
           </button>
@@ -138,9 +138,9 @@ export default function AIToolsClient() {
                         : "bg-surface border-border-card text-fg hover:border-accent/40"
                     }`}
                     style={{ 
-                      background: occasion === occ.id ? "var(--accent)" : "var(--bg-surface)",
+                      background: occasion === occ.id ? "var(--accent)" : "var(--bg-card)",
                       borderColor: occasion === occ.id ? "var(--accent)" : "var(--border-card)",
-                      color: occasion === occ.id ? "#0a0c10" : "var(--fg)"
+                      color: occasion === occ.id ? "var(--bg-primary)" : "var(--fg)"
                     }}
                   >
                     <span className="text-3xl">{occ.icon}</span>
@@ -192,7 +192,8 @@ export default function AIToolsClient() {
                    <p className="text-sm italic opacity-40">&quot;The perfect synergy of texture and aroma, tailored for {OCCASIONS.find(o => o.id === occasion)?.label}.&quot;</p>
                    <Link
                       href="/buy/elite-diner/menu"
-                      className="px-10 py-4 rounded-xl font-montserrat text-xs font-bold uppercase tracking-widest bg-accent text-[#0a0c10] shadow-xl shadow-accent/20 transition-all hover:scale-105"
+                      className="px-10 py-4 rounded-xl font-montserrat text-xs font-bold uppercase tracking-widest bg-accent shadow-xl shadow-accent/20 transition-all hover:scale-105"
+                      style={{ color: "var(--bg-primary)" }}
                    >
                      View on Menu
                    </Link>

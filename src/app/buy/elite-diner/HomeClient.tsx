@@ -56,8 +56,8 @@ export default function HomeClient() {
             className="w-full h-full object-cover scale-105"
           />
           {/* Theme-aware overlay */}
-          <div className="absolute inset-0 bg-[#0a0c10]/40 dark:bg-[#0a0c10]/85 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0c10]/60 via-transparent to-transparent dark:from-[#0a0c10] dark:to-[#0a0c10]/40" />
+          <div className="absolute inset-0 bg-bg-primary/40 dark:bg-bg-primary/85 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/60 via-transparent to-transparent dark:from-bg-primary dark:to-bg-primary/40" />
         </div>
 
         <div className="max-w-[1000px] w-full mx-auto relative z-10 text-center">
@@ -72,12 +72,12 @@ export default function HomeClient() {
               <span className="w-12 h-px bg-accent/30" />
             </div>
 
-            <h1 className="font-montserrat text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] text-white mb-8">
+            <h1 className="font-montserrat text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] text-fg-primary mb-8" style={{ color: "var(--fg)" }}>
               Savour the <br />
               <span className="text-accent">Future</span>
             </h1>
 
-            <p className="max-w-xl mx-auto text-white/60 text-lg md:text-xl font-montserrat leading-relaxed mb-12">
+            <p className="max-w-xl mx-auto text-fg-60 text-lg md:text-xl font-montserrat leading-relaxed mb-12">
               The premium London restaurant template powered by invisible AI. 
               Built for conversion, designed for elegance.
             </p>
@@ -103,8 +103,8 @@ export default function HomeClient() {
                 />
                 <Link
                   href={`/buy/elite-diner/menu?q=${encodeURIComponent(searchQuery)}`}
-                  className="px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-accent/20"
-                  style={{ background: "var(--accent)", color: "#ffffff" }}
+                  className="px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] active:scale-95"
+                  style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                 >
                   Explore
                 </Link>
@@ -116,7 +116,7 @@ export default function HomeClient() {
                   <button
                     key={chip.label}
                     onClick={() => setSearchQuery(chip.query)}
-                    className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 text-white/40 text-[10px] uppercase font-bold tracking-wider hover:border-accent hover:text-accent transition-all animate-in fade-in slide-in-from-bottom-2"
+                    className="px-3.5 py-1.5 rounded-full border border-border-subtle bg-fg-05 text-fg-40 text-[10px] uppercase font-bold tracking-wider hover:border-accent hover:text-accent transition-all animate-in fade-in slide-in-from-bottom-2"
                   >
                     {chip.label}
                   </button>
@@ -241,7 +241,8 @@ export default function HomeClient() {
                     {dish.dietaryTags.map(tag => (
                       <span 
                         key={tag} 
-                        className="px-3 py-1 rounded-full border border-accent/20 bg-accent text-[9px] uppercase font-bold text-[#0a0c10] shadow-sm"
+                        className="px-3 py-1 rounded-full bg-accent text-[9px] uppercase font-bold shadow-sm"
+                        style={{ color: "var(--bg-primary)" }}
                       >
                         {tag}
                       </span>
@@ -285,8 +286,8 @@ export default function HomeClient() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link
               href="/buy/elite-diner/menu"
-              className="w-full sm:w-auto px-10 py-5 rounded-2xl font-montserrat text-xs font-bold uppercase tracking-[2px] shadow-xl shadow-accent/20 transition-all hover:scale-105"
-              style={{ background: "var(--accent)", color: "#ffffff" }}
+              className="w-full sm:w-auto px-10 py-5 rounded-2xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] shadow-xl shadow-accent/20 transition-all hover:scale-105"
+              style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
             >
               Order Delivery
             </Link>

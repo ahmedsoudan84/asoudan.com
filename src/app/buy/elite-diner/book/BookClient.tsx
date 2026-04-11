@@ -112,7 +112,7 @@ export default function BookClient() {
                     <button 
                       onClick={() => { setIsBooked(false); setStep(1); }}
                       className="px-10 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:scale-105"
-                      style={{ background: "var(--accent)", color: "#0a0c10" }}
+                      style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                     >
                       Done
                     </button>
@@ -131,8 +131,9 @@ export default function BookClient() {
                         <div key={s} className="flex items-center gap-2 shrink-0">
                           <div 
                             className={`w-8 h-8 rounded-full flex items-center justify-center font-montserrat text-xs font-black transition-all ${
-                              step >= s ? "bg-accent text-[#0a0c10]" : "bg-fg-10 text-fg-40 border border-border-subtle"
+                              step >= s ? "bg-accent" : "bg-fg-10 text-fg-40 border border-border-subtle"
                             }`}
+                            style={{ color: step >= s ? "var(--bg-primary)" : "var(--fg-40)" }}
                           >
                             0{s}
                           </div>
@@ -180,8 +181,8 @@ export default function BookClient() {
                                   onClick={() => setSelectedDate(d)}
                                   className={`p-3 rounded-xl transition-all border ${
                                     isSelected 
-                                      ? "bg-accent border-accent text-[#0a0c10] shadow-lg shadow-accent/20" 
-                                      : "bg-fg-05 border-border-subtle hover:border-fg-20"
+                                      ? "bg-accent border-accent shadow-lg shadow-accent/20" 
+                                      : "bg-surface border-border-card hover:border-accent/40"
                                   }`}
                                 >
                                   <div className={`text-[8px] uppercase font-black tracking-tighter mb-1 ${isSelected ? "text-[#0a0c10]/60" : "opacity-40"}`}>
@@ -198,7 +199,7 @@ export default function BookClient() {
                           disabled={!selectedDate}
                           onClick={() => setStep(2)}
                           className="w-full py-5 rounded-2xl font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:scale-105 active:scale-95 disabled:opacity-30 flex items-center justify-center gap-2"
-                          style={{ background: "var(--accent)", color: "#0a0c10" }}
+                          style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                         >
                           Choose Time <Icons.ChevronRight className="w-4 h-4" />
                         </button>
@@ -246,7 +247,7 @@ export default function BookClient() {
                             disabled={!selectedTime}
                             onClick={() => setStep(3)}
                             className="flex-[2] py-5 rounded-2xl font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:scale-105 active:scale-95 disabled:opacity-30 shadow-xl shadow-accent/20"
-                            style={{ background: "var(--accent)", color: "#0a0c10" }}
+                            style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                           >
                             Contact Details
                           </button>
@@ -315,7 +316,7 @@ export default function BookClient() {
                             disabled={!details.name || !details.email}
                             onClick={handleBooking}
                             className="flex-[2] py-5 rounded-2xl font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:scale-105 active:scale-95 disabled:opacity-30 shadow-xl shadow-accent/20"
-                            style={{ background: "var(--accent)", color: "#0a0c10" }}
+                            style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                           >
                             Confirm Table
                           </button>

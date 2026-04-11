@@ -67,7 +67,7 @@ export default function OrderClient() {
             href="/buy/elite-diner"
             onClick={() => clearCart()}
             className="inline-flex px-10 py-4 rounded-xl font-montserrat text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
-            style={{ background: "var(--accent)", color: "#0a0c10" }}
+            style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
           >
             Back to Home
           </Link>
@@ -89,7 +89,8 @@ export default function OrderClient() {
           </p>
           <Link
             href="/buy/elite-diner/menu"
-            className="inline-flex px-10 py-4 rounded-xl font-montserrat text-xs font-bold uppercase tracking-widest transition-all bg-accent text-[#0a0c10]"
+            className="inline-flex px-10 py-4 rounded-xl font-montserrat text-xs font-bold uppercase tracking-widest transition-all bg-accent"
+            style={{ color: "var(--bg-primary)" }}
           >
             Browse Menu
           </Link>
@@ -107,22 +108,24 @@ export default function OrderClient() {
           {/* ── Left: Cart Items ───────────────────────────── */}
           <div className="lg:col-span-2 space-y-8">
             <div className="flex bg-surface rounded-2xl p-1 border" style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}>
-              <button
-                onClick={() => setOrderType("delivery")}
-                className={`flex-1 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
-                  orderType === "delivery" ? "bg-accent text-[#0a0c10] shadow-lg" : "text-fg-40"
-                }`}
-              >
-                Delivery
-              </button>
-              <button
-                onClick={() => setOrderType("collection")}
-                className={`flex-1 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
-                  orderType === "collection" ? "bg-accent text-[#0a0c10] shadow-lg" : "text-fg-40"
-                }`}
-              >
-                Collection
-              </button>
+                <button 
+                  onClick={() => setOrderType("delivery")}
+                  className={`flex-1 py-4 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
+                    orderType === "delivery" ? "bg-accent shadow-lg" : "bg-fg-05 text-fg-40"
+                  }`}
+                  style={{ color: orderType === "delivery" ? "var(--bg-primary)" : "var(--fg-40)" }}
+                >
+                  Delivery
+                </button>
+                <button 
+                  onClick={() => setOrderType("collection")}
+                  className={`flex-1 py-4 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
+                    orderType === "collection" ? "bg-accent shadow-lg" : "bg-fg-05 text-fg-40"
+                  }`}
+                  style={{ color: orderType === "collection" ? "var(--bg-primary)" : "var(--fg-40)" }}
+                >
+                  Collection
+                </button>
             </div>
 
             <div className="space-y-6">
@@ -241,7 +244,7 @@ export default function OrderClient() {
                    <button
                     type="submit"
                     className="w-full py-5 rounded-2xl font-montserrat text-xs font-bold uppercase tracking-[2px] shadow-2xl shadow-accent/20 transition-all hover:scale-[1.02] active:scale-95"
-                    style={{ background: "var(--accent)", color: "#0a0c10" }}
+                    style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
                   >
                     Place Secure Order — £{total.toFixed(2)}
                   </button>
