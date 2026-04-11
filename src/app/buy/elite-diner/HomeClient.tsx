@@ -21,14 +21,14 @@ const FEATURES = [
     desc: "Find dishes by mood or craving. 'Something spicy and under £25' just works.",
   },
   {
-    icon: <Icons.ShoppingBag className="w-6 h-6" />,
+    icon: <Icons.ShoppingCart className="w-6 h-6" />,
     title: "Seamless Ordering",
     desc: "A fully integrated client-side cart for effortless takeaway or delivery.",
   },
   {
     icon: <Icons.Calendar className="w-6 h-6" />,
     title: "Table Reservations",
-    desc: "Beautiful booking flow with Calendly integration for your establishment.",
+    desc: "Beautiful booking flow with custom multi-step scheduling for your establishment.",
   },
 ];
 
@@ -51,13 +51,13 @@ export default function HomeClient() {
         {/* Ambient background with warm overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1514362545857-3bc16549766f?auto=format&fit=crop&q=80&w=2000"
+            src="https://images.unsplash.com/photo-1550966842-28dbdc2891f7?auto=format&fit=crop&q=80&w=2000"
             alt="Restaurant Ambiance"
             className="w-full h-full object-cover scale-105"
           />
-          {/* Theme-aware overlay: darker in dark mode, more tinted in light mode */}
-          <div className="absolute inset-0 bg-[#0a0c14]/70 dark:bg-[#0a0c14]/80 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0c14] via-transparent to-[#0a0c14]/40" />
+          {/* Theme-aware overlay */}
+          <div className="absolute inset-0 bg-[#0a0c10]/70 dark:bg-[#0a0c10]/85 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0c10] via-transparent to-[#0a0c10]/40" />
         </div>
 
         <div className="max-w-[1000px] w-full mx-auto relative z-10 text-center">
@@ -86,7 +86,7 @@ export default function HomeClient() {
             <div className="max-w-2xl mx-auto relative mb-6">
               <div 
                 className="flex items-center gap-3 p-2 pl-6 rounded-2xl border backdrop-blur-xl group transition-all"
-                style={{ background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.1)" }}
+                style={{ background: "rgba(255,255,255,0.08)", borderColor: "rgba(255,255,255,0.15)" }}
               >
                 <Icons.Search className="w-5 h-5 text-accent opacity-50 transition-opacity group-focus-within:opacity-100" />
                 <input
@@ -94,7 +94,7 @@ export default function HomeClient() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Tell us what you crave... 'something spicy' or 'date night'"
-                  className="flex-1 bg-transparent py-4 text-white font-montserrat outline-none placeholder:text-white/20"
+                  className="flex-1 bg-transparent py-4 text-white font-montserrat outline-none placeholder:text-white/30"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && searchQuery.trim()) {
                       window.location.href = `/buy/elite-diner/menu?q=${encodeURIComponent(searchQuery)}`;
@@ -173,18 +173,21 @@ export default function HomeClient() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative"
+            className="relative lg:pl-10"
           >
-            <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl relative z-10">
               <img
-                src="https://images.unsplash.com/photo-1559339352-11d135aa8251?auto=format&fit=crop&q=80&w=1200"
+                src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&q=80&w=1200"
                 alt="Signature Dish"
                 className="w-full h-full object-cover"
               />
             </div>
             {/* Float Badge */}
-            <div className="absolute -bottom-10 -left-10 p-8 rounded-3xl backdrop-blur-2xl border shadow-2xl shadow-accent/20" style={{ background: "rgba(var(--accent-rgb), 0.1)", borderColor: "rgba(var(--accent-rgb), 0.2)" }}>
-              <div className="text-accent font-montserrat font-black text-4xl mb-1">98/100</div>
+            <div 
+              className="absolute -bottom-6 -left-6 lg:-bottom-10 lg:-left-2 p-6 lg:p-8 rounded-3xl backdrop-blur-2xl border shadow-2xl shadow-accent/20 z-20" 
+              style={{ background: "var(--bg-card)", borderColor: "var(--border-card)" }}
+            >
+              <div className="text-accent font-montserrat font-black text-3xl lg:text-4xl mb-1">98/100</div>
               <div className="text-[10px] uppercase font-bold tracking-[2px] opacity-60">Lighthouse Score</div>
             </div>
           </motion.div>

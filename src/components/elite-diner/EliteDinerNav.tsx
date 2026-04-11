@@ -23,6 +23,15 @@ export function EliteDinerNav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const itemCount = useCart((state) => state.getItemCount());
   const [mounted, setMounted] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (itemCount > 0) {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [itemCount]);
 
   useEffect(() => {
     setMounted(true);
@@ -89,12 +98,26 @@ export function EliteDinerNav() {
             className="group relative p-2.5 rounded-xl border transition-all hover:border-accent/40"
             style={{ borderColor: "var(--border-subtle)", background: "var(--fg-05)" }}
           >
-            <Icons.ShoppingBag className="w-5 h-5 transition-colors group-hover:text-accent" />
+            <motion.div
+              animate={isAnimating ? { scale: [1, 1.2, 1] } : { scale: 1 }}
+              transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
+            >
+              <Icons.ShoppingCart className="w-5 h-5 transition-colors group-hover:text-accent" />
+            </motion.div>
             {mounted && itemCount > 0 && (
               <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-[10px] font-bold rounded-full flex items-center justify-center text-[#0a0c10] animate-in fade-in scale-in shadow-sm">
                 {itemCount}
               </span>
             )}
+          </Link>
+
+          <Link
+            href="/"
+            className="p-2.5 rounded-xl border transition-all hover:border-accent/40 group"
+            style={{ borderColor: "var(--border-subtle)", background: "var(--fg-05)" }}
+            title="Back to Portfolio"
+          >
+            <Icons.Home className="w-5 h-5 transition-colors group-hover:text-accent" />
           </Link>
 
           <Link

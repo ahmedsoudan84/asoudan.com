@@ -52,7 +52,7 @@ export default function MenuClient() {
         </div>
 
         {/* ── Filters & Search ─────────────────────────────── */}
-        <div className="sticky top-20 z-40 bg-primary/80 backdrop-blur-md py-6 mb-12 flex flex-col gap-6" style={{ background: "var(--bg-primary)" }}>
+        <div className="sticky top-[64px] z-40 backdrop-blur-md py-6 mb-12 flex flex-col gap-6" style={{ background: "var(--bg-primary)" }}>
           {/* Search bar */}
           <div className="flex items-center gap-3 p-2 pl-5 rounded-2xl border bg-surface transition-all focus-within:border-accent/40" style={{ borderColor: "var(--border-card)", background: "var(--bg-surface)" }}>
             <Icons.Search className="w-5 h-5 text-accent opacity-50" />
@@ -158,9 +158,9 @@ export default function MenuClient() {
                     </div>
                     <button
                       onClick={() => addItem(item)}
-                      className="w-11 h-11 rounded-xl bg-accent text-[#0a0c10] flex items-center justify-center transition-all hover:scale-110 active:scale-90 shadow-lg shadow-accent/20"
+                      className="w-11 h-11 rounded-xl bg-accent text-[#0a0c10] flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg shadow-accent/20 group/btn"
                     >
-                      <Icons.ShoppingBag className="w-5 h-5" />
+                      <Icons.ShoppingCart className="w-5 h-5 transition-transform group-active/btn:scale-125" />
                     </button>
                   </div>
                 </div>
