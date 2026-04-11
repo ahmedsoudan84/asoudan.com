@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Icons } from "@/components/elite-diner/Icons";
 
 const TEMPLATE_NAV = [
   { label: "Home", href: "/buy/real-estate" },
