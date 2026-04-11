@@ -56,15 +56,16 @@ export function EliteDinerNav() {
       }}
     >
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/buy/elite-diner" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-[#0a0c10] transition-transform group-hover:scale-110 shadow-lg shadow-accent/20">
-            <Icons.ChefHat className="w-6 h-6" />
-          </div>
-          <div className="hidden sm:block">
-            <span className="font-montserrat font-bold text-lg tracking-tight block leading-none">ELITE</span>
-            <span className="font-montserrat text-[10px] uppercase tracking-[3px] opacity-60 block mt-0.5">Diner</span>
-          </div>
+        {/* Unified Templates Button */}
+        <Link 
+          href="/buy" 
+          className="flex items-center gap-3 group px-5 py-2.5 rounded-xl border transition-all hover:bg-accent hover:border-accent"
+          style={{ borderColor: "var(--border-subtle)", background: "var(--fg-05)" }}
+        >
+          <Icons.Layout className="w-4 h-4 text-accent group-hover:text-[#ffffff] transition-colors" />
+          <span className="font-montserrat font-bold text-[10px] uppercase tracking-[2px] transition-colors group-hover:text-[#ffffff]" style={{ color: "var(--fg)" }}>
+            Templates
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -105,25 +106,17 @@ export function EliteDinerNav() {
               <Icons.ShoppingCart className="w-5 h-5 transition-colors group-hover:text-accent" />
             </motion.div>
             {mounted && itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-[10px] font-bold rounded-full flex items-center justify-center text-[#0a0c10] animate-in fade-in scale-in shadow-sm">
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-[10px] font-bold rounded-full flex items-center justify-center text-white animate-in fade-in scale-in shadow-sm">
                 {itemCount}
               </span>
             )}
           </Link>
 
-          <Link
-            href="/"
-            className="p-2.5 rounded-xl border transition-all hover:border-accent/40 group"
-            style={{ borderColor: "var(--border-subtle)", background: "var(--fg-05)" }}
-            title="Back to Portfolio"
-          >
-            <Icons.Home className="w-5 h-5 transition-colors group-hover:text-accent" />
-          </Link>
 
           <Link
             href="/buy/elite-diner/book"
             className="hidden sm:flex px-6 py-2.5 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] hover:-translate-y-0.5"
-            style={{ background: "var(--accent)", color: "#0a0c10" }}
+            style={{ background: "var(--accent)", color: "#ffffff" }}
           >
             Book Table
           </Link>
@@ -168,7 +161,7 @@ export function EliteDinerNav() {
                 href="/buy/elite-diner/book"
                 onClick={() => setMobileOpen(false)}
                 className="mt-2 w-full text-center py-4 rounded-xl font-montserrat text-xs font-bold uppercase tracking-wider"
-                style={{ background: "var(--accent)", color: "#0a0c10" }}
+                style={{ background: "var(--accent)", color: "#ffffff" }}
               >
                 Book Table
               </Link>

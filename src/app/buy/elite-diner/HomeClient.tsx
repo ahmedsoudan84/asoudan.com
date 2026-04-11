@@ -51,13 +51,13 @@ export default function HomeClient() {
         {/* Ambient background with warm overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1550966842-28dbdc2891f7?auto=format&fit=crop&q=80&w=2000"
+            src="https://images.unsplash.com/photo-1546241072-48010ad28abb?auto=format&fit=crop&q=80&w=2000"
             alt="Restaurant Ambiance"
             className="w-full h-full object-cover scale-105"
           />
           {/* Theme-aware overlay */}
-          <div className="absolute inset-0 bg-[#0a0c10]/70 dark:bg-[#0a0c10]/85 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0c10] via-transparent to-[#0a0c10]/40" />
+          <div className="absolute inset-0 bg-[#0a0c10]/40 dark:bg-[#0a0c10]/85 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0c10]/60 via-transparent to-transparent dark:from-[#0a0c10] dark:to-[#0a0c10]/40" />
         </div>
 
         <div className="max-w-[1000px] w-full mx-auto relative z-10 text-center">
@@ -104,7 +104,7 @@ export default function HomeClient() {
                 <Link
                   href={`/buy/elite-diner/menu?q=${encodeURIComponent(searchQuery)}`}
                   className="px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-accent/20"
-                  style={{ background: "var(--accent)", color: "#0a0c10" }}
+                  style={{ background: "var(--accent)", color: "#ffffff" }}
                 >
                   Explore
                 </Link>
@@ -177,7 +177,7 @@ export default function HomeClient() {
           >
             <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl relative z-10">
               <img
-                src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&q=80&w=1200"
+                src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1200"
                 alt="Signature Dish"
                 className="w-full h-full object-cover"
               />
@@ -286,7 +286,7 @@ export default function HomeClient() {
             <Link
               href="/buy/elite-diner/menu"
               className="w-full sm:w-auto px-10 py-5 rounded-2xl font-montserrat text-xs font-bold uppercase tracking-[2px] shadow-xl shadow-accent/20 transition-all hover:scale-105"
-              style={{ background: "var(--accent)", color: "#0a0c10" }}
+              style={{ background: "var(--accent)", color: "#ffffff" }}
             >
               Order Delivery
             </Link>

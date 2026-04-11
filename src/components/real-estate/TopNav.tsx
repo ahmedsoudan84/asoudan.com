@@ -30,15 +30,16 @@ export default function TopNav() {
       }}
     >
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex items-center justify-between h-16">
-        {/* Logo / Back to portfolio */}
-        <Link
-          href="/"
-          className="flex items-center gap-2"
+        {/* Unified Templates Button */}
+        <Link 
+          href="/buy" 
+          className="flex items-center gap-3 group px-4 py-2 rounded-lg border transition-all hover:bg-accent hover:border-accent"
+          style={{ borderColor: "var(--border-subtle)", background: "var(--fg-05)" }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
+          <Icons.Layout className="w-4 h-4 text-accent group-hover:text-white transition-colors" />
+          <span className="font-montserrat font-bold text-[10px] uppercase tracking-[2px] transition-colors group-hover:text-white" style={{ color: "var(--fg)" }}>
+            Templates
+          </span>
         </Link>
 
         {/* Breadcrumb removed */}
