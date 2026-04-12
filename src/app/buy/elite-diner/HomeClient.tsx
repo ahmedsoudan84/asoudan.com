@@ -54,15 +54,11 @@ export default function HomeClient() {
             src="https://images.unsplash.com/photo-1546241072-48010ad28abb?auto=format&fit=crop&q=80&w=2000"
             alt="Restaurant Ambiance"
             className="w-full h-full object-cover scale-105"
+            loading="eager"
           />
           {/* Theme-aware overlay positioned within the photo */}
-          <div className="absolute inset-0" style={{
-            background: "linear-gradient(135deg, rgba(var(--accent-rgb), 0.08) 0%, rgba(var(--accent-rgb), 0.04) 50%, rgba(var(--bg-primary-rgb), 0.6) 100%)",
-            backdropFilter: "blur(0.5px)"
-          }} />
-          <div className="absolute bottom-0 left-0 right-0 h-1/2" style={{
-            background: "linear-gradient(to top, rgba(var(--bg-primary-rgb), 0.8) 0%, rgba(var(--bg-primary-rgb), 0.4) 50%, transparent 100%)"
-          }} />
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/2 to-bg-primary/60 backdrop-blur-sm" />
+          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-bg-primary/80 via-bg-primary/40 to-transparent" />
         </div>
 
         <div className="max-w-[1000px] w-full mx-auto relative z-10 text-center">

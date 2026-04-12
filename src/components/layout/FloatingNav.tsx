@@ -187,8 +187,8 @@ export default function FloatingNav() {
               );
             }
 
-            const targetHref = isOnBuyPages && item.id !== "hero" && item.id !== "real-estate" 
-              ? (item.id === "projects" ? "/" : `/#${item.id}`) 
+            const targetHref = isOnBuyPages && item.id !== "hero" && item.id !== "real-estate"
+              ? (item.id === "projects" ? "/#projects" : item.id === "cv" ? "/#experience" : `/#${item.id}`)
               : undefined;
 
             if (targetHref) {
