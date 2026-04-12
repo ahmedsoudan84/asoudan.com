@@ -65,6 +65,12 @@ export default function AboutClient() {
                 src="https://images.unsplash.com/photo-1577219491135-ce39a73e4ef8?auto=format&fit=crop&q=80&w=1200" 
                 alt="Chef Thorne" 
                 className="w-full h-full object-cover" 
+                crossOrigin="anonymous"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "https://picsum.photos/1200/1200?random=chef";
+                }}
               />
             </div>
             {/* Absolute element */}

@@ -56,6 +56,10 @@ export default function HomeClient() {
             className="w-full h-full object-cover scale-105"
             loading="eager"
             crossOrigin="anonymous"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = "https://picsum.photos/2000/1200?random=hero";
+            }}
           />
           {/* Theme-aware overlay positioned within the photo */}
           <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/2 to-bg-primary/60 backdrop-blur-sm" />
@@ -179,6 +183,12 @@ export default function HomeClient() {
                 src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1200"
                 alt="Signature Dish"
                 className="w-full h-full object-cover"
+                crossOrigin="anonymous"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "https://picsum.photos/1200/1500?random=sig";
+                }}
               />
             </div>
             {/* Float Badge */}

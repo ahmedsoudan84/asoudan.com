@@ -134,7 +134,17 @@ export default function MenuClient() {
                 style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
               >
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-6">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    crossOrigin="anonymous"
+                    loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = `https://picsum.photos/800/600?random=${item.id}`;
+                    }}
+                  />
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     {item.dietaryTags.map((tag) => (
                       <span 
