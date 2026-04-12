@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'picsum.photos',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'images.unsplash.com',
         pathname: '/**',
       },
@@ -32,7 +37,7 @@ const nextConfig: NextConfig = {
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https:",
+      "img-src 'self' data: https: https://images.unsplash.com https://picsum.photos https://i.picsum.photos",
       "font-src 'self' https: data:",
       "connect-src 'self' https:",
       "frame-ancestors 'none'",

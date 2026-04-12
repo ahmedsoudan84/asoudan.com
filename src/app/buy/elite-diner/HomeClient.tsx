@@ -51,7 +51,7 @@ export default function HomeClient() {
         {/* Ambient background with warm overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1546241072-48010ad28abb?auto=format&fit=crop&q=80&w=2000"
+            src="https://picsum.photos/2000/1200?random=hero"
             alt="Restaurant Ambiance"
             className="w-full h-full object-cover scale-105"
             loading="eager"
@@ -175,7 +175,7 @@ export default function HomeClient() {
           >
             <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl relative z-10">
               <img
-                src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1200"
+                src="https://picsum.photos/1200/800?random=sig"
                 alt="Signature Dish"
                 className="w-full h-full object-cover"
               />
