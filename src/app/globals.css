@@ -36,6 +36,8 @@
   --accent-rgb:   0, 241, 241;
   --accent-hover: #00c8c8;
 
+  --bg-primary-rgb: 10, 12, 20;
+
   --vignette-rgb: 10, 12, 20;
   --nav-bg:       rgba(10,12,20,0.70);
   --nav-border:   rgba(255,255,255,0.06);
@@ -78,6 +80,8 @@
   --accent:       #008b8b;
   --accent-rgb:   0, 139, 139;
   --accent-hover: #006f6f;
+
+  --bg-primary-rgb: 248, 248, 248;
 
   --vignette-rgb: 244, 241, 234;
   --nav-bg:       rgba(244,241,234,0.88);

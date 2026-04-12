@@ -55,9 +55,14 @@ export default function HomeClient() {
             alt="Restaurant Ambiance"
             className="w-full h-full object-cover scale-105"
           />
-          {/* Theme-aware overlay */}
-          <div className="absolute inset-0 backdrop-blur-[1px]" style={{ background: "var(--bg-primary)", opacity: 0.5 }} />
-          <div className="absolute inset-0 bg-gradient-to-t" style={{ background: "linear-gradient(to top, var(--bg-primary) 0%, transparent 60%)" }} />
+          {/* Theme-aware overlay positioned within the photo */}
+          <div className="absolute inset-0" style={{
+            background: "linear-gradient(135deg, rgba(var(--accent-rgb), 0.08) 0%, rgba(var(--accent-rgb), 0.04) 50%, rgba(var(--bg-primary-rgb), 0.6) 100%)",
+            backdropFilter: "blur(0.5px)"
+          }} />
+          <div className="absolute bottom-0 left-0 right-0 h-1/2" style={{
+            background: "linear-gradient(to top, rgba(var(--bg-primary-rgb), 0.8) 0%, rgba(var(--bg-primary-rgb), 0.4) 50%, transparent 100%)"
+          }} />
         </div>
 
         <div className="max-w-[1000px] w-full mx-auto relative z-10 text-center">
