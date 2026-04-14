@@ -37,6 +37,19 @@ export default function BuyPage() {
             "availability": "https://schema.org/InStock"
           }
         }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Product",
+          "name": "Kurator E-Commerce Premium Shop Template",
+          "description": "Semantic product search, AI stylist with occasion bundles, persistent cart, 3-step checkout. Fully client-side.",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock"
+          }
+        }
       }
     ]
   };

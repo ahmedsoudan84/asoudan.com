@@ -49,6 +49,23 @@ export const categories: TemplateCategory[] = [
     ),
   },
   {
+    slug: "ecommerce",
+    title: "E-Commerce",
+    subtitle: "Kurator — Premium Shop Template with AI Stylist",
+    description:
+      "Semantic product search, AI stylist with occasion bundles, persistent cart, 3-step checkout. Sixteen curated products. Fully client-side.",
+    tags: ["Next.js 16", "AI Stylist", "Cart + Checkout", "16 Products"],
+    status: "live",
+    coverImage: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=400&fit=crop",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 01-8 0" />
+      </svg>
+    ),
+  },
+  {
     slug: null,
     title: "SaaS Dashboard",
     subtitle: "Analytics & subscription management template",
@@ -71,8 +88,8 @@ export const categories: TemplateCategory[] = [
     title: "Creative Portfolio",
     subtitle: "Photography & art showcase template",
     description:
-      "Masonry galleries, lightbox, client proofing, e-commerce integration for prints.",
-    tags: ["Next.js", "Gallery", "E-commerce"],
+      "Masonry galleries, lightbox, client proofing, print sales integration.",
+    tags: ["Next.js", "Gallery", "Portfolio"],
     status: "coming-soon",
     coverImage: null,
     icon: (
