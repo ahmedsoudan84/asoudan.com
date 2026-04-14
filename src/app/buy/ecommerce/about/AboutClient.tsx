@@ -9,7 +9,7 @@ const VALUES = [
   {
     icon: <EcomIcons.Sparkles className="w-5 h-5" />,
     title: "Curation over catalogue",
-    body: "Sixteen objects. Every one chosen because we'd actually send it to a friend. No endless scroll, no dead stock.",
+    body: "Twenty-two objects. Every one chosen because we'd actually send it to a friend. No endless scroll, no dead stock.",
   },
   {
     icon: <EcomIcons.Shield className="w-5 h-5" />,

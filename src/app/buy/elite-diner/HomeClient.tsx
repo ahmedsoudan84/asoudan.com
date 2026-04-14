@@ -191,14 +191,66 @@ export default function HomeClient() {
                 }}
               />
             </div>
-            {/* Float Badge */}
-            <div 
-              className="absolute -bottom-6 -left-6 lg:-bottom-10 lg:-left-2 p-6 lg:p-8 rounded-3xl backdrop-blur-2xl border shadow-2xl shadow-accent/20 z-20" 
-              style={{ background: "var(--bg-card)", borderColor: "var(--border-card)" }}
+            {/* Float Badge — Lighthouse score ring */}
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.92 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="absolute -bottom-6 -left-4 sm:-bottom-8 sm:-left-6 lg:-bottom-10 lg:left-0 flex items-center gap-4 pl-3 pr-5 py-3 rounded-2xl border backdrop-blur-2xl shadow-2xl shadow-accent/20 z-20"
+              style={{
+                background: "var(--nav-bg)",
+                borderColor: "rgba(var(--accent-rgb), 0.3)",
+              }}
             >
-              <div className="text-accent font-montserrat font-black text-3xl lg:text-4xl mb-1">98/100</div>
-              <div className="text-[10px] uppercase font-bold tracking-[2px] opacity-60">Lighthouse Score</div>
-            </div>
+              <div className="relative w-14 h-14 shrink-0">
+                <svg viewBox="0 0 36 36" className="w-14 h-14 -rotate-90">
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r="15.915"
+                    fill="none"
+                    strokeWidth="3"
+                    stroke="var(--fg-10)"
+                  />
+                  <motion.circle
+                    cx="18"
+                    cy="18"
+                    r="15.915"
+                    fill="none"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    stroke="var(--accent)"
+                    initial={{ strokeDasharray: "0 100" }}
+                    whileInView={{ strokeDasharray: "98 100" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span
+                    className="font-montserrat font-black text-base leading-none"
+                    style={{ color: "var(--accent)" }}
+                  >
+                    98
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-0.5">
+                <span
+                  className="font-montserrat text-[9px] uppercase font-bold tracking-[2.5px]"
+                  style={{ color: "var(--accent)" }}
+                >
+                  Lighthouse
+                </span>
+                <span
+                  className="font-montserrat text-[11px] font-bold"
+                  style={{ color: "var(--fg)" }}
+                >
+                  Performance · Best practice
+                </span>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>

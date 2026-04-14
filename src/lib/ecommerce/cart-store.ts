@@ -12,9 +12,19 @@ export interface CartLine {
   quantity: number;
 }
 
+export interface LastAdded {
+  slug: string;
+  name: string;
+  image: string;
+  quantity: number;
+  /** Monotonically increasing tick so that re-adding the same product still fires listeners. */
+  tick: number;
+}
+
 interface CartState {
   items: CartLine[];
   isOpen: boolean;
+  lastAdded: LastAdded | null;
   addItem: (product: Product, quantity?: number) => void;
   removeItem: (slug: string) => void;
   updateQuantity: (slug: string, quantity: number) => void;
@@ -31,9 +41,18 @@ export const useCart = create<CartState>()(
     (set, get) => ({
       items: [],
       isOpen: false,
+      lastAdded: null,
 
       addItem: (product, quantity = 1) =>
         set((state) => {
+          const tick = (state.lastAdded?.tick ?? 0) + 1;
+          const lastAdded: LastAdded = {
+            slug: product.slug,
+            name: product.name,
+            image: product.image,
+            quantity,
+            tick,
+          };
           const existing = state.items.find((i) => i.slug === product.slug);
           if (existing) {
             return {
@@ -42,7 +61,7 @@ export const useCart = create<CartState>()(
                   ? { ...i, quantity: i.quantity + quantity }
                   : i
               ),
-              isOpen: true,
+              lastAdded,
             };
           }
           return {
@@ -57,7 +76,7 @@ export const useCart = create<CartState>()(
                 quantity,
               },
             ],
-            isOpen: true,
+            lastAdded,
           };
         }),
 

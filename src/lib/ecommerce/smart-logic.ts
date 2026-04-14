@@ -34,6 +34,14 @@ export interface SearchFilters {
   minPrice?: number;
   maxPrice?: number;
   sort?: "featured" | "price-asc" | "price-desc" | "rating" | "newest";
+  /** Only show products currently discounted (have a `compareAtPrice`). */
+  onSale?: boolean;
+  /** Only show products flagged `isNew`. */
+  newOnly?: boolean;
+  /** Only show products flagged `isBestseller`. */
+  bestsellersOnly?: boolean;
+  /** Only show products whose tags include this token (case-insensitive). */
+  vibe?: string | null;
 }
 
 export function searchProducts(
@@ -41,8 +49,18 @@ export function searchProducts(
   filters: SearchFilters = {},
   items: Product[] = products
 ): Product[] {
-  const { category = "all", minPrice = 0, maxPrice = Infinity, sort = "featured" } = filters;
+  const {
+    category = "all",
+    minPrice = 0,
+    maxPrice = Infinity,
+    sort = "featured",
+    onSale = false,
+    newOnly = false,
+    bestsellersOnly = false,
+    vibe = null,
+  } = filters;
   const tokens = query.trim() ? expandTokens(query) : [];
+  const vibeToken = vibe?.toLowerCase() ?? null;
 
   // Price range phrases ("under £50", "below 100")
   let priceCap = maxPrice;
@@ -89,6 +107,15 @@ export function searchProducts(
     .filter(({ item, score }) => {
       if (category !== "all" && item.category !== category) return false;
       if (item.price < minPrice || item.price > priceCap) return false;
+      if (onSale && !item.compareAtPrice) return false;
+      if (newOnly && !item.isNew) return false;
+      if (bestsellersOnly && !item.isBestseller) return false;
+      if (vibeToken) {
+        const hasVibe =
+          item.tags.some((t) => t.toLowerCase() === vibeToken) ||
+          item.category === vibeToken;
+        if (!hasVibe) return false;
+      }
       if (tokens.length > 0 && score <= 0) return false;
       return true;
     })
@@ -255,8 +282,16 @@ export function getChatReply(query: string): ChatReply {
     };
   }
 
+  // Final fallback: still surface three bestsellers so the user has something to react to.
+  const trending = [...products]
+    .sort(
+      (a, b) =>
+        (b.isBestseller ? 2 : 0) + b.rating - ((a.isBestseller ? 2 : 0) + a.rating)
+    )
+    .slice(0, 3);
   return {
-    text: "I'm not quite sure what you're after yet. Try telling me the occasion (gift, travel, WFH), a rough budget, or a vibe (minimal, cosy, premium) and I'll come back with three solid picks.",
+    text: "I couldn't quite place that — mind telling me the occasion (gift, travel, WFH), a rough budget, or a vibe (minimal, cosy, premium)? In the meantime, here are three pieces the house always stands behind.",
+    suggestedSlugs: trending.map((t) => t.slug),
   };
 }
 

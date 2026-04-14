@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
+import ProductImage from "@/components/ecommerce/ProductImage";
 import {
   OCCASION_BUNDLES,
   getBundleProducts,
@@ -109,15 +110,32 @@ export default function AIToolsClient() {
 
 function StylistPanel() {
   const [prompt, setPrompt] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const reply = useMemo(
-    () => (submitted && prompt ? getChatReply(prompt) : null),
-    [prompt, submitted]
-  );
+  const [thinking, setThinking] = useState(false);
+  const [reply, setReply] = useState<ReturnType<typeof getChatReply> | null>(null);
+  const replyRef = useRef<HTMLDivElement | null>(null);
+
   const suggestions = reply?.suggestedSlugs
     ?.map(getProductBySlug)
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
   const addItem = useCart((s) => s.addItem);
+
+  const submit = (value?: string) => {
+    const q = (value ?? prompt).trim();
+    if (!q) return;
+    setThinking(true);
+    setReply(null);
+    // Small defer so the "thinking" spinner is visible — the logic itself is synchronous.
+    window.setTimeout(() => {
+      setReply(getChatReply(q));
+      setThinking(false);
+    }, 320);
+  };
+
+  useEffect(() => {
+    if (reply && replyRef.current) {
+      replyRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [reply]);
 
   const examples = [
     "Housewarming gift for a minimalist friend, under £150",
@@ -149,12 +167,9 @@ function StylistPanel() {
         </label>
         <textarea
           value={prompt}
-          onChange={(e) => {
-            setPrompt(e.target.value);
-            setSubmitted(false);
-          }}
+          onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) setSubmitted(true);
+            if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) submit();
           }}
           placeholder="Tell me the occasion, vibe, or budget — I'll suggest three."
           className="w-full mt-4 px-5 py-5 rounded-2xl border outline-none resize-none min-h-[120px] font-montserrat text-base focus:border-accent transition-colors"
@@ -170,7 +185,7 @@ function StylistPanel() {
               key={ex}
               onClick={() => {
                 setPrompt(ex);
-                setSubmitted(true);
+                submit(ex);
               }}
               className="px-3 py-1.5 rounded-full border text-[11px] font-montserrat transition-all hover:border-accent hover:text-accent"
               style={{
@@ -184,24 +199,39 @@ function StylistPanel() {
           ))}
         </div>
         <button
-          onClick={() => setSubmitted(true)}
-          disabled={!prompt.trim()}
-          className="mt-6 px-6 py-3 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] transition-all disabled:opacity-40 hover:scale-[1.02]"
+          onClick={() => submit()}
+          disabled={!prompt.trim() || thinking}
+          className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] transition-all disabled:opacity-40 hover:scale-[1.02]"
           style={{
             background: "var(--accent)",
             color: "var(--bg-primary)",
           }}
         >
-          Get recommendations
+          {thinking ? (
+            <>
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="inline-block w-3.5 h-3.5 rounded-full border-2 border-current border-r-transparent"
+              />
+              Thinking…
+            </>
+          ) : (
+            <>
+              <EcomIcons.Sparkles className="w-3.5 h-3.5" />
+              Get recommendations
+            </>
+          )}
         </button>
       </div>
 
       {reply && (
         <motion.div
+          ref={replyRef}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="p-6 md:p-10 rounded-[2rem] border"
+          className="p-6 md:p-10 rounded-[2rem] border scroll-mt-24"
           style={{
             background: "var(--bg-secondary)",
             borderColor: "var(--border-subtle)",
@@ -249,9 +279,10 @@ function StylistPanel() {
                     className="block aspect-square overflow-hidden"
                     style={{ background: "var(--fg-05)" }}
                   >
-                    <img
+                    <ProductImage
                       src={p.image}
                       alt={p.name}
+                      fallbackSeed={p.slug}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </Link>
@@ -548,9 +579,10 @@ function BundlesPanel() {
                 className="w-16 h-16 rounded-xl overflow-hidden shrink-0"
                 style={{ background: "var(--fg-05)" }}
               >
-                <img
+                <ProductImage
                   src={p.image}
                   alt={p.name}
+                  fallbackSeed={p.slug}
                   className="w-full h-full object-cover"
                 />
               </div>

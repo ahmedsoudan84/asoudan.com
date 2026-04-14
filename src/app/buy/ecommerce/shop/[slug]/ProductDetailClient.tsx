@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
+import ProductImage from "@/components/ecommerce/ProductImage";
 import { type Product, CATEGORY_META } from "@/lib/ecommerce/products";
 import { recommendFrom } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
@@ -69,9 +70,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 borderColor: "var(--border-subtle)",
               }}
             >
-              <img
+              <ProductImage
                 src={gallery[activeImage]}
                 alt={product.name}
+                fallbackSeed={`${product.slug}-${activeImage}`}
                 className="w-full h-full object-cover"
               />
               {product.compareAtPrice && (
@@ -102,9 +104,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                       opacity: activeImage === i ? 1 : 0.6,
                     }}
                   >
-                    <img
+                    <ProductImage
                       src={img}
                       alt={`${product.name} ${i + 1}`}
+                      fallbackSeed={`${product.slug}-thumb-${i}`}
                       className="w-full h-full object-cover"
                     />
                   </button>
@@ -210,15 +213,16 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </div>
 
             {/* Quantity + Add */}
-            <div className="mt-8 flex items-center gap-3">
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <div
-                className="flex items-center gap-1 rounded-xl border"
+                className="flex items-center justify-between sm:justify-center gap-1 rounded-xl border self-start"
                 style={{ borderColor: "var(--border-card)" }}
               >
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-10 h-12 flex items-center justify-center hover:text-accent transition-colors"
+                  className="w-11 h-12 flex items-center justify-center hover:text-accent transition-colors"
                   style={{ color: "var(--fg-70)" }}
+                  aria-label="Decrease quantity"
                 >
                   <EcomIcons.Minus className="w-4 h-4" />
                 </button>
@@ -232,15 +236,22 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   onClick={() =>
                     setQuantity((q) => Math.min(product.stock, q + 1))
                   }
-                  className="w-10 h-12 flex items-center justify-center hover:text-accent transition-colors"
+                  className="w-11 h-12 flex items-center justify-center hover:text-accent transition-colors"
                   style={{ color: "var(--fg-70)" }}
+                  aria-label="Increase quantity"
                 >
                   <EcomIcons.Plus className="w-4 h-4" />
                 </button>
               </div>
-              <button
+              <motion.button
                 onClick={handleAdd}
-                className="flex-1 h-12 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] transition-all hover:scale-[1.01] flex items-center justify-center gap-2"
+                animate={
+                  justAdded
+                    ? { scale: [1, 1.03, 1] }
+                    : { scale: 1 }
+                }
+                transition={{ duration: 0.4 }}
+                className="flex-1 min-w-0 h-12 px-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
                 style={{
                   background: justAdded ? "var(--fg)" : "var(--accent)",
                   color: "var(--bg-primary)",
@@ -249,15 +260,17 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 {justAdded ? (
                   <>
                     <EcomIcons.Check className="w-4 h-4" />
-                    Added
+                    <span>Added to cart</span>
                   </>
                 ) : (
                   <>
-                    <EcomIcons.Bag className="w-4 h-4" />
-                    Add to cart — £{(product.price * quantity).toLocaleString()}
+                    <EcomIcons.Bag className="w-4 h-4 shrink-0" />
+                    <span className="truncate">
+                      Add to cart · £{(product.price * quantity).toLocaleString()}
+                    </span>
                   </>
                 )}
-              </button>
+              </motion.button>
             </div>
 
             <div className="flex items-center gap-2 mt-4">
@@ -381,9 +394,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     className="aspect-square overflow-hidden"
                     style={{ background: "var(--fg-05)" }}
                   >
-                    <img
+                    <ProductImage
                       src={r.image}
                       alt={r.name}
+                      fallbackSeed={r.slug}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>

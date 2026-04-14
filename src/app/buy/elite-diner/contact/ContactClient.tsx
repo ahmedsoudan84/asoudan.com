@@ -30,36 +30,64 @@ export default function ContactClient() {
               Whether you&apos;re planning a private event, looking for a career change, or just want to share your dining experience, we&apos;d love to hear from you.
             </p>
 
-            <div className="space-y-12">
-              <div className="flex items-center gap-6 group cursor-pointer">
-                <div className="w-14 h-14 rounded-2xl bg-fg-05 flex items-center justify-center text-accent transition-transform group-hover:scale-110 border border-border-subtle">
-                   <Icons.Mail className="w-6 h-6" />
+            <div className="space-y-6">
+              <a
+                href="mailto:hello@elitediner.com"
+                className="flex items-center gap-6 group p-4 -mx-4 rounded-2xl transition-colors hover:bg-fg-05"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-fg-05 flex items-center justify-center text-accent transition-transform group-hover:scale-110 border border-border-subtle shrink-0">
+                  <Icons.Mail className="w-6 h-6" />
                 </div>
-                <div>
-                  <h3 className="font-montserrat font-bold text-sm uppercase tracking-widest opacity-40">Email Us</h3>
-                  <p className="text-lg font-bold">hello@elitediner.com</p>
+                <div className="min-w-0">
+                  <h3 className="font-montserrat font-bold text-[11px] uppercase tracking-widest opacity-40">Email us</h3>
+                  <p className="text-base md:text-lg font-bold mt-1 break-all group-hover:text-accent transition-colors">
+                    hello@elitediner.com
+                  </p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-center gap-6 group cursor-pointer">
-                <div className="w-14 h-14 rounded-2xl bg-fg-05 flex items-center justify-center text-accent transition-transform group-hover:scale-110 border border-border-subtle">
-                   <Icons.Phone className="w-6 h-6" />
+              {/* Phone — tel: link so mobile taps open the native dialer. */}
+              <a
+                href="tel:+442079460852"
+                className="flex items-start gap-6 group p-4 -mx-4 rounded-2xl transition-colors hover:bg-fg-05"
+                aria-label="Call Elite Diner at +44 20 7946 0852"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-fg-05 flex items-center justify-center text-accent transition-transform group-hover:scale-110 border border-border-subtle shrink-0">
+                  <Icons.Phone className="w-6 h-6" />
                 </div>
-                <div>
-                  <h3 className="font-montserrat font-bold text-sm uppercase tracking-widest opacity-40">Call Us</h3>
-                  <p className="text-lg font-bold">+44 (0) 20 7946 0852</p>
+                <div className="min-w-0 flex-1 flex flex-col">
+                  <h3 className="font-montserrat font-bold text-[11px] uppercase tracking-widest opacity-40">
+                    Call us
+                  </h3>
+                  <span className="text-xs text-fg-50 mt-1 block">
+                    Reservations &amp; enquiries · Mon–Sat 10am–11pm
+                  </span>
+                  <span className="text-xl md:text-2xl font-montserrat font-black mt-2 tracking-tight text-accent group-hover:underline underline-offset-4">
+                    +44 (0) 20 7946 0852
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 mt-2 text-[10px] font-montserrat uppercase tracking-[2px] font-bold opacity-60">
+                    <Icons.ChevronRight className="w-3 h-3" />
+                    Tap to dial on mobile
+                  </span>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-center gap-6 group cursor-pointer">
-                <div className="w-14 h-14 rounded-2xl bg-fg-05 flex items-center justify-center text-accent transition-transform group-hover:scale-110 border border-border-subtle">
-                   <Icons.MapPin className="w-6 h-6" />
+              <a
+                href="https://maps.google.com/?q=42+Mayfair+Mews+London"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-6 group p-4 -mx-4 rounded-2xl transition-colors hover:bg-fg-05"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-fg-05 flex items-center justify-center text-accent transition-transform group-hover:scale-110 border border-border-subtle shrink-0">
+                  <Icons.MapPin className="w-6 h-6" />
                 </div>
-                <div>
-                  <h3 className="font-montserrat font-bold text-sm uppercase tracking-widest opacity-40">Visit Us</h3>
-                  <p className="text-lg font-bold">42 Mayfair Mews, London</p>
+                <div className="min-w-0">
+                  <h3 className="font-montserrat font-bold text-[11px] uppercase tracking-widest opacity-40">Visit us</h3>
+                  <p className="text-base md:text-lg font-bold mt-1 group-hover:text-accent transition-colors">
+                    42 Mayfair Mews, London
+                  </p>
                 </div>
-              </div>
+              </a>
             </div>
           </motion.div>
 

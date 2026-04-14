@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import EcommerceNav from "@/components/ecommerce/EcommerceNav";
 import CartDrawer from "@/components/ecommerce/CartDrawer";
 import AIChatWidget from "@/components/ecommerce/AIChatWidget";
+import AddedToast from "@/components/ecommerce/AddedToast";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function EcommerceLayout({
       <div className="min-h-screen">{children}</div>
       <Footer />
       <CartDrawer />
+      <AddedToast />
       <AIChatWidget />
     </>
   );

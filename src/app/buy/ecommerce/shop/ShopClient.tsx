@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
+import ProductImage from "@/components/ecommerce/ProductImage";
 import {
   products,
   CATEGORY_META,
@@ -30,6 +31,22 @@ const PRICE_RANGES = [
   { label: "£1000+", min: 1000, max: Infinity },
 ];
 
+const VIBES: { id: string; label: string; tag: string }[] = [
+  { id: "minimalist", label: "Minimalist", tag: "minimalist" },
+  { id: "premium", label: "Premium", tag: "premium" },
+  { id: "handmade", label: "Handmade", tag: "handmade" },
+  { id: "giftable", label: "Giftable", tag: "gift" },
+  { id: "travel", label: "Travel-ready", tag: "travel" },
+  { id: "workspace", label: "For the desk", tag: "workspace" },
+];
+
+type QuickFilter = "new" | "sale" | "bestsellers";
+const QUICK_FILTERS: { id: QuickFilter; label: string }[] = [
+  { id: "new", label: "New in" },
+  { id: "sale", label: "On sale" },
+  { id: "bestsellers", label: "Bestsellers" },
+];
+
 export default function ShopClient() {
   const params = useSearchParams();
   const initialQuery = params.get("q") ?? "";
@@ -48,12 +65,21 @@ export default function ShopClient() {
   const [sort, setSort] = useState<NonNullable<SearchFilters["sort"]>>(
     initialSort
   );
+  const [vibe, setVibe] = useState<string | null>(null);
+  const [quick, setQuick] = useState<Set<QuickFilter>>(new Set());
 
   useEffect(() => {
     setQuery(initialQuery);
   }, [initialQuery]);
 
   const addItem = useCart((s) => s.addItem);
+
+  const toggleQuick = (id: QuickFilter) =>
+    setQuick((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
 
   const results = useMemo(() => {
     const range = PRICE_RANGES[priceIndex];
@@ -62,14 +88,29 @@ export default function ShopClient() {
       minPrice: range.min,
       maxPrice: range.max,
       sort,
+      vibe,
+      newOnly: quick.has("new"),
+      onSale: quick.has("sale"),
+      bestsellersOnly: quick.has("bestsellers"),
     });
-  }, [query, category, priceIndex, sort]);
+  }, [query, category, priceIndex, sort, vibe, quick]);
 
   const hasActiveFilters =
     query.trim().length > 0 ||
     category !== "all" ||
     priceIndex !== 0 ||
-    sort !== "featured";
+    sort !== "featured" ||
+    vibe !== null ||
+    quick.size > 0;
+
+  const clearFilters = () => {
+    setQuery("");
+    setCategory("all");
+    setPriceIndex(0);
+    setSort("featured");
+    setVibe(null);
+    setQuick(new Set());
+  };
 
   return (
     <div style={{ background: "var(--bg-primary)" }}>
@@ -189,17 +230,82 @@ export default function ShopClient() {
             </div>
           </div>
 
+          {/* Quick filter pills + Vibe chips */}
+          <div className="mt-5 flex flex-col gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className="font-montserrat text-[10px] uppercase tracking-[2.5px] font-bold mr-1"
+                style={{ color: "var(--fg-40)" }}
+              >
+                Quick
+              </span>
+              {QUICK_FILTERS.map((q) => {
+                const active = quick.has(q.id);
+                return (
+                  <button
+                    key={q.id}
+                    onClick={() => toggleQuick(q.id)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-montserrat font-bold uppercase tracking-[1.5px] border transition-all"
+                    style={{
+                      background: active
+                        ? "rgba(var(--accent-rgb), 0.15)"
+                        : "transparent",
+                      color: active ? "var(--accent)" : "var(--fg-60)",
+                      borderColor: active
+                        ? "rgba(var(--accent-rgb), 0.45)"
+                        : "var(--border-subtle)",
+                    }}
+                    aria-pressed={active}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full transition-all"
+                      style={{
+                        background: active
+                          ? "var(--accent)"
+                          : "var(--fg-30)",
+                      }}
+                    />
+                    {q.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className="font-montserrat text-[10px] uppercase tracking-[2.5px] font-bold mr-1"
+                style={{ color: "var(--fg-40)" }}
+              >
+                Vibe
+              </span>
+              {VIBES.map((v) => {
+                const active = vibe === v.tag;
+                return (
+                  <button
+                    key={v.id}
+                    onClick={() => setVibe(active ? null : v.tag)}
+                    className="px-3 py-1.5 rounded-full text-[11px] font-montserrat font-medium tracking-[0.5px] border transition-all"
+                    style={{
+                      background: active ? "var(--fg)" : "transparent",
+                      color: active ? "var(--bg-primary)" : "var(--fg-70)",
+                      borderColor: active ? "var(--fg)" : "var(--border-subtle)",
+                    }}
+                    aria-pressed={active}
+                  >
+                    {v.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {hasActiveFilters && (
             <button
-              onClick={() => {
-                setQuery("");
-                setCategory("all");
-                setPriceIndex(0);
-                setSort("featured");
-              }}
-              className="mt-4 text-[10px] font-montserrat uppercase tracking-[2px] font-bold hover:text-accent transition-colors"
+              onClick={clearFilters}
+              className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-montserrat uppercase tracking-[2px] font-bold hover:text-accent transition-colors"
               style={{ color: "var(--fg-50)" }}
             >
+              <EcomIcons.X className="w-3 h-3" />
               Clear filters
             </button>
           )}
@@ -327,134 +433,156 @@ function ProductCard({
   product: (typeof products)[number];
   onAdd: () => void;
 }) {
+  const [justAdded, setJustAdded] = useState(false);
+  const handleAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onAdd();
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1200);
+  };
   return (
-    <div className="group relative h-full">
-      <Link
-        href={`/buy/ecommerce/shop/${p.slug}`}
-        className="flex flex-col h-full rounded-2xl overflow-hidden border transition-all duration-500 group-hover:-translate-y-2 group-hover:border-accent group-hover:shadow-[0_24px_60px_-20px_rgba(var(--accent-rgb),0.2)]"
-        style={{
-          background: "var(--bg-surface)",
-          borderColor: "var(--border-subtle)",
-        }}
+    <div
+      className="group relative h-full flex flex-col rounded-2xl overflow-hidden border transition-all duration-500 hover:-translate-y-2 hover:border-accent hover:shadow-[0_24px_60px_-20px_rgba(var(--accent-rgb),0.2)]"
+      style={{
+        background: "var(--bg-surface)",
+        borderColor: "var(--border-subtle)",
+      }}
+    >
+      <div
+        className="relative aspect-square overflow-hidden"
+        style={{ background: "var(--fg-05)" }}
       >
-        <div
-          className="relative aspect-square overflow-hidden"
-          style={{ background: "var(--fg-05)" }}
+        <Link
+          href={`/buy/ecommerce/shop/${p.slug}`}
+          className="block w-full h-full"
+          aria-label={p.name}
         >
-          <img
+          <ProductImage
             src={p.image}
             alt={p.name}
+            fallbackSeed={p.slug}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-            {p.isNew && (
-              <span
-                className="px-2.5 py-1 rounded-full text-[9px] font-montserrat uppercase tracking-[2px] font-bold"
-                style={{
-                  background: "var(--bg-primary)",
-                  color: "var(--accent)",
-                  border: "1px solid rgba(var(--accent-rgb), 0.3)",
-                }}
-              >
-                New
-              </span>
-            )}
-            {p.compareAtPrice && (
-              <span
-                className="px-2.5 py-1 rounded-full text-[9px] font-montserrat uppercase tracking-[2px] font-bold"
-                style={{
-                  background: "var(--accent)",
-                  color: "var(--bg-primary)",
-                }}
-              >
-                -{Math.round(100 - (p.price / p.compareAtPrice) * 100)}%
-              </span>
-            )}
-          </div>
-          {p.stock < 10 && (
+        </Link>
+        <div className="pointer-events-none absolute top-3 left-3 flex flex-col gap-1.5">
+          {p.isNew && (
             <span
-              className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[9px] font-montserrat uppercase tracking-[2px] font-bold"
+              className="px-2.5 py-1 rounded-full text-[9px] font-montserrat uppercase tracking-[2px] font-bold"
               style={{
-                background: "rgba(239, 68, 68, 0.9)",
-                color: "#fff",
+                background: "var(--bg-primary)",
+                color: "var(--accent)",
+                border: "1px solid rgba(var(--accent-rgb), 0.3)",
               }}
             >
-              Only {p.stock} left
+              New
+            </span>
+          )}
+          {p.compareAtPrice && (
+            <span
+              className="px-2.5 py-1 rounded-full text-[9px] font-montserrat uppercase tracking-[2px] font-bold"
+              style={{
+                background: "var(--accent)",
+                color: "var(--bg-primary)",
+              }}
+            >
+              -{Math.round(100 - (p.price / p.compareAtPrice) * 100)}%
             </span>
           )}
         </div>
-        <div className="p-4 flex-1 flex flex-col">
-          <p
-            className="font-montserrat text-[10px] uppercase tracking-[2px] font-bold"
-            style={{ color: "var(--fg-40)" }}
+        {p.stock < 10 && (
+          <span
+            className="pointer-events-none absolute top-3 right-3 px-2.5 py-1 rounded-full text-[9px] font-montserrat uppercase tracking-[2px] font-bold"
+            style={{
+              background: "rgba(239, 68, 68, 0.9)",
+              color: "#fff",
+            }}
           >
-            {p.brand}
-          </p>
-          <h3
-            className="font-montserrat font-bold text-sm mt-0.5 group-hover:text-accent transition-colors line-clamp-1"
-            style={{ color: "var(--fg)" }}
-          >
-            {p.name}
-          </h3>
-          <p
-            className="font-montserrat text-xs mt-1.5 line-clamp-2 flex-1"
-            style={{ color: "var(--fg-50)" }}
-          >
-            {p.tagline}
-          </p>
-          <div className="flex items-end justify-between mt-4">
-            <div className="flex items-baseline gap-2">
+            Only {p.stock} left
+          </span>
+        )}
+        <motion.button
+          type="button"
+          onClick={handleAdd}
+          animate={justAdded ? { scale: [1, 1.15, 1] } : {}}
+          transition={{ duration: 0.35 }}
+          className={`absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_8px_24px_-4px_rgba(var(--accent-rgb),0.55)] hover:scale-110 active:scale-95 ${
+            justAdded
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-2 group-hover:opacity-100 focus-visible:opacity-100 group-hover:translate-y-0"
+          }`}
+          style={{
+            background: justAdded ? "var(--fg)" : "var(--accent)",
+            color: "var(--bg-primary)",
+          }}
+          aria-label={`Add ${p.name} to cart`}
+        >
+          {justAdded ? (
+            <EcomIcons.Check className="w-4 h-4" />
+          ) : (
+            <EcomIcons.Plus className="w-4 h-4" />
+          )}
+        </motion.button>
+      </div>
+      <Link
+        href={`/buy/ecommerce/shop/${p.slug}`}
+        className="p-4 flex-1 flex flex-col"
+      >
+        <p
+          className="font-montserrat text-[10px] uppercase tracking-[2px] font-bold"
+          style={{ color: "var(--fg-40)" }}
+        >
+          {p.brand}
+        </p>
+        <h3
+          className="font-montserrat font-bold text-sm mt-0.5 group-hover:text-accent transition-colors line-clamp-1"
+          style={{ color: "var(--fg)" }}
+        >
+          {p.name}
+        </h3>
+        <p
+          className="font-montserrat text-xs mt-1.5 line-clamp-2 flex-1"
+          style={{ color: "var(--fg-50)" }}
+        >
+          {p.tagline}
+        </p>
+        <div className="flex items-end justify-between mt-4">
+          <div className="flex items-baseline gap-2">
+            <span
+              className="font-montserrat font-bold text-base"
+              style={{ color: "var(--fg)" }}
+            >
+              £{p.price}
+            </span>
+            {p.compareAtPrice && (
               <span
-                className="font-montserrat font-bold text-base"
-                style={{ color: "var(--fg)" }}
-              >
-                £{p.price}
-              </span>
-              {p.compareAtPrice && (
-                <span
-                  className="font-montserrat text-xs line-through"
-                  style={{ color: "var(--fg-40)" }}
-                >
-                  £{p.compareAtPrice}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-1">
-              <EcomIcons.Star
-                className="w-3 h-3"
-                style={{ color: "var(--accent)" }}
-              />
-              <span
-                className="font-montserrat text-[11px] font-bold"
-                style={{ color: "var(--fg-70)" }}
-              >
-                {p.rating}
-              </span>
-              <span
-                className="font-montserrat text-[10px]"
+                className="font-montserrat text-xs line-through"
                 style={{ color: "var(--fg-40)" }}
               >
-                ({p.reviews})
+                £{p.compareAtPrice}
               </span>
-            </div>
+            )}
+          </div>
+          <div className="flex items-center gap-1">
+            <EcomIcons.Star
+              className="w-3 h-3"
+              style={{ color: "var(--accent)" }}
+            />
+            <span
+              className="font-montserrat text-[11px] font-bold"
+              style={{ color: "var(--fg-70)" }}
+            >
+              {p.rating}
+            </span>
+            <span
+              className="font-montserrat text-[10px]"
+              style={{ color: "var(--fg-40)" }}
+            >
+              ({p.reviews})
+            </span>
           </div>
         </div>
       </Link>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onAdd();
-        }}
-        className="absolute bottom-3 right-3 w-9 h-9 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 shadow-lg"
-        style={{
-          background: "var(--accent)",
-          color: "var(--bg-primary)",
-        }}
-        aria-label={`Add ${p.name} to cart`}
-      >
-        <EcomIcons.Plus className="w-4 h-4" />
-      </button>
     </div>
   );
 }

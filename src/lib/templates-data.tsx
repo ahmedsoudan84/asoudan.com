@@ -53,8 +53,8 @@ export const categories: TemplateCategory[] = [
     title: "E-Commerce",
     subtitle: "Kurator — Premium Shop Template with AI Stylist",
     description:
-      "Semantic product search, AI stylist with occasion bundles, persistent cart, 3-step checkout. Sixteen curated products. Fully client-side.",
-    tags: ["Next.js 16", "AI Stylist", "Cart + Checkout", "16 Products"],
+      "Semantic product search, AI stylist with occasion bundles, persistent cart, 3-step checkout. Twenty-two curated products across six categories. Fully client-side.",
+    tags: ["Next.js 16", "AI Stylist", "Cart + Checkout", "22 Products"],
     status: "live",
     coverImage: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=400&fit=crop",
     icon: (
