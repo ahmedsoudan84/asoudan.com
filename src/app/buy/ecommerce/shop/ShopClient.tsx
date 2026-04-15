@@ -501,30 +501,29 @@ function ProductCard({
             Only {p.stock} left
           </span>
         )}
-        {/* Hover overlay — slides up from the bottom of the image */}
+        {/* Soft gradient on hover for contrast behind the round + button (desktop only) */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 hidden sm:block"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.22) 100%)",
+          }}
+        />
+        {/* Desktop: round + button fades + scales in from centre on hover */}
         <button
           type="button"
           onClick={handleAdd}
           aria-label={`Add ${p.name} to cart`}
-          className="absolute inset-x-0 bottom-0 h-14 flex items-center justify-center gap-2 font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all duration-300 ease-out translate-y-full group-hover:translate-y-0 active:scale-[0.98]"
+          className="hidden sm:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 items-center justify-center rounded-full opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out active:scale-95 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.45)]"
           style={{
-            background: justAdded
-              ? "var(--fg)"
-              : "rgba(var(--accent-rgb), 0.92)",
+            background: justAdded ? "var(--fg)" : "var(--accent)",
             color: "var(--bg-primary)",
-            backdropFilter: "blur(6px)",
           }}
         >
           {justAdded ? (
-            <>
-              <EcomIcons.Check className="w-4 h-4" />
-              Added
-            </>
+            <EcomIcons.Check className="w-5 h-5" />
           ) : (
-            <>
-              <EcomIcons.Plus className="w-4 h-4" />
-              Add to cart
-            </>
+            <EcomIcons.Plus className="w-5 h-5" strokeWidth={2.5} />
           )}
         </button>
       </div>
@@ -587,6 +586,34 @@ function ProductCard({
           </div>
         </div>
       </Link>
+      {/* Mobile: always-visible CTA beneath the product info */}
+      <button
+        type="button"
+        onClick={handleAdd}
+        aria-label={`Add ${p.name} to cart`}
+        className="sm:hidden mx-4 mb-4 flex items-center justify-center gap-2 py-3 rounded-xl border font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all active:scale-[0.97]"
+        style={{
+          background: justAdded
+            ? "var(--fg)"
+            : "rgba(var(--accent-rgb), 0.12)",
+          color: justAdded ? "var(--bg-primary)" : "var(--accent)",
+          borderColor: justAdded
+            ? "var(--fg)"
+            : "rgba(var(--accent-rgb), 0.35)",
+        }}
+      >
+        {justAdded ? (
+          <>
+            <EcomIcons.Check className="w-4 h-4" />
+            Added
+          </>
+        ) : (
+          <>
+            <EcomIcons.Plus className="w-4 h-4" />
+            Add to cart
+          </>
+        )}
+      </button>
     </div>
   );
 }

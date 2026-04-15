@@ -472,7 +472,7 @@ export default function HomeClient() {
             }}
           >
             <div
-              className="absolute -top-3.5 left-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-[2px] font-bold border backdrop-blur-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-[2px] font-bold border mb-4"
               style={{
                 background: "rgba(var(--accent-rgb), 0.12)",
                 color: "var(--accent)",

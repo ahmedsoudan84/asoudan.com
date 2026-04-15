@@ -527,7 +527,6 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&h=1200&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&h=1200&fit=crop",
-      "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=1200&h=1200&fit=crop",
     ],
     isNew: true,
   },
@@ -557,7 +556,6 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=1200&h=1200&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=1200&h=1200&fit=crop",
-      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=1200&h=1200&fit=crop",
     ],
     isBestseller: true,
   },
