@@ -9,6 +9,301 @@ import { type Product, CATEGORY_META } from "@/lib/ecommerce/products";
 import { recommendFrom } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
 
+/* ── Reviews section component ──────────────────────────── */
+
+function ReviewsSection({ product }: { product: Product }) {
+  const reviews = getReviews(product);
+  const avgRating = product.rating;
+  const reviewCount = product.reviews;
+
+  // Distribution buckets (purely cosmetic, seeded so they look realistic)
+  const dist = [
+    Math.round(reviewCount * (0.55 + seededIndex(product.slug, 99, 15) * 0.01)),
+    Math.round(reviewCount * (0.25 + seededIndex(product.slug, 98, 8) * 0.01)),
+    Math.round(reviewCount * 0.12),
+    Math.round(reviewCount * 0.05),
+    Math.round(reviewCount * 0.03),
+  ];
+
+  return (
+    <section
+      id="reviews"
+      className="py-20 px-6 lg:px-10 border-t scroll-mt-24"
+      style={{ borderColor: "var(--border-subtle)" }}
+    >
+      <div className="max-w-[1200px] mx-auto">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+          <div>
+            <span
+              className="font-montserrat text-[10px] uppercase tracking-[3px] font-bold"
+              style={{ color: "var(--accent)" }}
+            >
+              Reviews
+            </span>
+            <h2
+              className="font-montserrat text-3xl md:text-4xl font-black mt-2 tracking-tight"
+              style={{ color: "var(--fg)" }}
+            >
+              {reviewCount.toLocaleString()} verified buyers
+            </h2>
+          </div>
+
+          {/* Summary card */}
+          <div
+            className="flex items-center gap-8 p-6 rounded-2xl border shrink-0"
+            style={{
+              background: "var(--bg-surface)",
+              borderColor: "var(--border-card)",
+            }}
+          >
+            <div className="text-center">
+              <p
+                className="font-montserrat font-black text-5xl leading-none"
+                style={{ color: "var(--fg)" }}
+              >
+                {avgRating}
+              </p>
+              <div className="flex justify-center gap-0.5 mt-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <EcomIcons.Star
+                    key={i}
+                    className="w-4 h-4"
+                    style={{
+                      color:
+                        i < Math.floor(avgRating)
+                          ? "var(--accent)"
+                          : "var(--fg-15)",
+                    }}
+                  />
+                ))}
+              </div>
+              <p
+                className="font-montserrat text-[11px] mt-1"
+                style={{ color: "var(--fg-50)" }}
+              >
+                out of 5
+              </p>
+            </div>
+            <div className="space-y-1.5 min-w-[140px]">
+              {dist.map((count, i) => {
+                const stars = 5 - i;
+                const pct = Math.round((count / reviewCount) * 100);
+                return (
+                  <div key={stars} className="flex items-center gap-2">
+                    <span
+                      className="font-montserrat text-[11px] font-bold w-3 text-right"
+                      style={{ color: "var(--fg-60)" }}
+                    >
+                      {stars}
+                    </span>
+                    <div
+                      className="flex-1 h-1.5 rounded-full overflow-hidden"
+                      style={{ background: "var(--fg-10)" }}
+                    >
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${pct}%`,
+                          background: "var(--accent)",
+                        }}
+                      />
+                    </div>
+                    <span
+                      className="font-montserrat text-[10px] w-8"
+                      style={{ color: "var(--fg-40)" }}
+                    >
+                      {pct}%
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Review cards */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {reviews.map((r, i) => (
+            <motion.div
+              key={`${r.name}-${i}`}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              className="p-6 rounded-2xl border"
+              style={{
+                background: "var(--bg-surface)",
+                borderColor: "var(--border-subtle)",
+              }}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-9 h-9 rounded-full flex items-center justify-center font-montserrat font-black text-[11px] shrink-0"
+                    style={{
+                      background: "rgba(var(--accent-rgb), 0.12)",
+                      color: "var(--accent)",
+                    }}
+                  >
+                    {r.avatar}
+                  </div>
+                  <div>
+                    <p
+                      className="font-montserrat font-bold text-sm"
+                      style={{ color: "var(--fg)" }}
+                    >
+                      {r.name}
+                    </p>
+                    <p
+                      className="font-montserrat text-[10px]"
+                      style={{ color: "var(--fg-40)" }}
+                    >
+                      {r.date}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-0.5 shrink-0">
+                  {Array.from({ length: r.rating }).map((_, si) => (
+                    <EcomIcons.Star
+                      key={si}
+                      className="w-3 h-3"
+                      style={{ color: "var(--accent)" }}
+                    />
+                  ))}
+                  {Array.from({ length: 5 - r.rating }).map((_, si) => (
+                    <EcomIcons.Star
+                      key={`empty-${si}`}
+                      className="w-3 h-3"
+                      style={{ color: "var(--fg-15)" }}
+                    />
+                  ))}
+                </div>
+              </div>
+              <p
+                className="font-montserrat font-bold text-sm mt-4"
+                style={{ color: "var(--fg)" }}
+              >
+                {r.title}
+              </p>
+              <p
+                className="font-montserrat text-sm mt-2 leading-relaxed"
+                style={{ color: "var(--fg-60)" }}
+              >
+                {r.body}
+              </p>
+              {/* Verified purchase badge */}
+              <div className="flex items-center gap-1.5 mt-4">
+                <EcomIcons.Check
+                  className="w-3 h-3"
+                  style={{ color: "var(--accent)" }}
+                />
+                <span
+                  className="font-montserrat text-[10px] font-bold uppercase tracking-[1.5px]"
+                  style={{ color: "var(--fg-40)" }}
+                >
+                  Verified purchase
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* See all CTA */}
+        <div className="mt-10 text-center">
+          <p
+            className="font-montserrat text-sm"
+            style={{ color: "var(--fg-50)" }}
+          >
+            Showing {reviews.length} of {reviewCount.toLocaleString()} reviews
+          </p>
+          <button
+            className="mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-xl border font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all hover:border-accent hover:text-accent"
+            style={{
+              borderColor: "var(--border-subtle)",
+              color: "var(--fg-70)",
+            }}
+          >
+            Load more reviews
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Deterministic dummy reviews ─────────────────────────── */
+
+const REVIEW_POOL = [
+  {
+    name: "Alex M.",
+    avatar: "AM",
+    rating: 5,
+    date: "March 2025",
+    title: "Genuinely changed how I feel about my space.",
+    body: "I was sceptical about spending this much, but the quality is immediately apparent the moment you unbox it. The materials feel considered, not flashy. It's already become a favourite.",
+  },
+  {
+    name: "Sam L.",
+    avatar: "SL",
+    rating: 5,
+    date: "February 2025",
+    title: "Worth every penny.",
+    body: "Bought this after months of deliberation and I wish I'd done it sooner. Delivery was fast, packaging was impressive, and the product exceeded what I expected from the photos.",
+  },
+  {
+    name: "J. Richardson",
+    avatar: "JR",
+    rating: 4,
+    date: "January 2025",
+    title: "Excellent — minor quibble on sizing.",
+    body: "Really pleased with this. Sits exactly where I wanted it, looks better than on-screen, and feels like it'll last years. One star off because the sizing info could be clearer.",
+  },
+  {
+    name: "Priya N.",
+    avatar: "PN",
+    rating: 5,
+    date: "December 2024",
+    title: "The stylist recommendation was spot-on.",
+    body: "Used the AI stylist to find this as a gift and my friend loved it. The little details — the stitching, the finish — show how much thought went into it.",
+  },
+  {
+    name: "Tom G.",
+    avatar: "TG",
+    rating: 5,
+    date: "November 2024",
+    title: "Exactly as described. No compromises.",
+    body: "Product does exactly what it says on the page. The build quality is solid and it's held up perfectly after a few months of daily use. Would buy again without hesitation.",
+  },
+  {
+    name: "Clara B.",
+    avatar: "CB",
+    rating: 4,
+    date: "October 2024",
+    title: "Beautiful — delivery could have been quicker.",
+    body: "The product itself is lovely; it photographs even better in real life. Delivery took a day longer than expected but support was friendly when I reached out. Would definitely recommend.",
+  },
+];
+
+function seededIndex(slug: string, offset: number, max: number): number {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) {
+    hash = ((hash << 5) - hash + slug.charCodeAt(i)) | 0;
+  }
+  return Math.abs((hash + offset * 1337) % max);
+}
+
+function getReviews(product: Product) {
+  const count = 4 + (seededIndex(product.slug, 0, 3)); // 4, 5, or 6 reviews
+  return Array.from({ length: count }, (_, i) => {
+    const idx = seededIndex(product.slug, i + 1, REVIEW_POOL.length);
+    return REVIEW_POOL[idx];
+  }).filter(
+    // de-duplicate by name (same pool entry can repeat for low-count products)
+    (r, i, arr) => arr.findIndex((x) => x.name === r.name) === i
+  );
+}
+
 export default function ProductDetailClient({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -149,9 +444,13 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               {product.tagline}
             </p>
 
-            {/* Rating row */}
-            <div className="flex items-center gap-4 mt-5">
-              <div className="flex items-center gap-1">
+            {/* Rating row — clicking scrolls to the reviews section */}
+            <a
+              href="#reviews"
+              className="inline-flex items-center gap-4 mt-5 group"
+              aria-label="Jump to customer reviews"
+            >
+              <div className="flex items-center gap-0.5">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <EcomIcons.Star
                     key={i}
@@ -166,12 +465,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 ))}
               </div>
               <span
-                className="font-montserrat text-xs"
+                className="font-montserrat text-xs underline underline-offset-2 group-hover:text-accent transition-colors"
                 style={{ color: "var(--fg-60)" }}
               >
-                {product.rating} ({product.reviews.toLocaleString()} reviews)
+                {product.rating} · {product.reviews.toLocaleString()} reviews
               </span>
-            </div>
+            </a>
 
             {/* Price */}
             <div className="flex items-baseline gap-3 mt-6">
@@ -212,22 +511,22 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
             </div>
 
-            {/* Quantity + Add */}
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            {/* Quantity + Add — always a single flex row */}
+            <div className="mt-8 flex items-center gap-3">
               <div
-                className="flex items-center justify-between sm:justify-center gap-1 rounded-xl border self-start"
+                className="flex items-center gap-1 rounded-xl border shrink-0"
                 style={{ borderColor: "var(--border-card)" }}
               >
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-11 h-12 flex items-center justify-center hover:text-accent transition-colors"
+                  className="w-10 h-12 flex items-center justify-center hover:text-accent transition-colors"
                   style={{ color: "var(--fg-70)" }}
                   aria-label="Decrease quantity"
                 >
                   <EcomIcons.Minus className="w-4 h-4" />
                 </button>
                 <span
-                  className="font-montserrat font-bold text-sm min-w-[32px] text-center"
+                  className="font-montserrat font-bold text-sm w-7 text-center tabular-nums"
                   style={{ color: "var(--fg)" }}
                 >
                   {quantity}
@@ -236,7 +535,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   onClick={() =>
                     setQuantity((q) => Math.min(product.stock, q + 1))
                   }
-                  className="w-11 h-12 flex items-center justify-center hover:text-accent transition-colors"
+                  className="w-10 h-12 flex items-center justify-center hover:text-accent transition-colors"
                   style={{ color: "var(--fg-70)" }}
                   aria-label="Increase quantity"
                 >
@@ -245,28 +544,30 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
               <motion.button
                 onClick={handleAdd}
-                animate={
-                  justAdded
-                    ? { scale: [1, 1.03, 1] }
-                    : { scale: 1 }
-                }
-                transition={{ duration: 0.4 }}
-                className="flex-1 min-w-0 h-12 px-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
+                animate={justAdded ? { scale: [1, 1.04, 1] } : { scale: 1 }}
+                transition={{ duration: 0.35 }}
+                className="flex-1 h-12 rounded-xl font-montserrat font-bold uppercase tracking-[2px] transition-colors flex items-center justify-center gap-2 min-w-0"
                 style={{
                   background: justAdded ? "var(--fg)" : "var(--accent)",
                   color: "var(--bg-primary)",
+                  fontSize: "11px",
                 }}
               >
                 {justAdded ? (
                   <>
-                    <EcomIcons.Check className="w-4 h-4" />
-                    <span>Added to cart</span>
+                    <EcomIcons.Check className="w-4 h-4 shrink-0" />
+                    {/* Wider screens show text */}
+                    <span className="hidden xs:inline">Added</span>
                   </>
                 ) : (
                   <>
                     <EcomIcons.Bag className="w-4 h-4 shrink-0" />
-                    <span className="truncate">
+                    {/* On very small screens: just the icon + price. On sm+: full label */}
+                    <span className="hidden sm:inline truncate">
                       Add to cart · £{(product.price * quantity).toLocaleString()}
+                    </span>
+                    <span className="sm:hidden font-bold">
+                      £{(product.price * quantity).toLocaleString()}
                     </span>
                   </>
                 )}
@@ -427,6 +728,9 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
         </section>
       )}
+
+      {/* ── Reviews ─────────────────────────────────────────── */}
+      <ReviewsSection product={product} />
     </div>
   );
 }

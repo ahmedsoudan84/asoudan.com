@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
+import ProductImage from "@/components/ecommerce/ProductImage";
 import { products, CATEGORY_META, type ProductCategory } from "@/lib/ecommerce/products";
 import { OCCASION_BUNDLES, getBundleProducts } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
@@ -303,9 +304,10 @@ export default function HomeClient() {
                       className="relative aspect-square overflow-hidden"
                       style={{ background: "var(--fg-05)" }}
                     >
-                      <img
+                      <ProductImage
                         src={p.image}
                         alt={p.name}
+                        fallbackSeed={p.slug}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       {p.compareAtPrice && (
@@ -470,13 +472,15 @@ export default function HomeClient() {
             }}
           >
             <div
-              className="absolute -top-3 left-6 px-3 py-1 rounded-full text-[9px] font-montserrat uppercase tracking-[2px] font-bold"
+              className="absolute -top-3.5 left-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-[2px] font-bold border backdrop-blur-sm"
               style={{
-                background: "var(--accent)",
-                color: "var(--bg-primary)",
+                background: "rgba(var(--accent-rgb), 0.12)",
+                color: "var(--accent)",
+                borderColor: "rgba(var(--accent-rgb), 0.3)",
               }}
             >
-              Sample bundle
+              <EcomIcons.Sparkles className="w-3 h-3" />
+              Curated bundle
             </div>
             <h3
               className="font-montserrat text-xl font-bold"
@@ -505,9 +509,10 @@ export default function HomeClient() {
                     className="w-12 h-12 rounded-lg overflow-hidden shrink-0"
                     style={{ background: "var(--fg-05)" }}
                   >
-                    <img
+                    <ProductImage
                       src={bp.image}
                       alt={bp.name}
+                      fallbackSeed={bp.slug}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -599,9 +604,10 @@ export default function HomeClient() {
                       className="relative aspect-[4/3] overflow-hidden"
                       style={{ background: "var(--fg-05)" }}
                     >
-                      <img
+                      <ProductImage
                         src={p.image}
                         alt={p.name}
+                        fallbackSeed={p.slug}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <span

@@ -501,28 +501,32 @@ function ProductCard({
             Only {p.stock} left
           </span>
         )}
-        <motion.button
+        {/* Hover overlay — slides up from the bottom of the image */}
+        <button
           type="button"
           onClick={handleAdd}
-          animate={justAdded ? { scale: [1, 1.15, 1] } : {}}
-          transition={{ duration: 0.35 }}
-          className={`absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_8px_24px_-4px_rgba(var(--accent-rgb),0.55)] hover:scale-110 active:scale-95 ${
-            justAdded
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-2 group-hover:opacity-100 focus-visible:opacity-100 group-hover:translate-y-0"
-          }`}
-          style={{
-            background: justAdded ? "var(--fg)" : "var(--accent)",
-            color: "var(--bg-primary)",
-          }}
           aria-label={`Add ${p.name} to cart`}
+          className="absolute inset-x-0 bottom-0 h-14 flex items-center justify-center gap-2 font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all duration-300 ease-out translate-y-full group-hover:translate-y-0 active:scale-[0.98]"
+          style={{
+            background: justAdded
+              ? "var(--fg)"
+              : "rgba(var(--accent-rgb), 0.92)",
+            color: "var(--bg-primary)",
+            backdropFilter: "blur(6px)",
+          }}
         >
           {justAdded ? (
-            <EcomIcons.Check className="w-4 h-4" />
+            <>
+              <EcomIcons.Check className="w-4 h-4" />
+              Added
+            </>
           ) : (
-            <EcomIcons.Plus className="w-4 h-4" />
+            <>
+              <EcomIcons.Plus className="w-4 h-4" />
+              Add to cart
+            </>
           )}
-        </motion.button>
+        </button>
       </div>
       <Link
         href={`/buy/ecommerce/shop/${p.slug}`}

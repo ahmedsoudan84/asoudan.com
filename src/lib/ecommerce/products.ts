@@ -209,10 +209,10 @@ export const products: Product[] = [
       "10-year frame warranty",
     ],
     image:
-      "https://images.unsplash.com/photo-1587212695269-6c11e0ea6e3b?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1200&h=1200&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1587212695269-6c11e0ea6e3b?w=1200&h=1200&fit=crop",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=1200&h=1200&fit=crop",
     ],
     isBestseller: true,
   },
@@ -239,9 +239,9 @@ export const products: Product[] = [
       "12-year warranty",
     ],
     image:
-      "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1567538096621-38d2284b23ff?w=1200&h=1200&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1567538096621-38d2284b23ff?w=1200&h=1200&fit=crop",
     ],
   },
   {
@@ -295,9 +295,9 @@ export const products: Product[] = [
       "Hand-loomed in Wales",
     ],
     image:
-      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=1200&h=1200&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=1200&h=1200&fit=crop",
     ],
     isNew: true,
   },
@@ -324,9 +324,9 @@ export const products: Product[] = [
       "Reusable vessels",
     ],
     image:
-      "https://images.unsplash.com/photo-1602874801006-e26a4f4e6c0e?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1200&h=1200&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1602874801006-e26a4f4e6c0e?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1200&h=1200&fit=crop",
     ],
   },
   {
@@ -383,9 +383,9 @@ export const products: Product[] = [
       "QMK/VIA firmware",
     ],
     image:
-      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=1200&h=1200&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=1200&h=1200&fit=crop",
     ],
     isNew: true,
   },
@@ -468,9 +468,9 @@ export const products: Product[] = [
       "Multi-room audio",
     ],
     image:
-      "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=1200&h=1200&fit=crop",
     gallery: [
-      "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=1200&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=1200&h=1200&fit=crop",
     ],
   },
   {
