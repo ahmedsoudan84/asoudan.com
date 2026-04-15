@@ -152,7 +152,6 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1627123424574-724758594e93?w=1200&h=1200&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1627123424574-724758594e93?w=1200&h=1200&fit=crop",
-      "https://images.unsplash.com/photo-1604026310024-1a3a3065f37c?w=1200&h=1200&fit=crop",
     ],
   },
   {

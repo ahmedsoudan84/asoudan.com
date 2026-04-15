@@ -291,105 +291,7 @@ export default function HomeClient() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
               >
-                <div className="group relative">
-                  <Link
-                    href={`/buy/ecommerce/shop/${p.slug}`}
-                    className="block rounded-2xl overflow-hidden border transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_24px_60px_-20px_rgba(var(--accent-rgb),0.25)]"
-                    style={{
-                      background: "var(--bg-surface)",
-                      borderColor: "var(--border-subtle)",
-                    }}
-                  >
-                    <div
-                      className="relative aspect-square overflow-hidden"
-                      style={{ background: "var(--fg-05)" }}
-                    >
-                      <ProductImage
-                        src={p.image}
-                        alt={p.name}
-                        fallbackSeed={p.slug}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      {p.compareAtPrice && (
-                        <span
-                          className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-[2px] font-bold"
-                          style={{
-                            background: "var(--accent)",
-                            color: "var(--bg-primary)",
-                          }}
-                        >
-                          -
-                          {Math.round(
-                            100 - (p.price / p.compareAtPrice) * 100
-                          )}
-                          %
-                        </span>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="min-w-0 flex-1">
-                          <p
-                            className="font-montserrat text-[10px] uppercase tracking-[2px] font-bold truncate"
-                            style={{ color: "var(--fg-40)" }}
-                          >
-                            {p.brand}
-                          </p>
-                          <h3
-                            className="font-montserrat font-bold text-sm mt-0.5 truncate group-hover:text-accent transition-colors"
-                            style={{ color: "var(--fg)" }}
-                          >
-                            {p.name}
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-1 shrink-0">
-                          <EcomIcons.Star
-                            className="w-3 h-3"
-                            style={{ color: "var(--accent)" }}
-                          />
-                          <span
-                            className="font-montserrat text-xs font-bold"
-                            style={{ color: "var(--fg-70)" }}
-                          >
-                            {p.rating}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between mt-3">
-                        <div className="flex items-baseline gap-2">
-                          <span
-                            className="font-montserrat font-bold text-base"
-                            style={{ color: "var(--fg)" }}
-                          >
-                            £{p.price}
-                          </span>
-                          {p.compareAtPrice && (
-                            <span
-                              className="font-montserrat text-xs line-through"
-                              style={{ color: "var(--fg-40)" }}
-                            >
-                              £{p.compareAtPrice}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      addItem(p);
-                    }}
-                    className="absolute bottom-3 right-3 w-9 h-9 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 shadow-lg"
-                    style={{
-                      background: "var(--accent)",
-                      color: "var(--bg-primary)",
-                    }}
-                    aria-label={`Add ${p.name} to cart`}
-                  >
-                    <EcomIcons.Plus className="w-4 h-4" />
-                  </button>
-                </div>
+                <NewArrivalCard product={p} onAdd={() => addItem(p)} />
               </motion.div>
             ))}
           </div>
@@ -791,6 +693,162 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+/* ── NewArrivalCard ─────────────────────────────────────────── */
+function NewArrivalCard({
+  product: p,
+  onAdd,
+}: {
+  product: (typeof products)[number];
+  onAdd: () => void;
+}) {
+  const [justAdded, setJustAdded] = useState(false);
+  const handleAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onAdd();
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1200);
+  };
+
+  return (
+    <div
+      className="group relative h-full flex flex-col rounded-2xl overflow-hidden border transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_60px_-20px_rgba(var(--accent-rgb),0.25)]"
+      style={{
+        background: "var(--bg-surface)",
+        borderColor: "var(--border-subtle)",
+      }}
+    >
+      {/* Image area */}
+      <div
+        className="relative aspect-square overflow-hidden shrink-0"
+        style={{ background: "var(--fg-05)" }}
+      >
+        <Link
+          href={`/buy/ecommerce/shop/${p.slug}`}
+          className="block w-full h-full"
+          aria-label={p.name}
+        >
+          <ProductImage
+            src={p.image}
+            alt={p.name}
+            fallbackSeed={p.slug}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        </Link>
+        {p.compareAtPrice && (
+          <span
+            className="pointer-events-none absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-[2px] font-bold"
+            style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
+          >
+            -{Math.round(100 - (p.price / p.compareAtPrice) * 100)}%
+          </span>
+        )}
+        {/* Soft gradient for button contrast */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 hidden sm:block"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.22) 100%)",
+          }}
+        />
+        {/* Desktop: round + button centred on image, fades + scales in on hover */}
+        <button
+          type="button"
+          onClick={handleAdd}
+          aria-label={`Add ${p.name} to cart`}
+          className="hidden sm:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 items-center justify-center rounded-full opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out active:scale-95 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.45)]"
+          style={{
+            background: justAdded ? "var(--fg)" : "var(--accent)",
+            color: "var(--bg-primary)",
+          }}
+        >
+          {justAdded ? (
+            <EcomIcons.Check className="w-5 h-5" />
+          ) : (
+            <EcomIcons.Plus className="w-5 h-5" />
+          )}
+        </button>
+      </div>
+
+      {/* Info */}
+      <Link
+        href={`/buy/ecommerce/shop/${p.slug}`}
+        className="p-4 flex-1 flex flex-col"
+      >
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <p
+              className="font-montserrat text-[10px] uppercase tracking-[2px] font-bold truncate"
+              style={{ color: "var(--fg-40)" }}
+            >
+              {p.brand}
+            </p>
+            <h3
+              className="font-montserrat font-bold text-sm mt-0.5 truncate group-hover:text-accent transition-colors"
+              style={{ color: "var(--fg)" }}
+            >
+              {p.name}
+            </h3>
+          </div>
+          <div className="flex items-center gap-1 shrink-0 mt-0.5">
+            <EcomIcons.Star
+              className="w-3 h-3"
+              style={{ color: "var(--accent)" }}
+            />
+            <span
+              className="font-montserrat text-xs font-bold"
+              style={{ color: "var(--fg-70)" }}
+            >
+              {p.rating}
+            </span>
+          </div>
+        </div>
+        <div className="flex items-baseline gap-2 mt-3">
+          <span
+            className="font-montserrat font-bold text-base"
+            style={{ color: "var(--fg)" }}
+          >
+            £{p.price}
+          </span>
+          {p.compareAtPrice && (
+            <span
+              className="font-montserrat text-xs line-through"
+              style={{ color: "var(--fg-40)" }}
+            >
+              £{p.compareAtPrice}
+            </span>
+          )}
+        </div>
+      </Link>
+
+      {/* Mobile: always-visible CTA */}
+      <button
+        type="button"
+        onClick={handleAdd}
+        aria-label={`Add ${p.name} to cart`}
+        className="sm:hidden mx-4 mb-4 flex items-center justify-center gap-2 py-3 rounded-xl border font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all active:scale-[0.97]"
+        style={{
+          background: justAdded ? "var(--fg)" : "rgba(var(--accent-rgb), 0.12)",
+          color: justAdded ? "var(--bg-primary)" : "var(--accent)",
+          borderColor: justAdded ? "var(--fg)" : "rgba(var(--accent-rgb), 0.35)",
+        }}
+      >
+        {justAdded ? (
+          <>
+            <EcomIcons.Check className="w-4 h-4" />
+            Added
+          </>
+        ) : (
+          <>
+            <EcomIcons.Plus className="w-4 h-4" />
+            Add to cart
+          </>
+        )}
+      </button>
     </div>
   );
 }
