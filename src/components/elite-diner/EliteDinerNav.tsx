@@ -95,13 +95,14 @@ export function EliteDinerNav() {
         {/* Actions */}
         <div className="flex items-center gap-4">
           <Link
+            id="elite-diner-cart-icon"
             href="/buy/elite-diner/order"
             className="group relative p-2.5 rounded-xl border transition-all hover:border-accent/40"
             style={{ borderColor: "var(--border-subtle)", background: "var(--fg-05)" }}
           >
             <motion.div
-              animate={isAnimating ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-              transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
+              animate={isAnimating ? { scale: [1, 1.35, 0.95, 1], rotate: [0, -8, 8, 0] } : { scale: 1, rotate: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <Icons.ShoppingCart className="w-5 h-5 transition-colors group-hover:text-accent" />
             </motion.div>

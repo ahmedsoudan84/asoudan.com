@@ -1,21 +1,70 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
-import { menuItems, categoryLabels, dietaryFilters } from "@/lib/elite-diner/menu-data";
+import { menuItems, categoryLabels, dietaryFilters, type MenuItem } from "@/lib/elite-diner/menu-data";
 import { searchMenu } from "@/lib/elite-diner/smart-logic";
 import { useCart } from "@/lib/elite-diner/cart-store";
+
+interface FlyingItem {
+  key: string;
+  image: string;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  peakY: number;
+}
+
+const FLY_SIZE = 56;
 
 export default function MenuClient() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
-  
+
   const [query, setQuery] = useState(initialQuery);
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeDietary, setActiveDietary] = useState<string[]>([]);
+  const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
+  const [pulseId, setPulseId] = useState<string | null>(null);
   const addItem = useCart((state) => state.addItem);
+
+  const handleAddToCart = useCallback(
+    (item: MenuItem, event: React.MouseEvent<HTMLButtonElement>) => {
+      const button = event.currentTarget;
+      const buttonRect = button.getBoundingClientRect();
+      const cartEl = document.getElementById("elite-diner-cart-icon");
+
+      addItem(item);
+      setPulseId(item.id);
+      window.setTimeout(() => setPulseId((id) => (id === item.id ? null : id)), 450);
+
+      if (!cartEl) return;
+      const cartRect = cartEl.getBoundingClientRect();
+      const startX = buttonRect.left + buttonRect.width / 2;
+      const startY = buttonRect.top + buttonRect.height / 2;
+      const endX = cartRect.left + cartRect.width / 2;
+      const endY = cartRect.top + cartRect.height / 2;
+      const peakY = Math.min(startY, endY) - 120;
+
+      const flight: FlyingItem = {
+        key: `${item.id}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        image: item.image,
+        startX,
+        startY,
+        endX,
+        endY,
+        peakY,
+      };
+      setFlyingItems((prev) => [...prev, flight]);
+      window.setTimeout(() => {
+        setFlyingItems((prev) => prev.filter((f) => f.key !== flight.key));
+      }, 900);
+    },
+    [addItem]
+  );
 
   const filteredItems = useMemo(() => {
     let results = searchMenu(query, menuItems);
@@ -40,6 +89,47 @@ export default function MenuClient() {
   };
 
   return (
+    <>
+    {/* Fly-to-cart overlay — a fixed container that holds each flying thumbnail
+        while it arcs from the clicked "add" button to the nav's cart icon. It
+        sits outside the scroll area so it's never clipped by a parent and is
+        pointer-events:none so it never blocks subsequent clicks. */}
+    <div className="fixed inset-0 pointer-events-none z-[100]">
+      <AnimatePresence>
+        {flyingItems.map((f) => (
+          <motion.div
+            key={f.key}
+            initial={{
+              x: f.startX - FLY_SIZE / 2,
+              y: f.startY - FLY_SIZE / 2,
+              scale: 0.7,
+              opacity: 0,
+            }}
+            animate={{
+              x: [f.startX - FLY_SIZE / 2, f.startX - FLY_SIZE / 2, f.endX - FLY_SIZE / 2],
+              y: [f.startY - FLY_SIZE / 2, f.peakY - FLY_SIZE / 2, f.endY - FLY_SIZE / 2],
+              scale: [0.7, 1.05, 0.25],
+              opacity: [0, 1, 0],
+              rotate: [0, 12, -6],
+            }}
+            transition={{
+              duration: 0.8,
+              times: [0, 0.35, 1],
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="absolute top-0 left-0"
+            style={{ width: FLY_SIZE, height: FLY_SIZE }}
+          >
+            <div
+              className="w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-accent/40 ring-2 ring-accent"
+              style={{ background: "var(--bg-surface)" }}
+            >
+              <img src={f.image} alt="" className="w-full h-full object-cover" />
+            </div>
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </div>
     <div className="pt-32 pb-24 px-6 min-h-screen" style={{ background: "var(--bg-primary)" }}>
       <div className="max-w-[1200px] mx-auto">
         {/* ── Header ───────────────────────────────────────── */}
@@ -172,13 +262,33 @@ export default function MenuClient() {
                       <span className="text-[10px] uppercase font-bold tracking-wider opacity-30">Pairing</span>
                       <span className="text-[11px] font-bold text-fg-60">{item.pairing || "House Blend"}</span>
                     </div>
-                    <button
-                      onClick={() => addItem(item)}
-                      className="w-11 h-11 rounded-xl bg-accent flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg shadow-accent/20 group/btn"
+                    <motion.button
+                      onClick={(e) => handleAddToCart(item, e)}
+                      aria-label={`Add ${item.name} to cart`}
+                      animate={
+                        pulseId === item.id
+                          ? { scale: [1, 1.25, 0.92, 1.08, 1] }
+                          : { scale: 1 }
+                      }
+                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      whileTap={{ scale: 0.9 }}
+                      className="relative w-11 h-11 rounded-xl bg-accent flex items-center justify-center shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:scale-110 transition-shadow"
                       style={{ color: "var(--bg-primary)" }}
                     >
-                      <Icons.ShoppingCart className="w-5 h-5 transition-transform group-active/btn:scale-125" />
-                    </button>
+                      <Icons.ShoppingCart className="w-5 h-5" />
+                      <AnimatePresence>
+                        {pulseId === item.id && (
+                          <motion.span
+                            key="ring"
+                            initial={{ opacity: 0.7, scale: 0.6 }}
+                            animate={{ opacity: 0, scale: 2.2 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
+                            className="absolute inset-0 rounded-xl ring-2 ring-accent pointer-events-none"
+                          />
+                        )}
+                      </AnimatePresence>
+                    </motion.button>
                   </div>
                 </div>
               </motion.div>
@@ -211,5 +321,6 @@ export default function MenuClient() {
         )}
       </div>
     </div>
+    </>
   );
 }
