@@ -47,7 +47,7 @@ const NAV_ITEMS: NavItem[] = [
      ),
    },
   {
-    id: "cv",
+    id: "experience",
     label: "CV",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -150,7 +150,8 @@ export default function FloatingNav() {
       // Tween with out-quint ease — snappier and more predictable than spring for nav.
       // Spring physics had a slow ramp-up that made buttons feel sluggish; ease starts immediately
       // and lands smoothly without overshoot. Duration scales gently with distance.
-      const duration = Math.min(0.85, Math.max(0.42, distance / 2400));
+      // Faster: full-page scroll lands in ≤ 500ms, short hops in ≤ 250ms.
+      const duration = Math.min(0.5, Math.max(0.25, distance / 4500));
       const controls = animate(startY, targetY, {
         duration,
         ease: [0.22, 1, 0.36, 1],
@@ -226,8 +227,10 @@ export default function FloatingNav() {
               );
             }
 
-            const targetHref = isOnBuyPages && item.id !== "hero" && item.id !== "real-estate"
-              ? (item.id === "projects" ? "/#projects" : item.id === "cv" ? "/#experience" : `/#${item.id}`)
+            // On /buy pages every scroll-target item needs a cross-page Link.
+            // hero → "/" (go home), everything else → /#id (hash anchor on home page).
+            const targetHref = isOnBuyPages
+              ? (item.id === "hero" ? "/" : `/#${item.id}`)
               : undefined;
 
             if (targetHref) {

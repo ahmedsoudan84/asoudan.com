@@ -370,7 +370,8 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
 function ProjectsCarousel({ projects }: { projects: Project[] }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
-  const dragState = useRef({ down: false, startX: 0, startScroll: 0, moved: false });
+  // dragEndTime replaces the sticky `moved` boolean — see onClickCapture below.
+  const dragState = useRef({ down: false, startX: 0, startScroll: 0, moved: false, dragEndTime: 0 });
   const scrollAnimRef = useRef<{ stop: () => void } | null>(null);
 
   // Track which card is centered
@@ -443,7 +444,7 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
   const onPointerDown = (e: React.PointerEvent) => {
     const el = scrollerRef.current;
     if (!el) return;
-    dragState.current = { down: true, startX: e.clientX, startScroll: el.scrollLeft, moved: false };
+    dragState.current = { down: true, startX: e.clientX, startScroll: el.scrollLeft, moved: false, dragEndTime: dragState.current.dragEndTime };
     el.setPointerCapture(e.pointerId);
     el.style.scrollSnapType = "none";
     el.style.cursor = "grabbing";
@@ -459,6 +460,12 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
     const el = scrollerRef.current;
     if (!el || !dragState.current.down) return;
     dragState.current.down = false;
+    // Record drag-end time BEFORE resetting moved, then clear moved immediately so
+    // it never lingers and blocks future clicks (the old sticky-boolean bug).
+    if (dragState.current.moved) {
+      dragState.current.dragEndTime = Date.now();
+      dragState.current.moved = false;
+    }
     el.releasePointerCapture(e.pointerId);
     el.style.cursor = "grab";
     // Re-enable snap after a tick so native snap kicks in on idle
@@ -466,12 +473,13 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
       if (el) el.style.scrollSnapType = "x mandatory";
     });
   };
-  // Suppress click after drag
+  // Suppress the click that fires immediately after a pointer-up drag release
+  // (within 200ms). Clicks that arrive AFTER that window — e.g. a deliberate tap
+  // on "View Project" after the card has snapped into place — are never blocked.
   const onClickCapture = (e: React.MouseEvent) => {
-    if (dragState.current.moved) {
+    if (Date.now() - dragState.current.dragEndTime < 200) {
       e.preventDefault();
       e.stopPropagation();
-      dragState.current.moved = false;
     }
   };
 
