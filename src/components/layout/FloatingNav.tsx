@@ -111,49 +111,49 @@ export default function FloatingNav() {
     };
   }, []);
 
-  // Scroll-position-based active detection. IntersectionObserver can't reliably
-  // track zero-height anchor divs (like #projects) because they spend only a
-  // frame or two in any non-trivial rootMargin band, leaving the nav stuck on
-  // whatever section was last seen. Instead, on every scroll we pick the section
-  // whose range [top, bottom] is closest to the viewport's vertical midpoint —
-  // bottom-of-page is snapped to the last section so "Contact" lights up when
-  // scrolled to the footer.
+  // Scrollspy: each section owns the vertical range from its own top down to
+  // the next section's top. The active section is the last one whose top has
+  // crossed an activation line slightly above the viewport midpoint. This is
+  // robust against zero-height anchor divs (like #projects, which is a 0-px
+  // `<div>` inside ImmersiveProjects) because we only rely on `top`, not
+  // `height` — so a section activates the moment its anchor scrolls past the
+  // line, and stays active while the user is inside its range.
   useEffect(() => {
     if (isOnBuyPages) return;
     const ids = NAV_ITEMS.filter((i) => !i.href).map((item) => item.id);
 
     const updateActive = () => {
-      const elements = ids
-        .map((id) => ({ id, el: document.getElementById(id) }))
-        .filter((e): e is { id: string; el: HTMLElement } => !!e.el);
-      if (elements.length === 0) return;
+      const entries = ids
+        .map((id) => {
+          const el = document.getElementById(id);
+          if (!el) return null;
+          const rect = el.getBoundingClientRect();
+          return { id, top: rect.top + window.scrollY };
+        })
+        .filter((e): e is { id: string; top: number } => !!e);
+      if (entries.length === 0) return;
 
-      const doc = document.documentElement;
+      entries.sort((a, b) => a.top - b.top);
+
       const scrollY = window.scrollY;
       const viewportH = window.innerHeight;
+      const doc = document.documentElement;
       const atBottom = scrollY + viewportH >= doc.scrollHeight - 2;
       if (atBottom) {
-        setActiveSection(elements[elements.length - 1].id);
+        setActiveSection(entries[entries.length - 1].id);
         return;
       }
-      const center = scrollY + viewportH / 2;
 
-      let bestId = elements[0].id;
-      let bestDistance = Infinity;
-      for (const { id, el } of elements) {
-        const rect = el.getBoundingClientRect();
-        const top = rect.top + scrollY;
-        const bottom = top + Math.max(rect.height, 1);
-        const distance =
-          center >= top && center <= bottom
-            ? 0
-            : Math.min(Math.abs(center - top), Math.abs(center - bottom));
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          bestId = id;
-        }
+      // Activation line: 40% down the viewport. A section lights up once its
+      // anchor has scrolled above this line and stays lit until the next
+      // section's anchor crosses it.
+      const line = scrollY + viewportH * 0.4;
+      let active = entries[0].id;
+      for (const entry of entries) {
+        if (entry.top <= line) active = entry.id;
+        else break;
       }
-      setActiveSection(bestId);
+      setActiveSection(active);
     };
 
     let raf = 0;
@@ -221,11 +221,15 @@ export default function FloatingNav() {
       {visible && (
         <motion.nav
           {...motionProps}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] backdrop-blur-xl rounded-full px-5 py-3 flex items-center gap-5"
+          className="fixed left-1/2 -translate-x-1/2 z-[60] backdrop-blur-xl rounded-full px-5 py-3 flex items-center gap-5"
           style={{
             background: "var(--nav-bg)",
             border: "1px solid var(--nav-border)",
-            paddingBottom: "env(safe-area-inset-bottom)",
+            // Anchor the pill well above the viewport bottom, and add the
+            // iOS/Android safe-area on top so we never sit under the home
+            // indicator. (Previously `paddingBottom: env(safe-area-inset-bottom)`
+            // overrode `py-3` with 0 on most devices, crunching the pill.)
+            bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.75rem)",
           }}
         >
           {NAV_ITEMS.map((item) => {
@@ -235,12 +239,6 @@ export default function FloatingNav() {
 
             const inner = (
               <>
-                <span
-                  className={`absolute -top-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300 ${
-                    isActive ? "opacity-100" : "opacity-0"
-                  }`}
-                  style={{ backgroundColor: isActive ? "var(--accent)" : "transparent" }}
-                />
                 <span
                   className="transition-colors duration-300"
                   style={{

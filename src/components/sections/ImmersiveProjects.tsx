@@ -453,7 +453,14 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
     const el = scrollerRef.current;
     if (!el || !dragState.current.down) return;
     const dx = e.clientX - dragState.current.startX;
-    if (Math.abs(dx) > 4) dragState.current.moved = true;
+    // Touch fingers jitter a few pixels during a tap, which previously crossed
+    // the 4px drag threshold and flagged the tap as a drag, so the follow-up
+    // click got suppressed and the card felt "not clickable". Use a larger
+    // threshold for touch pointers, and only start scrolling once we've
+    // actually committed to a drag — tiny wobbles no longer move the carousel.
+    const threshold = e.pointerType === "touch" ? 10 : 4;
+    if (!dragState.current.moved && Math.abs(dx) <= threshold) return;
+    dragState.current.moved = true;
     el.scrollLeft = dragState.current.startScroll - dx;
   };
   const endDrag = (e: React.PointerEvent) => {
