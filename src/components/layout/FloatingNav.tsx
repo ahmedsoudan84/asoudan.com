@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, animate } from "framer-motion";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 interface NavItem {
@@ -75,6 +75,7 @@ export default function FloatingNav() {
   const [activeSection, setActiveSection] = useState("hero");
   const [visible, setVisible] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const scrollAnimRef = useRef<{ stop: () => void } | null>(null);
 
   const isOnBuyPages = pathname.startsWith("/buy");
 
@@ -90,9 +91,24 @@ export default function FloatingNav() {
     const onScroll = () => {
       setVisible(true);
     };
+    // Cancel a programmatic scroll only when the user actually tries to scroll —
+    // wheel (mouse/trackpad) or touchmove (finger drag). Touchstart fires on every
+    // nav-button tap, so listening to it added perceived click latency.
+    const cancelOnUserScroll = (e: WheelEvent | TouchEvent) => {
+      if (scrollAnimRef.current && e.isTrusted) {
+        scrollAnimRef.current.stop();
+        scrollAnimRef.current = null;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("wheel", cancelOnUserScroll, { passive: true });
+    window.addEventListener("touchmove", cancelOnUserScroll, { passive: true });
     setVisible(true);
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", cancelOnUserScroll);
+      window.removeEventListener("touchmove", cancelOnUserScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -114,11 +130,34 @@ export default function FloatingNav() {
     return () => observer.disconnect();
   }, []);
 
+  // Spring-driven section scroll — feels cinematic and consistent with the carousel's physics.
+  // Falls back to native instant jump when the user prefers reduced motion.
   const scrollTo = useCallback(
     (id: string) => {
       const el = document.getElementById(id);
       if (!el) return;
-      el.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+      const targetY = el.getBoundingClientRect().top + window.scrollY;
+      if (prefersReducedMotion) {
+        window.scrollTo({ top: targetY, behavior: "auto" });
+        return;
+      }
+      // Cancel any in-flight nav animation so back-to-back clicks don't fight
+      scrollAnimRef.current?.stop();
+      const startY = window.scrollY;
+      const distance = Math.abs(targetY - startY);
+      // Already at destination — skip the animation entirely so button feels instant.
+      if (distance < 4) return;
+      // Tween with out-quint ease — snappier and more predictable than spring for nav.
+      // Spring physics had a slow ramp-up that made buttons feel sluggish; ease starts immediately
+      // and lands smoothly without overshoot. Duration scales gently with distance.
+      const duration = Math.min(0.85, Math.max(0.42, distance / 2400));
+      const controls = animate(startY, targetY, {
+        duration,
+        ease: [0.22, 1, 0.36, 1],
+        onUpdate: (y) => window.scrollTo(0, y),
+        onComplete: () => { scrollAnimRef.current = null; },
+      });
+      scrollAnimRef.current = controls;
     },
     [prefersReducedMotion]
   );

@@ -89,6 +89,14 @@ export interface ProjectDetail {
   tags: string[];
   color: string;
   cover: string;
+  /**
+   * How the cover renders inside the carousel card:
+   * - "fill" (default): object-cover, image fills the frame — good for photo/artwork compositions
+   * - "browser": desktop screenshot is framed in a macOS-style browser chrome and floats on the tinted bg
+   * - "phone": mobile screen in a phone chrome
+   * - "contain": image is object-contain with padding against the tinted bg — good for pre-composed artwork or low-res tiles that shouldn't be upscaled
+   */
+  coverStyle?: "fill" | "browser" | "phone" | "contain";
   images: ProjectImage[];
   behanceUrl: string;
   employer?: string;
@@ -118,6 +126,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#3D9B9B",
     "cover": "/images/projects/org-reports/org-reports-cover.png",
+    "coverStyle": "browser",
     "images": [
       {
         "src": "/images/projects/org-reports/org-reports-cover.png",
@@ -240,6 +249,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#E8A838",
     "cover": "/images/projects/learner-dashboard/new-dashboard.png",
+    "coverStyle": "browser",
     "images": [
       {
         "src": "/images/projects/learner-dashboard/new-dashboard.png",
@@ -608,6 +618,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#4CAF50",
     "cover": "/images/projects/offline-downloads.jpg",
+    "coverStyle": "browser",
     "images": [
       {
         "src": "/images/projects/offline-downloads/1.jpg",
@@ -788,7 +799,8 @@ export const projectsData: ProjectDetail[] = [
       "EdTech"
     ],
     "color": "#5C6BC0",
-    "cover": "/images/projects/org-integration-v2/Assessment  Org - Dashboard.png",
+    "cover": "/images/projects/org-integration-v2/org-dashboard.png",
+    "coverStyle": "browser",
     "images": [
       {
         "src": "/images/projects/org-integration-v2/lean-ux-p1.png",
@@ -1012,7 +1024,7 @@ export const projectsData: ProjectDetail[] = [
         "label": "Dashboard Views",
         "heading": "Assessment vs Teaching & Learning",
         "screens": [
-          { "image": "/images/projects/org-integration-v2/Assessment  Org - Dashboard.png", "label": "Assessment Org" },
+          { "image": "/images/projects/org-integration-v2/org-dashboard.png", "label": "Assessment Org" },
           { "image": "/images/projects/org-integration-v2/T&L Org - Dashboard.png", "label": "Teaching & Learning Org" }
         ],
         "columns": 2,
@@ -1106,6 +1118,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#4CAF50",
     "cover": "/images/projects/offline-downloads.jpg",
+    "coverStyle": "browser",
     "images": [
       {
         "src": "/images/projects/offline-downloads/1.jpg",
@@ -1513,7 +1526,8 @@ export const projectsData: ProjectDetail[] = [
       "EdTech"
     ],
     "color": "#AB47BC",
-    "cover": "/images/projects/org-reports-cover-new.jpg",
+    "cover": "/images/projects/org-reports/org-reports-cover.png",
+    "coverStyle": "browser",
     "images": [
       {
         "src": "/images/projects/org-reports/1.jpg",
@@ -1745,6 +1759,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#26A69A",
     "cover": "/images/projects/components-production-cover-new.jpg",
+    "coverStyle": "browser",
     "images": [
       {
         "src": "/images/projects/components-production/1.jpg",
@@ -2056,6 +2071,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#3D9B9B",
     "cover": "/images/projects/nano-gps.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/111842085/Nano-Gps-Teaser-Campaign"
   },
@@ -2074,6 +2090,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#4A7FBD",
     "cover": "/images/projects/private-transport.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/137616831/Private-Transportation-App"
   },
@@ -2092,6 +2109,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#7B5EA7",
     "cover": "/images/projects/zas-air.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/107305835/ZAS-Air-Website-renovation-UIUX"
   },
@@ -2110,6 +2128,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#BD6B4A",
     "cover": "/images/projects/seater-app.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/92566769/Seater-App-UIUX"
   },
@@ -2128,6 +2147,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#4ABD8C",
     "cover": "/images/projects/dealnbuy-campaign.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/89258495/DealNBuy-Social-Media-Promo-Campaign"
   },
@@ -2146,6 +2166,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#BD4A6B",
     "cover": "/images/projects/royal-home.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/106658979/Royal-Home-Furniture-e-commerce-UIUX"
   },
@@ -2164,6 +2185,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#6B9B3D",
     "cover": "/images/projects/logos.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/70344501/Logos-2"
   },
@@ -2182,6 +2204,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "color": "#3D6B9B",
     "cover": "/images/projects/dealnbuy-uxui.jpg",
+    "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/85331167/DealNBuy-UIUX"
   }

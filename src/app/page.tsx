@@ -33,8 +33,10 @@ export default function Home() {
         <h2 id="experience-heading" className="sr-only">Professional Experience</h2>
         <ImmersiveCV />
       </section>
-      <section id="projects" aria-labelledby="projects-heading">
+      <section aria-labelledby="projects-heading">
         <h2 id="projects-heading" className="sr-only">Featured Projects</h2>
+        {/* The "projects" id is mounted inside ImmersiveProjects, anchored at the
+            filter chips so the floating nav's "Work" link lands on the carousel. */}
         <ImmersiveProjects />
       </section>
       <div id="contact">

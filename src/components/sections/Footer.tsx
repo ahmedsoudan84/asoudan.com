@@ -44,18 +44,29 @@ export default function Footer() {
             </h3>
             <a
               href="mailto:ahmedsoudan@gmail.com"
-              className="text-[#3D9B9B] text-[16px] mt-2 inline-block hover:text-[#91fbff] transition-colors"
+              className="text-[#3D9B9B] text-[16px] mt-2 flex w-fit items-center gap-2 hover:text-[#91fbff] transition-colors group"
             >
-              ahmedsoudan@gmail.com
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <polyline points="22 4 12 13 2 4" />
+              </svg>
+              <span className="border-b border-current/30 group-hover:border-current transition-colors">
+                ahmedsoudan@gmail.com
+              </span>
             </a>
             <a
               href="tel:+447774921967"
-              className="text-[14px] mt-1 inline-block hover:text-[#3D9B9B] transition-colors"
-              style={{ color: "var(--fg-50)" }}
+              className="text-[#3D9B9B] text-[15px] mt-3 flex w-fit items-center gap-2 hover:text-[#91fbff] transition-colors group"
+              aria-label="Call +44 777 492 1967"
             >
-              +44 777 492 1967
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+              </svg>
+              <span className="border-b border-current/30 group-hover:border-current transition-colors">
+                +44 777 492 1967
+              </span>
             </a>
-            <p className="text-[14px]" style={{ color: "var(--fg-50)" }}>London, UK</p>
+            <p className="text-[14px] mt-3" style={{ color: "var(--fg-50)" }}>London, UK</p>
           </div>
 
           {/* Socials — uniform 40×40 circle containers keep all icons pixel-aligned */}

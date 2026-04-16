@@ -1,13 +1,13 @@
 "use client";
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, { useRef, useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, useInView, useScroll, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, animate } from "framer-motion";
 import { projectsData } from "@/lib/projects";
 
-/* ── Build project list ── */
-const caseStudyProjects = projectsData
-  .filter((p) => !p.hidden && p.caseStudy && p.caseStudy.length > 0)
+/* ── Unified project list — case studies + Behance flow together ── */
+const allProjects = projectsData
+  .filter((p) => !p.hidden && ((p.caseStudy && p.caseStudy.length > 0) || p.behanceUrl))
   .map((p) => ({
     id: p.slug,
     title: p.title,
@@ -18,277 +18,520 @@ const caseStudyProjects = projectsData
     tags: p.tags,
     color: p.color,
     cover: p.cover,
+    coverStyle: p.coverStyle ?? "fill",
     behanceUrl: p.behanceUrl,
-    hasCaseStudy: true,
+    hasCaseStudy: !!(p.caseStudy && p.caseStudy.length > 0),
   }));
 
-const behanceProjects = projectsData
-  .filter((p) => !p.hidden && !(p.caseStudy && p.caseStudy.length > 0) && p.behanceUrl)
-  .map((p) => ({
-    id: p.slug,
-    title: p.title,
-    subtitle: p.subtitle,
-    category: p.category,
-    number: p.number,
-    description: p.description,
-    tags: p.tags,
-    color: p.color,
-    cover: p.cover,
-    behanceUrl: p.behanceUrl,
-    hasCaseStudy: false,
-  }));
-
-type Project = typeof caseStudyProjects[0];
-
-/* ── Animation variants ── */
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
-};
-const stagger = {
-  visible: { transition: { staggerChildren: 0.08 } },
-};
+type Project = typeof allProjects[0];
 
 /* ──────────────────────────────────────────────────────────────
-   FEATURED PROJECT CARD — full-width image-dominant card
+   COVER — renders inside a fixed aspect-[16/11] image zone.
+   No percentage-based padding — the parent provides the bounds.
 ────────────────────────────────────────────────────────────── */
-function FeaturedProjectCard({ project, index }: { project: Project; index: number }) {
-  const router = useRouter();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+function CoverMedia({ project }: { project: Project }) {
+  const alt = `${project.title} — ${project.subtitle}`;
+  const sizes = "(max-width: 640px) 380px, 520px";
 
-  const handleClick = () => {
-    if (project.hasCaseStudy) {
-      router.push(`/projects/${project.id}`);
-    } else if (project.behanceUrl) {
-      window.open(project.behanceUrl, "_blank");
-    }
-  };
-  const handleHoverPrefetch = () => {
-    if (project.hasCaseStudy) router.prefetch(`/projects/${project.id}`);
-  };
+  if (project.coverStyle === "browser") {
+    return (
+      // Fills the image zone, leaves 12px breathing room on all sides then renders
+      // a full-height macOS chrome box — no bottom percentage hack needed.
+      <div className="absolute inset-0 p-3">
+        <div
+          className="w-full h-full rounded-[10px] overflow-hidden flex flex-col
+                     shadow-[0_16px_40px_-16px_rgba(0,0,0,0.55)]"
+          style={{ border: `1px solid ${project.color}30` }}
+        >
+          {/* macOS chrome bar */}
+          <div
+            className="flex items-center gap-1.5 px-3 py-[7px] shrink-0 border-b"
+            style={{
+              background: `linear-gradient(180deg, ${project.color}1a, ${project.color}0d)`,
+              borderColor: `${project.color}20`,
+            }}
+          >
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
+            <span className="ml-2 flex-1 h-[14px] rounded-[4px]"
+              style={{ background: `${project.color}14` }} />
+          </div>
+          {/* Screenshot fills the remaining height */}
+          <div className="relative flex-1 min-h-0">
+            <Image
+              src={project.cover}
+              alt={alt}
+              fill
+              draggable={false}
+              loading="eager"
+              className="object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+              sizes={sizes}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={fadeUp}
-      transition={{ delay: (index % 3) * 0.08 }}
-      className="group cursor-pointer [content-visibility:auto] [contain-intrinsic-size:800px]"
-      onClick={handleClick}
-      onMouseEnter={handleHoverPrefetch}
-    >
-      {/* Tinted MedDrop-style outer panel */}
-      <div
-        className="relative rounded-[32px] p-3 lg:p-5 transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_30px_80px_-30px_rgba(0,0,0,0.55)]"
-        style={{
-          background: `linear-gradient(135deg, ${project.color}1f, ${project.color}06)`,
-          border: `1px solid ${project.color}1a`,
-        }}
-      >
-        {/* Watermark number */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute top-4 right-6 lg:top-6 lg:right-10 font-montserrat font-black select-none"
+  if (project.coverStyle === "phone") {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center py-3 px-16">
+        <div
+          className="relative h-full aspect-[9/18] rounded-[20px] overflow-hidden shrink-0"
           style={{
-            fontSize: "clamp(60px, 9vw, 140px)",
-            color: project.color,
-            opacity: 0.08,
-            lineHeight: 1,
+            border: `1.5px solid ${project.color}40`,
+            boxShadow: `0 16px 40px -12px rgba(0,0,0,0.55)`,
+            background: "#000",
           }}
         >
-          {project.number}
-        </span>
-
-      {/* Full-width cover image */}
-      <div
-        className="relative aspect-[16/9] lg:aspect-[2.2/1] rounded-2xl lg:rounded-[24px] overflow-hidden transition-all duration-500"
-        style={{ background: `linear-gradient(135deg, ${project.color}20, ${project.color}08)` }}
-      >
-        <div className="absolute inset-[-6%]">
           <Image
             src={project.cover}
-            alt={`${project.title} — ${project.subtitle}`}
+            alt={alt}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-            sizes="(max-width: 768px) 100vw, 1200px"
-            loading={index < 2 ? undefined : "lazy"}
-            priority={index < 2}
-            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+            draggable={false}
+            loading="eager"
+            className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+            sizes="(max-width: 640px) 40vw, 200px"
           />
         </div>
+      </div>
+    );
+  }
 
-        {/* Gradient overlay — fades into section background */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(180deg, transparent 30%, ${project.color}08 50%, rgba(var(--vignette-rgb),0.8) 80%, rgba(var(--vignette-rgb),0.93) 100%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(90deg, rgba(var(--vignette-rgb),0.73) 0%, transparent 50%)`,
-          }}
-        />
-
-        {/* Content overlay at bottom */}
-        <div className="absolute inset-x-0 bottom-0 p-6 lg:p-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-          {/* Left — title + meta */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-3 mb-3">
-              <span
-                className="text-[10px] font-bold uppercase tracking-[4px]"
-                style={{ color: project.color }}
-              >
-                {project.number}
-              </span>
-              <div className="h-px w-4" style={{ background: `${project.color}60` }} />
-              <span
-                className="text-[10px] font-semibold uppercase tracking-[2px] px-2.5 py-1 rounded-full backdrop-blur-md"
-                style={{
-                  color: project.color,
-                  background: `${project.color}15`,
-                  border: `1px solid ${project.color}25`,
-                }}
-              >
-                {project.category}
-              </span>
-            </div>
-            <h3
-              className="font-montserrat font-bold leading-[1.05]"
-              style={{ fontSize: "clamp(24px, 3.5vw, 48px)", color: "var(--fg)" }}
-            >
-              {project.title}
-            </h3>
-            <p className="mt-1" style={{ fontSize: "clamp(13px, 1.2vw, 18px)", color: "var(--fg-30)" }}>
-              {project.subtitle}
-            </p>
-            {/* Tags — desktop only */}
-            <div className="hidden lg:flex flex-wrap gap-2 mt-3">
-              {project.tags.slice(0, 4).map((tag) => (
-                <span key={tag} className="text-[10px] uppercase tracking-[1.5px]" style={{ color: "var(--fg-20)" }}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Right — CTA */}
-          <div className="shrink-0">
-            <span
-              className="inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 text-[10px] lg:text-[11px] font-semibold uppercase tracking-[3px] backdrop-blur-md transition-all duration-300 group-hover:gap-4"
-              style={{
-                color: "white",
-                borderColor: `${project.color}30`,
-                background: `${project.color}15`,
-              }}
-            >
-              View Project
-              <svg
-                width="14" height="14" viewBox="0 0 16 16" fill="none"
-                stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                <path d="M3 8h10M9 3l5 5-5 5" />
-              </svg>
-            </span>
-          </div>
+  if (project.coverStyle === "contain") {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center p-6">
+        <div className="relative w-full h-full">
+          <Image
+            src={project.cover}
+            alt={alt}
+            fill
+            draggable={false}
+            loading="eager"
+            className="object-contain transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+            sizes={sizes}
+          />
         </div>
       </div>
+    );
+  }
 
-      {/* Description below image */}
-      <p
-        className="text-[13px] lg:text-[14px] leading-[1.8] mt-4 lg:mt-5 max-w-[700px] px-2 lg:px-3"
-        style={{ color: "var(--fg-40)" }}
-      >
-        {project.description}
-      </p>
-      </div>
-    </motion.div>
+  // Default "fill" — photographic / full-bleed composition
+  return (
+    <div className="absolute inset-0">
+      <Image
+        src={project.cover}
+        alt={alt}
+        fill
+        draggable={false}
+        loading="eager"
+        className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+        sizes={sizes}
+      />
+    </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────
-   BEHANCE PROJECT CARD — compact grid card for external projects
+   CAROUSEL CARD — editorial layout: image zone on top, info panel
+   below. Cover is NEVER obscured — no overlays on the image.
+   Info panel is always readable and expands on hover.
 ────────────────────────────────────────────────────────────── */
-function BehanceCard({ project }: { project: Project }) {
+function CarouselCard({ project, offset }: { project: Project; offset: number }) {
+  const router = useRouter();
+  const [hovered, setHovered] = useState(false);
+  const active = offset === 0;
+
+  const handleClick = () => {
+    if (project.hasCaseStudy) router.push(`/projects/${project.id}`);
+    else if (project.behanceUrl) window.open(project.behanceUrl, "_blank", "noopener,noreferrer");
+  };
+  const handleEnter = () => {
+    setHovered(true);
+    if (project.hasCaseStudy) router.prefetch(`/projects/${project.id}`);
+  };
+
+  const framed = project.coverStyle !== "fill" && project.coverStyle !== undefined;
+
+  // Continuous distance-from-center → 3D coverflow spring physics
+  const distance = Math.abs(offset);
+  const clampedOffset = Math.max(-3, Math.min(3, offset));
+  const rotateY = clampedOffset * -6;
+  const scale = active ? 1 : Math.max(0.86, 1 - distance * 0.055);
+  const opacity = active ? 1 : Math.max(0.5, 1 - distance * 0.2);
+  const y = active ? 0 : Math.min(20, distance * 7);
+
   return (
-    <a
-      href={project.behanceUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative rounded-2xl overflow-hidden transition-all duration-400"
+    <motion.article
+      id={`project-${project.id}`}
+      onClick={handleClick}
+      onMouseEnter={handleEnter}
+      onMouseLeave={() => setHovered(false)}
+      animate={{ scale, opacity, rotateY, y }}
+      transition={{
+        scale:   { type: "spring", stiffness: 260, damping: 28, mass: 0.7 },
+        rotateY: { type: "spring", stiffness: 200, damping: 26, mass: 0.7 },
+        y:       { type: "spring", stiffness: 240, damping: 28 },
+        opacity: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+      }}
       style={{
-        border: "1px solid var(--fg-05)",
-        background: "var(--fg-05)",
+        transformPerspective: 1400,
+        transformStyle: "preserve-3d",
+        border: `1px solid ${project.color}28`,
+        boxShadow: active
+          ? `0 32px 72px -24px ${project.color}50, 0 8px 32px -16px rgba(var(--bg-primary-rgb),0.5)`
+          : `0 8px 28px -16px rgba(var(--bg-primary-rgb),0.4)`,
       }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = "rgba(var(--accent-rgb),0.3)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = "var(--fg-05)";
-      }}
+      className="group shrink-0 snap-center cursor-pointer select-none flex flex-col
+                 w-[78vw] sm:w-[460px] lg:w-[520px] rounded-[24px] overflow-hidden"
     >
-      {/* Image */}
-      <div className="relative h-[200px] overflow-hidden" style={{ background: `linear-gradient(135deg, ${project.color}30, ${project.color}10)` }}>
-        <Image
-          src={project.cover}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, 33vw"
-          loading="lazy"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+      {/* ── IMAGE ZONE ─────────────────────────────────────────
+          Fixed aspect-[16/11] container — cover always 100% visible.
+          For framed covers the branded tint shows in the padding area
+          around the browser/phone chrome.
+      ───────────────────────────────────────────────────────── */}
+      <div
+        className="relative aspect-[16/11] overflow-hidden shrink-0"
+        style={{
+          background: framed
+            ? `radial-gradient(ellipse 140% 100% at 50% 0%, ${project.color}30 0%, ${project.color}14 55%, var(--bg-primary) 100%)`
+            : `${project.color}10`,
+        }}
+      >
+        <CoverMedia project={project} />
+
+        {/* Subtle top-right Behance badge — stays within the image zone */}
+        {!project.hasCaseStudy && (
+          <span
+            className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-full text-[9px]
+                       font-semibold uppercase tracking-[2px] backdrop-blur-sm"
+            style={{
+              color: "white",
+              background: "rgba(0,0,0,0.38)",
+              border: "1px solid rgba(255,255,255,0.22)",
+            }}
+          >
+            Behance ↗
+          </span>
+        )}
+
+        {/* Hover scale-ring glow — purely decorative, no coverage */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none rounded-[inherit]"
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.35 }}
+          style={{ boxShadow: `inset 0 0 0 1.5px ${project.color}70` }}
         />
-        <div
-          className="absolute inset-0 opacity-60"
-          style={{
-            background: "linear-gradient(to top, var(--bg-primary), transparent)",
+      </div>
+
+      {/* ── INFO PANEL ─────────────────────────────────────────
+          Always visible below the image — never covers the cover.
+          Base content (category + title + subtitle) is always shown.
+          On hover a smooth expand reveals description + tags + CTA.
+      ───────────────────────────────────────────────────────── */}
+      <div
+        className="flex flex-col px-6 pt-4 pb-5"
+        style={{
+          background: "var(--bg-primary)",
+          borderTop: `1px solid ${project.color}20`,
+        }}
+      >
+        {/* Category pill */}
+        <motion.span
+          className="self-start text-[9px] font-semibold uppercase tracking-[2px]
+                     px-2.5 py-1 rounded-full mb-3 transition-shadow duration-300"
+          animate={{
+            background: hovered ? `${project.color}38` : `${project.color}20`,
+            boxShadow: hovered ? `0 4px 14px -6px ${project.color}55` : "0 0 0 0 transparent",
           }}
-        />
-        {/* Category badge */}
-        <span
-          className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] tracking-[1px] uppercase backdrop-blur-md border"
+          transition={{ duration: 0.3 }}
           style={{
             color: project.color,
-            borderColor: `${project.color}25`,
-            background: `${project.color}10`,
+            border: `1px solid ${hovered ? project.color : `${project.color}45`}`,
           }}
         >
           {project.category}
-        </span>
-        {/* External arrow */}
-        <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 12L12 4M12 4H6M12 4v6" />
-          </svg>
-        </div>
-      </div>
+        </motion.span>
 
-      {/* Content */}
-      <div className="p-5">
-        <h4
-          className="text-[15px] font-semibold leading-tight transition-colors duration-300"
-          style={{ color: "var(--fg)" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--accent)"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--fg)"; }}
+        {/* Title — word-stagger slide-up when card becomes active */}
+        <h3
+          className="font-montserrat font-bold leading-[1.15] flex flex-wrap mb-1.5"
+          style={{ fontSize: "clamp(18px, 2vw, 24px)" }}
         >
-          {project.title}
-        </h4>
-        <p className="text-[12px] leading-relaxed line-clamp-2 mt-1.5" style={{ color: "var(--fg-30)" }}>
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-1.5 mt-3">
-          {project.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="text-[10px] tracking-[0.5px]" style={{ color: "var(--fg-20)" }}>
-              #{tag}
+          {project.title.split(" ").map((word, i) => (
+            <span
+              key={`${word}-${i}`}
+              className="overflow-hidden inline-block align-bottom mr-[0.28em] last:mr-0"
+              style={{ paddingBottom: "0.05em" }}
+            >
+              <motion.span
+                className="inline-block will-change-transform transition-colors duration-300"
+                initial={{ y: "110%" }}
+                animate={{ y: active ? "0%" : "110%" }}
+                transition={{
+                  duration: 0.65,
+                  delay: active ? 0.06 + i * 0.055 : 0,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                style={{ color: hovered ? project.color : "var(--fg)" }}
+              >
+                {word}
+              </motion.span>
             </span>
           ))}
+        </h3>
+
+        {/* Subtitle — always visible */}
+        <p
+          className="text-[12px] leading-[1.5] transition-colors duration-300"
+          style={{ color: hovered ? "var(--fg-80)" : "var(--fg-50)" }}
+        >
+          {project.subtitle}
+        </p>
+
+        {/* Hover-reveal — description + tags + CTA slides in below subtitle */}
+        <AnimatePresence>
+          {hovered && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <p
+                className="text-[12px] leading-[1.65] mt-3 line-clamp-2"
+                style={{ color: "var(--fg-70)" }}
+              >
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-2.5">
+                {project.tags.slice(0, 3).map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] uppercase tracking-[1.5px] font-medium"
+                    style={{ color: "var(--fg-50)" }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <motion.span
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                className="inline-flex items-center gap-2 mt-4 rounded-full px-4 py-2
+                           text-[10px] font-semibold uppercase tracking-[2.5px]
+                           transition-all duration-300 hover:gap-3"
+                style={{
+                  color: "var(--fg)",
+                  background: `${project.color}28`,
+                  border: `1px solid ${project.color}`,
+                  boxShadow: `0 6px 18px -8px ${project.color}80`,
+                }}
+              >
+                {project.hasCaseStudy ? "View Project" : "View on Behance"}
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
+                  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 8h10M9 3l5 5-5 5" />
+                </svg>
+              </motion.span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.article>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────
+   CAROUSEL — drag + snap horizontal scroller
+────────────────────────────────────────────────────────────── */
+function ProjectsCarousel({ projects }: { projects: Project[] }) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const dragState = useRef({ down: false, startX: 0, startScroll: 0, moved: false });
+  const scrollAnimRef = useRef<{ stop: () => void } | null>(null);
+
+  // Track which card is centered
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const center = el.scrollLeft + el.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      Array.from(el.children).forEach((child, i) => {
+        const node = child as HTMLElement;
+        const c = node.offsetLeft + node.offsetWidth / 2;
+        const d = Math.abs(c - center);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      });
+      setActiveIdx(bestIdx);
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+    update();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [projects.length]);
+
+  // Spring-driven scroll-to — cinematic ease beats native "smooth" which is linear-ish.
+  // Uses framer-motion's `animate` to drive scrollLeft with physics, with reduced-motion fallback.
+  const scrollToIdx = useCallback((idx: number) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const clamped = Math.max(0, Math.min(projects.length - 1, idx));
+    const child = el.children[clamped] as HTMLElement | undefined;
+    if (!child) return;
+    const target = child.offsetLeft - (el.clientWidth - child.offsetWidth) / 2;
+
+    const reduce = typeof window !== "undefined"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      el.scrollTo({ left: target, behavior: "auto" });
+      return;
+    }
+
+    // Cancel any in-flight spring so rapid arrow taps don't stack
+    scrollAnimRef.current?.stop();
+    // Disable snap during programmatic scroll so the spring can settle, then restore
+    const prevSnap = el.style.scrollSnapType;
+    el.style.scrollSnapType = "none";
+    const controls = animate(el.scrollLeft, target, {
+      type: "spring",
+      stiffness: 140,
+      damping: 22,
+      mass: 0.9,
+      onUpdate: (v) => { el.scrollLeft = v; },
+      onComplete: () => {
+        el.style.scrollSnapType = prevSnap || "x mandatory";
+        scrollAnimRef.current = null;
+      },
+    });
+    scrollAnimRef.current = controls;
+  }, [projects.length]);
+
+  // Pointer drag — convert horizontal drag to scroll
+  const onPointerDown = (e: React.PointerEvent) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    dragState.current = { down: true, startX: e.clientX, startScroll: el.scrollLeft, moved: false };
+    el.setPointerCapture(e.pointerId);
+    el.style.scrollSnapType = "none";
+    el.style.cursor = "grabbing";
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    const el = scrollerRef.current;
+    if (!el || !dragState.current.down) return;
+    const dx = e.clientX - dragState.current.startX;
+    if (Math.abs(dx) > 4) dragState.current.moved = true;
+    el.scrollLeft = dragState.current.startScroll - dx;
+  };
+  const endDrag = (e: React.PointerEvent) => {
+    const el = scrollerRef.current;
+    if (!el || !dragState.current.down) return;
+    dragState.current.down = false;
+    el.releasePointerCapture(e.pointerId);
+    el.style.cursor = "grab";
+    // Re-enable snap after a tick so native snap kicks in on idle
+    requestAnimationFrame(() => {
+      if (el) el.style.scrollSnapType = "x mandatory";
+    });
+  };
+  // Suppress click after drag
+  const onClickCapture = (e: React.MouseEvent) => {
+    if (dragState.current.moved) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragState.current.moved = false;
+    }
+  };
+
+  // Keyboard nav — ← →
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement)?.tagName === "INPUT") return;
+      if (e.key === "ArrowRight") { e.preventDefault(); scrollToIdx(activeIdx + 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); scrollToIdx(activeIdx - 1); }
+      else if (e.key === "Enter") {
+        const p = projects[activeIdx];
+        if (!p) return;
+        if (p.hasCaseStudy) window.location.assign(`/projects/${p.id}`);
+        else if (p.behanceUrl) window.open(p.behanceUrl, "_blank", "noopener,noreferrer");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeIdx, projects, scrollToIdx]);
+
+  return (
+    <div className="relative">
+      {/* Scroller */}
+      <div
+        ref={scrollerRef}
+        role="region"
+        aria-label="Projects carousel"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onClickCapture={onClickCapture}
+        className="flex gap-5 lg:gap-7 overflow-x-auto overflow-y-hidden pb-8 pt-2
+                   px-[11vw] sm:px-[calc((100vw-460px)/2)] lg:px-[calc((100vw-520px)/2)]
+                   snap-x snap-mandatory cursor-grab
+                   [scrollbar-width:none] [-ms-overflow-style:none]
+                   [&::-webkit-scrollbar]:hidden"
+        style={{ scrollSnapType: "x mandatory" }}
+      >
+        {projects.map((p, i) => (
+          <CarouselCard key={p.id} project={p} offset={i - activeIdx} />
+        ))}
+      </div>
+
+      {/* Controls */}
+      <div className="flex items-center justify-between mt-6 px-6 lg:px-12 max-w-[1200px] mx-auto">
+        <div className="flex items-center gap-3 text-[11px] tracking-[2px] uppercase" style={{ color: "var(--fg-40)" }}>
+          <span style={{ color: "var(--fg)" }}>{String(activeIdx + 1).padStart(2, "0")}</span>
+          <span className="h-px w-8" style={{ background: "var(--fg-15)" }} />
+          <span>{String(projects.length).padStart(2, "0")}</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            aria-label="Previous project"
+            onClick={() => scrollToIdx(activeIdx - 1)}
+            disabled={activeIdx === 0}
+            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-105"
+            style={{ border: "1px solid var(--border-card)", color: "var(--fg)" }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M13 8H3M7 13L2 8l5-5" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            aria-label="Next project"
+            onClick={() => scrollToIdx(activeIdx + 1)}
+            disabled={activeIdx === projects.length - 1}
+            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-105"
+            style={{ border: "1px solid var(--accent)", color: "var(--accent)", background: "rgba(var(--accent-rgb),0.08)" }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 8h10M9 3l5 5-5 5" />
+            </svg>
+          </button>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -300,7 +543,7 @@ function ProjectsIntro() {
   const isInView = useInView(ref, { once: true, amount: 0.5 });
 
   return (
-    <div ref={ref} className="text-center pt-24 lg:pt-32 pb-12 lg:pb-16">
+    <div ref={ref} className="text-center pt-24 lg:pt-32 pb-10 lg:pb-14">
       <motion.span
         initial={{ opacity: 0, letterSpacing: "0.2em" }}
         animate={isInView ? { opacity: 1, letterSpacing: "0.5em" } : {}}
@@ -319,197 +562,90 @@ function ProjectsIntro() {
       >
         Portfolio
       </motion.h2>
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={isInView ? { scaleX: 1 } : {}}
-        transition={{ duration: 0.7, delay: 0.3 }}
-        className="w-12 h-px mt-5 mx-auto origin-center"
-        style={{ background: "var(--fg-15)" }}
-      />
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.7, delay: 0.35 }}
+        className="text-[12px] tracking-[2px] uppercase mt-5"
+        style={{ color: "var(--fg-30)" }}
+      >
+        Drag · Swipe · ← →
+      </motion.p>
     </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────
-   MAIN EXPORT — unified project section (always dark background)
+   MAIN EXPORT — unified carousel of all projects
 ────────────────────────────────────────────────────────────── */
 export default function ImmersiveProjects() {
-  const router = useRouter();
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-
-  // Three-bucket category system — map each project's raw category into a bucket
   const bucketOf = (cat: string): "Product Design" | "Campaign" | "Branding" => {
     const c = cat.toUpperCase();
     if (c.includes("BRAND")) return "Branding";
     if (c.includes("CAMPAIGN")) return "Campaign";
-    return "Product Design"; // PRODUCT DESIGN, UX/UI, UX RESEARCH & DESIGN, DESIGN SYSTEM, etc.
+    return "Product Design";
   };
   const categories = ["All", "Product Design", "Campaign", "Branding"];
   const [activeCat, setActiveCat] = useState<string>("All");
-  const filtered = useMemo(
-    () => (activeCat === "All" ? caseStudyProjects : caseStudyProjects.filter((p) => bucketOf(p.category) === activeCat)),
-    [activeCat]
-  );
-  const filteredBehance = useMemo(
-    () => (activeCat === "All" ? behanceProjects : behanceProjects.filter((p) => bucketOf(p.category) === activeCat)),
-    [activeCat]
-  );
 
-  // Keyboard nav: J/K between projects, Enter/→ to open, filter with 1..9
-  const [focused, setFocused] = useState(0);
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement)?.tagName === "INPUT") return;
-      if (e.key === "j" || e.key === "ArrowDown") {
-        e.preventDefault();
-        keyNavRef.current = true;
-        setFocused((i) => Math.min(i + 1, filtered.length - 1));
-      } else if (e.key === "k" || e.key === "ArrowUp") {
-        e.preventDefault();
-        keyNavRef.current = true;
-        setFocused((i) => Math.max(i - 1, 0));
-      } else if (e.key === "Enter" || e.key === "ArrowRight") {
-        const p = filtered[focused];
-        if (p?.hasCaseStudy) router.push(`/projects/${p.id}`);
-        else if (p?.behanceUrl) window.open(p.behanceUrl, "_blank");
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [filtered, focused, router]);
-
-  const keyNavRef = useRef(false);
-  useEffect(() => {
-    if (!keyNavRef.current) return;
-    keyNavRef.current = false;
-    const el = document.getElementById(`project-${filtered[focused]?.id}`);
-    el?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, [focused, filtered]);
+  // Case studies first, then Behance — preserves a sensible narrative order
+  const filtered = useMemo(() => {
+    const base = activeCat === "All"
+      ? allProjects
+      : allProjects.filter((p) => bucketOf(p.category) === activeCat);
+    return [...base].sort((a, b) => Number(b.hasCaseStudy) - Number(a.hasCaseStudy));
+  }, [activeCat]);
 
   return (
-    <section ref={sectionRef} id="projects" className="font-montserrat relative" style={{ background: "var(--bg-primary)" }}>
-      {/* Reading-progress rail */}
-      <motion.div
-        className="sticky top-0 left-0 right-0 h-[2px] origin-left z-40"
-        style={{ scaleX: scrollYProgress, background: "var(--accent)" }}
-      />
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
-        <ProjectsIntro />
+    <section className="font-montserrat relative" style={{ background: "var(--bg-primary)" }}>
+      <div className="max-w-[1400px] mx-auto">
+        <div className="px-6 lg:px-12">
+          <ProjectsIntro />
 
-        {/* Filter chips */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map((cat) => {
-            const active = cat === activeCat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => { setActiveCat(cat); setFocused(0); }}
-                className="relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-colors"
-                style={{
-                  color: active ? "var(--bg-primary)" : "var(--fg-60)",
-                  border: "1px solid var(--border-card)",
-                }}
-              >
-                {active && (
-                  <motion.span
-                    layoutId="filter-chip-active"
-                    className="absolute inset-0 rounded-full"
-                    style={{ background: "var(--accent)" }}
-                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                  />
-                )}
-                <span className="relative z-10">{cat}</span>
-              </button>
-            );
-          })}
-        </div>
+          {/* Scroll anchor — clicking "Work" in the floating nav lands the viewport here,
+              with the filter chips and carousel framed in view (not the big "Portfolio" intro). */}
+          <div id="projects" className="scroll-mt-8" />
 
-        {/* Featured Case Studies */}
-        <div id="projects-results">
-        {filtered.length > 0 && (
-          <div className="flex flex-col gap-16 lg:gap-24 pb-20 lg:pb-28">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  id={`project-${project.id}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className={focused === i ? "ring-1 ring-[#3D9B9B]/30 rounded-[32px]" : ""}
+          {/* Filter chips */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {categories.map((cat) => {
+              const active = cat === activeCat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveCat(cat)}
+                  className="relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-colors"
+                  style={{
+                    color: active ? "var(--bg-primary)" : "var(--fg-60)",
+                    border: "1px solid var(--border-card)",
+                  }}
                 >
-                  <FeaturedProjectCard project={project} index={i} />
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  {active && (
+                    <motion.span
+                      layoutId="filter-chip-active"
+                      className="absolute inset-0 rounded-full"
+                      style={{ background: "var(--accent)" }}
+                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10">{cat}</span>
+                </button>
+              );
+            })}
           </div>
-        )}
-
-        {/* Behance Projects */}
-        {filteredBehance.length > 0 && (
-          <div className="pb-20 lg:pb-28">
-            {/* Only show divider when both sections have content */}
-            {filtered.length > 0 && (
-            <div className="flex items-center gap-4 mb-10">
-              <div className="h-px flex-1" style={{ background: "var(--fg-06)" }} />
-              <span
-                className="text-[10px] font-medium uppercase tracking-[4px] shrink-0"
-                style={{ color: "var(--fg-20)" }}
-              >
-                More Projects
-              </span>
-              <div className="h-px flex-1" style={{ background: "var(--fg-06)" }} />
-            </div>
-            )}
-            <motion.div
-              key={activeCat}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ margin: "-60px" }}
-              variants={stagger}
-              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            >
-              {filteredBehance.map((project) => (
-                <motion.div key={project.id} variants={fadeUp}>
-                  <BehanceCard project={project} />
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* View all on Behance */}
-            <div className="text-center mt-12">
-              <a
-                href="https://www.behance.net/artlabsoudan"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full text-[12px] tracking-[2px] uppercase transition-all duration-300"
-                style={{
-                  border: "1px solid rgba(var(--accent-rgb),0.2)",
-                  color: "var(--accent)",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.background = "rgba(var(--accent-rgb),0.1)";
-                  el.style.borderColor = "rgba(var(--accent-rgb),0.4)";
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.background = "transparent";
-                  el.style.borderColor = "rgba(var(--accent-rgb),0.2)";
-                }}
-              >
-                View all on Behance
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 12L12 4M12 4H6M12 4v6" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        )}
         </div>
+
+        {/* Carousel — key on activeCat forces remount + resets scroll position */}
+        {filtered.length > 0 ? (
+          <ProjectsCarousel key={activeCat} projects={filtered} />
+        ) : (
+          <p className="text-center py-20 text-[13px]" style={{ color: "var(--fg-30)" }}>
+            No projects in this category.
+          </p>
+        )}
+
+        <div className="mb-24" />
       </div>
     </section>
   );
