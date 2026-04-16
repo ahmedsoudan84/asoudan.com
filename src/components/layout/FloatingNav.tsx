@@ -227,10 +227,8 @@ export default function FloatingNav() {
               );
             }
 
-            // On /buy pages every scroll-target item needs a cross-page Link.
-            // hero → "/" (go home), everything else → /#id (hash anchor on home page).
-            const targetHref = isOnBuyPages
-              ? (item.id === "hero" ? "/" : `/#${item.id}`)
+const targetHref = isOnBuyPages && item.id !== "real-estate"
+              ? (item.id === "hero" ? "/" : item.id === "projects" ? "/#projects" : item.id === "cv" ? "/#experience" : `/#${item.id}`)
               : undefined;
 
             if (targetHref) {

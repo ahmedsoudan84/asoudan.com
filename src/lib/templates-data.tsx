@@ -16,18 +16,20 @@ export interface TemplateCategory {
 export const categories: TemplateCategory[] = [
   {
     slug: "elite-diner",
-    title: "Elite Diner",
-    subtitle: "Premium Restaurant Template with AI Features",
+    title: "Restaurants",
+    subtitle: "Premium Restaurant Template with AI",
     description:
-      "AI menu recommender, semantic search, chatbot, online ordering, table booking. Fully client-side — no API keys required.",
-    tags: ["Next.js 15", "AI-Powered", "Menu System", "Online Ordering"],
+      "Elegant menu, online ordering, table booking, AI recommender & chatbot. Fully client-side — no API keys ever.",
+    tags: ["Next.js 15", "AI-Powered", "Online Ordering", "Reservations"],
     status: "live",
     coverImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2" />
-        <path d="M7 2v20" />
-        <path d="M21 15V2v0a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+        <path d="M18 8h1a4 4 0 010 8h-1" />
+        <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+        <line x1="6" y1="1" x2="6" y2="4" />
+        <line x1="10" y1="1" x2="10" y2="4" />
+        <line x1="14" y1="1" x2="14" y2="4" />
       </svg>
     ),
   },
@@ -49,21 +51,19 @@ export const categories: TemplateCategory[] = [
     ),
   },
   {
-    slug: "elite-diner",
-    title: "Restaurants",
-    subtitle: "Premium Restaurant Template with AI",
+    slug: "ecommerce",
+    title: "E-Commerce",
+    subtitle: "Kurator — Premium Shop Template with AI Stylist",
     description:
-      "Elegant menu, online ordering, table booking, AI recommender & chatbot. Fully client-side — no API keys ever.",
-    tags: ["Next.js 15", "AI-Powered", "Online Ordering", "Reservations"],
+      "Semantic product search, AI stylist with occasion bundles, persistent cart, 3-step checkout. Twenty-two curated products across six categories. Fully client-side.",
+    tags: ["Next.js 16", "AI Stylist", "Cart + Checkout", "22 Products"],
     status: "live",
-    coverImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=400&fit=crop",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 8h1a4 4 0 010 8h-1" />
-        <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
-        <line x1="6" y1="1" x2="6" y2="4" />
-        <line x1="10" y1="1" x2="10" y2="4" />
-        <line x1="14" y1="1" x2="14" y2="4" />
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 01-8 0" />
       </svg>
     ),
   },
@@ -90,8 +90,8 @@ export const categories: TemplateCategory[] = [
     title: "Creative Portfolio",
     subtitle: "Photography & art showcase template",
     description:
-      "Masonry galleries, lightbox, client proofing, e-commerce integration for prints.",
-    tags: ["Next.js", "Gallery", "E-commerce"],
+      "Masonry galleries, lightbox, client proofing, print sales integration.",
+    tags: ["Next.js", "Gallery", "Portfolio"],
     status: "coming-soon",
     coverImage: null,
     icon: (

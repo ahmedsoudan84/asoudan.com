@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -7,12 +8,16 @@ export default function FixedThemeToggle() {
   const { theme, toggle } = useTheme();
   const isDark = theme === "dark";
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) return null;
+
+  // Templates (under /buy) ship their own chrome — keep the portfolio toggle off those pages.
+  if (pathname?.startsWith("/buy")) return null;
 
   return (
     <motion.button

@@ -169,7 +169,7 @@ export default function MenuClient() {
                   
                   <div className="flex items-center justify-between gap-4 pt-4 border-t" style={{ borderColor: "var(--border-subtle)" }}>
                     <div className="flex flex-col">
-                      <span className="text-[10px] uppercase font-bold tracking-wider opacity-30">Paring</span>
+                      <span className="text-[10px] uppercase font-bold tracking-wider opacity-30">Pairing</span>
                       <span className="text-[11px] font-bold text-fg-60">{item.pairing || "House Blend"}</span>
                     </div>
                     <button
@@ -203,9 +203,7 @@ export default function MenuClient() {
             </p>
             <button
               onClick={() => { setQuery(""); setActiveCategory("all"); setActiveDietary([]); }}
-              className="mt-8 px-8 py-3 rounded-xl border border-accent text-accent text-[11px] font-bold uppercase tracking-[2px] hover:bg-accent transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]"
-              onMouseEnter={(e: any) => e.target.style.color = "var(--bg-primary)"}
-              onMouseLeave={(e: any) => e.target.style.color = "var(--accent)"}
+              className="mt-8 px-8 py-3 rounded-xl border border-accent text-accent hover:text-[color:var(--bg-primary)] text-[11px] font-bold uppercase tracking-[2px] hover:bg-accent transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]"
             >
               Reset Filters
             </button>
