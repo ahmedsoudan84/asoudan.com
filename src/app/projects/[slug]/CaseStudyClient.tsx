@@ -1779,7 +1779,7 @@ function FloatingBackButton() {
       style={{ pointerEvents: visible ? "auto" : "none" }}
     >
       <Link
-        href="/"
+        href="/#projects"
         className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium border backdrop-blur-md [background:var(--nav-bg)] [border-color:var(--nav-border)] [color:var(--fg-60)] hover:[color:var(--fg)] transition-colors"
       >
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -2000,7 +2000,7 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
       <section className="py-12 px-6 lg:px-20 border-t [border-color:var(--border-subtle)]">
         <div className="max-w-5xl mx-auto">
           <Link
-            href="/"
+            href="/#projects"
             className="inline-flex items-center gap-3 [color:var(--fg-30)] hover:[color:var(--fg-70)] transition-colors text-sm group"
           >
             <svg
