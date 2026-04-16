@@ -767,16 +767,11 @@ export default function ImmersiveCV() {
             href="https://adplist.org/mentors/ahmed-soudan"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 mt-8 px-6 py-3 rounded-full text-[12px] font-semibold uppercase tracking-[2px] transition-all duration-300 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2.5 mt-8 px-6 py-3 rounded-full text-[12px] font-semibold uppercase tracking-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/60 hover:shadow-[0_8px_30px_-10px_rgba(var(--accent-rgb),0.4)]"
             style={{
               color: "var(--accent)",
               border: "1px solid rgba(var(--accent-rgb), 0.35)",
               background: "rgba(var(--accent-rgb), 0.1)",
-            }}
-            whileHover={{
-              background: "rgba(var(--accent-rgb), 0.2)",
-              borderColor: "rgba(var(--accent-rgb), 0.6)",
-              boxShadow: "0 8px 30px -10px rgba(var(--accent-rgb), 0.4)",
             }}
           >
             Book a session
