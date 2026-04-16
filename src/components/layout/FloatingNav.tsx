@@ -111,24 +111,68 @@ export default function FloatingNav() {
     };
   }, []);
 
+  // Scroll-position-based active detection. IntersectionObserver can't reliably
+  // track zero-height anchor divs (like #projects) because they spend only a
+  // frame or two in any non-trivial rootMargin band, leaving the nav stuck on
+  // whatever section was last seen. Instead, on every scroll we pick the section
+  // whose range [top, bottom] is closest to the viewport's vertical midpoint —
+  // bottom-of-page is snapped to the last section so "Contact" lights up when
+  // scrolled to the footer.
   useEffect(() => {
+    if (isOnBuyPages) return;
     const ids = NAV_ITEMS.filter((i) => !i.href).map((item) => item.id);
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[];
-    if (elements.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
+    const updateActive = () => {
+      const elements = ids
+        .map((id) => ({ id, el: document.getElementById(id) }))
+        .filter((e): e is { id: string; el: HTMLElement } => !!e.el);
+      if (elements.length === 0) return;
+
+      const doc = document.documentElement;
+      const scrollY = window.scrollY;
+      const viewportH = window.innerHeight;
+      const atBottom = scrollY + viewportH >= doc.scrollHeight - 2;
+      if (atBottom) {
+        setActiveSection(elements[elements.length - 1].id);
+        return;
+      }
+      const center = scrollY + viewportH / 2;
+
+      let bestId = elements[0].id;
+      let bestDistance = Infinity;
+      for (const { id, el } of elements) {
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + scrollY;
+        const bottom = top + Math.max(rect.height, 1);
+        const distance =
+          center >= top && center <= bottom
+            ? 0
+            : Math.min(Math.abs(center - top), Math.abs(center - bottom));
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestId = id;
         }
-      },
-      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
-    );
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+      }
+      setActiveSection(bestId);
+    };
+
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        updateActive();
+      });
+    };
+    updateActive();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [isOnBuyPages, pathname]);
 
   // Spring-driven section scroll — feels cinematic and consistent with the carousel's physics.
   // Falls back to native instant jump when the user prefers reduced motion.
@@ -228,8 +272,13 @@ export default function FloatingNav() {
               );
             }
 
-const targetHref = isOnBuyPages && item.id !== "real-estate"
-              ? (item.id === "hero" ? "/" : item.id === "projects" ? "/#projects" : item.id === "cv" ? "/#experience" : `/#${item.id}`)
+            // When on /buy pages, in-page scroll buttons can't find their
+            // sections (they live on "/"). Render them as Links that navigate
+            // home and jump to the matching hash.
+            const targetHref = isOnBuyPages
+              ? item.id === "hero"
+                ? "/"
+                : `/#${item.id}`
               : undefined;
 
             if (targetHref) {
