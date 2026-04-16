@@ -440,49 +440,69 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
     scrollAnimRef.current = controls;
   }, [projects.length]);
 
-  // Pointer drag — convert horizontal drag to scroll
+  // Pointer drag — convert horizontal drag to scroll.
+  //
+  // We DO NOT use `setPointerCapture` on the scroller here. Capturing the
+  // pointer to the scroller made the resulting click event target the
+  // scroller instead of the card that the user actually tapped, so the
+  // card's `onClick` (which navigates to the case study) never fired —
+  // only the keyboard Enter path worked. Instead, when a drag starts we
+  // attach `pointermove` / `pointerup` / `pointercancel` listeners to the
+  // document, which keeps tracking the drag even if the pointer leaves the
+  // scroller, while leaving the normal click pipeline untouched.
   const onPointerDown = (e: React.PointerEvent) => {
     const el = scrollerRef.current;
     if (!el) return;
-    dragState.current = { down: true, startX: e.clientX, startScroll: el.scrollLeft, moved: false, dragEndTime: dragState.current.dragEndTime };
-    el.setPointerCapture(e.pointerId);
-    el.style.scrollSnapType = "none";
-    el.style.cursor = "grabbing";
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    const el = scrollerRef.current;
-    if (!el || !dragState.current.down) return;
-    const dx = e.clientX - dragState.current.startX;
-    // Touch fingers jitter a few pixels during a tap, which previously crossed
-    // the 4px drag threshold and flagged the tap as a drag, so the follow-up
-    // click got suppressed and the card felt "not clickable". Use a larger
-    // threshold for touch pointers, and only start scrolling once we've
-    // actually committed to a drag — tiny wobbles no longer move the carousel.
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    dragState.current = {
+      down: true,
+      startX: e.clientX,
+      startScroll: el.scrollLeft,
+      moved: false,
+      dragEndTime: dragState.current.dragEndTime,
+    };
+
+    // Touch fingers jitter a few pixels during a tap — use a larger drag
+    // threshold for touch and only commit to "this is a drag" once it's
+    // crossed, so light taps still register as clicks.
     const threshold = e.pointerType === "touch" ? 10 : 4;
-    if (!dragState.current.moved && Math.abs(dx) <= threshold) return;
-    dragState.current.moved = true;
-    el.scrollLeft = dragState.current.startScroll - dx;
+
+    const onMove = (ev: PointerEvent) => {
+      if (!dragState.current.down) return;
+      const dx = ev.clientX - dragState.current.startX;
+      if (!dragState.current.moved && Math.abs(dx) <= threshold) return;
+      if (!dragState.current.moved) {
+        dragState.current.moved = true;
+        el.style.scrollSnapType = "none";
+        el.style.cursor = "grabbing";
+      }
+      el.scrollLeft = dragState.current.startScroll - dx;
+    };
+
+    const onUp = () => {
+      if (!dragState.current.down) return;
+      dragState.current.down = false;
+      if (dragState.current.moved) {
+        dragState.current.dragEndTime = Date.now();
+        dragState.current.moved = false;
+        el.style.cursor = "grab";
+        requestAnimationFrame(() => {
+          if (el) el.style.scrollSnapType = "x mandatory";
+        });
+      }
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      document.removeEventListener("pointercancel", onUp);
+    };
+
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", onUp);
+    document.addEventListener("pointercancel", onUp);
   };
-  const endDrag = (e: React.PointerEvent) => {
-    const el = scrollerRef.current;
-    if (!el || !dragState.current.down) return;
-    dragState.current.down = false;
-    // Record drag-end time BEFORE resetting moved, then clear moved immediately so
-    // it never lingers and blocks future clicks (the old sticky-boolean bug).
-    if (dragState.current.moved) {
-      dragState.current.dragEndTime = Date.now();
-      dragState.current.moved = false;
-    }
-    el.releasePointerCapture(e.pointerId);
-    el.style.cursor = "grab";
-    // Re-enable snap after a tick so native snap kicks in on idle
-    requestAnimationFrame(() => {
-      if (el) el.style.scrollSnapType = "x mandatory";
-    });
-  };
-  // Suppress the click that fires immediately after a pointer-up drag release
-  // (within 200ms). Clicks that arrive AFTER that window — e.g. a deliberate tap
-  // on "View Project" after the card has snapped into place — are never blocked.
+
+  // Suppress the click that fires immediately after a real drag release
+  // (within 200ms). Clean taps never set `dragEndTime`, so their clicks
+  // pass through untouched and the card's `onClick` runs normally.
   const onClickCapture = (e: React.MouseEvent) => {
     if (Date.now() - dragState.current.dragEndTime < 200) {
       e.preventDefault();
@@ -515,9 +535,6 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
         role="region"
         aria-label="Projects carousel"
         onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
         onClickCapture={onClickCapture}
         className="flex gap-5 lg:gap-7 overflow-x-auto overflow-y-hidden pb-8 pt-2
                    px-[11vw] sm:px-[calc((100vw-460px)/2)] lg:px-[calc((100vw-520px)/2)]
