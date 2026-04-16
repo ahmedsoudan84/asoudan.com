@@ -631,7 +631,7 @@ export default function ImmersiveProjects() {
 
           {/* Scroll anchor — clicking "Work" in the floating nav lands the viewport here,
               with the filter chips and carousel framed in view (not the big "Portfolio" intro). */}
-          <div id="projects" className="scroll-mt-8" />
+          <div id="projects" className="scroll-mt-28" />
 
           {/* Filter chips */}
           <div className="flex flex-wrap justify-center gap-2 mb-10">
