@@ -143,6 +143,21 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
   const [hovered, setHovered] = useState(false);
   const active = offset === 0;
 
+  // On touch/no-hover devices (phones, tablets) there is no hover state,
+  // so project details are always expanded — users browse by scrolling,
+  // not hovering. Click still navigates to the project as normal.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  // showDetails: always true on touch devices; toggled by hover on desktop
+  const showDetails = isMobile || hovered;
+
   const handleClick = () => {
     if (project.hasCaseStudy) router.push(`/projects/${project.id}`);
     else if (project.behanceUrl) window.open(project.behanceUrl, "_blank", "noopener,noreferrer");
@@ -242,13 +257,13 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
           className="self-start text-[9px] font-semibold uppercase tracking-[2px]
                      px-2.5 py-1 rounded-full mb-3 transition-shadow duration-300"
           animate={{
-            background: hovered ? `${project.color}38` : `${project.color}20`,
-            boxShadow: hovered ? `0 4px 14px -6px ${project.color}55` : "0 0 0 0 transparent",
+            background: showDetails ? `${project.color}38` : `${project.color}20`,
+            boxShadow: showDetails ? `0 4px 14px -6px ${project.color}55` : "0 0 0 0 transparent",
           }}
           transition={{ duration: 0.3 }}
           style={{
             color: project.color,
-            border: `1px solid ${hovered ? project.color : `${project.color}45`}`,
+            border: `1px solid ${showDetails ? project.color : `${project.color}45`}`,
           }}
         >
           {project.category}
@@ -268,13 +283,17 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
               <motion.span
                 className="inline-block will-change-transform transition-colors duration-300"
                 initial={{ y: "110%" }}
-                animate={{ y: active ? "0%" : "110%" }}
+                animate={{
+                  // Desktop: title slides up only when centred (active) — coverflow reveal.
+                  // Mobile: always visible so title is readable while swiping.
+                  y: (active || isMobile) ? "0%" : "110%",
+                }}
                 transition={{
                   duration: 0.65,
                   delay: active ? 0.06 + i * 0.055 : 0,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                style={{ color: hovered ? project.color : "var(--fg)" }}
+                style={{ color: showDetails ? project.color : "var(--fg)" }}
               >
                 {word}
               </motion.span>
@@ -285,14 +304,14 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
         {/* Subtitle — always visible */}
         <p
           className="text-[12px] leading-[1.5] transition-colors duration-300"
-          style={{ color: hovered ? "var(--fg-80)" : "var(--fg-50)" }}
+          style={{ color: showDetails ? "var(--fg-80)" : "var(--fg-50)" }}
         >
           {project.subtitle}
         </p>
 
         {/* Hover-reveal — description + tags + CTA slides in below subtitle */}
         <AnimatePresence>
-          {hovered && (
+          {showDetails && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
