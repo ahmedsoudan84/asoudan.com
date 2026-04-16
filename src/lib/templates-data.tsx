@@ -49,7 +49,7 @@ export const categories: TemplateCategory[] = [
     ),
   },
   {
-    slug: "restaurant",
+    slug: "elite-diner",
     title: "Restaurants",
     subtitle: "Premium Restaurant Template with AI",
     description:
