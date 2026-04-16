@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, Fragment } from "react";
+import { useRef, useEffect, useState, Fragment, useMemo } from "react";
 import {
   motion,
   useInView,
@@ -511,8 +511,8 @@ function MentoringCounter({
 export default function ImmersiveCV() {
   useTheme();
   const logoColor = "3D9B9B";
-  const skillDelays = useRef(designSkills.map(() => Math.random() * 0.6));
-  const toolDelays = useRef(tools.map(() => Math.random() * 0.6));
+  const skillDelays = useMemo(() => designSkills.map((_, i) => i * 0.1), []);
+  const toolDelays = useMemo(() => tools.map((_, i) => i * 0.08), []);
 
   return (
     <section
@@ -576,7 +576,7 @@ export default function ImmersiveCV() {
                 variants={skillPill}
                 transition={{
                   duration: 0.4,
-                  delay: skillDelays.current[i],
+                  delay: skillDelays[i],
                 }}
                 whileHover={{
                   backgroundColor: "rgba(61,155,155,0.1)",
@@ -617,7 +617,7 @@ export default function ImmersiveCV() {
                 variants={skillPill}
                 transition={{
                   duration: 0.4,
-                  delay: toolDelays.current[i],
+                  delay: toolDelays[i],
                 }}
                 whileHover={{
                   backgroundColor: "rgba(61,155,155,0.1)",
@@ -769,21 +769,14 @@ export default function ImmersiveCV() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 mt-8 px-6 py-3 rounded-full text-[12px] font-semibold uppercase tracking-[2px] transition-all duration-300 hover:-translate-y-0.5"
             style={{
-              color: "#3D9B9B",
-              border: "1px solid rgba(61,155,155,0.35)",
-              background: "rgba(61,155,155,0.1)",
+              color: "var(--accent)",
+              border: "1px solid rgba(var(--accent-rgb), 0.35)",
+              background: "rgba(var(--accent-rgb), 0.1)",
             }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget;
-              el.style.background = "rgba(61,155,155,0.2)";
-              el.style.borderColor = "rgba(61,155,155,0.6)";
-              el.style.boxShadow = "0 8px 30px -10px rgba(61,155,155,0.4)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget;
-              el.style.background = "rgba(61,155,155,0.1)";
-              el.style.borderColor = "rgba(61,155,155,0.35)";
-              el.style.boxShadow = "none";
+            whileHover={{
+              background: "rgba(var(--accent-rgb), 0.2)",
+              borderColor: "rgba(var(--accent-rgb), 0.6)",
+              boxShadow: "0 8px 30px -10px rgba(var(--accent-rgb), 0.4)",
             }}
           >
             Book a session

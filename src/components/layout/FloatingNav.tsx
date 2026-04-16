@@ -181,6 +181,7 @@ export default function FloatingNav() {
           style={{
             background: "var(--nav-bg)",
             border: "1px solid var(--nav-border)",
+            paddingBottom: "env(safe-area-inset-bottom)",
           }}
         >
           {NAV_ITEMS.map((item) => {

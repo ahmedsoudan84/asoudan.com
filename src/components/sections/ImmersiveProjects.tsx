@@ -526,10 +526,29 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
 
       {/* Controls */}
       <div className="flex items-center justify-between mt-6 px-6 lg:px-12 max-w-[1200px] mx-auto">
-        <div className="flex items-center gap-3 text-[11px] tracking-[2px] uppercase" style={{ color: "var(--fg-40)" }}>
-          <span style={{ color: "var(--fg)" }}>{String(activeIdx + 1).padStart(2, "0")}</span>
-          <span className="h-px w-8" style={{ background: "var(--fg-15)" }} />
-          <span>{String(projects.length).padStart(2, "0")}</span>
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-3 text-[11px] tracking-[2px] uppercase" style={{ color: "var(--fg-40)" }}>
+            <span style={{ color: "var(--fg)" }}>{String(activeIdx + 1).padStart(2, "0")}</span>
+            <span className="h-px w-8" style={{ background: "var(--fg-15)" }} />
+            <span>{String(projects.length).padStart(2, "0")}</span>
+          </div>
+          {/* Carousel dot track with per-project color */}
+          <div className="flex items-center gap-1.5 h-1.5">
+            {projects.map((p, i) => {
+              const isActive = i === activeIdx;
+              return (
+                <motion.div
+                  key={p.id}
+                  className="rounded-full"
+                  animate={{
+                    width: isActive ? 20 : 6,
+                    backgroundColor: isActive ? p.color : "var(--fg-15)",
+                  }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              );
+            })}
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -637,7 +656,7 @@ export default function ImmersiveProjects() {
           <div className="flex flex-wrap justify-center gap-2 mb-10">
             {categories.map((cat) => {
               const active = cat === activeCat;
-              return (
+return (
                 <button
                   key={cat}
                   type="button"
@@ -645,17 +664,10 @@ export default function ImmersiveProjects() {
                   className="relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-colors"
                   style={{
                     color: active ? "var(--bg-primary)" : "var(--fg-60)",
+                    background: active ? "var(--accent)" : "transparent",
                     border: "1px solid var(--border-card)",
                   }}
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="filter-chip-active"
-                      className="absolute inset-0 rounded-full"
-                      style={{ background: "var(--accent)" }}
-                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                    />
-                  )}
                   <span className="relative z-10">{cat}</span>
                 </button>
               );

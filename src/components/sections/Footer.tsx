@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 const socials = [
   {
     href: "https://www.linkedin.com/in/ahmedsoudan/",
@@ -39,12 +41,28 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           {/* Left */}
           <div>
-            <h3 className="text-[28px] font-bold" style={{ color: "var(--fg)" }}>
-              Let&apos;s work together
+            <h3 className="text-[28px] font-bold relative inline-block cursor-pointer group" style={{ color: "var(--fg)" }}>
+              <span className="relative z-10 group-hover:text-[var(--accent)] transition-colors duration-300">Let&apos;s work together</span>
+              <span className="absolute bottom-0 left-0 w-full h-[2px] overflow-hidden">
+                <motion.span
+                  className="absolute bottom-0 left-0 h-full w-full origin-left"
+                  style={{ background: "var(--accent)" }}
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                />
+              </span>
+              <motion.span
+                className="absolute inset-0 pointer-events-none"
+                style={{ textShadow: "0 0 28px rgba(var(--accent-rgb), 0.18)" }}
+                whileHover={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
+              />
             </h3>
             <a
               href="mailto:ahmedsoudan@gmail.com"
-              className="text-[#3D9B9B] text-[16px] mt-2 flex w-fit items-center gap-2 hover:text-[#91fbff] transition-colors group"
+              className="text-[16px] mt-2 flex w-fit items-center gap-2 hover:opacity-80 transition-opacity group"
+              style={{ color: "var(--accent)" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -56,7 +74,8 @@ export default function Footer() {
             </a>
             <a
               href="tel:+447774921967"
-              className="text-[#3D9B9B] text-[15px] mt-3 flex w-fit items-center gap-2 hover:text-[#91fbff] transition-colors group"
+              className="text-[15px] mt-3 flex w-fit items-center gap-2 hover:opacity-80 transition-opacity group"
+              style={{ color: "var(--accent)" }}
               aria-label="Call +44 777 492 1967"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

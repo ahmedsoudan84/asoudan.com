@@ -6,6 +6,76 @@ import Footer from "@/components/sections/Footer";
 
 import { categories } from "@/lib/templates-data";
 
+/* ── Coming Soon scan line ── */
+function ScanLine({ delay }: { delay: number }) {
+  return (
+    <motion.div
+      className="absolute left-0 w-full h-px pointer-events-none"
+      style={{
+        background: "linear-gradient(90deg, transparent, rgba(145,251,255,0.12), transparent)",
+      }}
+      animate={{ top: ["-10%", "110%"] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "linear", delay }}
+    />
+  );
+}
+
+/* ── Coming Soon card pulse ── */
+function ComingSoonCard({ cat, i }: { cat: typeof categories[0]; i: number }) {
+  const delay = i * 0.8;
+  return (
+    <motion.div
+      key={cat.title}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 0.6, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.1 * i }}
+      className="group relative rounded-2xl border overflow-hidden"
+      style={{
+        background: "var(--bg-surface)",
+        borderColor: "var(--border-subtle)",
+      }}
+    >
+      {/* Scan line */}
+      <ScanLine delay={delay} />
+      {/* Pulse border */}
+      <motion.div
+        className="absolute inset-0 rounded-2xl pointer-events-none"
+        style={{ border: "1px solid var(--accent)" }}
+        animate={{ opacity: [0.06, 0.18, 0.06] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
+      />
+      {/* Content */}
+      <div className="h-48 flex items-center justify-center relative">
+        <span className="font-montserrat text-xs uppercase tracking-[3px]" style={{ color: "var(--fg-30)" }}>
+          Coming Soon
+        </span>
+      </div>
+      <div className="p-6">
+        <h3 className="font-montserrat text-xl font-bold" style={{ color: "var(--fg)" }}>
+          {cat.title}
+        </h3>
+        <p className="font-montserrat text-sm mt-1" style={{ color: "var(--accent)" }}>
+          {cat.subtitle}
+        </p>
+        <p className="font-montserrat text-sm mt-3 leading-relaxed" style={{ color: "var(--fg-50)" }}>
+          {cat.description}
+        </p>
+        <div className="flex flex-wrap gap-2 mt-4">
+          {cat.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-2.5 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-wider"
+              style={{ background: "var(--fg-06)", color: "var(--fg-50)" }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function BuyCategoriesClient() {
   return (
     <main className="relative min-h-screen" style={{ background: "var(--bg-primary)" }}>
@@ -38,6 +108,7 @@ export default function BuyCategoriesClient() {
         <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((cat, i) => {
             const isLive = cat.status === "live";
+            if (!isLive) return <ComingSoonCard key={cat.title} cat={cat} i={i} />;
             const Card = (
               <motion.div
                 key={cat.title}

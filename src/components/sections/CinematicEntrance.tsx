@@ -104,6 +104,33 @@ function NameSVG() {
   );
 }
 
+/* ── Year counter animation ── */
+function YearCounter({ target, delay }: { target: number; delay: number }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const startTimeout = setTimeout(() => {
+      const duration = 1200;
+      const steps = 60;
+      const increment = target / steps;
+      let current = 0;
+      const interval = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          setCount(target);
+          clearInterval(interval);
+        } else {
+          setCount(Math.floor(current));
+        }
+      }, duration / steps);
+      return () => clearInterval(interval);
+    }, delay);
+    return () => clearTimeout(startTimeout);
+  }, [target, delay]);
+
+  return <span>{count}</span>;
+}
+
 export default function CinematicEntrance() {
   const [phase, setPhase] = useState<1 | 2 | 3>(1);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -323,24 +350,22 @@ export default function CinematicEntrance() {
                 <NameSVG />
               </motion.div>
 
-              {/* Title label with line */}
+              {/* Title label with line + year counter */}
               <motion.div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4 mt-6" variants={slideUp}>
-                <p className="text-[11px] font-semibold uppercase tracking-[5px] text-[#3D9B9B]">
-                  Product Designer
+                <p className="text-[11px] font-semibold uppercase tracking-[5px]" style={{ color: "var(--accent)" }}>
+                  Product Designer <span style={{ color: "var(--fg-30)" }}> · </span> <YearCounter target={20} delay={3800} /> yrs
                 </p>
-                <div className="w-12 h-px bg-[#3D9B9B]/50" />
+                <div className="w-12 h-px" style={{ background: "var(--accent)" }} />
               </motion.div>
 
               {/* Spacer — pushes bio & buttons to bottom on mobile */}
               <div className="flex-1 lg:hidden" />
 
-              {/* Bio */}
+              {/* Bio with accent highlights */}
               <motion.div className="mt-8 lg:mt-8 max-w-md relative" variants={fadeIn}>
-                <div className="border-l-2 border-[#3D9B9B]/50 pl-5">
+                <div className="border-l-2 pl-5" style={{ borderColor: "var(--accent)", opacity: 0.5 }}>
                   <p className="text-[15px] leading-[1.65]" style={{ color: "var(--fg-60)" }}>
-                    20 years crafting digital experiences — from architecture
-                    to product design. 300+ projects delivered across the globe.
-                    Currently shaping the future of education at Oxford University Press.
+                    <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>20 years</span> crafting digital experiences — from architecture to product design. <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>300+ projects</span> delivered across the globe. Currently shaping the future of education at <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>Oxford University Press</span>.
                   </p>
                 </div>
               </motion.div>
@@ -349,18 +374,18 @@ export default function CinematicEntrance() {
               <motion.div className="mt-10 hidden lg:flex flex-wrap gap-4" variants={slideUp}>
                 <button
                   onClick={() => scrollTo("#projects")}
-                  className="group relative overflow-hidden rounded-full border border-[#3D9B9B]/20 px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500 hover:border-[#3D9B9B]/60"
-                  style={{ color: "var(--fg-70)", background: "rgba(61,155,155,0.04)" }}
+                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500 hover:border-[var(--accent)]/60"
+                  style={{ color: "var(--fg-70)", background: "rgba(var(--accent-rgb), 0.04)", borderColor: "rgba(var(--accent-rgb), 0.2)" }}
                 >
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#3D9B9B]/0 via-[#3D9B9B]/10 to-[#3D9B9B]/0"
+                    className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/10 to-[var(--accent)]/0"
                     animate={{ x: ["-100%", "100%"] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                   />
                   <span className="relative z-10">Projects</span>
                 </button>
                 <button
-                  onClick={() => scrollTo("#cv")}
+                  onClick={() => scrollTo("#experience")}
                   className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
                   style={{ borderColor: "var(--fg-05)", color: "var(--fg-30)" }}
                 >
@@ -381,7 +406,7 @@ export default function CinematicEntrance() {
           transition={{ delay: 2, duration: 1 }}
         >
           <motion.div
-            className="w-px h-8 bg-gradient-to-b from-[#3D9B9B]/40 to-transparent"
+            className="w-px h-8 bg-gradient-to-b from-[var(--accent)]/40 to-transparent"
             animate={{ scaleY: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
