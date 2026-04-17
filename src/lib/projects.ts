@@ -1760,20 +1760,16 @@ export const projectsData: ProjectDetail[] = [
     "coverStyle": "browser",
     "images": [
       {
-        "src": "/images/projects/components-production-new/tablist-full.svg",
-        "alt": "TabList — all interaction states"
+        "src": "/images/projects/components-production-new/tab-button.svg",
+        "alt": "TabList — Tab Button anatomy & states"
       },
       {
-        "src": "/images/projects/components-production-new/progress-ring-spec.svg",
-        "alt": "Progress Ring — specification"
+        "src": "/images/projects/components-production-new/progress-ring.svg",
+        "alt": "Progress Ring — anatomy, states, and thresholds"
       },
       {
-        "src": "/images/projects/components-production-new/listitem-spec.svg",
-        "alt": "ListItem — specification"
-      },
-      {
-        "src": "/images/projects/components-production-new/cards-gallery.svg",
-        "alt": "Cards — gallery of variants"
+        "src": "/images/projects/components-production-new/skill-card.svg",
+        "alt": "Skill Card — composed from the Cards base"
       }
     ],
     "behanceUrl": "",
@@ -1854,52 +1850,17 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "screen-gallery",
-        "label": "TabList in depth",
-        "heading": "States, spec, and anatomy — one component, one source of truth",
-        "screens": [
-          {
-            "image": {
-              "src": "/images/projects/components-production-new/tablist-full.svg",
-              "alt": "TabList — every interaction state across selected and unselected tabs"
-            },
-            "label": "All states"
-          },
-          {
-            "image": {
-              "src": "/images/projects/components-production-new/tablist-spec.svg",
-              "alt": "TabList specification — spacing tokens, sizing rules, and ARIA attribute mapping"
-            },
-            "label": "Specification"
-          },
-          {
-            "image": {
-              "src": "/images/projects/components-production-new/tablist-anatomy.svg",
-              "alt": "TabList anatomy — component regions, token references, and measurement annotations"
-            },
-            "label": "Anatomy"
-          }
-        ],
-        "columns": 3,
-        "caption": "TabList — all states, the token-level spec, and the annotated anatomy engineers build from",
-        "bg": "dark"
-      },
-      {
-        "type": "image-pair",
-        "label": "TabList — spec & anatomy",
-        "heading": "From an interaction matrix to a buildable spec",
-        "body": "The spec fixes every value engineers would otherwise guess — spacing tokens, type ramp, focus ring geometry, indicator animation timing, and the exact ARIA attributes on each element. The anatomy drawing makes the same information legible to designers composing new screens.",
+        "type": "showcase",
+        "label": "TabList — Tab Button",
+        "heading": "Every state, slot, and ARIA attribute on a single sheet",
+        "body": "The Tab Button sheet lays out the full component in one place: default / hover / active / focused / disabled across both selected and unselected tabs, the optional count badge, the active indicator, and the exact ARIA attributes each element carries. It's the artefact engineers build from and the artefact designers compose with — no second source, no drift.",
         "image": {
-          "src": "/images/projects/components-production-new/tablist-spec.svg",
-          "alt": "TabList specification sheet — spacing, sizing, and ARIA attribute mapping"
+          "src": "/images/projects/components-production-new/tab-button.svg",
+          "alt": "TabList — Tab Button anatomy, interaction states, and ARIA mapping on a single reference sheet"
         },
-        "caption": "Spec sheet — spacing, sizing, motion rules, and ARIA mapping in one place",
-        "image2": {
-          "src": "/images/projects/components-production-new/tablist-anatomy.svg",
-          "alt": "TabList anatomy — container, tab, indicator, and badge regions called out with token references"
-        },
-        "caption2": "Anatomy — container, tab, indicator, and count badge annotated with token references",
-        "bg": "light"
+        "caption": "Tab Button — anatomy, every interaction state, and ARIA attributes on one sheet",
+        "showcaseBg": "#0F1E24",
+        "bg": "dark"
       },
       {
         "type": "process-step",
@@ -1910,21 +1871,17 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "image-pair",
-        "label": "Progress Ring — spec & detail",
-        "heading": "Animation, thresholds, and accessibility in one sheet",
-        "body": "The spec documents the full state set, the three sizes, the threshold colour logic, and the ARIA pattern. The detail view zooms into the SVG geometry — stroke-width ratio, dasharray math, and the reduced-motion fallback — so the component behaves identically whether it's rendered in a dashboard tile or a course card.",
+        "type": "showcase",
+        "label": "Progress Ring — reference sheet",
+        "heading": "Geometry, thresholds, and accessibility — one compact sheet",
+        "body": "The Progress Ring sheet documents everything a team needs to ship the component: three sizes with locked stroke-width ratios, the threshold colour logic (green ≥ 75%, amber 25–75%, red < 25%), the motion rules and reduced-motion fallback, and the ARIA schema (aria-valuenow plus a human aria-valuetext). One sheet, no ambiguity — the ring reads the same on a dashboard tile as it does on a course card.",
         "image": {
-          "src": "/images/projects/components-production-new/progress-ring-spec.svg",
-          "alt": "Progress Ring specification — states, sizes, colour thresholds, and ARIA schema"
+          "src": "/images/projects/components-production-new/progress-ring.svg",
+          "alt": "Progress Ring — sizes, colour thresholds, motion rules, and ARIA schema on a single reference sheet"
         },
-        "caption": "Spec — states, sizes, colour thresholds, and the ARIA live-region pattern",
-        "image2": {
-          "src": "/images/projects/components-production-new/progress-ring-detail.svg",
-          "alt": "Progress Ring detail — SVG geometry, stroke-width ratio, and reduced-motion fallback"
-        },
-        "caption2": "Detail — SVG geometry, stroke-width ratios, and the reduced-motion fallback",
-        "bg": "dark"
+        "caption": "Progress Ring — sizes, thresholds, motion, and ARIA mapping in one compact sheet",
+        "showcaseBg": "#F0FAF9",
+        "bg": "light"
       },
       {
         "type": "text",
@@ -1942,20 +1899,17 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "image-pair",
-        "label": "ListItem — spec & detail",
-        "heading": "One row, every platform surface",
-        "body": "The spec shows the full variant set — leading media options, trailing actions, two densities, and every interaction state. The detail view calls out slot regions, the 4px spacing grid, and the 64px touch target that keeps the component usable on tablets and assistive-tech targets without changing visually.",
-        "image": {
-          "src": "/images/projects/components-production-new/listitem-spec.svg",
-          "alt": "ListItem specification — variants, slots, and states across comfortable and dense rows"
-        },
-        "caption": "Spec — variants, slot configurations, and states across both densities",
-        "image2": {
-          "src": "/images/projects/components-production-new/listitem-detail.svg",
-          "alt": "ListItem anatomy — slot regions, spacing grid, and 64px touch target annotation"
-        },
-        "caption2": "Detail — slot regions, 4px-grid spacing, and the 64px touch target",
+        "type": "split",
+        "label": "ListItem — anatomy in words",
+        "heading": "Four slots, two densities, one interaction model",
+        "body": "Rather than a forked row per screen, ListItem exposes the same anatomy everywhere it lands — so a learner's course row and an admin's member row share muscle memory.",
+        "bullets": [
+          "**Leading media.** Icon, cover, or avatar — sized to the row density, never arbitrary.",
+          "**Text block.** Primary label plus optional secondary line, with explicit truncation and tooltip-on-hover.",
+          "**Trailing action.** Status pill, Progress Ring, or overflow menu — one slot, never stacked actions.",
+          "**Row-as-control.** When the row is interactive, the whole row is the target, with a single focus ring — no fiddly inner targets."
+        ],
+        "imagePosition": "right",
         "bg": "dark"
       },
       {
@@ -1968,14 +1922,14 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "showcase",
-        "label": "Cards — gallery",
-        "heading": "One base, every variant in context",
-        "body": "The gallery shows base cards, Skill Cards, content cards, and loading skeletons across all three elevation levels — all composed from the same five-slot base with no forked implementations.",
+        "label": "Cards — Skill Card",
+        "heading": "A learner-specific variant, composed from the base",
+        "body": "The Skill Card is the proof that the base held up without forking. It composes the same five-slot anatomy — media, header, body, footer, overlay — and adds a mastery badge plus an inline Progress Ring in the trailing slot. Elevation, spacing, hover, and focus all come from the base rules. What changes is what it's for; the mechanics stay identical to every other card on the platform.",
         "image": {
-          "src": "/images/projects/components-production-new/cards-gallery.svg",
-          "alt": "Card system gallery — base, skill, content, and loading variants across three elevations"
+          "src": "/images/projects/components-production-new/skill-card.svg",
+          "alt": "Skill Card — mastery badge, inline Progress Ring, and the base card anatomy composed into a learner-specific variant"
         },
-        "caption": "Cards — every variant composed from the same base, elevation, and density rules",
+        "caption": "Skill Card — the base composition plus mastery badge and inline Progress Ring",
         "showcaseBg": "#F0FAF9",
         "bg": "light"
       },
@@ -1987,20 +1941,17 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "image-pair",
+        "type": "split",
         "label": "Accessibility",
         "heading": "Accessibility is a specification, not a review step",
-        "body": "Every component ships with a dedicated accessibility sheet: ARIA roles and attributes, keyboard interaction tables, focus-management rules, screen-reader announcement scripts, and contrast verification at every relevant state. The accessibility spec became the most-referenced section in engineer onboarding — not because it was beautiful, but because it removed the guesswork.",
-        "image": {
-          "src": "/images/projects/components-production-new/accessibility-spec.svg",
-          "alt": "Accessibility specification — ARIA patterns, keyboard tables, and contrast verification"
-        },
-        "caption": "Accessibility spec — ARIA mappings, keyboard tables, and contrast verification per component",
-        "image2": {
-          "src": "/images/projects/components-production-new/accessibility-detail.svg",
-          "alt": "Accessibility detail — focus ring geometry, live-region patterns, and reduced-motion fallbacks"
-        },
-        "caption2": "Detail — focus ring geometry, live-region patterns, and reduced-motion fallbacks",
+        "body": "Every component ships with a dedicated accessibility section — it's part of the spec, not a check at the end. The accessibility section became the most-referenced page in engineer onboarding, not because it was beautiful, but because it removed the guesswork.",
+        "bullets": [
+          "**ARIA roles & attributes.** Mapped per slot, per state — no guesses at review time.",
+          "**Keyboard patterns.** Tables for each component: which keys move focus, which activate, which escape.",
+          "**Focus management.** Ring geometry, trap rules for modals, restore rules on close.",
+          "**Motion & contrast.** Reduced-motion fallbacks and contrast checked at every relevant state."
+        ],
+        "imagePosition": "left",
         "bg": "dark"
       },
       {
