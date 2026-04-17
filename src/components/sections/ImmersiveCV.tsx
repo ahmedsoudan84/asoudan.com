@@ -583,7 +583,7 @@ export default function ImmersiveCV() {
                   borderColor: "#3D9B9B",
                 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm border cursor-default transition-colors"
-                style={{ borderColor: "var(--border-card)", color: "var(--fg-60)" }}
+                style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border-card)", color: "var(--fg-60)" }}
               >
                 <span style={{ color: "var(--accent)" }}>{skill.icon}</span>
                 {skill.name}
@@ -624,7 +624,7 @@ export default function ImmersiveCV() {
                   borderColor: "#3D9B9B",
                 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm border cursor-default transition-colors"
-                style={{ borderColor: "var(--border-card)", color: "var(--fg-60)" }}
+                style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border-card)", color: "var(--fg-60)" }}
               >
                 {tool.type === "cdn" ? (
                   /* eslint-disable-next-line @next/next/no-img-element */

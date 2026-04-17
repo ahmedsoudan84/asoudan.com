@@ -55,12 +55,14 @@
 }
 
 /* ── Light theme ────────────────────────────────────────────── */
+/* Neutral cool grays — matches the tint of cs-section-light (var(--fg-05)
+   over the base bg) used throughout the Org-level Reports case study. */
 [data-theme="light"] {
   --bg-primary:   #f8f8f8;
-  --bg-secondary: #f4f1ea;
-  --bg-tertiary:  #ede8de;
+  --bg-secondary: #eceef1;
+  --bg-tertiary:  #e0e3e8;
   --bg-surface:   #ffffff;
-  --bg-surface-2: #f6f3ed;
+  --bg-surface-2: #eff1f4;
   --bg-footer:    #1a1d2e;   /* footer intentionally stays dark */
 
   --fg-rgb:       22, 25, 42;
@@ -83,14 +85,14 @@
 
   --bg-primary-rgb: 248, 248, 248;
 
-  --vignette-rgb: 244, 241, 234;
-  --nav-bg:       rgba(244,241,234,0.88);
+  --vignette-rgb: 236, 238, 241;
+  --nav-bg:       rgba(236,238,241,0.88);
   --nav-border:   rgba(22,25,42,0.10);
   --nav-icon-inactive: #6b7280;
 
   --border-subtle: rgba(22,25,42,0.08);
   --border-card:   rgba(22,25,42,0.12);
-  --scrollbar-track: #ede8de;
+  --scrollbar-track: #e0e3e8;
 
   --selection-bg:  rgba(0,139,139,0.25);
   --selection-fg:  rgb(22,25,42);
@@ -126,12 +128,20 @@ body {
 [data-theme="light"] .theme-text { color: var(--fg); }
 [data-theme="light"] .theme-text-muted { color: var(--fg-60); }
 
+/* ── Scroll-velocity motion scale ───────────────────────────────
+   --motion-scale is driven by ScrollSpeedTracker: 1 when the page is
+   at rest, shrinking toward ~0.35 while the user is scrolling fast.
+   This makes CSS transitions snappier for fast readers and softer
+   for slow ones. Defaults to 1 so behaviour is unchanged on SSR /
+   when the tracker has not yet mounted. */
+:root { --motion-scale: 1; }
+
 /* ── Smooth transitions on theme switch ─────────────────────── */
 *,
 *::before,
 *::after {
   transition-property: background-color, border-color, color;
-  transition-duration: 0.3s;
+  transition-duration: calc(0.3s * var(--motion-scale));
   transition-timing-function: ease;
 }
 /* Don't slow down animations */

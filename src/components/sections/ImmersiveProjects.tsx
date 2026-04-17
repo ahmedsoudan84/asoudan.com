@@ -2,7 +2,7 @@
 import React, { useRef, useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, useInView, AnimatePresence, animate } from "framer-motion";
+import { motion, useInView, AnimatePresence, animate, useAnimationControls } from "framer-motion";
 import { projectsData } from "@/lib/projects";
 
 /* ── Unified project list — case studies + Behance flow together ── */
@@ -138,10 +138,25 @@ function CoverMedia({ project }: { project: Project }) {
    below. Cover is NEVER obscured — no overlays on the image.
    Info panel is always readable and expands on hover.
 ────────────────────────────────────────────────────────────── */
-function CarouselCard({ project, offset }: { project: Project; offset: number }) {
+function CarouselCard({ project, offset, wiggleTick }: { project: Project; offset: number; wiggleTick: number }) {
   const router = useRouter();
   const [hovered, setHovered] = useState(false);
   const active = offset === 0;
+
+  // Idle attractor — when the parent increments `wiggleTick` after 15s of
+  // no interaction, the card immediately to the right of the active one
+  // (offset === 1) does a subtle 1px horizontal wiggle to hint "there's
+  // more here." Anything else ignores the tick.
+  const wiggle = useAnimationControls();
+  useEffect(() => {
+    if (wiggleTick === 0 || offset !== 1) return;
+    if (typeof window !== "undefined"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    wiggle.start({
+      x: [0, -1, 1, -1, 1, 0],
+      transition: { duration: 0.9, ease: "easeInOut" },
+    });
+  }, [wiggleTick, offset, wiggle]);
 
   // On touch/no-hover devices (phones, tablets) there is no hover state,
   // so project details are always expanded — users browse by scrolling,
@@ -178,6 +193,11 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
   const y = active ? 0 : Math.min(20, distance * 7);
 
   return (
+    <motion.div
+      animate={wiggle}
+      className="shrink-0 snap-center
+                 w-[78vw] sm:w-[460px] lg:w-[520px]"
+    >
     <motion.article
       id={`project-${project.id}`}
       onClick={handleClick}
@@ -198,8 +218,8 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
           ? `0 32px 72px -24px ${project.color}50, 0 8px 32px -16px rgba(var(--bg-primary-rgb),0.5)`
           : `0 8px 28px -16px rgba(var(--bg-primary-rgb),0.4)`,
       }}
-      className="group shrink-0 snap-center cursor-pointer select-none flex flex-col
-                 w-[78vw] sm:w-[460px] lg:w-[520px] rounded-[24px] overflow-hidden"
+      className="group w-full cursor-pointer select-none flex flex-col
+                 rounded-[24px] overflow-hidden"
     >
       {/* ── IMAGE ZONE ─────────────────────────────────────────
           Fixed aspect-[16/11] container — cover always 100% visible.
@@ -361,6 +381,7 @@ function CarouselCard({ project, offset }: { project: Project; offset: number })
         </AnimatePresence>
       </div>
     </motion.article>
+    </motion.div>
   );
 }
 
@@ -373,6 +394,32 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
   // dragEndTime replaces the sticky `moved` boolean — see onClickCapture below.
   const dragState = useRef({ down: false, startX: 0, startScroll: 0, moved: false, dragEndTime: 0 });
   const scrollAnimRef = useRef<{ stop: () => void } | null>(null);
+
+  // Idle attractor — after 15 s of no user interaction, increment wiggleTick so
+  // the next-up card (offset === 1) nudges 1px to hint "keep going." The timer
+  // re-arms after every fire, so long idle sessions keep getting gentle reminders.
+  const [wiggleTick, setWiggleTick] = useState(0);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const arm = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        setWiggleTick((t) => t + 1);
+        arm();
+      }, 15000);
+    };
+    const events: (keyof WindowEventMap)[] = [
+      "scroll", "pointermove", "pointerdown", "keydown", "touchstart", "wheel",
+    ];
+    const reset = () => arm();
+    events.forEach((e) => window.addEventListener(e, reset, { passive: true }));
+    arm();
+    return () => {
+      if (timer) clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, reset));
+    };
+  }, []);
 
   // Track which card is centered
   useEffect(() => {
@@ -544,7 +591,7 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
         style={{ scrollSnapType: "x mandatory" }}
       >
         {projects.map((p, i) => (
-          <CarouselCard key={p.id} project={p} offset={i - activeIdx} />
+          <CarouselCard key={p.id} project={p} offset={i - activeIdx} wiggleTick={wiggleTick} />
         ))}
       </div>
 
