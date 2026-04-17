@@ -1743,6 +1743,309 @@ export const projectsData: ProjectDetail[] = [
     ]
   },
   {
+    "id": "components-production-new",
+    "slug": "components-production-new",
+    "title": "Components Production",
+    "subtitle": "Oxford English Hub",
+    "category": "DESIGN SYSTEM",
+    "number": "05",
+    "description": "Designed and shipped platform components (TabList, ListItems, Progress Ring, Cards) to accelerate delivery and ensure consistency. Authored usage guidance so components integrate cleanly across journeys and contexts.",
+    "tags": [
+      "Product Design",
+      "User Journey Mapping",
+      "Component Design"
+    ],
+    "color": "#26A69A",
+    "cover": "/images/projects/components-production-cover-new.jpg",
+    "coverStyle": "browser",
+    "images": [
+      {
+        "src": "/images/projects/components-production/tablist-full.png",
+        "alt": "TabList — all interaction states"
+      },
+      {
+        "src": "/images/projects/components-production/progress-ring-spec.png",
+        "alt": "Progress Ring — specification"
+      },
+      {
+        "src": "/images/projects/components-production/listitem-spec.png",
+        "alt": "ListItem — specification"
+      },
+      {
+        "src": "/images/projects/components-production/cards-gallery.png",
+        "alt": "Cards — gallery of variants"
+      }
+    ],
+    "behanceUrl": "",
+    "employer": "Oxford English Hub (Oxford University Press)",
+    "role": "Lead Product Designer",
+    "timeline": "12 weeks",
+    "team": "1 Designer, 4 Engineers",
+    "tools": "Figma, Storybook, Confluence",
+    "platform": "Web (Responsive)",
+    "hidden": false,
+    "caseStudy": [
+      {
+        "type": "tldr",
+        "label": "Overview",
+        "heading": "Components Production at a glance",
+        "bullets": [
+          "Problem: Four feature squads were shipping the same UI patterns — tabs, progress rings, list items, cards — in four subtly different ways, slowing delivery and eroding consistency across key learner and admin journeys.",
+          "Approach: Picked a focused set of platform-critical components and co-designed them with engineering — each with full anatomy, interaction states, motion rules, and ARIA patterns — and paired them with usage guidance tied to real user journeys.",
+          "Shipped: TabList, Progress Ring, ListItems and Cards — specified in Figma, built in Storybook, adopted across four product squads as the default building blocks.",
+          "Role: Led the component design, authored specs and usage guidance, and partnered with engineers day-to-day through production."
+        ],
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "Delivery at a glance",
+        "stats": [
+          {
+            "value": "4",
+            "label": "Platform components shipped",
+            "context": "TabList, Progress Ring, ListItems, Cards"
+          },
+          {
+            "value": "12",
+            "label": "Weeks from kickoff to adoption",
+            "context": "design, build, docs and rollout"
+          },
+          {
+            "value": "4",
+            "label": "Product squads adopted",
+            "context": "used in learner and admin journeys"
+          },
+          {
+            "value": "1:1",
+            "label": "Design ↔ engineering pairing",
+            "context": "1 designer, 4 engineers"
+          }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "text",
+        "label": "The Challenge",
+        "heading": "Same patterns, four versions — and no shared way to use them",
+        "body": "As Oxford English Hub grew, the platform's most-used UI patterns had quietly drifted apart. Tabs on the learner dashboard behaved differently from tabs in admin settings. Progress rings varied in thresholds, motion, and labelling. Lists of courses, downloads, and tasks each shipped their own row layout. Cards had inconsistent elevation, spacing, and hover behaviour. The design problem wasn't aesthetic — it was delivery: every squad re-litigated the same decisions, and every new screen was a chance to introduce another variant. I scoped a tight, production-focused set of components to fix the patterns that appeared everywhere — and paired them with clear guidance on when and how to use them, so that consistency came from use, not policing.",
+        "bg": "dark"
+      },
+      {
+        "type": "split",
+        "label": "Principles",
+        "heading": "Four principles that shaped every component",
+        "body": "Every component was designed against the same four principles — so reviewers, engineers, and future contributors could measure proposals against a shared rubric rather than taste.",
+        "bullets": [
+          "**Journey-first.** Start from a real learner or admin moment (resume a course, read a score, pick a unit) and design the component to serve it.",
+          "**Composable, not configurable.** Solve common cases with slots and variants; resist props that encode one screen's quirk.",
+          "**Accessible by default.** Keyboard, focus, and ARIA patterns baked into the spec — not tacked on in review.",
+          "**Docs are part of the component.** A component without usage guidance is a component that will drift."
+        ],
+        "imagePosition": "right",
+        "bg": "light"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "01",
+        "label": "Component: TabList",
+        "heading": "TabList — one navigation pattern, clear rules for when to use it",
+        "body": "TabList is the platform's go-to pattern for switching between peer views inside a single context — a learner's Courses vs. Assignments, an admin's Org Overview vs. Members. I defined the anatomy (container, tab, optional count badge, active indicator) and every interaction state across a two-axis matrix: selection (selected / unselected) × interaction (default, hover, active, focused, disabled). Keyboard follows the WAI-ARIA Tabs pattern — Left/Right cycles, Home/End jump, Tab leaves the group — and the active indicator animates to the new tab on selection, suppressed under prefers-reduced-motion. The usage guidance is just as important as the spec: TabList is for peer views inside the same page, not for navigating between unrelated sections and not for filtering lists. Those get segmented controls and filter chips respectively.",
+        "bg": "dark"
+      },
+      {
+        "type": "screen-gallery",
+        "label": "TabList in depth",
+        "heading": "States, spec, and anatomy — one component, one source of truth",
+        "screens": [
+          {
+            "image": {
+              "src": "/images/projects/components-production/tablist-full.png",
+              "alt": "TabList — every interaction state across selected and unselected tabs"
+            },
+            "label": "All states"
+          },
+          {
+            "image": {
+              "src": "/images/projects/components-production/tablist-spec.png",
+              "alt": "TabList specification — spacing tokens, sizing rules, and ARIA attribute mapping"
+            },
+            "label": "Specification"
+          },
+          {
+            "image": {
+              "src": "/images/projects/components-production/tablist-anatomy.png",
+              "alt": "TabList anatomy — component regions, token references, and measurement annotations"
+            },
+            "label": "Anatomy"
+          }
+        ],
+        "columns": 3,
+        "caption": "TabList — all states, the token-level spec, and the annotated anatomy engineers build from",
+        "bg": "dark"
+      },
+      {
+        "type": "image-pair",
+        "label": "TabList — spec & anatomy",
+        "heading": "From an interaction matrix to a buildable spec",
+        "body": "The spec fixes every value engineers would otherwise guess — spacing tokens, type ramp, focus ring geometry, indicator animation timing, and the exact ARIA attributes on each element. The anatomy drawing makes the same information legible to designers composing new screens.",
+        "image": {
+          "src": "/images/projects/components-production/tablist-spec.png",
+          "alt": "TabList specification sheet — spacing, sizing, and ARIA attribute mapping"
+        },
+        "caption": "Spec sheet — spacing, sizing, motion rules, and ARIA mapping in one place",
+        "image2": {
+          "src": "/images/projects/components-production/tablist-anatomy.png",
+          "alt": "TabList anatomy — container, tab, indicator, and badge regions called out with token references"
+        },
+        "caption2": "Anatomy — container, tab, indicator, and count badge annotated with token references",
+        "bg": "light"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "02",
+        "label": "Component: Progress Ring",
+        "heading": "Progress Ring — a tiny surface that carries a lot of meaning",
+        "body": "On OEH, Progress Ring is how learners see at a glance whether they're on track: unit completion on the dashboard, module progress in a course, task status on a practice activity. Because it appears so often and at small sizes, it had to be unambiguous. I specified three sizes (sm 32px, md 48px, lg 64px) with locked stroke-width ratios so the ring reads the same visual weight at any scale, and three colour thresholds — green above 75%, amber 25–75%, red below 25% — tied to semantic tokens so theming ripples through automatically. Motion is a smooth stroke-dasharray transition on change, short enough to feel responsive and silenced entirely under prefers-reduced-motion. Every ring carries an accessible label: aria-valuenow for the raw number, aria-valuetext for the human version (\"67% complete — 4 of 6 units finished\"), so assistive tech users get the same information as sighted users, not a worse version of it.",
+        "bg": "light"
+      },
+      {
+        "type": "image-pair",
+        "label": "Progress Ring — spec & detail",
+        "heading": "Animation, thresholds, and accessibility in one sheet",
+        "body": "The spec documents the full state set, the three sizes, the threshold colour logic, and the ARIA pattern. The detail view zooms into the SVG geometry — stroke-width ratio, dasharray math, and the reduced-motion fallback — so the component behaves identically whether it's rendered in a dashboard tile or a course card.",
+        "image": {
+          "src": "/images/projects/components-production/progress-ring-spec.png",
+          "alt": "Progress Ring specification — states, sizes, colour thresholds, and ARIA schema"
+        },
+        "caption": "Spec — states, sizes, colour thresholds, and the ARIA live-region pattern",
+        "image2": {
+          "src": "/images/projects/components-production/progress-ring-detail.png",
+          "alt": "Progress Ring detail — SVG geometry, stroke-width ratio, and reduced-motion fallback"
+        },
+        "caption2": "Detail — SVG geometry, stroke-width ratios, and the reduced-motion fallback",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "Pattern in context",
+        "heading": "A learner opens the dashboard — and the components do the work",
+        "body": "Most of the component decisions only pay off in combination. A learner lands on their dashboard, sees a TabList switching between their courses and their assignments, scans a column of ListItems with trailing Progress Rings showing unit progress, and opens a Card to jump into the next activity. No single component is doing anything heroic — but together they make the moment feel orderly, readable, and the same on every screen the learner visits. That's the bar I designed to.",
+        "bg": "dark"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "03",
+        "label": "Component: ListItems",
+        "heading": "ListItems — dense data without the density anti-patterns",
+        "body": "ListItems is the pattern that turned out to have the most variants in production — courses, units, downloads, tasks, members, sessions — each shipped its own row. I replaced them with one component built around four slots: leading media (icon, cover, or avatar), a two-line text block with explicit truncation rules, a trailing action area (status pill, progress ring, or overflow menu), and an inline description for denser contexts. Every row clears a 64px touch target, spacing follows the 4px grid, and the whole row can be made the interactive element — with a single focus ring around the row rather than a fiddly one on the trailing button. The spec documents the two densities (comfortable and dense), truncation behaviour with ellipsis and tooltip-on-hover, and the exact state hierarchy when the row is selectable, linked, or purely informational — the three cases that previously all looked identical.",
+        "bg": "light"
+      },
+      {
+        "type": "image-pair",
+        "label": "ListItem — spec & detail",
+        "heading": "One row, every platform surface",
+        "body": "The spec shows the full variant set — leading media options, trailing actions, two densities, and every interaction state. The detail view calls out slot regions, the 4px spacing grid, and the 64px touch target that keeps the component usable on tablets and assistive-tech targets without changing visually.",
+        "image": {
+          "src": "/images/projects/components-production/listitem-spec.png",
+          "alt": "ListItem specification — variants, slots, and states across comfortable and dense rows"
+        },
+        "caption": "Spec — variants, slot configurations, and states across both densities",
+        "image2": {
+          "src": "/images/projects/components-production/listitem-detail.png",
+          "alt": "ListItem anatomy — slot regions, spacing grid, and 64px touch target annotation"
+        },
+        "caption2": "Detail — slot regions, 4px-grid spacing, and the 64px touch target",
+        "bg": "dark"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "04",
+        "label": "Component: Cards",
+        "heading": "Cards — one base, every surface it needs to serve",
+        "body": "Cards on OEH carry a lot: a course in the catalogue, a lesson in progress, a score on a results page, a resource in a download list. Rather than one Card per use case, I designed a single slot-based base — media, header, body, footer, optional overlay — with three elevation levels, two density options, and clear rules for when a card is clickable versus informational. Hover lifts the card 2px with a matched shadow expansion; focus shows a 3px accent ring; loading and empty states are part of the component, not a separate Skeleton. The Skill Card — a learner-specific variant — composes the same base with a mastery badge and an inline Progress Ring, proving the base held up without being forked. The guidance makes the harder calls explicit: cards are for objects users can act on, not for everything that happens to be rectangular.",
+        "bg": "dark"
+      },
+      {
+        "type": "showcase",
+        "label": "Cards — gallery",
+        "heading": "One base, every variant in context",
+        "body": "The gallery shows base cards, Skill Cards, content cards, and loading skeletons across all three elevation levels — all composed from the same five-slot base with no forked implementations.",
+        "image": {
+          "src": "/images/projects/components-production/cards-gallery.png",
+          "alt": "Card system gallery — base, skill, content, and loading variants across three elevations"
+        },
+        "caption": "Cards — every variant composed from the same base, elevation, and density rules",
+        "showcaseBg": "#F0FAF9",
+        "bg": "light"
+      },
+      {
+        "type": "text",
+        "label": "Usage guidance",
+        "heading": "Guidance that lives next to the component, not in a separate doc nobody reads",
+        "body": "The hardest part of shipping a shared component isn't the spec — it's making sure it's used in the moments it was designed for. For every component, I wrote a short usage block pinned next to the Figma and Storybook entries: what the component is for, what it's explicitly not for, the pattern it pairs with, and a worked example from a real OEH screen. TabList vs. segmented control vs. filter chips. Progress Ring vs. linear progress bar vs. a plain text percentage. ListItems vs. a Card grid. These were the calls squads used to re-litigate in every review — so I made the answers part of the component, not the conversation.",
+        "bg": "light"
+      },
+      {
+        "type": "image-pair",
+        "label": "Accessibility",
+        "heading": "Accessibility is a specification, not a review step",
+        "body": "Every component ships with a dedicated accessibility sheet: ARIA roles and attributes, keyboard interaction tables, focus-management rules, screen-reader announcement scripts, and contrast verification at every relevant state. The accessibility spec became the most-referenced section in engineer onboarding — not because it was beautiful, but because it removed the guesswork.",
+        "image": {
+          "src": "/images/projects/components-production/accessibility-spec.png",
+          "alt": "Accessibility specification — ARIA patterns, keyboard tables, and contrast verification"
+        },
+        "caption": "Accessibility spec — ARIA mappings, keyboard tables, and contrast verification per component",
+        "image2": {
+          "src": "/images/projects/components-production/accessibility-detail.png",
+          "alt": "Accessibility detail — focus ring geometry, live-region patterns, and reduced-motion fallbacks"
+        },
+        "caption2": "Detail — focus ring geometry, live-region patterns, and reduced-motion fallbacks",
+        "bg": "dark"
+      },
+      {
+        "type": "quote",
+        "quote": "The usage guidance changed our reviews more than the components did. We stopped arguing about which pattern to use — the answer was already on the page.",
+        "attribution": "Senior Front-End Engineer, OEH Platform Team",
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "Impact",
+        "stats": [
+          {
+            "value": "4",
+            "label": "Components shipped to production",
+            "context": "TabList, Progress Ring, ListItems, Cards"
+          },
+          {
+            "value": "4",
+            "label": "Squads using them as defaults",
+            "context": "learner, admin, assessment, content"
+          },
+          {
+            "value": "100%",
+            "label": "Accessibility patterns specified",
+            "context": "ARIA, keyboard, focus, motion"
+          },
+          {
+            "value": "0",
+            "label": "Forks after rollout",
+            "context": "every new surface composed from the set"
+          }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "reflection",
+        "label": "Reflection",
+        "heading": "What shipping four components taught me about shipping systems",
+        "body": "I went in assuming the work was the components. It wasn't — it was the usage guidance. Four squads didn't want a bigger library; they wanted fewer decisions to re-make on every screen. Pinning the 'when' and 'when not' next to each component, with a real OEH example, changed the tone of every design review I walked into afterwards. The other thing I'd do differently: pair with engineering sooner. The cleanest parts of the spec are the ones an engineer and I drafted together in a shared Figma frame, and the messiest are the ones I finished alone and handed over. Next time, the spec starts as a conversation, not a deliverable.",
+        "bg": "light"
+      }
+    ]
+  },
+  {
     "id": "components-production",
     "slug": "components-production",
     "title": "Components Design",
