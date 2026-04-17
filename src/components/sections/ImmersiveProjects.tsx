@@ -250,14 +250,6 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
             Behance ↗
           </span>
         )}
-
-        {/* Hover scale-ring glow — purely decorative, no coverage */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none rounded-[inherit]"
-          animate={{ opacity: hovered ? 1 : 0 }}
-          transition={{ duration: 0.35 }}
-          style={{ boxShadow: `inset 0 0 0 1.5px ${project.color}70` }}
-        />
       </div>
 
       {/* ── INFO PANEL ─────────────────────────────────────────
@@ -380,6 +372,17 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
           )}
         </AnimatePresence>
       </div>
+
+      {/* Hover ring — full-card outline that hugs all four 24px corners.
+          Previously the ring lived inside the image zone with rounded-[inherit]
+          (inheriting nothing), so its corners were sharp and got clipped by the
+          article's rounding — making it invisible on rounded edges. */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none rounded-[24px]"
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.35 }}
+        style={{ boxShadow: `inset 0 0 0 1.5px ${project.color}` }}
+      />
     </motion.article>
     </motion.div>
   );
