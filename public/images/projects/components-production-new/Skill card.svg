@@ -1,0 +1,59 @@
+<svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="480" height="480" rx="24" fill="#F4F7F9"/>
+
+  <!-- Card shadow -->
+  <rect x="80" y="68" width="320" height="344" rx="16" fill="rgba(10,12,20,0.06)"/>
+
+  <!-- Card body (raised elevation) -->
+  <rect x="76" y="64" width="320" height="344" rx="16" fill="#FFFFFF"/>
+  <rect x="76" y="64" width="320" height="344" rx="16" stroke="#E4E9F0" stroke-width="1"/>
+
+  <!-- Media slot — teal accent strip -->
+  <rect x="76" y="64" width="320" height="104" rx="16" fill="#26A69A"/>
+  <rect x="76" y="148" width="320" height="20" fill="#26A69A"/>
+
+  <!-- Skill title -->
+  <text x="112" y="108" font-family="'Inter', system-ui, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF">Academic Vocabulary</text>
+  <text x="112" y="130" font-family="'Inter', system-ui, sans-serif" font-size="12" fill="rgba(255,255,255,0.72)">Oxford English Hub · B2 Upper Intermediate</text>
+
+  <!-- Mastery badge -->
+  <rect x="340" y="84" width="36" height="36" rx="18" fill="rgba(255,255,255,0.18)"/>
+  <text x="358" y="107" font-family="'Inter', system-ui, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle">★</text>
+
+  <!-- Progress ring inside card -->
+  <circle cx="268" cy="242" r="40" stroke="#EEF2F7" stroke-width="6" fill="none"/>
+  <circle cx="268" cy="242" r="40" stroke="#26A69A" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="167 84" stroke-dashoffset="63" transform="rotate(-90 268 242)"/>
+  <text x="268" y="238" font-family="'Inter', system-ui, sans-serif" font-size="18" font-weight="700" fill="#1A2035" text-anchor="middle">72</text>
+  <text x="268" y="254" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0" text-anchor="middle">mastery</text>
+
+  <!-- Stats row -->
+  <rect x="100" y="196" width="140" height="56" rx="10" fill="#F4F7F9"/>
+  <text x="170" y="222" font-family="'Inter', system-ui, sans-serif" font-size="22" font-weight="700" fill="#1A2035" text-anchor="middle">48</text>
+  <text x="170" y="238" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0" text-anchor="middle">sessions practiced</text>
+
+  <!-- Slot annotation lines -->
+  <line x1="54" y1="116" x2="76" y2="116" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="14" y="108" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">media</text>
+  <text x="14" y="120" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+
+  <line x1="54" y1="220" x2="76" y2="220" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="10" y="212" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">stats</text>
+  <text x="10" y="224" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+
+  <line x1="54" y1="242" x2="228" y2="242" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="8" y="236" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">ring</text>
+  <text x="5" y="248" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+
+  <!-- CTA area -->
+  <rect x="100" y="274" width="276" height="44" rx="10" fill="#26A69A"/>
+  <text x="238" y="302" font-family="'Inter', system-ui, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">Continue Practice</text>
+
+  <!-- Label: footer slot -->
+  <line x1="54" y1="296" x2="100" y2="296" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="8" y="290" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">footer</text>
+  <text x="6" y="302" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+
+  <!-- Bottom label -->
+  <text x="240" y="440" font-family="'Inter', system-ui, sans-serif" font-size="10" letter-spacing="0.08em" fill="#A0AABF" text-anchor="middle">SKILL CARD · SLOT ARCHITECTURE · 5 REGIONS</text>
+</svg>

@@ -2057,6 +2057,287 @@ export const projectsData: ProjectDetail[] = [
     ]
   },
   {
+    "id": "components-production-new",
+    "slug": "components-production-new",
+    "title": "Components Production",
+    "subtitle": "Oxford English Hub",
+    "category": "DESIGN SYSTEM",
+    "number": "05",
+    "description": "Designed and shipped platform components (TabList, ListItems, Progress Ring, Cards) to accelerate delivery and ensure consistency. Authored usage guidance so components integrate cleanly across journeys and contexts.",
+    "tags": [
+      "Product Design",
+      "User Journey Mapping",
+      "Component Design"
+    ],
+    "color": "#26A69A",
+    "cover": "/images/projects/components-production-cover-new.jpg",
+    "coverStyle": "browser",
+    "images": [
+      {
+        "src": "/images/projects/components-production/tablist-full.png",
+        "alt": "TabList — all interaction states"
+      },
+      {
+        "src": "/images/projects/components-production/progress-ring-spec.png",
+        "alt": "Progress Ring — specification"
+      },
+      {
+        "src": "/images/projects/components-production/cards-gallery.png",
+        "alt": "Card system gallery"
+      },
+      {
+        "src": "/images/projects/components-production/listitem-spec.png",
+        "alt": "ListItem specification"
+      }
+    ],
+    "behanceUrl": "",
+    "employer": "Oxford University Press",
+    "role": "Lead Product Designer",
+    "timeline": "12 weeks",
+    "team": "1 Designer, 4 Engineers",
+    "tools": "Figma, Storybook, Confluence",
+    "platform": "Web (Responsive)",
+    "hidden": false,
+    "caseStudy": [
+      {
+        "type": "tldr",
+        "label": "At a glance",
+        "heading": "Shipped four production components that the whole platform could finally agree on",
+        "bullets": [
+          "Four engineering squads were building their own versions of the same components — no shared spec, no shared behaviour, no shared tokens.",
+          "Designed TabList, Progress Ring, Cards, and ListItems from the ground up: states, tokens, ARIA, edge cases — everything an engineer needs to build without a follow-up Slack message.",
+          "Authored usage guidance in Storybook and Confluence so each component integrates cleanly across every journey and context on Oxford English Hub.",
+          "Outcome: zero ambiguity sprint-to-sprint. Components shipped once, adopted everywhere."
+        ],
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "The Starting Point",
+        "stats": [
+          {
+            "value": "4×",
+            "label": "Duplicate implementations per component",
+            "context": "across 4 independent squads"
+          },
+          {
+            "value": "12 wks",
+            "label": "From audit to shipped, documented components",
+            "context": "TabList · Progress Ring · Cards · ListItems"
+          },
+          {
+            "value": "0",
+            "label": "Ambiguous handoff moments",
+            "context": "every state, token, and ARIA attribute specified"
+          }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "text",
+        "label": "The Problem",
+        "heading": "Same component, four different behaviours — same platform, one user.",
+        "body": "Oxford English Hub was scaling fast. Four product squads were building in parallel — and each had independently solved the same UI problems. The tab that navigated course content in one journey had different keyboard behaviour than the tab in the assessment flow. Progress rings used different colour logic. Cards had mismatched hover states. None of it was intentional. It was the natural result of moving quickly without a shared component language. Users felt it as subtle wrongness — interactions that almost worked. Engineers felt it as spiralling cost — every sprint spent re-litigating decisions that should have been made once.",
+        "bg": "dark"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "01",
+        "label": "TabList",
+        "heading": "Every state, explicitly named. Every keyboard shortcut, precisely specified.",
+        "body": "The TabList was where the fragmentation was most visible — and most costly. I designed a 2-axis state matrix: selection state (selected / unselected) × interaction state (default / hover / active / focused / disabled / loading). Twelve states total, every one of them documented with exact token references. Keyboard behaviour follows the WAI-ARIA Tabs Pattern precisely: Left/Right arrows cycle between tabs, Home and End jump to first and last, Tab moves focus out of the component entirely. The Tab Button SVG (below) captures the anatomy — active indicator, label slot, focus ring geometry, and ARIA attribute mapping — so an engineer reading the spec has everything they need without opening Figma.",
+        "bg": "light"
+      },
+      {
+        "type": "split",
+        "label": "TabList Anatomy",
+        "heading": "Anatomy of one tab — twelve states built from three variables",
+        "body": "The active indicator (4px, color-interactive-primary) is the visual anchor. The label inherits from the design token system — never a raw value. Focus ring uses a 2px offset ring in color-focus-ring, meeting WCAG 2.1 AA contrast against both light and dark surfaces.",
+        "image": "/images/projects/components-production-new/Tab Button.svg",
+        "imagePosition": "right",
+        "bg": "light"
+      },
+      {
+        "type": "screen-gallery",
+        "label": "TabList Specification",
+        "heading": "Full component, all states, complete anatomy",
+        "screens": [
+          {
+            "image": {
+              "src": "/images/projects/components-production/tablist-full.png",
+              "alt": "TabList — all 12 interaction states"
+            },
+            "label": "All states"
+          },
+          {
+            "image": {
+              "src": "/images/projects/components-production/tablist-spec.png",
+              "alt": "TabList specification — spacing tokens and ARIA mapping"
+            },
+            "label": "Specification"
+          },
+          {
+            "image": {
+              "src": "/images/projects/components-production/tablist-anatomy.png",
+              "alt": "TabList anatomy — component regions and measurements"
+            },
+            "label": "Anatomy"
+          }
+        ],
+        "columns": 3,
+        "caption": "Selected × default through disabled/loading — every state token-referenced, never raw hex",
+        "bg": "dark"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "02",
+        "label": "Progress Ring",
+        "heading": "An SVG that knows when to celebrate and when to stay still.",
+        "body": "Progress Ring renders with SVG stroke-dasharray and transitions that automatically disable when prefers-reduced-motion is active. Colour thresholds give users contextual feedback without a legend: teal above 75%, amber between 25–75%, red below 25%. Screen readers receive live updates via aria-valuenow and a human-readable aria-valuetext. The component ships in three sizes with consistent stroke-width ratios — the ring geometry SVG (right) captures the threshold logic, size variants, and token references in one view. Edge cases: zero progress shows an empty ring with a motivational label; 100% triggers a brief motion-safe celebration; indeterminate uses a rotating dash pattern.",
+        "bg": "dark"
+      },
+      {
+        "type": "image-pair",
+        "label": "Progress Ring Specification",
+        "heading": "Eight states, three sizes, one SVG that respects every user preference",
+        "body": "The spec pairs the annotated ring geometry with the full state breakdown — thresholds, motion fallbacks, and ARIA live region patterns all documented in one place.",
+        "image": {
+          "src": "/images/projects/components-production-new/Progress ring.svg",
+          "alt": "Progress Ring SVG — threshold logic, size variants, and token references"
+        },
+        "caption": "Ring anatomy — stroke-dasharray geometry, threshold colours, and size presets",
+        "image2": {
+          "src": "/images/projects/components-production/progress-ring-spec.png",
+          "alt": "Progress Ring component specification — all states, sizes, and ARIA schema"
+        },
+        "caption2": "Full spec — 8 states, reduced-motion fallback, and ARIA live region pattern",
+        "bg": "dark"
+      },
+      {
+        "type": "image-pair",
+        "label": "Progress Ring Detail",
+        "heading": "Anatomy close-up — where SVG meets the design token system",
+        "body": "Every measurement on the ring traces back to a token. Stroke width scales proportionally across sm/md/lg — never redrawn, just resized through a single CSS custom property.",
+        "image": {
+          "src": "/images/projects/components-production/progress-ring-detail.png",
+          "alt": "Progress Ring anatomy detail — SVG measurement and token references"
+        },
+        "caption": "Anatomy detail — stroke-width ratio, token wiring, and motion preference handling",
+        "image2": {
+          "src": "/images/projects/components-production-new/Skill card.svg",
+          "alt": "Skill Card showing inline Progress Ring in context"
+        },
+        "caption2": "Skill Card — Progress Ring in context as a mastery indicator",
+        "bg": "light"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "03",
+        "label": "Cards",
+        "heading": "One base card. Five slots. Every variant composable, nothing forked.",
+        "body": "The Card system uses a slot-based architecture with five configurable regions: media, header, body, footer, and overlay. Three elevation levels control visual prominence. Clickable cards receive distinct hover (translateY -2px + shadow expansion, 200ms ease-out) and focus states. The Skill Card — seen embedded in the Progress Ring section above — extends the base with domain-specific slots: mastery level badge, session count, and an inline mini-Progress Ring. All cards use CSS Grid internally for consistent alignment across content lengths. The gallery below shows every variant in context — no divergence, no forked implementations.",
+        "bg": "dark"
+      },
+      {
+        "type": "showcase",
+        "label": "Card System",
+        "heading": "Every variant, one composable base",
+        "body": "Base cards, Skill Cards, content cards, and loading skeletons — all built from the same five-slot architecture across three elevation levels.",
+        "image": {
+          "src": "/images/projects/components-production/cards-gallery.png",
+          "alt": "Card system gallery — all variants across three elevation levels"
+        },
+        "caption": "Card system — variants, elevations, and skeleton states in one gallery",
+        "showcaseBg": "#F0FAF9",
+        "bg": "light"
+      },
+      {
+        "type": "process-step",
+        "stepNumber": "04",
+        "label": "ListItems",
+        "heading": "Dense data, clear hierarchy — no content length can break this layout.",
+        "body": "ListItem handles the platform's most data-dense surfaces: course listings, task queues, download managers. Its slot-based anatomy supports a leading media region, multi-line text with explicit truncation control, a trailing action, and inline status indicators — all within a 64px hit target that meets WCAG touch compliance. Density is configurable: comfortable for browsing, compact for power users scanning long lists. The spec defines exactly when truncation kicks in (line-clamp: 2 for titles, 1 for metadata) and what happens to the trailing action when content overflows. Usage guidance in Confluence covers when to reach for ListItem vs. a Table vs. a Card — the decision tree that stopped teams from solving the same information architecture question sprint after sprint.",
+        "bg": "dark"
+      },
+      {
+        "type": "image-pair",
+        "label": "ListItem Specification",
+        "heading": "Slot anatomy and state map — every density, every overflow rule",
+        "body": "The ListItem spec is split into two views: the full slot specification showing all variants and density modes, and the anatomy close-up detailing touch target sizing and token references.",
+        "image": {
+          "src": "/images/projects/components-production/listitem-spec.png",
+          "alt": "ListItem specification — all variants, states, and slot configurations"
+        },
+        "caption": "ListItem spec — slots, states, and truncation rules across comfortable and compact densities",
+        "image2": {
+          "src": "/images/projects/components-production/listitem-detail.png",
+          "alt": "ListItem anatomy detail — slot regions, spacing tokens, and touch target"
+        },
+        "caption2": "Anatomy detail — slot regions, 4px-grid spacing, and 64px touch target compliance",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "Usage Guidance",
+        "heading": "The spec is the product. Not the Figma file.",
+        "body": "Each component ships with synchronised documentation across three tools. Storybook hosts interactive examples for every state — engineers can test edge cases in isolation before a line of product code is written. Figma components use auto-layout with design token references, so composing screens never requires detaching an instance. Confluence houses the governance layer: decision logs explaining why each choice was made, version history with migration guides, and the usage decision trees that stop teams from re-litigating the same component selection questions sprint after sprint. A beautifully designed component is worthless if an engineer needs a Slack message to implement it. Every hour spent on specification detail saves ten hours of implementation back-and-forth.",
+        "bg": "light"
+      },
+      {
+        "type": "image-pair",
+        "label": "Accessibility",
+        "heading": "WCAG compliance written into the spec — not bolted on after.",
+        "body": "Every component's documentation includes a dedicated accessibility section: ARIA role and attribute mappings, keyboard interaction tables, focus management rules, screen reader announcement scripts, and contrast verification. The accessibility spec became the most-referenced section in developer onboarding.",
+        "image": {
+          "src": "/images/projects/components-production/accessibility-spec.png",
+          "alt": "Accessibility specification — ARIA patterns, keyboard tables, and contrast verification"
+        },
+        "caption": "Accessibility spec — ARIA mappings, keyboard patterns, and contrast verification per component",
+        "image2": {
+          "src": "/images/projects/components-production/accessibility-detail.png",
+          "alt": "Accessibility detail — focus ring specs, screen reader scripts, and reduced-motion fallbacks"
+        },
+        "caption2": "Accessibility detail — focus ring geometry, live region patterns, and reduced-motion fallbacks",
+        "bg": "dark"
+      },
+      {
+        "type": "quote",
+        "quote": "These specs are the most thorough component documentation I've worked with in 8 years. Zero ambiguity — we built the TabList in a single sprint with no design-engineering back-and-forth at all.",
+        "attribution": "Senior Front-End Engineer, OUP Platform Team",
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "Impact",
+        "stats": [
+          {
+            "value": "4",
+            "label": "Platform components shipped to production",
+            "context": "TabList · Progress Ring · Cards · ListItems"
+          },
+          {
+            "value": "100%",
+            "label": "Adoption across all squads",
+            "context": "zero forked implementations post-launch"
+          },
+          {
+            "value": "1 sprint",
+            "label": "Average time to implement a new component",
+            "context": "down from 3 sprints with design back-and-forth"
+          }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "reflection",
+        "label": "Reflection",
+        "heading": "What shipping components taught me about designing for engineers.",
+        "body": "The hardest part of this project wasn't designing the components — it was deciding what the spec needed to say so that implementation required zero clarification. That discipline changed how I think about handoff entirely. A design that leaves questions open isn't done. It's a debt that surfaces at the worst possible moment: mid-sprint, when the engineer is blocked and the PM is asking for an ETA. Authoring the usage guidance was equally clarifying. Writing down when to use ListItem vs. Table vs. Card forced me to articulate distinctions I had been making intuitively. Those distinctions turned out to be the most valuable thing I could give the teams — not prettier components, but a shared decision framework that scaled beyond the four components I'd designed.",
+        "bg": "light"
+      }
+    ]
+  },
+  {
     "id": "nano-gps",
     "slug": "nano-gps",
     "title": "Nano GPS",

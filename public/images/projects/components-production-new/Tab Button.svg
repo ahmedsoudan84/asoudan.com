@@ -1,0 +1,93 @@
+<svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="480" height="480" rx="24" fill="#0A0C14"/>
+
+  <!-- Section label -->
+  <text x="240" y="44" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.12em" fill="#26A69A" text-anchor="middle">TAB BUTTON · INTERACTION STATES</text>
+
+  <!-- State matrix heading -->
+  <text x="54" y="80" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#3D4460" letter-spacing="0.06em">SELECTED</text>
+  <text x="54" y="196" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#3D4460" letter-spacing="0.06em">UNSELECTED</text>
+
+  <!-- Col headers -->
+  <text x="92" y="68" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#3D4460" letter-spacing="0.06em" text-anchor="middle">DEFAULT</text>
+  <text x="196" y="68" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#3D4460" letter-spacing="0.06em" text-anchor="middle">HOVER</text>
+  <text x="296" y="68" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#3D4460" letter-spacing="0.06em" text-anchor="middle">FOCUSED</text>
+  <text x="396" y="68" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#3D4460" letter-spacing="0.06em" text-anchor="middle">DISABLED</text>
+
+  <!-- ── ROW 1: SELECTED ── -->
+
+  <!-- Selected / Default -->
+  <rect x="54" y="82" width="76" height="40" rx="4" fill="#0A0C14"/>
+  <rect x="54" y="118" width="76" height="4" rx="2" fill="#26A69A"/>
+  <text x="92" y="108" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">Overview</text>
+
+  <!-- Selected / Hover -->
+  <rect x="158" y="82" width="76" height="40" rx="4" fill="#111524"/>
+  <rect x="158" y="118" width="76" height="4" rx="2" fill="#26A69A"/>
+  <text x="196" y="108" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">Overview</text>
+
+  <!-- Selected / Focused -->
+  <rect x="258" y="82" width="76" height="40" rx="4" fill="#0A0C14"/>
+  <rect x="258" y="118" width="76" height="4" rx="2" fill="#26A69A"/>
+  <rect x="256" y="80" width="80" height="44" rx="6" fill="none" stroke="#26A69A" stroke-width="2"/>
+  <text x="296" y="108" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">Overview</text>
+
+  <!-- Selected / Disabled -->
+  <rect x="358" y="82" width="76" height="40" rx="4" fill="#0A0C14" opacity="0.4"/>
+  <rect x="358" y="118" width="76" height="4" rx="2" fill="#26A69A" opacity="0.3"/>
+  <text x="396" y="108" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle" opacity="0.4">Overview</text>
+
+  <!-- ── ROW 2: UNSELECTED ── -->
+
+  <!-- Unselected / Default -->
+  <rect x="54" y="208" width="76" height="40" rx="4" fill="none"/>
+  <text x="92" y="234" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#6B7A9A" text-anchor="middle">Vocabulary</text>
+
+  <!-- Unselected / Hover -->
+  <rect x="158" y="208" width="76" height="40" rx="4" fill="#111524"/>
+  <text x="196" y="234" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#A0AABF" text-anchor="middle">Vocabulary</text>
+
+  <!-- Unselected / Focused -->
+  <rect x="258" y="208" width="76" height="40" rx="4" fill="none"/>
+  <rect x="256" y="206" width="80" height="44" rx="6" fill="none" stroke="#26A69A" stroke-width="2"/>
+  <text x="296" y="234" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#A0AABF" text-anchor="middle">Vocabulary</text>
+
+  <!-- Unselected / Disabled -->
+  <rect x="358" y="208" width="76" height="40" rx="4" fill="none" opacity="0.4"/>
+  <text x="396" y="234" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#6B7A9A" text-anchor="middle" opacity="0.4">Vocabulary</text>
+
+  <!-- ── ANATOMY SECTION ── -->
+  <line x1="54" y1="276" x2="426" y2="276" stroke="#1E2235" stroke-width="1"/>
+  <text x="240" y="300" font-family="'Inter', system-ui, sans-serif" font-size="10" letter-spacing="0.08em" fill="#3D4460" text-anchor="middle">ANATOMY</text>
+
+  <!-- Anatomy tab example -->
+  <rect x="94" y="314" width="130" height="48" rx="4" fill="#0A0C14"/>
+  <rect x="94" y="358" width="130" height="4" rx="2" fill="#26A69A"/>
+
+  <!-- Annotation: label -->
+  <line x1="140" y1="334" x2="140" y2="378" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+  <text x="144" y="340" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#26A69A">label</text>
+  <text x="144" y="353" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#6B7A9A">color-text-primary</text>
+
+  <!-- Annotation: indicator -->
+  <line x1="148" y1="366" x2="260" y2="366" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+  <text x="264" y="363" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#26A69A">active indicator</text>
+  <text x="264" y="375" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#6B7A9A">h: 4px · color-interactive-primary</text>
+
+  <!-- Tab label text in anatomy -->
+  <text x="159" y="344" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">My Tasks</text>
+
+  <!-- ARIA labels -->
+  <rect x="254" y="314" width="172" height="64" rx="8" fill="#0F1322"/>
+  <text x="268" y="334" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">ARIA</text>
+  <text x="268" y="350" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#6B7A9A">role="tab"</text>
+  <text x="268" y="364" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#6B7A9A">aria-selected="true"</text>
+  <text x="268" y="378" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#6B7A9A">aria-controls="panel-id"</text>
+
+  <!-- Keyboard nav note -->
+  <text x="240" y="414" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#3D4460" text-anchor="middle">← → arrow keys cycle tabs · Home/End jump · Tab exits component</text>
+
+  <!-- Bottom label -->
+  <text x="240" y="452" font-family="'Inter', system-ui, sans-serif" font-size="10" letter-spacing="0.08em" fill="#3D4460" text-anchor="middle">WAI-ARIA TABS PATTERN · 2-AXIS STATE MATRIX</text>
+</svg>
