@@ -1,59 +1,123 @@
-<svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="600" height="480" viewBox="0 0 600 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cardAccent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#26A69A"/>
+      <stop offset="100%" stop-color="#1E8D82"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#26A69A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
   <!-- Background -->
-  <rect width="480" height="480" rx="24" fill="#F4F7F9"/>
+  <rect width="600" height="480" rx="20" fill="#F7F9FB"/>
 
-  <!-- Card shadow -->
-  <rect x="80" y="68" width="320" height="344" rx="16" fill="rgba(10,12,20,0.06)"/>
+  <!-- Label row -->
+  <text x="36" y="44" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">SKILL CARD</text>
+  <text x="36" y="60" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0" letter-spacing="0.04em">Slot architecture · 5 regions · composable from base Card</text>
+  <text x="564" y="44" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0" text-anchor="end">— 03 / COMPONENT</text>
 
-  <!-- Card body (raised elevation) -->
-  <rect x="76" y="64" width="320" height="344" rx="16" fill="#FFFFFF"/>
-  <rect x="76" y="64" width="320" height="344" rx="16" stroke="#E4E9F0" stroke-width="1"/>
+  <!-- Main card (focused/hover state) with accent shadow -->
+  <g filter="url(#cardShadow)">
+    <rect x="56" y="96" width="288" height="320" rx="14" fill="#FFFFFF"/>
+  </g>
+  <rect x="56" y="96" width="288" height="320" rx="14" stroke="#E4E9F0" stroke-width="1"/>
 
-  <!-- Media slot — teal accent strip -->
-  <rect x="76" y="64" width="320" height="104" rx="16" fill="#26A69A"/>
-  <rect x="76" y="148" width="320" height="20" fill="#26A69A"/>
+  <!-- Focus ring (subtle) -->
+  <rect x="52" y="92" width="296" height="328" rx="18" stroke="#26A69A" stroke-width="2" stroke-dasharray="4 3" opacity="0.4" fill="none"/>
+
+  <!-- Media slot — teal accent -->
+  <path d="M 56 110 Q 56 96 70 96 L 330 96 Q 344 96 344 110 L 344 200 L 56 200 Z" fill="url(#cardAccent)"/>
 
   <!-- Skill title -->
-  <text x="112" y="108" font-family="'Inter', system-ui, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF">Academic Vocabulary</text>
-  <text x="112" y="130" font-family="'Inter', system-ui, sans-serif" font-size="12" fill="rgba(255,255,255,0.72)">Oxford English Hub · B2 Upper Intermediate</text>
+  <text x="82" y="138" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="0.14em" fill="rgba(255,255,255,0.75)">VOCABULARY · B2</text>
+  <text x="82" y="168" font-family="'Inter', system-ui, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF" letter-spacing="-0.01em">Academic Vocabulary</text>
+  <text x="82" y="188" font-family="'Inter', system-ui, sans-serif" font-size="12" fill="rgba(255,255,255,0.72)">Oxford English Hub · Unit 04</text>
 
   <!-- Mastery badge -->
-  <rect x="340" y="84" width="36" height="36" rx="18" fill="rgba(255,255,255,0.18)"/>
-  <text x="358" y="107" font-family="'Inter', system-ui, sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle">★</text>
-
-  <!-- Progress ring inside card -->
-  <circle cx="268" cy="242" r="40" stroke="#EEF2F7" stroke-width="6" fill="none"/>
-  <circle cx="268" cy="242" r="40" stroke="#26A69A" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="167 84" stroke-dashoffset="63" transform="rotate(-90 268 242)"/>
-  <text x="268" y="238" font-family="'Inter', system-ui, sans-serif" font-size="18" font-weight="700" fill="#1A2035" text-anchor="middle">72</text>
-  <text x="268" y="254" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0" text-anchor="middle">mastery</text>
+  <rect x="300" y="112" width="32" height="32" rx="16" fill="rgba(255,255,255,0.2)"/>
+  <text x="316" y="134" font-family="'Inter', system-ui, sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">★</text>
 
   <!-- Stats row -->
-  <rect x="100" y="196" width="140" height="56" rx="10" fill="#F4F7F9"/>
-  <text x="170" y="222" font-family="'Inter', system-ui, sans-serif" font-size="22" font-weight="700" fill="#1A2035" text-anchor="middle">48</text>
-  <text x="170" y="238" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0" text-anchor="middle">sessions practiced</text>
+  <rect x="76" y="220" width="124" height="56" rx="8" fill="#F7F9FB"/>
+  <text x="138" y="244" font-family="'Inter', system-ui, sans-serif" font-size="22" font-weight="700" fill="#1A2035" text-anchor="middle" letter-spacing="-0.02em">48</text>
+  <text x="138" y="262" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0" text-anchor="middle" letter-spacing="0.06em">SESSIONS</text>
 
-  <!-- Slot annotation lines -->
-  <line x1="54" y1="116" x2="76" y2="116" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
-  <text x="14" y="108" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">media</text>
-  <text x="14" y="120" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+  <!-- Mini progress ring -->
+  <g transform="translate(268, 248)">
+    <circle cx="0" cy="0" r="30" stroke="#EEF2F7" stroke-width="5" fill="none"/>
+    <circle cx="0" cy="0" r="30" stroke="#26A69A" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="125 63" stroke-dashoffset="47" transform="rotate(-90)"/>
+    <text x="0" y="-2" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="700" fill="#1A2035" text-anchor="middle">72</text>
+    <text x="0" y="12" font-family="'Inter', system-ui, sans-serif" font-size="7" fill="#8A97B0" text-anchor="middle" letter-spacing="0.08em">MASTERY</text>
+  </g>
 
-  <line x1="54" y1="220" x2="76" y2="220" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
-  <text x="10" y="212" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">stats</text>
-  <text x="10" y="224" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+  <!-- Body text -->
+  <text x="76" y="310" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#5A6784">Continue building academic vocabulary with</text>
+  <text x="76" y="324" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#5A6784">contextual practice and spaced recall.</text>
 
-  <line x1="54" y1="242" x2="228" y2="242" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
-  <text x="8" y="236" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">ring</text>
-  <text x="5" y="248" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+  <!-- CTA button -->
+  <rect x="76" y="348" width="248" height="44" rx="8" fill="#1A2035"/>
+  <text x="200" y="376" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle">Continue Practice →</text>
 
-  <!-- CTA area -->
-  <rect x="100" y="274" width="276" height="44" rx="10" fill="#26A69A"/>
-  <text x="238" y="302" font-family="'Inter', system-ui, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">Continue Practice</text>
+  <!-- Slot annotation lines + labels -->
+  <!-- media -->
+  <line x1="36" y1="148" x2="56" y2="148" stroke="#26A69A" stroke-width="1"/>
+  <circle cx="36" cy="148" r="2.5" fill="#26A69A"/>
+  <text x="14" y="140" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">01</text>
+  <text x="14" y="152" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">media</text>
 
-  <!-- Label: footer slot -->
-  <line x1="54" y1="296" x2="100" y2="296" stroke="#26A69A" stroke-width="1" stroke-dasharray="3 2"/>
-  <text x="8" y="290" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#26A69A" font-weight="600">footer</text>
-  <text x="6" y="302" font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#8A97B0">slot</text>
+  <!-- header -->
+  <line x1="24" y1="168" x2="56" y2="168" stroke="#26A69A" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
 
-  <!-- Bottom label -->
-  <text x="240" y="440" font-family="'Inter', system-ui, sans-serif" font-size="10" letter-spacing="0.08em" fill="#A0AABF" text-anchor="middle">SKILL CARD · SLOT ARCHITECTURE · 5 REGIONS</text>
+  <!-- stats/body -->
+  <line x1="36" y1="248" x2="56" y2="248" stroke="#26A69A" stroke-width="1"/>
+  <circle cx="36" cy="248" r="2.5" fill="#26A69A"/>
+  <text x="14" y="240" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">02</text>
+  <text x="14" y="252" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">body</text>
+
+  <!-- footer -->
+  <line x1="36" y1="370" x2="56" y2="370" stroke="#26A69A" stroke-width="1"/>
+  <circle cx="36" cy="370" r="2.5" fill="#26A69A"/>
+  <text x="14" y="362" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">03</text>
+  <text x="14" y="374" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">footer</text>
+
+  <!-- RIGHT SIDE: elevation variants -->
+  <text x="388" y="110" font-family="'Inter', system-ui, sans-serif" font-size="10" letter-spacing="0.12em" fill="#8A97B0" font-weight="600">ELEVATION</text>
+
+  <!-- Flat -->
+  <rect x="388" y="124" width="176" height="60" rx="8" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="406" y="146" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#1A2035" font-weight="600">Flat</text>
+  <text x="406" y="162" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">border · no shadow</text>
+  <text x="554" y="146" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" text-anchor="end">z-0</text>
+
+  <!-- Raised -->
+  <g filter="url(#cardShadow)">
+    <rect x="388" y="196" width="176" height="60" rx="8" fill="#FFFFFF"/>
+  </g>
+  <text x="406" y="218" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#1A2035" font-weight="600">Raised</text>
+  <text x="406" y="234" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">shadow-sm · interactive</text>
+  <text x="554" y="218" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" text-anchor="end">z-1</text>
+
+  <!-- Elevated -->
+  <g filter="url(#cardShadow)">
+    <rect x="388" y="268" width="176" height="60" rx="8" fill="#FFFFFF"/>
+  </g>
+  <text x="406" y="290" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#1A2035" font-weight="600">Elevated</text>
+  <text x="406" y="306" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">shadow-lg · modal peer</text>
+  <text x="554" y="290" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" text-anchor="end">z-2</text>
+
+  <!-- Interaction states -->
+  <text x="388" y="358" font-family="'Inter', system-ui, sans-serif" font-size="10" letter-spacing="0.12em" fill="#8A97B0" font-weight="600">INTERACTION</text>
+
+  <rect x="388" y="372" width="176" height="28" rx="6" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="400" y="390" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#1A2035">Hover</text>
+  <text x="554" y="390" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0" text-anchor="end">translateY(-2px) · 200ms</text>
+
+  <rect x="388" y="404" width="176" height="28" rx="6" fill="#FFFFFF" stroke="#26A69A" stroke-width="2"/>
+  <text x="400" y="422" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#1A2035">Focused</text>
+  <text x="554" y="422" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0" text-anchor="end">3px ring · color-focus</text>
+
+  <rect x="388" y="436" width="176" height="28" rx="6" fill="#F0FAF9" stroke="#E4E9F0"/>
+  <text x="400" y="454" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#1A2035">Pressed</text>
+  <text x="554" y="454" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0" text-anchor="end">bg-tint · 8% accent</text>
 </svg>
