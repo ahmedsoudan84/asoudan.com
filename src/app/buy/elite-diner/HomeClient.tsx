@@ -57,13 +57,27 @@ export default function HomeClient() {
             loading="eager"
             crossOrigin="anonymous"
             onError={(e) => {
+              // Deterministic, on-brand fallback chain. The old fallback used
+              // `picsum.photos/...?random=hero` — the `?random=X` query is not a
+              // seed, so picsum served a fresh random image on every load
+              // (suits, landscapes, whatever). We now retry once with a second
+              // restaurant-interior Unsplash URL; if that also fails we hide the
+              // image so the page's own background shows through instead.
               const target = e.target as HTMLImageElement;
-              target.src = "https://picsum.photos/2000/1200?random=hero";
+              if (target.dataset.fallbackTried !== "1") {
+                target.dataset.fallbackTried = "1";
+                target.src =
+                  "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80&w=2000";
+              } else {
+                target.style.display = "none";
+              }
             }}
           />
-          {/* Theme-aware overlay positioned within the photo */}
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/2 to-bg-primary/60 backdrop-blur-sm" />
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-bg-primary/80 via-bg-primary/40 to-transparent" />
+          {/* Theme-aware overlay. Using rgba(0,0,0,...) instead of bg-primary
+              keeps the photo legible in light mode — where bg-primary is near
+              white and previously washed the image out. */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/15 via-black/10 to-black/30" />
+          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-bg-primary/55 via-bg-primary/20 to-transparent" />
         </div>
 
         <div className="max-w-[1000px] w-full mx-auto relative z-10 text-center">
@@ -78,13 +92,17 @@ export default function HomeClient() {
               <span className="w-12 h-px" style={{ background: "var(--accent)", opacity: 0.3 }} />
             </div>
 
-            <h1 className="font-montserrat text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] mb-8" style={{ color: "var(--fg)" }}>
+            {/* Hero text sits on a photo with a consistent dark scrim, so
+                colours are locked light-on-dark in both themes. Previously
+                the heading used var(--fg) (dark navy in light mode), which
+                was illegible after loosening the light-mode overlay. */}
+            <h1 className="font-montserrat text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] mb-8 drop-shadow-[0_2px_20px_rgba(0,0,0,0.45)]" style={{ color: "#ffffff" }}>
               Savour the <br />
               <span style={{ color: "var(--accent)" }}>Future</span>
             </h1>
 
-            <p className="max-w-xl mx-auto text-lg md:text-xl font-montserrat leading-relaxed mb-12" style={{ color: "var(--fg-60)" }}>
-              The premium London restaurant template powered by invisible AI. 
+            <p className="max-w-xl mx-auto text-lg md:text-xl font-montserrat leading-relaxed mb-12 drop-shadow-[0_1px_10px_rgba(0,0,0,0.35)]" style={{ color: "rgba(255,255,255,0.82)" }}>
+              The premium London restaurant template powered by invisible AI.
               Built for conversion, designed for elegance.
             </p>
 
