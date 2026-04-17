@@ -247,7 +247,7 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
               border: "1px solid rgba(255,255,255,0.22)",
             }}
           >
-            Behance ↗
+            Behance
           </span>
         )}
       </div>
@@ -363,10 +363,6 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
                 }}
               >
                 {project.hasCaseStudy ? "View Project" : "View on Behance"}
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"
-                  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 8h10M9 3l5 5-5 5" />
-                </svg>
               </motion.span>
             </motion.div>
           )}
