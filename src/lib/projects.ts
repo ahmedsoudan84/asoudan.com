@@ -2147,43 +2147,10 @@ export const projectsData: ProjectDetail[] = [
         "bg": "accent"
       },
       {
-        "type": "timeline",
-        "label": "The 12 weeks",
-        "heading": "Audit → design → document → adopt",
-        "timelineSteps": [
-          {
-            "phase": "Weeks 1–2",
-            "title": "Component Audit",
-            "description": "Catalogued every existing variant across all four squads. Mapped gaps in states, tokens, and accessibility."
-          },
-          {
-            "phase": "Weeks 3–4",
-            "title": "Token Foundation",
-            "description": "Aligned with engineering on a three-tier token system. Colour, spacing, elevation — tokens first, components second."
-          },
-          {
-            "phase": "Weeks 5–8",
-            "title": "Component Design",
-            "description": "TabList, Progress Ring, Cards, ListItems — every state, size, and edge case specified."
-          },
-          {
-            "phase": "Weeks 9–10",
-            "title": "Documentation",
-            "description": "Storybook stories, Figma auto-layout components, Confluence usage guidance — same specs, three places."
-          },
-          {
-            "phase": "Weeks 11–12",
-            "title": "Adoption & Migration",
-            "description": "Paired with each squad for their first build. Resolved open questions by updating the spec — never in Slack."
-          }
-        ],
-        "bg": "light"
-      },
-      {
         "type": "text",
-        "label": "Methodology",
-        "heading": "Audit the mess before designing the ideal.",
-        "body": "I rejected the clean-slate instinct that kills adoption on most design system projects. Every existing implementation got catalogued — its states, its quirks, the reasons it ended up that way. For each component family I found the strongest existing version and designed upward from there. Two things came out of it. First, teams saw their own work reflected in the final specs, so resistance dropped to zero. Second, the system inherited real-world constraints engineers already knew — nothing had to be retrofitted when we hit production.",
+        "label": "How we work",
+        "heading": "Every new component earns its way in.",
+        "body": "Nothing ships from a Figma file alone. Each new component goes through a strict intake: the proposing designer writes a one-page case — the user problem it solves, the gap in the existing system, the states and tokens it needs, the tradeoffs — and presents it to platform leads and application architects. If it duplicates something that already exists, it doesn't get built; the existing component absorbs the need instead. If it passes, the design, the API, and the usage rules get signed off together. That single review is why the system stays small, and why engineers can trust that every component in it earns its place.",
         "bg": "light"
       },
       {
@@ -2191,49 +2158,59 @@ export const projectsData: ProjectDetail[] = [
         "stepNumber": "01",
         "label": "Component · TabList",
         "heading": "The component that sat on every page — and behaved differently on each one.",
-        "body": "TabList carried the most fragmentation and the most cost. Four squads had four tabs — none of them keyboard-compatible with each other. I rebuilt it from its smallest decisions outward: the state matrix, the active indicator, the keyboard contract, the ARIA schema. Every piece below is a slice of that spec.",
+        "body": "TabList carried the most fragmentation and the most cost. Four squads had four tabs — none of them keyboard-compatible with each other. Rebuilt from its smallest decisions outward: anatomy, layout, state matrix, then the accessibility contract. Each piece below is one extracted slice of that spec.",
         "bg": "dark"
       },
       {
         "type": "split",
-        "label": "01.1 · State Matrix",
-        "heading": "Two axes. Every cell named. No \"we'll figure it out\" left.",
-        "body": "Selection crosses interaction — selected/unselected against default, hover, focused, disabled. Eight permutations before loading, twelve with it. Each cell references a token, never a raw hex. The matrix is the spec: if a state isn't in this grid, it doesn't exist in the component.",
-        "image": "/images/projects/components-production-new/fragments/tab-matrix.svg",
-        "imagePosition": "right",
-        "bg": "dark"
-      },
-      {
-        "type": "split",
-        "label": "01.2 · Active Indicator",
-        "heading": "The 4-pixel bar doing the hardest work.",
-        "body": "Everything about a TabList is communicated by the 4px indicator at the bottom of the selected tab. It inherits color-interactive-primary, animates when selection changes, and traces a gradient glow from the label's centre so the eye reads \"this one\" before the brain parses the words. One annotation replaces ten design reviews.",
+        "label": "01.1 · Anatomy",
+        "heading": "Label, container, active indicator.",
+        "body": "Three parts, named once. The label carries the semantic weight; the container is just a row; the 4px bar at the base is the only thing that moves. Anatomy is documented in isolation so engineers know exactly which element maps to which token.",
         "image": "/images/projects/components-production-new/fragments/tab-anatomy.svg",
-        "imagePosition": "left",
+        "imagePosition": "right",
         "bg": "light"
       },
       {
-        "type": "image-pair",
-        "label": "01.3 · Two Contracts",
-        "heading": "Keyboard and ARIA — spelled out so the build can't drift.",
-        "body": "Half of TabList's complexity is what happens when nobody is clicking. The keyboard contract follows WAI-ARIA Tabs exactly — arrow keys cycle, Home/End jump, Tab exits the component. The ARIA contract pairs role with aria-selected and aria-controls so screen readers announce tab state without a custom live region. Both are spelled out on the page so the engineer doesn't have to go hunting.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/tab-keyboard.svg",
-          "alt": "TabList keyboard contract — arrow keys, Home, End, and Tab behaviours"
-        },
-        "caption": "Keyboard contract — WAI-ARIA Tabs Pattern, no custom shortcuts.",
-        "image2": {
-          "src": "/images/projects/components-production-new/fragments/tab-aria.svg",
-          "alt": "TabList ARIA contract — role, aria-selected, aria-controls"
-        },
-        "caption2": "ARIA contract — every attribute required, none optional.",
+        "type": "split",
+        "label": "01.2 · Layout & Spacing",
+        "heading": "Height, gap, padding — all tokens, not magic numbers.",
+        "body": "Every dimension resolves to a named token. 64px hit-area keeps the component touch-safe on phones. 16px gap, 20px horizontal padding, 4px indicator. Nothing is free-typed; nothing drifts.",
+        "image": "/images/projects/components-production-new/fragments/tab-layout-spacing.svg",
+        "imagePosition": "left",
+        "bg": "dark"
+      },
+      {
+        "type": "split",
+        "label": "01.3 · State Matrix",
+        "heading": "Two axes. Every cell named.",
+        "body": "Selection crosses interaction — selected/unselected against default, hover, focused, disabled. Eight cells, each pointing at a token. If a state isn't on the grid, it doesn't exist in the component.",
+        "image": "/images/projects/components-production-new/fragments/tab-matrix.svg",
+        "imagePosition": "right",
+        "bg": "light"
+      },
+      {
+        "type": "split",
+        "label": "01.4 · Accessibility — Keyboard",
+        "heading": "Every key, documented.",
+        "body": "Arrow keys cycle. Home and End jump. Tab exits the component. No custom shortcuts, no surprises — the WAI-ARIA Tabs pattern, unchanged.",
+        "image": "/images/projects/components-production-new/fragments/tab-keyboard.svg",
+        "imagePosition": "left",
+        "bg": "dark"
+      },
+      {
+        "type": "split",
+        "label": "01.5 · Accessibility — Screen Readers",
+        "heading": "Role, state, and target — always paired.",
+        "body": "role=\"tab\" with aria-selected and aria-controls. Three attributes that tell a screen reader what the element is, which one is active, and where its panel lives.",
+        "image": "/images/projects/components-production-new/fragments/tab-aria.svg",
+        "imagePosition": "right",
         "bg": "light"
       },
       {
         "type": "text",
-        "label": "01.4 · Outcome",
+        "label": "01.6 · Outcome",
         "heading": "Built in a single sprint. Zero clarifications.",
-        "body": "The fragments above — matrix, indicator, keyboard, ARIA — plus the spotlight at the top of this section were the entire handoff. No Figma links trailing into Slack, no \"can you confirm the focused state\" DMs, no mid-sprint re-specs. Four squads rolled the same TabList into production within two weeks of the page being signed off.",
+        "body": "The slices above were the entire handoff. No Figma links trailing into Slack, no \"can you confirm the focused state\" DMs, no mid-sprint re-specs. Four squads rolled the same TabList into production within two weeks of the page being signed off.",
         "bg": "dark"
       },
       {
@@ -2241,129 +2218,132 @@ export const projectsData: ProjectDetail[] = [
         "stepNumber": "02",
         "label": "Component · Progress Ring",
         "heading": "A 60-pixel component with a physics problem at its centre.",
-        "body": "The Progress Ring looks trivial until you try to specify it. What happens at zero? At one hundred? When the user has reduced-motion enabled? When a screen reader encounters it mid-update? Each of those questions got its own slice of the spec — shown below as its own fragment. The whole ring is the sum of those decisions, not the starting point for them.",
-        "bg": "dark"
+        "body": "The Progress Ring looks trivial until you try to specify it. What happens at zero? At one hundred? When the user has reduced-motion enabled? When a screen reader encounters it mid-update? Each question got its own slice below.",
+        "bg": "light"
       },
       {
         "type": "split",
         "label": "02.1 · The Primitive",
-        "heading": "67% at rest. Nothing else competes for attention.",
-        "body": "This is the component most users see most of the time. Track, arc, centred value — no legend, no tooltip, no second label. The motion trace around the outside appears only while the value is animating. Everything else is engineered to disappear.",
+        "heading": "67% at rest.",
+        "body": "Track, arc, centred value. No legend, no tooltip, no second label. The motion trace around the outside appears only while the value is animating; everything else is engineered to disappear.",
         "image": "/images/projects/components-production-new/fragments/ring-hero.svg",
         "imagePosition": "right",
         "bg": "dark"
       },
       {
         "type": "split",
-        "label": "02.2 · The Maths",
-        "heading": "Percentage isn't a prop — it's the length of a line.",
-        "body": "Most teams ship rings as GIFs or image sprites because they assume the maths is hard. It isn't. Stroke-dasharray is the circumference cut to the percentage; the browser renders it exactly. Four lines of calculation ship instead of twenty animation frames. The spec shows the full derivation so the next engineer doesn't hesitate.",
+        "label": "02.2 · Geometry",
+        "heading": "Percentage is the length of a line.",
+        "body": "stroke-dasharray equals the circumference cut to the percentage. Four lines of calculation instead of twenty animation frames. The spec shows the full derivation so the next engineer doesn't hesitate.",
         "image": "/images/projects/components-production-new/fragments/ring-geometry.svg",
         "imagePosition": "left",
         "bg": "light"
       },
       {
-        "type": "image-pair",
-        "label": "02.3 · Context + Respect",
-        "heading": "Colour tells the user where they are. Motion tells the browser when to stay still.",
-        "body": "Two systems that look like polish but are really accessibility. Thresholds give contextual feedback so users who can't read the number still understand the state — at risk, in progress, on track. Motion uses an ease-out-quart curve that lands gently at rest, and disables itself the moment prefers-reduced-motion is on. Neither is a setting. Both ship as defaults.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/ring-thresholds.svg",
-          "alt": "Progress Ring colour thresholds — at risk, in progress, on track"
-        },
-        "caption": "Colour thresholds — token-driven, no legend needed.",
-        "image2": {
-          "src": "/images/projects/components-production-new/fragments/ring-motion.svg",
-          "alt": "Progress Ring motion curve — ease-out-quart with reduced-motion fallback"
-        },
-        "caption2": "Motion — ease-out-quart, 400ms, honours reduced-motion.",
+        "type": "split",
+        "label": "02.3 · Colour Thresholds",
+        "heading": "The colour says where you are.",
+        "body": "Under 25% is at-risk. 25–75% is in-progress. Over 75% is on-track. Three token-driven colours, no legend needed — the fill tells the story.",
+        "image": "/images/projects/components-production-new/fragments/ring-thresholds.svg",
+        "imagePosition": "right",
         "bg": "dark"
       },
       {
         "type": "split",
-        "label": "02.4 · Size Scale",
-        "heading": "Same ring. Three scales. Zero redraws.",
-        "body": "Stroke-width equals diameter divided by ten. Hold the ratio and the ring holds its identity at any size — 24px inside a ListItem, 40px on a dashboard card, 60px as a Skill Card mastery indicator. No asset is ever redrawn. No scale ever drifts.",
+        "label": "02.4 · Motion",
+        "heading": "400ms, ease-out-quart.",
+        "body": "The arc eases in and lands gently at rest. The curve disables itself the moment prefers-reduced-motion is set. Motion is a default, not a setting.",
+        "image": "/images/projects/components-production-new/fragments/ring-motion.svg",
+        "imagePosition": "left",
+        "bg": "light"
+      },
+      {
+        "type": "split",
+        "label": "02.5 · Size Scale",
+        "heading": "Same ring, three scales.",
+        "body": "Stroke-width equals diameter divided by ten. Hold the ratio and the ring keeps its identity at any size — 24px inside a ListItem, 40px on a card, 60px as a mastery indicator. No asset is ever redrawn.",
         "image": "/images/projects/components-production-new/fragments/ring-sizes.svg",
         "imagePosition": "right",
         "bg": "dark"
       },
       {
-        "type": "image-pair",
-        "label": "02.5 · Voice + Moment",
-        "heading": "What users hear — and when the ring gets to celebrate.",
-        "body": "aria-valuetext turns numerical progress into a sentence a screen reader can speak as a human would. And at 100%, the ring gets its one permitted flourish — a brief confetti burst — but only on motion-safe devices. Two edge cases, two quiet pieces of craft. Both shipped with the primitive, not after it.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/ring-aria.svg",
-          "alt": "Progress Ring ARIA pattern — role progressbar with aria-valuenow and aria-valuetext"
-        },
-        "caption": "Screen reader voice — consistent across NVDA, VoiceOver, JAWS.",
-        "image2": {
-          "src": "/images/projects/components-production-new/fragments/ring-celebrate.svg",
-          "alt": "Progress Ring 100% celebration state with motion-safe fallback"
-        },
-        "caption2": "100% moment — confetti on motion-safe, opacity pulse on motion-reduce.",
+        "type": "split",
+        "label": "02.6 · Accessibility — Screen Readers",
+        "heading": "Progress that speaks.",
+        "body": "role=\"progressbar\" carries aria-valuenow for the raw number and aria-valuetext for a human sentence — \"4 of 6 units complete\". Same phrasing across NVDA, VoiceOver, and JAWS.",
+        "image": "/images/projects/components-production-new/fragments/ring-aria.svg",
+        "imagePosition": "left",
         "bg": "light"
+      },
+      {
+        "type": "split",
+        "label": "02.7 · Accessibility — Completion",
+        "heading": "The 100% moment.",
+        "body": "A short confetti burst marks completion — but only on motion-safe devices. Reduced-motion gets a calm opacity pulse instead. Celebration never overrides preference.",
+        "image": "/images/projects/components-production-new/fragments/ring-celebrate.svg",
+        "imagePosition": "right",
+        "bg": "dark"
       },
       {
         "type": "quote",
         "quote": "Designing a ring isn't the hard part. Designing the rules for how it behaves at zero, when motion is disabled, when it hits a hundred — that's where a component earns its place in production.",
         "attribution": "Design note, week 7",
-        "bg": "dark"
+        "bg": "light"
       },
       {
         "type": "process-step",
         "stepNumber": "03",
         "label": "Component · Cards",
         "heading": "One primitive. Never a new component, just a filled slot.",
-        "body": "The Card system refuses to fork. Every variant — content card, Skill Card, empty state, loading skeleton — composes from the same five-slot base. Elevation and interaction are both token-driven, and neither applies by default. The pieces below show the primitive, the rules, and the Skill Card as proof the system actually composes.",
-        "bg": "light"
+        "body": "The Card system refuses to fork. Every variant composes from the same five-slot base. Elevation and interaction are both token-driven, and neither applies by default. Below: the slots, the elevations, the interactions, the composed Skill Card, and the full gallery.",
+        "bg": "dark"
       },
       {
         "type": "split",
-        "label": "03.1 · Five Slots",
-        "heading": "Every variant lives in the same anatomy.",
-        "body": "Media, header, body, footer, overlay. That's the whole surface area. Domain cards — Skill, content, dashboard metric — fill those slots differently. They don't extend the primitive. They don't add regions. The slot overlay below is the contract every card in the system signs.",
+        "label": "03.1 · Slots",
+        "heading": "Five regions. That's the whole surface.",
+        "body": "Media, header, body, footer, overlay. Every card in the system fills those regions differently. They don't extend the primitive. They don't add regions.",
         "image": "/images/projects/components-production-new/fragments/card-slots.svg",
         "imagePosition": "left",
         "bg": "light"
       },
       {
-        "type": "image-pair",
-        "label": "03.2 · Two Orthogonal Systems",
-        "heading": "Elevation says where the card sits. Interaction says whether it responds.",
-        "body": "These two systems are deliberately separate. A flat card isn't automatically non-interactive; an elevated card isn't automatically tap-able. Designers pick both axes explicitly — preventing the drift where every card becomes clickable because the hover state looks good.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/card-elevations.svg",
-          "alt": "Card elevation system — flat, raised, elevated with shadow tokens"
-        },
-        "caption": "Elevation — three levels, three tokens, explicit choice.",
-        "image2": {
-          "src": "/images/projects/components-production-new/fragments/card-interactions.svg",
-          "alt": "Card interaction states — hover, focused, pressed"
-        },
-        "caption2": "Interaction — only applied when the card is actually a link or button.",
+        "type": "split",
+        "label": "03.2 · Elevation",
+        "heading": "Flat, raised, elevated.",
+        "body": "Three levels mapped to three shadow tokens. Flat sits in-page. Raised lifts for interactive surfaces. Elevated reads as a modal peer. The level is picked explicitly — never automatic.",
+        "image": "/images/projects/components-production-new/fragments/card-elevations.svg",
+        "imagePosition": "right",
         "bg": "dark"
       },
       {
         "type": "split",
-        "label": "03.3 · Composition in Action",
-        "heading": "The Skill Card — everything above, assembled.",
-        "body": "The Skill Card fills four slots from the base Card — media, header, body, footer — and uses the overlay slot for the mastery badge. The mini Progress Ring isn't a Skill Card feature; it's the 40px variant of the Progress Ring primitive, imported. No new component was born to make this screen. That's the whole point.",
-        "image": "/images/projects/components-production-new/fragments/card-hero.svg",
-        "imagePosition": "right",
+        "label": "03.3 · Interaction States",
+        "heading": "Hover, focused, pressed — only when the card is actually a link.",
+        "body": "Interactive cards lift 2px on hover, gain a 3px focus ring on keyboard focus, and tint on press. Non-interactive cards skip all three. Decoration never pretends to be an affordance.",
+        "image": "/images/projects/components-production-new/fragments/card-interactions.svg",
+        "imagePosition": "left",
         "bg": "light"
       },
       {
+        "type": "split",
+        "label": "03.4 · The Skill Card",
+        "heading": "The Skill Card — composed.",
+        "body": "Four slots filled from the base Card; the overlay slot holds the mastery badge. The mini ring inside isn't a new component — it's the 40px Progress Ring variant, imported unchanged.",
+        "image": "/images/projects/components-production-new/fragments/card-hero.svg",
+        "imagePosition": "right",
+        "bg": "dark"
+      },
+      {
         "type": "showcase",
-        "label": "03.4 · Gallery",
-        "heading": "Six variants in production. One primitive. Zero forks.",
-        "body": "Content Card, Skill Card, Dashboard Metric, Base Card, Loading Skeleton, Empty State — every one composes from the same five slots. Differences read as intentional variation, never as drift. The Skill Card's Progress Ring is the 40px variant of the ring primitive from section 02, imported unchanged.",
+        "label": "03.5 · Gallery",
+        "heading": "Same primitive. Six variants.",
+        "body": "Content Card, Skill Card, Dashboard Metric, Base Card, Loading Skeleton, Empty State. Every one fills the same five slots differently. Differences read as intentional, not as drift.",
         "image": {
           "src": "/images/projects/components-production-new/fragments/card-gallery.svg",
           "alt": "Card system gallery — Content Card, Skill Card, Dashboard Metric, Base Card, Loading Skeleton, and Empty State composed from the same five-slot primitive"
         },
-        "caption": "One primitive, six variants, three elevations — every card signs the same slot contract.",
+        "caption": "One primitive, six variants — every card signs the same slot contract.",
         "showcaseBg": "#F0FAF9",
         "bg": "light"
       },
@@ -2371,51 +2351,52 @@ export const projectsData: ProjectDetail[] = [
         "type": "process-step",
         "stepNumber": "04",
         "label": "Component · ListItem",
-        "heading": "The component that had to survive real data — 400 rows of it, long titles, short metadata, icons next to UUIDs.",
-        "body": "ListItem carries the densest surfaces on Oxford English Hub — course queues, task lists, download managers, assessment histories. It had to make dense data legible, survive truncation gracefully, and still be touch-safe on mobile. Four slots, two densities, one decision tree — broken down below.",
+        "heading": "The component that had to survive real data.",
+        "body": "ListItem carries the densest surfaces on Oxford English Hub — course queues, task lists, assessment histories. It had to make dense data legible, survive truncation gracefully, and stay touch-safe on mobile. Four slots, two densities, one decision tree.",
         "bg": "dark"
       },
       {
         "type": "split",
-        "label": "04.1 · Slot Anatomy",
-        "heading": "Four regions. Truncation named where it lives.",
-        "body": "Leading, title, metadata, trailing. Titles clamp at two lines; metadata clamps at one. Nothing ever pushes the trailing slot off-screen — the rule is enforced in the component, not in the content. Teams stopped losing hours every sprint to content that \"somehow\" broke their layout.",
+        "label": "04.1 · Slots",
+        "heading": "Leading, title, metadata, trailing.",
+        "body": "Four regions. Titles clamp at two lines; metadata clamps at one. The trailing slot never gets pushed off-screen — the rule is enforced in the component, not in the content.",
         "image": "/images/projects/components-production-new/fragments/list-slots.svg",
         "imagePosition": "left",
-        "bg": "dark"
-      },
-      {
-        "type": "image-pair",
-        "label": "04.2 · Same Anatomy, Two Densities",
-        "heading": "Comfortable for browsing. Compact for scanning. Slots never move.",
-        "body": "Density is a prop, not a component. Comfortable uses 72px rows with full padding; compact drops to 56px for power users scanning 400 rows at a time. The 64px touch-target guarantee holds in both modes — the compact version adds a 4px colour bar on the active row to keep hit area honest.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/list-comfortable.svg",
-          "alt": "ListItem comfortable density — 72px row with avatar, title, metadata, status ring, trailing"
-        },
-        "caption": "Comfortable · 72px · browsing surfaces.",
-        "image2": {
-          "src": "/images/projects/components-production-new/fragments/list-compact.svg",
-          "alt": "ListItem compact density — 56px rows with status icons and inline progress"
-        },
-        "caption2": "Compact · 56px · scanning surfaces, hundreds of rows.",
         "bg": "light"
       },
       {
         "type": "split",
-        "label": "04.3 · The Decision Tree",
-        "heading": "One sentence at the top of the spec — shipped before the component itself.",
-        "body": "The hardest question on a list-heavy platform isn't \"how should this row look\" — it's \"should this be a ListItem, a Table, or a Card?\". We answered it once, put the tree at the top of every list spec, and never debated it again. ListItem for sequential same-shape data. Table for comparative scoped columns. Card for browsable rich data that varies per instance.",
+        "label": "04.2 · Comfortable Density",
+        "heading": "72px rows for browsing.",
+        "body": "Full padding, leading avatar, inline progress ring in the status slot, trailing chevron. The default density for course catalogues and task lists.",
+        "image": "/images/projects/components-production-new/fragments/list-comfortable.svg",
+        "imagePosition": "right",
+        "bg": "dark"
+      },
+      {
+        "type": "split",
+        "label": "04.3 · Compact Density",
+        "heading": "56px rows for scanning.",
+        "body": "Dropped to 56px for power users working through hundreds of rows. A 4px colour bar marks the active row so the hit area stays honest, and the 64px touch-target guarantee still holds.",
+        "image": "/images/projects/components-production-new/fragments/list-compact.svg",
+        "imagePosition": "left",
+        "bg": "light"
+      },
+      {
+        "type": "split",
+        "label": "04.4 · Decision Tree",
+        "heading": "ListItem, Table, or Card?",
+        "body": "ListItem for sequential same-shape data. Table for comparative scoped columns. Card for browsable rich data that varies per instance. The tree ships with every list spec — no more quarterly re-debates.",
         "image": "/images/projects/components-production-new/fragments/list-decision.svg",
         "imagePosition": "right",
         "bg": "dark"
       },
       {
         "type": "text",
-        "label": "04.4 · Outcome",
+        "label": "04.5 · Outcome",
         "heading": "Four hundred rows. Three data shapes. No sprint re-specs.",
-        "body": "Real data finally stopped breaking layout. Long titles clamped at two lines without pushing the trailing chevron off-screen. Both densities preserved the 64px touch guarantee. The \"should this be a ListItem or a Table\" debate — which used to recur every sprint — ended when the decision tree shipped with the component instead of trailing six weeks behind it.",
-        "bg": "dark"
+        "body": "Real data finally stopped breaking layout. Long titles clamped at two lines without pushing the trailing chevron off-screen. Both densities preserved the 64px touch guarantee. The \"should this be a ListItem or a Table\" debate ended when the decision tree shipped with the component instead of trailing six weeks behind it.",
+        "bg": "light"
       },
       {
         "type": "text",
