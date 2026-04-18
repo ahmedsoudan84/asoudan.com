@@ -2074,20 +2074,20 @@ export const projectsData: ProjectDetail[] = [
     "coverStyle": "browser",
     "images": [
       {
-        "src": "/images/projects/components-production/tablist-full.png",
-        "alt": "TabList — all interaction states"
+        "src": "/images/projects/components-production-new/fragments/tab-production.svg",
+        "alt": "TabList production handoff sheet"
       },
       {
-        "src": "/images/projects/components-production/progress-ring-spec.png",
-        "alt": "Progress Ring — specification"
+        "src": "/images/projects/components-production-new/fragments/ring-hero.svg",
+        "alt": "Progress Ring at 67% — the primitive"
       },
       {
-        "src": "/images/projects/components-production/cards-gallery.png",
-        "alt": "Card system gallery"
+        "src": "/images/projects/components-production-new/fragments/card-gallery.svg",
+        "alt": "Card system gallery — six variants, one primitive"
       },
       {
-        "src": "/images/projects/components-production/listitem-spec.png",
-        "alt": "ListItem specification"
+        "src": "/images/projects/components-production-new/fragments/list-production.svg",
+        "alt": "ListItem production example — course queue"
       }
     ],
     "behanceUrl": "",
@@ -2230,34 +2230,16 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "screen-gallery",
+        "type": "showcase",
         "label": "01.4 · Production Spec",
-        "heading": "From fragments to the full page — handed to engineering.",
-        "screens": [
-          {
-            "image": {
-              "src": "/images/projects/components-production/tablist-full.png",
-              "alt": "TabList — all 12 interaction states"
-            },
-            "label": "States"
-          },
-          {
-            "image": {
-              "src": "/images/projects/components-production/tablist-spec.png",
-              "alt": "TabList specification — spacing tokens and ARIA mapping"
-            },
-            "label": "Spec"
-          },
-          {
-            "image": {
-              "src": "/images/projects/components-production/tablist-anatomy.png",
-              "alt": "TabList anatomy — component regions and measurements"
-            },
-            "label": "Anatomy"
-          }
-        ],
-        "columns": 3,
-        "caption": "Every fragment above lands in the production spec — assembled into a single handoff that nobody needs to decode.",
+        "heading": "Four fragments, one handoff sheet — engineering built from this page in a single sprint.",
+        "body": "The matrix, the indicator, the state tokens, the keyboard and ARIA contract — all four fragments above live on a single deliverable. No design file chasing. No Slack threads. One sheet, signed off, and the TabList was in production.",
+        "image": {
+          "src": "/images/projects/components-production-new/fragments/tab-production.svg",
+          "alt": "TabList production handoff sheet — matrix, tokens, state grid, and keyboard + ARIA contract assembled into one spec page"
+        },
+        "caption": "Production handoff — every fragment from 01.1–01.3 reassembled as the page the engineers signed off against.",
+        "showcaseBg": "#F0FAF9",
         "bg": "dark"
       },
       {
@@ -2330,23 +2312,6 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "image-pair",
-        "label": "02.6 · Production Spec",
-        "heading": "Fragments, reassembled — the page engineering built against.",
-        "body": "Every piece above lives on the production spec. Engineers don't chase links across Figma or Storybook for the states, the tokens, the sizes, the motion — the whole component arrives in two pages. The team built the ring in a single sprint.",
-        "image": {
-          "src": "/images/projects/components-production/progress-ring-spec.png",
-          "alt": "Progress Ring production specification — all states and sizes"
-        },
-        "caption": "Production spec — all states, all sizes, all thresholds.",
-        "image2": {
-          "src": "/images/projects/components-production/progress-ring-detail.png",
-          "alt": "Progress Ring anatomy detail — SVG measurement and token references"
-        },
-        "caption2": "Anatomy detail — stroke ratio, token wiring, motion fallback.",
-        "bg": "dark"
-      },
-      {
         "type": "quote",
         "quote": "Designing a ring isn't the hard part. Designing the rules for how it behaves at zero, when motion is disabled, when it hits a hundred — that's where a component earns its place in production.",
         "attribution": "Design note, week 7",
@@ -2398,13 +2363,13 @@ export const projectsData: ProjectDetail[] = [
       {
         "type": "showcase",
         "label": "03.4 · Gallery",
-        "heading": "Every variant in production. Zero forks.",
-        "body": "Base cards, Skill Cards, content cards, loading skeletons — all composing from the same five-slot primitive. Differences read as intentional variation, never as drift.",
+        "heading": "Six variants in production. One primitive. Zero forks.",
+        "body": "Content Card, Skill Card, Dashboard Metric, Base Card, Loading Skeleton, Empty State — every one composes from the same five slots. Differences read as intentional variation, never as drift. The Skill Card's Progress Ring is the 40px variant of the ring primitive from section 02, imported unchanged.",
         "image": {
-          "src": "/images/projects/components-production/cards-gallery.png",
-          "alt": "Card system gallery — all variants across three elevation levels"
+          "src": "/images/projects/components-production-new/fragments/card-gallery.svg",
+          "alt": "Card system gallery — Content Card, Skill Card, Dashboard Metric, Base Card, Loading Skeleton, and Empty State composed from the same five-slot primitive"
         },
-        "caption": "One primitive, four domains, three elevations.",
+        "caption": "One primitive, six variants, three elevations — every card signs the same slot contract.",
         "showcaseBg": "#F0FAF9",
         "bg": "light"
       },
@@ -2452,20 +2417,16 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "image-pair",
+        "type": "showcase",
         "label": "04.4 · Production Spec",
-        "heading": "Every slot, density, and overflow rule — one handoff.",
-        "body": "Fragments assembled into the page engineering actually ships against. The touch-target rule, the 4px-grid spacing, and the truncation logic that stops content length from ever breaking a row — all annotated, all in one place.",
+        "heading": "Real data. Real truncation. Real touch targets.",
+        "body": "A production course queue built from the ListItem primitive — avatar + title + metadata + status ring + trailing action + locked state, all in sequence, all obeying the slot contract. The long Speaking Evaluation title truncates at the two-line clamp; the trailing arrow never drifts off-screen; the 72px row preserves the 64px touch guarantee. This is the page the team finally stopped debating in sprint planning.",
         "image": {
-          "src": "/images/projects/components-production/listitem-spec.png",
-          "alt": "ListItem specification — all variants, states, and slot configurations"
+          "src": "/images/projects/components-production-new/fragments/list-production.svg",
+          "alt": "ListItem production example — course queue with avatar, truncated title, metadata, status ring, pending badge, completion, and locked state"
         },
-        "caption": "Production spec — slots, states, truncation across comfortable and compact.",
-        "image2": {
-          "src": "/images/projects/components-production/listitem-detail.png",
-          "alt": "ListItem anatomy detail — slot regions, spacing tokens, and touch target"
-        },
-        "caption2": "Anatomy close-up — slot regions, 4px-grid spacing, 64px touch target.",
+        "caption": "Production example — six rows, four row types, one primitive.",
+        "showcaseBg": "#F0FAF9",
         "bg": "dark"
       },
       {
@@ -2476,20 +2437,16 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "image-pair",
+        "type": "showcase",
         "label": "Accessibility",
-        "heading": "WCAG compliance written into the spec — never bolted on after.",
-        "body": "Every component's documentation includes a dedicated accessibility section: ARIA role and attribute mappings, keyboard interaction tables, focus management rules, screen reader announcement scripts, and contrast verification tables. It became the most-referenced section in developer onboarding — which said more about the documentation than it did about the components.",
+        "heading": "Four pillars — documented per component, never bolted on after.",
+        "body": "Every component's spec carries the same four accessibility artifacts: a focus ring with 3:1 contrast against any surface and :focus-visible semantics, an ARIA schema that leads with role and pairs aria-valuenow with a human-readable aria-valuetext, a keyboard table that spells out every key's effect, and a contrast verification grid with every token pair audited to WCAG AA. The four pillars became the most-referenced page in developer onboarding — which said more about the documentation than it did about the components.",
         "image": {
-          "src": "/images/projects/components-production/accessibility-spec.png",
-          "alt": "Accessibility specification — ARIA patterns, keyboard tables, and contrast verification"
+          "src": "/images/projects/components-production-new/fragments/accessibility-summary.svg",
+          "alt": "Accessibility four pillars summary — focus ring specification, ARIA schema code, keyboard interaction table, and contrast verification grid"
         },
-        "caption": "ARIA mappings, keyboard patterns, contrast verification — per component, every component.",
-        "image2": {
-          "src": "/images/projects/components-production/accessibility-detail.png",
-          "alt": "Accessibility detail — focus ring specs, screen reader scripts, and reduced-motion fallbacks"
-        },
-        "caption2": "Focus ring geometry, live region patterns, reduced-motion fallbacks.",
+        "caption": "Four pillars — focus ring, ARIA schema, keyboard table, contrast verification. Every component, every release.",
+        "showcaseBg": "#F0FAF9",
         "bg": "dark"
       },
       {

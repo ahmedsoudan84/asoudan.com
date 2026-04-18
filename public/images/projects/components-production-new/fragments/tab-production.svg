@@ -1,0 +1,105 @@
+<svg width="640" height="440" viewBox="0 0 640 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="440" rx="16" fill="#F7F9FB"/>
+
+  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">HANDOFF · ONE PAGE</text>
+  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Everything engineering needs to build TabList without a Slack thread</text>
+
+  <!-- Section label bar -->
+  <rect x="36" y="80" width="568" height="28" rx="4" fill="#1A2035"/>
+  <text x="52" y="98" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">TabList · v1.0 · Oxford English Hub</text>
+  <text x="588" y="98" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" text-anchor="end">Storybook ↗  Figma ↗</text>
+
+  <!-- Block 1: Live component sample -->
+  <rect x="36" y="124" width="278" height="96" rx="8" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="48" y="144" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">01 · Default assembly</text>
+  <!-- Tab pills -->
+  <rect x="48" y="156" width="64" height="28" rx="4" fill="#1A2035"/>
+  <text x="80" y="174" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">Overview</text>
+  <rect x="118" y="156" width="64" height="28" rx="4" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="150" y="174" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#1A2035" text-anchor="middle">Practice</text>
+  <rect x="188" y="156" width="64" height="28" rx="4" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="220" y="174" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#1A2035" text-anchor="middle">Tests</text>
+  <rect x="258" y="156" width="48" height="28" rx="4" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="282" y="174" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0" text-anchor="middle">Help</text>
+  <!-- Active indicator -->
+  <rect x="56" y="196" width="48" height="3" rx="1.5" fill="#26A69A"/>
+  <text x="48" y="210" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A">indicator · color-interactive-primary · 4px</text>
+
+  <!-- Block 2: Token strip -->
+  <rect x="326" y="124" width="278" height="96" rx="8" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="338" y="144" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">02 · Token wiring</text>
+  <!-- Token rows -->
+  <rect x="338" y="154" width="10" height="10" rx="2" fill="#1A2035"/>
+  <text x="354" y="163" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#1A2035">color.text.primary</text>
+  <text x="592" y="163" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0" text-anchor="end">#1A2035</text>
+
+  <rect x="338" y="170" width="10" height="10" rx="2" fill="#26A69A"/>
+  <text x="354" y="179" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#1A2035">color.interactive.primary</text>
+  <text x="592" y="179" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0" text-anchor="end">#26A69A</text>
+
+  <rect x="338" y="186" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="354" y="195" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#1A2035">color.surface.raised</text>
+  <text x="592" y="195" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0" text-anchor="end">#FFFFFF</text>
+
+  <rect x="338" y="202" width="10" height="10" rx="2" fill="#8A97B0"/>
+  <text x="354" y="211" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#1A2035">color.text.muted</text>
+  <text x="592" y="211" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0" text-anchor="end">#8A97B0</text>
+
+  <!-- Block 3: State matrix condensed -->
+  <rect x="36" y="236" width="278" height="104" rx="8" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="48" y="256" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">03 · State matrix · 12 cells</text>
+  <!-- Mini matrix -->
+  <g transform="translate(48, 266)">
+    <!-- Row labels -->
+    <text x="0" y="14" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">sel</text>
+    <text x="0" y="32" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">uns</text>
+    <!-- Column headers -->
+    <text x="42" y="2" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">def</text>
+    <text x="82" y="2" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">hov</text>
+    <text x="122" y="2" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">foc</text>
+    <text x="162" y="2" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">prs</text>
+    <text x="202" y="2" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">dis</text>
+    <text x="242" y="2" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">ldg</text>
+    <!-- Row 1: selected -->
+    <rect x="30" y="6" width="30" height="14" rx="2" fill="#1A2035"/>
+    <rect x="70" y="6" width="30" height="14" rx="2" fill="#1A2035"/>
+    <rect x="110" y="6" width="30" height="14" rx="2" fill="#1A2035" stroke="#26A69A" stroke-width="1.5"/>
+    <rect x="150" y="6" width="30" height="14" rx="2" fill="#0F1624"/>
+    <rect x="190" y="6" width="30" height="14" rx="2" fill="#1A2035" opacity="0.4"/>
+    <rect x="230" y="6" width="30" height="14" rx="2" fill="#1A2035" opacity="0.6"/>
+    <!-- Row 2: unselected -->
+    <rect x="30" y="24" width="30" height="14" rx="2" fill="#FFFFFF" stroke="#E4E9F0"/>
+    <rect x="70" y="24" width="30" height="14" rx="2" fill="#F0FAF9" stroke="#26A69A"/>
+    <rect x="110" y="24" width="30" height="14" rx="2" fill="#FFFFFF" stroke="#26A69A" stroke-width="1.5"/>
+    <rect x="150" y="24" width="30" height="14" rx="2" fill="#EEF2F7"/>
+    <rect x="190" y="24" width="30" height="14" rx="2" fill="#FFFFFF" stroke="#E4E9F0" opacity="0.4"/>
+    <rect x="230" y="24" width="30" height="14" rx="2" fill="#FFFFFF" stroke="#E4E9F0" opacity="0.6"/>
+  </g>
+  <text x="48" y="330" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A">every cell is a token, never a raw hex</text>
+
+  <!-- Block 4: Keyboard + ARIA contract -->
+  <rect x="326" y="236" width="278" height="104" rx="8" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="338" y="256" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">04 · Contract · keyboard + ARIA</text>
+
+  <rect x="338" y="266" width="42" height="16" rx="3" fill="#1A2035"/>
+  <text x="359" y="277" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#FFFFFF" text-anchor="middle">← →</text>
+  <text x="386" y="277" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#1A2035">cycle selection</text>
+
+  <rect x="338" y="286" width="42" height="16" rx="3" fill="#1A2035"/>
+  <text x="359" y="297" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#FFFFFF" text-anchor="middle">Home</text>
+  <text x="386" y="297" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#1A2035">first tab</text>
+
+  <rect x="338" y="306" width="42" height="16" rx="3" fill="#1A2035"/>
+  <text x="359" y="317" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#FFFFFF" text-anchor="middle">Tab ↹</text>
+  <text x="386" y="317" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#1A2035">exit component</text>
+
+  <text x="478" y="277" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A">role="tablist"</text>
+  <text x="478" y="297" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A">aria-selected</text>
+  <text x="478" y="317" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A">aria-controls</text>
+
+  <!-- Footer summary -->
+  <line x1="36" y1="364" x2="604" y2="364" stroke="#E4E9F0"/>
+  <text x="36" y="384" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#1A2035">Built in one sprint — from this sheet, no clarifications.</text>
+  <text x="36" y="400" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">All four fragments above (matrix · indicator · keyboard · ARIA) resolve on this single page.</text>
+  <text x="36" y="418" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">Adopted across four squads · zero forked implementations · every cell referenced by token.</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg width="640" height="440" viewBox="0 0 640 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="listProdShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#26A69A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="440" rx="16" fill="#F7F9FB"/>
+
+  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">PRODUCTION · COURSE QUEUE</text>
+  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Real data · real truncation · real touch targets — the final handoff surface</text>
+
+  <!-- Main container -->
+  <g filter="url(#listProdShadow)">
+    <rect x="36" y="80" width="568" height="328" rx="12" fill="#FFFFFF"/>
+  </g>
+  <rect x="36" y="80" width="568" height="328" rx="12" stroke="#E4E9F0"/>
+
+  <!-- Section heading -->
+  <text x="52" y="108" font-family="'Inter', system-ui, sans-serif" font-size="14" font-weight="700" fill="#1A2035">Your Courses</text>
+  <text x="52" y="125" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0">4 active · 2 completed this week</text>
+  <rect x="520" y="98" width="68" height="24" rx="4" fill="#F0FAF9"/>
+  <text x="554" y="113" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="600" fill="#26A69A" text-anchor="middle">Filter</text>
+
+  <line x1="36" y1="138" x2="604" y2="138" stroke="#E4E9F0"/>
+
+  <!-- Row 1 -->
+  <rect x="36" y="138" width="568" height="72" fill="#FFFFFF"/>
+  <rect x="40" y="150" width="48" height="48" rx="8" fill="#26A69A"/>
+  <text x="64" y="180" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">U4</text>
+  <text x="104" y="166" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#1A2035">Academic Vocabulary — Unit 4</text>
+  <text x="104" y="184" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0">Dr. Rebecca Liu · 4 of 6 lessons complete · last active 2 days ago</text>
+  <!-- Progress ring -->
+  <g transform="translate(500, 174)">
+    <circle cx="0" cy="0" r="14" stroke="#EEF2F7" stroke-width="3" fill="none"/>
+    <circle cx="0" cy="0" r="14" stroke="#26A69A" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="59 30" stroke-dashoffset="22" transform="rotate(-90)"/>
+    <text x="0" y="4" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#1A2035" text-anchor="middle">67</text>
+  </g>
+  <rect x="548" y="160" width="44" height="32" rx="6" fill="#F7F9FB"/>
+  <text x="570" y="180" font-family="'Inter', system-ui, sans-serif" font-size="14" fill="#5A6784" text-anchor="middle">→</text>
+  <line x1="36" y1="210" x2="604" y2="210" stroke="#E4E9F0"/>
+
+  <!-- Row 2 — title truncation -->
+  <rect x="36" y="210" width="568" height="72" fill="#FFFFFF"/>
+  <rect x="40" y="222" width="48" height="48" rx="8" fill="#FEF5E7"/>
+  <text x="64" y="252" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="700" fill="#E8A838" text-anchor="middle">!</text>
+  <text x="104" y="238" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#1A2035">Oxford Placement Test — Speaking Evaluation (B2…</text>
+  <text x="104" y="256" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0">Due Apr 30 · 12 min · examiner Sarah Mitchell</text>
+  <rect x="488" y="230" width="60" height="20" rx="4" fill="#FEF5E7"/>
+  <text x="518" y="244" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="600" fill="#E8A838" text-anchor="middle">Pending</text>
+  <rect x="548" y="232" width="44" height="32" rx="6" fill="#F7F9FB"/>
+  <text x="570" y="252" font-family="'Inter', system-ui, sans-serif" font-size="14" fill="#5A6784" text-anchor="middle">→</text>
+  <line x1="36" y1="282" x2="604" y2="282" stroke="#E4E9F0"/>
+
+  <!-- Row 3 — completed -->
+  <rect x="36" y="282" width="568" height="72" fill="#FFFFFF"/>
+  <rect x="40" y="294" width="48" height="48" rx="8" fill="#F0FAF9"/>
+  <text x="64" y="324" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="700" fill="#26A69A" text-anchor="middle">✓</text>
+  <text x="104" y="310" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#1A2035">Grammar Assessment — OPT Level</text>
+  <text x="104" y="328" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0">Completed · Score 82/100 · passed at B2</text>
+  <text x="548" y="319" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0" text-anchor="end">2d ago</text>
+  <line x1="36" y1="354" x2="604" y2="354" stroke="#E4E9F0"/>
+
+  <!-- Row 4 — blocked -->
+  <rect x="36" y="354" width="568" height="54" fill="#FAFBFC"/>
+  <rect x="40" y="366" width="48" height="30" rx="6" fill="#EEF2F7"/>
+  <text x="64" y="386" font-family="'Inter', system-ui, sans-serif" font-size="14" fill="#8A97B0" text-anchor="middle">🔒</text>
+  <text x="104" y="375" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="500" fill="#8A97B0">Advanced Writing — Unit 7</text>
+  <text x="104" y="391" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0">Locked · requires Unit 6 completion</text>
+
+  <!-- Annotation callouts -->
+  <!-- 64px touch target callout -->
+  <line x1="26" y1="150" x2="26" y2="282" stroke="#26A69A" stroke-width="1" stroke-dasharray="2 2"/>
+  <text x="20" y="220" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A" transform="rotate(-90 20 220)">72px · touch-safe</text>
+
+  <!-- Trailing slot annotation -->
+  <text x="592" y="74" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A" text-anchor="end">title clamps · trailing never overflows</text>
+</svg>
