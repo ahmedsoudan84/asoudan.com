@@ -1,0 +1,42 @@
+<svg width="420" height="260" viewBox="0 0 420 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="260" rx="16" fill="#F7F9FB"/>
+
+  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">SLOT ANATOMY</text>
+  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Four regions · explicit truncation rules</text>
+
+  <!-- Row with slot overlays -->
+  <rect x="36" y="90" width="348" height="72" rx="10" fill="#FFFFFF" stroke="#E4E9F0"/>
+
+  <!-- Leading slot overlay -->
+  <rect x="52" y="106" width="40" height="40" rx="6" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="72" y="131" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A" text-anchor="middle">01</text>
+
+  <!-- Title slot -->
+  <rect x="104" y="100" width="186" height="20" rx="3" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="110" y="114" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A">02 · line-clamp 2</text>
+
+  <!-- Metadata slot -->
+  <rect x="104" y="124" width="186" height="16" rx="3" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="110" y="136" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A">03 · line-clamp 1</text>
+
+  <!-- Trailing slot -->
+  <rect x="300" y="114" width="68" height="30" rx="4" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="334" y="134" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A" text-anchor="middle">04</text>
+
+  <!-- Annotations bottom -->
+  <rect x="36" y="184" width="82" height="48" rx="6" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="46" y="202" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">01 leading</text>
+  <text x="46" y="218" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">avatar · icon</text>
+
+  <rect x="126" y="184" width="82" height="48" rx="6" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="136" y="202" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">02 title</text>
+  <text x="136" y="218" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">truncates at 2</text>
+
+  <rect x="216" y="184" width="82" height="48" rx="6" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="226" y="202" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">03 meta</text>
+  <text x="226" y="218" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">truncates at 1</text>
+
+  <rect x="306" y="184" width="78" height="48" rx="6" fill="#FFFFFF" stroke="#E4E9F0"/>
+  <text x="316" y="202" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">04 trail</text>
+  <text x="316" y="218" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#8A97B0">status · action</text>
+</svg>

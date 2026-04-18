@@ -1,0 +1,42 @@
+<svg width="420" height="360" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="360" rx="16" fill="#0A0C14"/>
+
+  <text x="36" y="46" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">STROKE-DASHARRAY</text>
+  <text x="36" y="62" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784">The one line of maths every ring is built from</text>
+
+  <!-- Ring isolated -->
+  <circle cx="160" cy="200" r="74" stroke="#161A2A" stroke-width="10" fill="none"/>
+  <circle
+    cx="160" cy="200" r="74"
+    stroke="#26A69A" stroke-width="10" fill="none" stroke-linecap="round"
+    stroke-dasharray="311 155" stroke-dashoffset="116"
+    transform="rotate(-90 160 200)"
+  />
+
+  <!-- Dimension line: radius -->
+  <line x1="160" y1="200" x2="234" y2="200" stroke="#26A69A" stroke-width="1" stroke-dasharray="2 3"/>
+  <circle cx="160" cy="200" r="2" fill="#26A69A"/>
+  <text x="195" y="194" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" text-anchor="middle">r = 74</text>
+
+  <!-- Callout -->
+  <line x1="238" y1="148" x2="276" y2="124" stroke="#26A69A" stroke-width="1" stroke-dasharray="2 3"/>
+  <circle cx="238" cy="148" r="3" fill="#26A69A"/>
+
+  <!-- Formula block -->
+  <rect x="268" y="106" width="124" height="132" rx="8" fill="#0F1322"/>
+  <text x="280" y="128" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A">circumference</text>
+  <text x="280" y="142" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#F0F4F8">  = 2πr</text>
+  <text x="280" y="156" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#F0F4F8">  = 465</text>
+
+  <line x1="278" y1="170" x2="382" y2="170" stroke="#161A2A"/>
+
+  <text x="280" y="188" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A">dasharray</text>
+  <text x="280" y="202" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#F0F4F8">  = 465 × .67</text>
+  <text x="280" y="216" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#F0F4F8">  = 311</text>
+  <text x="280" y="230" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784">  · 155 gap</text>
+
+  <!-- Bottom: math principle -->
+  <line x1="36" y1="288" x2="384" y2="288" stroke="#161A2A"/>
+  <text x="36" y="312" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#F0F4F8">Percentage is not a property — it's a dasharray.</text>
+  <text x="36" y="328" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#6B7A9A">Let the browser render maths. Stop shipping GIFs.</text>
+</svg>

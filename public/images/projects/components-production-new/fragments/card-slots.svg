@@ -1,0 +1,46 @@
+<svg width="420" height="360" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="360" rx="16" fill="#F7F9FB"/>
+
+  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">5-SLOT ARCHITECTURE</text>
+  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">One primitive. Every variant composes from it.</text>
+
+  <!-- Card skeleton with slot overlays -->
+  <rect x="148" y="86" width="220" height="240" rx="10" fill="#FFFFFF" stroke="#E4E9F0"/>
+
+  <!-- Slot 01 — media -->
+  <rect x="148" y="86" width="220" height="56" rx="10" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="258" y="120" font-family="'Menlo', 'Consolas', monospace" font-size="10" fill="#26A69A" text-anchor="middle">01 · media</text>
+
+  <!-- Slot 02 — header -->
+  <rect x="160" y="152" width="196" height="36" rx="4" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="258" y="174" font-family="'Menlo', 'Consolas', monospace" font-size="10" fill="#26A69A" text-anchor="middle">02 · header</text>
+
+  <!-- Slot 03 — body -->
+  <rect x="160" y="196" width="196" height="52" rx="4" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="258" y="226" font-family="'Menlo', 'Consolas', monospace" font-size="10" fill="#26A69A" text-anchor="middle">03 · body</text>
+
+  <!-- Slot 04 — footer -->
+  <rect x="160" y="256" width="196" height="36" rx="4" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="258" y="278" font-family="'Menlo', 'Consolas', monospace" font-size="10" fill="#26A69A" text-anchor="middle">04 · footer</text>
+
+  <!-- Slot 05 — overlay (floating) -->
+  <rect x="324" y="102" width="32" height="32" rx="16" fill="#F0FAF9" stroke="#26A69A" stroke-dasharray="3 2"/>
+  <text x="340" y="122" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#26A69A" text-anchor="middle">05</text>
+
+  <!-- Annotations -->
+  <line x1="146" y1="114" x2="36" y2="114" stroke="#26A69A" stroke-width="1"/>
+  <circle cx="146" cy="114" r="2" fill="#26A69A"/>
+  <text x="36" y="110" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">media</text>
+  <text x="36" y="122" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">image · video · icon</text>
+
+  <line x1="146" y1="170" x2="36" y2="170" stroke="#26A69A" stroke-width="1"/>
+  <circle cx="146" cy="170" r="2" fill="#26A69A"/>
+  <text x="36" y="166" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" font-weight="600">header</text>
+  <text x="36" y="178" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">title · subtitle · badge</text>
+
+  <line x1="368" y1="222" x2="396" y2="222" stroke="#26A69A" stroke-width="1"/>
+  <circle cx="368" cy="222" r="2" fill="#26A69A"/>
+
+  <!-- Bottom note -->
+  <text x="36" y="338" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">No slot forks the primitive — they only fill regions.</text>
+</svg>
