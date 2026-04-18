@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
       "img-src 'self' data: https: blob: *",
       "font-src 'self' https: data:",
       "connect-src 'self' https:",
-      "frame-ancestors 'none'",
+      "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",
       "object-src 'none'",
@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'X-Frame-Options',
-            value: 'DENY',
+            value: 'SAMEORIGIN',
           },
           {
             key: 'X-Content-Type-Options',
