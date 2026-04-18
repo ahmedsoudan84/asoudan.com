@@ -2630,5 +2630,174 @@ export const projectsData: ProjectDetail[] = [
     "coverStyle": "contain",
     "images": [],
     "behanceUrl": "https://www.behance.net/gallery/85331167/DealNBuy-UIUX"
+  },
+  {
+    "id": "design-system",
+    "slug": "design-system",
+    "title": "Design System",
+    "subtitle": "asoudan.com v1.0",
+    "category": "DESIGN SYSTEM",
+    "number": "14",
+    "description": "A dark-first design system for asoudan.com — Montserrat across the 100–900 weight range, a single cyan accent, and twelve opacity steps replacing a grey scale. Tokens, type, colour, rhythm, and core components extracted directly from the live codebase and mirrored in Figma.",
+    "tags": [
+      "Design System",
+      "Design Tokens",
+      "Typography",
+      "Figma",
+      "Accessibility"
+    ],
+    "color": "#00F1F1",
+    "cover": "/images/projects/design-system/card-hero.svg",
+    "coverStyle": "contain",
+    "images": [
+      {
+        "src": "/images/projects/design-system/card-hero.svg",
+        "alt": "Design System — Cover"
+      }
+    ],
+    "behanceUrl": "",
+    "role": "Designer & Author",
+    "timeline": "2026",
+    "team": "Solo",
+    "tools": "Figma, Next.js, Tailwind",
+    "platform": "Web",
+    "caseStudy": [
+      {
+        "type": "tldr",
+        "label": "v1.0 — Design System",
+        "heading": "asoudan.com design system — dark-first, Montserrat, one cyan accent",
+        "bullets": [
+          "Direction: immersive · editorial. Dark (default) + Light themes, cross-faded on theme switch.",
+          "Font: Montserrat 100–900 across the full weight range. JetBrains Mono for tokens, metadata, and code.",
+          "Accent: cyan #00F1F1 — the only saturated hue, used to point never to decorate. Dark-theme hover #00c8c8; light-theme accent shifts to #008b8b / #006f6f.",
+          "Output: six surface tokens, a twelve-step foreground opacity ladder, an eleven-role type scale, ten-step spacing scale, and a core component library — all extracted from the live globals.css and mirrored in Figma."
+        ],
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "01 — Foundations",
+        "heading": "Four principles",
+        "stats": [
+          {
+            "value": "01",
+            "label": "Dark is the default",
+            "context": "The site opens dark and stays dark. Light is a courtesy, not a baseline."
+          },
+          {
+            "value": "02",
+            "label": "One glowing accent",
+            "context": "Cyan #00F1F1 is the only hue with saturation. Use it to point, never to decorate."
+          },
+          {
+            "value": "03",
+            "label": "Foreground by opacity",
+            "context": "Twelve opacity steps of the foreground replace a grey scale. Hierarchy by alpha, not hue."
+          },
+          {
+            "value": "04",
+            "label": "Motion scales with scroll",
+            "context": "Transitions use --motion-scale so fast readers get snappy UI, slow readers get soft."
+          }
+        ],
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "02 — Typography",
+        "heading": "Type system — Montserrat 100–900, JetBrains Mono for data",
+        "body": "Montserrat carries everything using the full 100–900 weight range for hierarchy; JetBrains Mono is a supporting voice for tokens, metadata, and code, never decorative. The specimen set: **Display** Montserrat 88 / 100 / weight 100 / -0.035em. **H1** 64 / 64 / 200 / -0.03em. **H2** 44 / 46 / 300 / -0.025em. **H3** 28 / 34 / 500 / -0.015em. **H4** 20 / 26 / 600. **Lede** 20 / 30 / 300 at fg-70. **Body L** 18 / 28 / 400. **Body** 16 / 26 / 400 at fg-70, measure caps at 62ch. **Small** 14 / 22 / 400. **Caption** 12 / 18 / 500. **Eyebrow** 11 / 14 / 600 tracked 0.24em in accent. **Mono** JetBrains Mono 13 tracked 0.02em in accent. Body running at 70% foreground opacity lets headings at full strength always read as the senior element on the page.",
+        "bg": "light"
+      },
+      {
+        "type": "text",
+        "label": "03 — Colour · surfaces",
+        "heading": "Six surface tokens — deep blue-black, stepping up to raised",
+        "body": "The dark palette is six named surfaces with exact hex values: **--bg-primary #0a0c14** (canvas), **--bg-secondary #141620** (section fill), **--bg-tertiary #111322** (inset), **--bg-surface #1a1d2e** (card), **--bg-surface-2 #23273a** (input / raised), **--bg-footer #0d0f1a** (footer — stays dark even in light mode). Accent is **#00F1F1** with hover pair **#00c8c8**. Light theme mirrors the structure: #f8f8f8 canvas, #ffffff card, ink #16192A, accent shifts to #008b8b / #006f6f to hold contrast. Selection uses the accent at 30% opacity with white ink. Focus is 2px accent, 2px offset — no exceptions. Scrollbar is a 6px rail with a cyan thumb at 3px radius.",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "03 — Colour · opacity ladder",
+        "heading": "One foreground token, twelve opacity steps — no grey scale",
+        "body": "Instead of maintaining a parallel grey scale, the foreground token `rgba(255,255,255,α)` in dark mode (and `rgba(22,25,42,α)` in light mode) steps through twelve opacities, each mapped to a role: **1.00** headings at full strength. **0.70** body copy and navigation hover. **0.60** secondary copy, card paragraphs. **0.50** metadata, years, captions. **0.40** placeholders. **0.30** disabled states. **0.20** / **0.15** dividers and subtle borders. **0.10** card borders. **0.08** / **0.06** tag backgrounds and nav borders. **0.05** repeating hatch and skeletons. Because every step is the same colour at a different alpha, light and dark themes stay perfectly paired and contrast stays predictable.",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "04 — Space",
+        "heading": "Tailwind's 4px scale, four radii, glow instead of shadow",
+        "body": "Spacing follows the default Tailwind 4px step scale — **4, 8, 12, 16, 24, 32, 48, 64, 96, 128** — so engineering reads directly from the design. Radii quantise to four values: **4 (sm), 8 (md), 12 (lg), 999 (pill)**. Depth is glow, not shadow: **base** 0 8px 24px rgba(0,0,0,0.3); **soft cyan halo** 0 0 24px rgba(0,241,241,0.25); **hover halo** 0 0 40px rgba(0,241,241,0.45). Grid and motion: **max-width 1200px** content container with **32px page gutters** and a **62ch** body measure. **--motion-scale** ranges 1 → 0.35, modulated by scroll velocity so transitions compress when the reader moves fast. Base transition is 0.3s × scale ease; theme switch is a 0.35s ease body cross-fade.",
+        "bg": "light"
+      },
+      {
+        "type": "text",
+        "label": "05 — Components · chrome",
+        "heading": "Header, buttons, links — the site's load-bearing pieces",
+        "body": "**Sticky header** — 64px high, --nav-bg with 12px backdrop blur, brand mark left (\"Ahmed Soudan.\" with the full stop rendered in accent and an accent text-shadow glow), tracked uppercase nav right (11px / 600 / 0.14em, colour fg-60, hover → accent), and a CTA arrow-link. **Buttons** — three hierarchies at 44px height, pill radius, 12px / 600 / 0.12em label: **primary** (filled cyan, ink #0a0c14, soft cyan halo that brightens on hover 0.25 → 0.45 opacity), **secondary** (outlined border-card, hover border and text to accent), **ghost** (text-only fg-70, hover to accent). **Links** — inline text (accent with a 35% accent underline), arrow-CTA (tracked uppercase with → that translates 3–4px on hover).",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "05 — Components · content",
+        "heading": "Tags, form, floating nav, project tile",
+        "body": "**Tags** — pill, 26px high, 11px / 500 / 0.08em tracked label. Three variants: **default** (fg-06 background, fg-70 label, border-subtle), **accent** (accent at 12%, accent text, accent border at 35%), **outline** (transparent background, border-subtle). **Form fields** — sit on --bg-surface-2 with an 8px radius and border-card boundary. Field labels are 10px / 600 / 0.16em tracked uppercase at fg-60. Inputs are 15px / 400. Focus activates a 2px accent border and a 3px accent glow at 18% opacity. **Floating nav** — pill-shaped with --nav-bg blur, 40px circular dots at 10px / 700 / 0.1em; active dot carries accent at 12% with a 1px inset accent ring at 30%. **Project tile** — 16:10 thumbnail zone over a head row (title 20/600, year JetBrains Mono 12 at fg-50), body copy at fg-60 13/1.5, and a tag strip. Hover lifts -3px, brightens the border to accent at 50%, and adds a composite shadow plus accent ring.",
+        "bg": "dark"
+      },
+      {
+        "type": "showcase",
+        "label": "05 — Components · project tile",
+        "heading": "The piece the whole site turns around",
+        "body": "The project tile is the atomic unit of the site — homepage grid, carousel card, and template sub-site homepages all render from it. The thumbnail is a 16:10 surface composed from a diagonal gradient layered with a 135° hatch of fg-05 at 10px / 20px intervals, overlay-blended. Rest state sits on bg-surface with a border-card boundary; hover translateY(-3px), border-color moves to accent-0.5, and the card gains a 0 16px 40px rgba(0,0,0,0.3) shadow composited with an accent-0.2 outer ring.",
+        "image": {
+          "src": "/images/projects/design-system/card-gallery.svg",
+          "alt": "Project tile variants — rest, hover, featured (accent tag), and skeleton states"
+        },
+        "caption": "Project tile — one component across the homepage grid, the immersive carousel, and every template sub-site",
+        "showcaseBg": "#0a0c14",
+        "bg": "light"
+      },
+      {
+        "type": "text",
+        "label": "06 — Applied",
+        "heading": "Pages in use — hero entrance + case-study open",
+        "body": "The tokens assemble into the two surfaces the site spends most of its life in. **Hero entrance** — an Display 88/100 headline with a `<b>` brand word at weight 700 and an `<em>` accent fragment at weight 300 (\"Ahmed Soudan designs products that move.\"), a 20/300 lede at fg-70 capped at ~48 characters, and a primary + secondary button pair. The background carries a radial accent gradient at 8% opacity bleeding from 20% 30%. **Case-study open** — Eyebrow \"Case study · 12 min\", H2 36 / 1.05 / 300 title, a 17/300 lede at fg-70, a 14px body paragraph at fg-60 (with an inline accent link example), and a tag strip (default tags + an accent \"Shipped\" pill). Both surfaces inherit --motion-scale so scroll velocity modulates every transition.",
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "System at a glance",
+        "heading": "What v1.0 ships with",
+        "stats": [
+          {
+            "value": "6",
+            "label": "Named surface tokens",
+            "context": "canvas #0a0c14 → surface-2 #23273a, plus footer pinned to #0d0f1a"
+          },
+          {
+            "value": "12",
+            "label": "Foreground opacity steps",
+            "context": "one fg token × alpha replaces the grey scale entirely"
+          },
+          {
+            "value": "11",
+            "label": "Roles in the type scale",
+            "context": "Display → Eyebrow, Montserrat 100–900 + JetBrains Mono"
+          },
+          {
+            "value": "10",
+            "label": "Steps in the spacing scale",
+            "context": "Tailwind 4px cadence, 4 → 128"
+          }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "reflection",
+        "label": "Reflection",
+        "heading": "What extracting a system from a live site taught me",
+        "body": "Starting from globals.css rather than a blank Figma file forces a different kind of honesty. The live site is already a working system — its tokens, spacing, and motion rules have been pressure-tested by every page. Documenting it after the fact surfaces every inconsistency: the one-off colour that never made it into a token, the spacing value that broke the 4px rule, the component that detached from the system and quietly drifted. The payoff is portability. The same system now drives the portfolio, every case study, and the template sub-sites — Elite Diner and Real Estate — without any bespoke overrides."
+      }
+    ]
   }
 ];
