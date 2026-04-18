@@ -2074,20 +2074,20 @@ export const projectsData: ProjectDetail[] = [
     "coverStyle": "browser",
     "images": [
       {
-        "src": "/images/projects/components-production-new/Tab Button.svg",
-        "alt": "TabList spotlight — state matrix, live anatomy, keyboard and ARIA contract"
+        "src": "/images/projects/components-production-new/fragments/tab-matrix.svg",
+        "alt": "TabList state matrix — selected and unselected across default, hover, focused, and disabled"
       },
       {
-        "src": "/images/projects/components-production-new/Progress ring.svg",
-        "alt": "Progress Ring spotlight — hero, thresholds, motion, ARIA, and size scale"
+        "src": "/images/projects/components-production-new/fragments/ring-hero.svg",
+        "alt": "Progress Ring primitive — 67% at rest with stroke-dasharray geometry"
       },
       {
-        "src": "/images/projects/components-production-new/Skill card.svg",
-        "alt": "Skill Card spotlight — slots, elevation system, and interaction states"
+        "src": "/images/projects/components-production-new/fragments/card-hero.svg",
+        "alt": "Skill Card composed from the five-slot Card primitive"
       },
       {
-        "src": "/images/projects/components-production-new/List item.svg",
-        "alt": "ListItem spotlight — comfortable and compact densities, slot anatomy, decision tree"
+        "src": "/images/projects/components-production-new/fragments/list-comfortable.svg",
+        "alt": "ListItem comfortable density — 72px row with leading, title, status ring, and trailing slots"
       }
     ],
     "behanceUrl": "",
@@ -2196,15 +2196,6 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "split",
-        "label": "01 · Spotlight",
-        "heading": "The full TabList on a single surface — four systems, one page.",
-        "body": "The spotlight above is the diagram engineers read first. **Top rows:** a 2×4 state matrix (selected/unselected across default, hover, focused, disabled) — every cell rendered with the same token, never a raw hex. **Bottom-left:** a live TabList anatomy with the 4px active indicator annotated and `color-text-primary` called out on the label. **Bottom-right top:** the keyboard contract — arrow keys cycle, Home/End jump, Tab exits the component. **Bottom-right bottom:** the ARIA schema — `role=\"tab\"`, `aria-selected=\"true\"`, `aria-controls=\"panel-id\"`. Everything else in sections 01.1–01.3 is a zoom into one of those regions.",
-        "image": "/images/projects/components-production-new/Tab Button.svg",
-        "imagePosition": "right",
-        "bg": "dark"
-      },
-      {
-        "type": "split",
         "label": "01.1 · State Matrix",
         "heading": "Two axes. Every cell named. No \"we'll figure it out\" left.",
         "body": "Selection crosses interaction — selected/unselected against default, hover, focused, disabled. Eight permutations before loading, twelve with it. Each cell references a token, never a raw hex. The matrix is the spec: if a state isn't in this grid, it doesn't exist in the component.",
@@ -2251,15 +2242,6 @@ export const projectsData: ProjectDetail[] = [
         "label": "Component · Progress Ring",
         "heading": "A 60-pixel component with a physics problem at its centre.",
         "body": "The Progress Ring looks trivial until you try to specify it. What happens at zero? At one hundred? When the user has reduced-motion enabled? When a screen reader encounters it mid-update? Each of those questions got its own slice of the spec — shown below as its own fragment. The whole ring is the sum of those decisions, not the starting point for them.",
-        "bg": "dark"
-      },
-      {
-        "type": "split",
-        "label": "02 · Spotlight",
-        "heading": "The whole ring, annotated — geometry, colour, motion, voice, scale.",
-        "body": "The spotlight is the handoff sheet. **Left:** the 67% hero, with a `stroke-dasharray = circumference × %` callout pointing at the arc and a `color-progress-fill → teal-500` token reference on the fill. **Top-right:** the three colour thresholds — at risk (<25%), in progress (25–75%), on track (>75%) — each token-wired. **Middle-right:** the ease-out-quart motion curve, 400ms, honouring prefers-reduced-motion. **Lower-right:** the ARIA block — `role=\"progressbar\"`, `aria-valuenow=67`, `aria-valuetext=\"4 of 6\"`. **Bottom row:** the size scale (24/36/56) and the 100% celebration variant. Sections 02.1–02.5 each zoom in on one of those annotations.",
-        "image": "/images/projects/components-production-new/Progress ring.svg",
-        "imagePosition": "left",
         "bg": "dark"
       },
       {
@@ -2339,15 +2321,6 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "split",
-        "label": "03 · Spotlight",
-        "heading": "The Skill Card — every slot, elevation, and interaction on one surface.",
-        "body": "The spotlight shows the full Skill Card assembled, with **numbered callouts** on the left (01 media, 02 body, 03 footer) and **system panels** on the right. **Top-right: ELEVATION** — three tokens, three z-indices (flat z-0 · raised z-1 · elevated z-2), each picked explicitly, never automatic. **Bottom-right: INTERACTION** — hover (`translateY(-2px) · 200ms`), focused (`3px ring · color-focus`), pressed (`bg-tint · 8% accent`). The hero card itself fills four slots and overlays the mastery badge — and the mini Progress Ring inside it is the 40px variant of the ring primitive from section 02, imported unchanged. Sections 03.1–03.3 zoom into specific parts of this view.",
-        "image": "/images/projects/components-production-new/Skill card.svg",
-        "imagePosition": "right",
-        "bg": "light"
-      },
-      {
-        "type": "split",
         "label": "03.1 · Five Slots",
         "heading": "Every variant lives in the same anatomy.",
         "body": "Media, header, body, footer, overlay. That's the whole surface area. Domain cards — Skill, content, dashboard metric — fill those slots differently. They don't extend the primitive. They don't add regions. The slot overlay below is the contract every card in the system signs.",
@@ -2400,15 +2373,6 @@ export const projectsData: ProjectDetail[] = [
         "label": "Component · ListItem",
         "heading": "The component that had to survive real data — 400 rows of it, long titles, short metadata, icons next to UUIDs.",
         "body": "ListItem carries the densest surfaces on Oxford English Hub — course queues, task lists, download managers, assessment histories. It had to make dense data legible, survive truncation gracefully, and still be touch-safe on mobile. Four slots, two densities, one decision tree — broken down below.",
-        "bg": "dark"
-      },
-      {
-        "type": "split",
-        "label": "04 · Spotlight",
-        "heading": "Both densities, all four slots, and the decision tree — assembled on one page.",
-        "body": "The spotlight carries the whole ListItem system. **Top: COMFORTABLE (72px)** — a single browsing-density row showing the leading media slot (U4 avatar), the title + metadata pair, a 14-stroke progress ring in the status slot, and a trailing chevron. **Middle: COMPACT (56px)** — three dense rows with status icons (✓ · ! · ○) replacing avatars, each honouring the same slot contract. **Annotation strip:** dashed callouts name `leading`, `primary · line-clamp 2`, `status`, `trailing` — the overflow rules enforced in the component itself. **Bottom: WHEN TO USE** — the ListItem / Table / Card decision tree, outlined card showing which of the three ships. Sections 04.1–04.3 zoom in.",
-        "image": "/images/projects/components-production-new/List item.svg",
-        "imagePosition": "left",
         "bg": "dark"
       },
       {
