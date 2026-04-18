@@ -2314,133 +2314,212 @@ export const projectsData: ProjectDetail[] = [
     "id": "design-system",
     "slug": "design-system",
     "title": "Design System",
-    "subtitle": "asoudan.com v1.0",
+    "subtitle": "Oxford English Hub",
     "category": "DESIGN SYSTEM",
     "number": "14",
-    "description": "A dark-first design system for asoudan.com — Montserrat across the 100–900 weight range, a single cyan accent, and twelve opacity steps replacing a grey scale. Tokens, type, colour, rhythm, and core components extracted directly from the live codebase and mirrored in Figma.",
+    "description": "Four components, one grammar. Rebuilt the Oxford English Hub component system around Tab, Progress Ring, Skill Card, and List Item — eliminating 6 forks, resolving 3 competing motion curves, and cutting primitive re-spec tickets by 74% in the quarter after ship.",
     "tags": [
       "Design System",
+      "Component Architecture",
       "Design Tokens",
-      "Typography",
       "Figma",
       "Accessibility"
     ],
     "color": "#00F1F1",
-    "cover": "/images/projects/design-system/card-hero.svg",
+    "cover": "/images/projects/design-system/Tab Button.svg",
     "coverStyle": "contain",
     "images": [
       {
-        "src": "/images/projects/design-system/card-hero.svg",
-        "alt": "Design System — Cover"
+        "src": "/images/projects/design-system/Tab Button.svg",
+        "alt": "Design System — Tab Component"
       }
     ],
     "behanceUrl": "",
-    "role": "Designer & Author",
-    "timeline": "2026",
-    "team": "Solo",
-    "tools": "Figma, Next.js, Tailwind",
+    "role": "Design systems lead / Component architecture, specs, governance",
+    "timeline": "16 weeks, Q1–Q2 2024",
+    "team": "2 designers, 4 engineers, 1 researcher, 1 PM",
+    "tools": "Figma, React, Storybook, Design Tokens",
     "platform": "Web",
+    "employer": "Oxford University Press",
     "caseStudy": [
       {
         "type": "tldr",
         "label": "Overview",
-        "heading": "Design System v1.0 at a glance",
+        "heading": "Four components, one grammar",
         "bullets": [
-          "Goal: Extract the design language of asoudan.com into a portable system so the site, case studies, and template sub-sites share one source of truth.",
-          "Approach: Read the live globals.css, distilled four principles, then documented type, colour, rhythm, and a core component library — each with Figma parity.",
-          "Output: Dark-first tokens, twelve-step foreground opacity ladder, Montserrat type scale (100–900), cyan #00F1F1 accent, and nine component families with full states and ARIA.",
-          "Use: Powers the homepage hero, every case study template, and downstream template sub-sites like Elite Diner and Real Estate."
+          "Problem: Oxford English Hub had 6 independent forks of the skill card, 3 competing easing curves for the same ring, and 38% of tickets re-speccing a primitive component. No shared accessibility spec existed.",
+          "Approach: Audit-first — ranked components by frequency across all screens, then rebuilt from anatomy up: one token set, one motion grammar, full WCAG 2.2 AA across all states.",
+          "Output: 4 components, 38 variants, 62 design tokens across 6 families. Shipped in v2.4 after 16 weeks.",
+          "Impact: −74% primitive re-spec tickets in the quarter after ship. 1 fork in the year following. +3 squads adopted the system. 100% WCAG 2.2 AA."
         ],
         "bg": "dark"
       },
       {
-        "type": "text",
-        "label": "Principles",
-        "heading": "Four rules that keep the system coherent",
-        "body": "Before tokens, before components, four principles extracted from the live site: **Dark is the default** — the site opens dark and stays dark; light is a courtesy, not a baseline. **One glowing accent** — cyan #00F1F1 is the only hue with saturation; use it to point, never to decorate. **Foreground by opacity** — twelve opacity steps of the foreground replace a grey scale; hierarchy by alpha, not hue. **Motion scales with scroll** — transitions use a --motion-scale multiplier so fast readers get snappy UI and slow readers get soft. Every token and component downstream is a consequence of these four rules.",
-        "bg": "dark"
-      },
-      {
-        "type": "text",
-        "label": "Typography",
-        "heading": "One typeface, the full 100–900 weight range, one supporting voice",
-        "body": "Montserrat carries everything — from the 88/100 cinematic display down to the 11px tracked eyebrow — using the full 100–900 weight range for hierarchy instead of layering in a second serif. Weights do the work: 200 for H1, 300 for H2 and lede, 500 for H3, 600 for H4 and eyebrows. JetBrains Mono is added for tokens, metadata, and code — a supporting voice, never decorative. The scale locks to a clear role per size (Display, H1–H4, Lede, Body, Small, Caption, Eyebrow, Mono) with a 62-character measure cap on body copy and body running at the 70%-foreground opacity step so headings at full strength always read as the senior element.",
-        "bg": "light"
-      },
-      {
-        "type": "text",
-        "label": "Colour",
-        "heading": "A deep blue-black canvas, one cyan, and a twelve-step opacity ladder",
-        "body": "The palette is intentionally small: six surface tokens stepping from #0a0c14 (canvas) up through #23273a (raised), one accent (#00F1F1) with its hover pair (#00c8c8), and the footer pinned to #0d0f1a even in light mode. Instead of a parallel grey scale, the foreground token steps through twelve opacities — 1.00, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.15, 0.10, 0.08, 0.06, 0.05 — each mapped to a role (headings, body, meta, disabled, dividers, tag backgrounds). Light theme mirrors the token structure with inked #16192A on an off-white #f8f8f8 canvas; the accent shifts to #008b8b to hold contrast. Selection is the accent at 30% opacity, focus is a 2px accent ring with 2px offset — no exceptions.",
-        "bg": "dark"
-      },
-      {
-        "type": "text",
-        "label": "Rhythm",
-        "heading": "Tailwind's 4px scale, pill radii, and glow instead of shadow",
-        "body": "Spacing follows Tailwind's default 4px step scale (4, 8, 12, 16, 24, 32, 48, 64, 96, 128) so engineering can read directly from the design. Radii are quantised to four values: 4 (sm), 8 (md), 12 (lg), and 999 (pill). Borders are all variations of the foreground opacity ladder so light and dark stay paired. Depth is handled by glow, not hard shadow — a soft cyan halo at 25% opacity for resting state, 45% on hover. The content container caps at 1200px with 32px page gutters and a 62ch measure for body text.",
-        "bg": "light"
-      },
-      {
-        "type": "text",
-        "label": "Core library",
-        "heading": "Nine components, one token set, zero one-offs",
-        "body": "The site component library lives entirely within the token system — no raw hex values, no magic numbers. **Buttons** come in three hierarchies (primary filled with cyan halo, secondary outlined, ghost text-only), all 44px tall with pill radius and a 12px tracked label. **Links** split into two forms: inline text with accent colour and underline for prose, arrow CTAs for standalone calls to action. **Tags** carry three variants — default (fg-06 background), accent (cyan tint), and outline (border-card) — all using the 11px eyebrow scale. **Form fields** sit on --bg-surface-2 with a 10px/600/0.16em tracked label; focus activates the accent ring plus an 18% cyan glow on the input boundary. **The floating nav** is a pill with --nav-bg blur, active dot at 12% accent with a 1px inset ring. **Project tiles** compose thumb + head + tags with a hover state that lifts the card and brightens the border. **The sticky header** is 64px, --nav-bg backdrop blur, with the brand mark on the left and tracked uppercase nav on the right.",
-        "bg": "dark"
-      },
-      {
-        "type": "showcase",
-        "label": "Cards",
-        "heading": "The project tile — the piece the whole site turns around",
-        "body": "Every project on the site renders from the same tile: a 16:10 thumbnail zone, a head row with title and year, body copy, and a tag strip. Hover lifts the card with a soft cyan glow and shifts the cursor to pointer. The same base tile is used in filtered grids, the immersive carousel, and template sub-site homepages — one component, three surfaces.",
-        "image": {
-          "src": "/images/projects/design-system/card-gallery.svg",
-          "alt": "Project tile variants — base, hover, featured, and skeleton states"
-        },
-        "caption": "Project tile — one component across the grid, carousel, and template homepages",
-        "showcaseBg": "#0a0c14",
-        "bg": "light"
-      },
-      {
-        "type": "text",
-        "label": "Pages in use",
-        "heading": "Two surfaces the site spends most of its life in",
-        "body": "The token system assembles into two primary surfaces. The **hero entrance** opens on a cinematic 88px/100 display heading, a 20px/300 lede capped at 48 characters, and a primary + secondary button pair — all sitting on --bg-primary with a radial accent gradient at 8% opacity bleeding in from the top left. The **case study open** uses the H2/300 scale for the title, fg-70 for the standfirst, fg-60 for the first body paragraph, and a tag strip at the base. Both surfaces inherit --motion-scale so scroll velocity modulates every transition from fade-in to colour cross-fade — fast scroll collapses animation duration, slow scroll lets it breathe.",
-        "bg": "dark"
-      },
-      {
         "type": "stats",
-        "label": "System at a glance",
-        "heading": "What v1.0 ships with",
+        "label": "Before we started",
+        "heading": "What the audit found",
         "stats": [
           {
             "value": "6",
-            "label": "Surface tokens from canvas to raised",
-            "context": "#0a0c14 → #23273a, plus pinned footer"
+            "label": "Forks of the Skill Card",
+            "context": "each squad had built their own version independently"
           },
           {
-            "value": "12",
-            "label": "Opacity steps replacing a grey scale",
-            "context": "one foreground token, alpha for hierarchy"
+            "value": "3",
+            "label": "Competing easing curves",
+            "context": "for the same Progress Ring animation"
           },
           {
-            "value": "1",
-            "label": "Saturated hue across the whole system",
-            "context": "cyan #00F1F1 — points, never decorates"
+            "value": "38%",
+            "label": "Tickets re-speccing a primitive",
+            "context": "before engineering touched the feature"
           },
           {
-            "value": "9",
-            "label": "Components in the core library",
-            "context": "buttons, links, tags, form, nav, header, tile"
+            "value": "0",
+            "label": "Shared accessibility specs",
+            "context": "across any of the four components"
           }
         ],
         "bg": "accent"
       },
       {
+        "type": "text",
+        "label": "Approach",
+        "heading": "Audit existing reality before designing the ideal",
+        "body": "Before opening Figma, we mapped every screen in the product and tallied component frequency. Tab appeared on 94% of screens. List appeared on 81%. Progress Ring on 58%. Skill Card on 46%. That ranking became the build order — highest frequency first, because if we got the tab wrong, nearly every journey broke. The audit also surfaced why each component had drifted: no canonical anatomy, no motion grammar, no accessibility contract. Each squad had filled the vacuum with their own reading of the intent. The system's job was to make the right thing the obvious thing.",
+        "bg": "dark"
+      },
+      {
+        "type": "showcase",
+        "label": "Component 01 — Tab",
+        "heading": "The tab is on 94% of screens. Get it wrong and every journey breaks.",
+        "body": "The tab had three layouts in production and no canonical anatomy. We defined the anatomy first: label zone, active indicator, focus ring, icon slot. From anatomy came the spacing rules, from spacing came the keyboard contract (arrow key navigation, Home/End, roving tabindex). The layout variants — inline, fill, pill — all share the same token structure so theming doesn't require per-variant overrides.",
+        "image": {
+          "src": "/images/projects/design-system/Tab Button.svg",
+          "alt": "Tab component anatomy and states"
+        },
+        "caption": "Tab Button — anatomy, states, layout variants, and keyboard interaction model",
+        "showcaseBg": "#0a0c14",
+        "bg": "light"
+      },
+      {
+        "type": "showcase",
+        "label": "Component 02 — Progress Ring",
+        "heading": "Three easing curves, one component. The motion audit came before the design.",
+        "body": "The ring had three competing animations across the product — all claiming to be the right one. We ran a motion audit, identified the threshold values where the ring changes meaning (0–39% danger, 40–69% warning, 70–100% success), then designed one easing grammar: linear fill, spring on completion, celebration pulse at 100%. All three states share the same token set and the same ARIA contract (`role=progressbar`, `aria-valuenow`, live region on threshold change).",
+        "image": {
+          "src": "/images/projects/design-system/Progress ring.svg",
+          "alt": "Progress Ring component — sizes, thresholds, and motion states"
+        },
+        "caption": "Progress Ring — three sizes, threshold colour semantics, and the celebration pulse at 100%",
+        "showcaseBg": "#0a0c14",
+        "bg": "dark"
+      },
+      {
+        "type": "showcase",
+        "label": "Component 03 — Skill Card",
+        "heading": "Six forks collapsed into one component with a slot architecture.",
+        "body": "Six forks existed because each squad needed a slightly different card. The audit showed the differences were in content, not structure — different squads were slotting different data into the same layout. The solution was a slot architecture: a fixed frame (image zone, title, progress, meta) with four named slots that each squad could populate without forking the component. One canonical component replaced all six versions.",
+        "image": {
+          "src": "/images/projects/design-system/Skill card.svg",
+          "alt": "Skill Card component — slots, elevations, and interaction states"
+        },
+        "caption": "Skill Card — slot architecture, elevation system, and hover/focus/loading states",
+        "showcaseBg": "#0a0c14",
+        "bg": "light"
+      },
+      {
+        "type": "showcase",
+        "label": "Component 04 — List Item",
+        "heading": "The list is 81% of screens. Density was the hardest decision.",
+        "body": "List items appear more than any other component except the tab. The density decision — compact vs comfortable — had been made differently by every squad. We defined two canonical densities (compact 48px, comfortable 64px) with a decision rule: compact for scan tasks, comfortable for reading tasks. Both densities share the same slot architecture (leading icon, primary text, supporting text, trailing element) and the same accessibility contract.",
+        "image": {
+          "src": "/images/projects/design-system/List item.svg",
+          "alt": "List Item component — compact and comfortable densities, slots, and states"
+        },
+        "caption": "List Item — two densities, slot architecture, and the decision rule that determines which to use",
+        "showcaseBg": "#0a0c14",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "Tokens",
+        "heading": "62 tokens across 6 families — one grammar for all four components",
+        "body": "Every component decision is a token decision. We defined 62 tokens across 6 families: **Surface** (background layers and elevation), **Text** (size, weight, line-height per role), **Accent** (semantic colour — danger/warning/success/info), **Motion** (duration, easing, delay per interaction class), **Elevation** (shadow levels 0–4), **Spacing** (component-specific padding and gap values). The constraint was that all four components had to share the token set — no component-specific tokens unless unavoidable. That constraint forced us to find the grammar rather than paper over inconsistency.",
+        "bg": "light"
+      },
+      {
+        "type": "timeline",
+        "label": "Timeline",
+        "heading": "16 weeks, 5 phases",
+        "items": [
+          {
+            "week": "Weeks 1–3",
+            "phase": "Audit",
+            "description": "Screen frequency mapping, fork inventory, accessibility gap analysis across all four components."
+          },
+          {
+            "week": "Weeks 4–7",
+            "phase": "Briefs & Specs",
+            "description": "Anatomy definitions, variant matrices, keyboard contracts, ARIA specifications for each component."
+          },
+          {
+            "week": "Weeks 8–10",
+            "phase": "Tokens & Theming",
+            "description": "62 token definitions across 6 families. Theming architecture. Motion grammar agreement with engineering."
+          },
+          {
+            "week": "Weeks 11–13",
+            "phase": "Migration",
+            "description": "Pilot squad migration. Spec validation. Edge case coverage. Storybook parity review."
+          },
+          {
+            "week": "Weeks 14–16",
+            "phase": "Governance",
+            "description": "Intake rules, contribution model, and usage guidelines. Shipped in v2.4."
+          }
+        ],
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "Outcome",
+        "heading": "Quarter after ship",
+        "stats": [
+          {
+            "value": "−74%",
+            "label": "Primitive re-spec tickets",
+            "context": "in the quarter after v2.4 shipped"
+          },
+          {
+            "value": "1",
+            "label": "Fork in the year following",
+            "context": "down from 6 forks across skill card alone"
+          },
+          {
+            "value": "+3",
+            "label": "Squads adopted the system",
+            "context": "beyond the original pilot team"
+          },
+          {
+            "value": "100%",
+            "label": "WCAG 2.2 AA",
+            "context": "across all components, states, and themes"
+          }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "quote",
+        "label": "From engineering",
+        "quote": "We stopped arguing about components in standup. That, on its own, paid for the quarter.",
+        "attribution": "Engineering manager, Oxford English Hub"
+      },
+      {
         "type": "reflection",
         "label": "Reflection",
-        "heading": "What extracting a system from a live site taught me",
-        "body": "Starting from globals.css rather than a blank Figma file forces a different kind of honesty. The live site is already a working system — its tokens, spacing, and motion rules have been pressure-tested by every page. Documenting it after the fact surfaces every inconsistency: the one-off colour that never made it into a token, the spacing value that broke the 4px rule, the component that detached from the system and quietly drifted. The payoff is portability. The same system now drives the portfolio, every case study, and the template sub-sites — Elite Diner and Real Estate — without any bespoke overrides. The next time I open Figma the starting point is not a blank canvas but a small, opinionated kit that already knows the answers."
+        "heading": "Keep · Change · Retire",
+        "body": "**Keep:** Slots over variants — the slot architecture for Skill Card was the right call. Squads got flexibility without forking. Also keep intake rules on a card — a physical decision record on the wall made prioritisation transparent in a way that Jira never did.\n\n**Change:** Involve QA from day one, not week eleven. We found edge cases in the pilot that a QA engineer would have caught in the spec. Also name the motion grammar earlier — we lost two weeks to motion debates that would have resolved faster with named easing tokens on the table.\n\n**Retire:** The pilot squad model. One squad piloting a component and reporting back sounds efficient; in practice it created an eight-week information lag before other squads knew what worked. A shared spec review in week four would have been cheaper."
       }
     ]
   },
