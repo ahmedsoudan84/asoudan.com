@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>asoudan.com — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* -------------------------------------------------------------
+     asoudan.com — Design System (matched to live site)
+     Source: src/app/globals.css
+     Dark-first. Montserrat. Cyan #00F1F1 accent.
+     ------------------------------------------------------------- */
+
+  /* ── Dark theme (default) ─────────────────────────────────── */
+  :root,
+  [data-theme="dark"] {
+    --bg-primary:   #0a0c14;
+    --bg-secondary: #141620;
+    --bg-tertiary:  #111322;
+    --bg-surface:   #1a1d2e;
+    --bg-surface-2: #23273a;
+    --bg-footer:    #0d0f1a;
+
+    --fg-rgb:       255, 255, 255;
+    --fg:           rgba(255,255,255,1);
+    --fg-70:        rgba(255,255,255,0.70);
+    --fg-60:        rgba(255,255,255,0.60);
+    --fg-50:        rgba(255,255,255,0.50);
+    --fg-40:        rgba(255,255,255,0.40);
+    --fg-30:        rgba(255,255,255,0.30);
+    --fg-20:        rgba(255,255,255,0.20);
+    --fg-15:        rgba(255,255,255,0.15);
+    --fg-10:        rgba(255,255,255,0.10);
+    --fg-08:        rgba(255,255,255,0.08);
+    --fg-06:        rgba(255,255,255,0.06);
+    --fg-05:        rgba(255,255,255,0.05);
+
+    --accent:       #00F1F1;
+    --accent-rgb:   0, 241, 241;
+    --accent-hover: #00c8c8;
+
+    --nav-bg:       rgba(10,12,20,0.70);
+    --nav-border:   rgba(255,255,255,0.06);
+    --border-subtle: rgba(255,255,255,0.06);
+    --border-card:   rgba(255,255,255,0.10);
+    --selection-bg:  rgba(0,241,241,0.30);
+    --selection-fg:  white;
+  }
+
+  /* ── Light theme ──────────────────────────────────────────── */
+  [data-theme="light"] {
+    --bg-primary:   #f8f8f8;
+    --bg-secondary: #eceef1;
+    --bg-tertiary:  #e0e3e8;
+    --bg-surface:   #ffffff;
+    --bg-surface-2: #eff1f4;
+    --bg-footer:    #1a1d2e;
+
+    --fg-rgb:       22, 25, 42;
+    --fg:           rgba(22,25,42,1);
+    --fg-70:        rgba(22,25,42,0.70);
+    --fg-60:        rgba(22,25,42,0.60);
+    --fg-50:        rgba(22,25,42,0.50);
+    --fg-40:        rgba(22,25,42,0.40);
+    --fg-30:        rgba(22,25,42,0.30);
+    --fg-20:        rgba(22,25,42,0.20);
+    --fg-15:        rgba(22,25,42,0.15);
+    --fg-10:        rgba(22,25,42,0.10);
+    --fg-08:        rgba(22,25,42,0.08);
+    --fg-06:        rgba(22,25,42,0.06);
+    --fg-05:        rgba(22,25,42,0.05);
+
+    --accent:       #008b8b;
+    --accent-rgb:   0, 139, 139;
+    --accent-hover: #006f6f;
+
+    --nav-bg:       rgba(236,238,241,0.88);
+    --nav-border:   rgba(22,25,42,0.10);
+    --border-subtle: rgba(22,25,42,0.08);
+    --border-card:   rgba(22,25,42,0.12);
+    --selection-bg:  rgba(0,139,139,0.25);
+    --selection-fg:  rgb(22,25,42);
+  }
+
+  /* ── Base ─────────────────────────────────────────────────── */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg-primary);
+    color: var(--fg);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+  ::selection { background: var(--selection-bg); color: var(--selection-fg); }
+  *:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  /* ── Chrome ──────────────────────────────────────────────── */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--nav-bg);
+    backdrop-filter: saturate(1.2) blur(12px);
+    -webkit-backdrop-filter: saturate(1.2) blur(12px);
+    border-bottom: 1px solid var(--nav-border);
+  }
+  .topbar .inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; max-width: 1200px; margin: 0 auto; padding: 0 32px;
+  }
+  .brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+  .brand em {
+    font-style: normal; color: var(--accent);
+    text-shadow: 0 0 16px rgba(var(--accent-rgb), 0.4);
+  }
+  .topnav {
+    display: flex; gap: 28px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-60);
+  }
+  .topnav a { color: inherit; text-decoration: none; transition: color .2s ease; }
+  .topnav a:hover { color: var(--accent); }
+  .toggle {
+    border: 1px solid var(--border-card);
+    background: transparent;
+    color: var(--fg-70);
+    height: 34px; padding: 0 14px;
+    border-radius: 999px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  section + section { border-top: 1px solid var(--border-subtle); }
+
+  /* ── Hero ────────────────────────────────────────────────── */
+  .hero { padding: 128px 0 96px; position: relative; overflow: hidden; }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 20% 30%, rgba(var(--accent-rgb),0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::before {
+    content: ""; width: 32px; height: 1px;
+    background: var(--accent); opacity: 0.7;
+  }
+  .hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    font-size: clamp(48px, 8vw, 104px);
+    line-height: 0.96; letter-spacing: -0.035em;
+    margin: 32px 0 24px;
+    text-wrap: balance;
+  }
+  .hero h1 b { font-weight: 700; color: var(--fg); }
+  .hero h1 em {
+    font-style: normal; color: var(--accent); font-weight: 300;
+  }
+  .hero .lede {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.5; color: var(--fg-70);
+    max-width: 62ch; text-wrap: pretty;
+  }
+  .meta {
+    display: flex; gap: 48px; margin-top: 56px;
+    font-size: 11px; font-weight: 500;
+    color: var(--fg-50);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .meta b { color: var(--fg); font-weight: 600; display: block; margin-top: 6px; letter-spacing: 0.08em; font-size: 13px; text-transform: none; }
+
+  /* ── Section heading ─────────────────────────────────────── */
+  .sec-head {
+    display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+    padding: 80px 0 40px; align-items: baseline;
+  }
+  .sec-head .num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .sec-head h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 44px; line-height: 1.05; letter-spacing: -0.025em;
+    margin: 0; color: var(--fg);
+  }
+  .sec-head p {
+    grid-column: 2; margin: 16px 0 0;
+    color: var(--fg-60); max-width: 60ch; font-size: 15px;
+  }
+
+  /* ── Grid + cards ────────────────────────────────────────── */
+  .grid { display: grid; gap: 20px; }
+  .g-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .card .label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-50);
+  }
+
+  /* ── Color swatches ──────────────────────────────────────── */
+  .swatches { display: grid; gap: 16px; grid-template-columns: repeat(4, 1fr); }
+  .sw {
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-surface);
+  }
+  .sw .chip { height: 88px; border-bottom: 1px solid var(--border-subtle); }
+  .sw .meta-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--fg); letter-spacing: 0;
+  }
+  .sw .meta-row span:last-child { color: var(--fg-50); }
+  .sw .name {
+    padding: 0 14px 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; color: var(--fg-60);
+  }
+
+  /* Opacity ladder */
+  .ladder {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
+    border: 1px solid var(--border-card); border-radius: 10px; overflow: hidden;
+  }
+  .ladder .step {
+    padding: 20px 12px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--fg); position: relative;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .ladder .step:last-child { border-right: 0; }
+  .ladder .step small { display: block; color: var(--fg-50); margin-top: 4px; font-size: 10px; }
+
+  /* ── Type specimens ──────────────────────────────────────── */
+  .specimen {
+    display: grid; grid-template-columns: 200px 1fr; gap: 24px;
+    padding: 24px 0; border-bottom: 1px solid var(--border-subtle);
+    align-items: baseline;
+  }
+  .specimen:last-child { border-bottom: 0; }
+  .specimen .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.02em; color: var(--fg-50);
+  }
+  .specimen .tag b { display: block; color: var(--fg); margin-top: 4px; font-weight: 500; }
+  .sp-display { font-family: 'Montserrat'; font-weight: 100; font-size: 88px; line-height: 0.95; letter-spacing: -0.035em; }
+  .sp-h1 { font-family: 'Montserrat'; font-weight: 200; font-size: 64px; line-height: 1; letter-spacing: -0.03em; }
+  .sp-h2 { font-family: 'Montserrat'; font-weight: 300; font-size: 44px; line-height: 1.05; letter-spacing: -0.025em; }
+  .sp-h3 { font-family: 'Montserrat'; font-weight: 500; font-size: 28px; line-height: 1.2; letter-spacing: -0.015em; }
+  .sp-h4 { font-family: 'Montserrat'; font-weight: 600; font-size: 20px; line-height: 1.3; letter-spacing: -0.005em; }
+  .sp-lede { font-family: 'Montserrat'; font-weight: 300; font-size: 20px; line-height: 1.5; color: var(--fg-70); }
+  .sp-body { font-family: 'Montserrat'; font-weight: 400; font-size: 16px; line-height: 1.6; color: var(--fg-70); max-width: 62ch; }
+  .sp-small { font-family: 'Montserrat'; font-weight: 400; font-size: 14px; color: var(--fg-60); }
+  .sp-mono { font-family: 'JetBrains Mono'; font-size: 13px; letter-spacing: 0.02em; color: var(--accent); }
+  .sp-eyebrow { font-family: 'Montserrat'; font-size: 11px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); }
+
+  /* Scale table */
+  table.scale { width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  table.scale th, table.scale td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border-subtle); }
+  table.scale th { text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg-50); font-weight: 600; font-size: 10px; font-family: 'Montserrat'; }
+  table.scale td { color: var(--fg); }
+  table.scale td:last-child { color: var(--fg-50); font-family: 'Montserrat'; }
+
+  /* Spacing scale */
+  .space-row {
+    display: grid; grid-template-columns: 80px 1fr 80px;
+    gap: 16px; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--fg-50);
+  }
+  .space-row .bar { height: 14px; background: rgba(var(--accent-rgb), 0.18); border-left: 2px solid var(--accent); }
+  .space-row .token { color: var(--fg); }
+
+  /* Samples */
+  .sample {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    aspect-ratio: 1.4 / 1;
+    display: flex; align-items: flex-end; padding: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-60);
+  }
+
+  /* ── Components ──────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 22px;
+    border-radius: 999px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid transparent; cursor: pointer;
+    transition: all .2s ease;
+  }
+  .btn-primary {
+    background: var(--accent); color: #0a0c14;
+    box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.25);
+  }
+  .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 0 32px rgba(var(--accent-rgb), 0.45); }
+  .btn-secondary { background: transparent; color: var(--fg); border-color: var(--border-card); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--fg-70); }
+  .btn-ghost:hover { color: var(--accent); }
+  .btn .arrow { transition: transform .2s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* Link */
+  .link-inline {
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.35);
+    transition: border-color .2s ease;
+  }
+  .link-inline:hover { border-color: var(--accent); }
+  .link-arrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--fg); text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .link-arrow:hover { color: var(--accent); }
+  .link-arrow .arrow { transition: transform .2s ease; }
+  .link-arrow:hover .arrow { transform: translateX(4px); }
+
+  /* Tag */
+  .tag {
+    display: inline-flex; align-items: center;
+    height: 26px; padding: 0 12px;
+    border-radius: 999px;
+    background: var(--fg-06); color: var(--fg-70);
+    border: 1px solid var(--border-subtle);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .tag.accent {
+    background: rgba(var(--accent-rgb), 0.12);
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.35);
+  }
+  .tag.outline { background: transparent; }
+
+  /* Form */
+  .field {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-60); margin-bottom: 10px;
+  }
+  .input, .textarea {
+    width: 100%; background: var(--bg-surface-2);
+    border: 1px solid var(--border-card); border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--fg);
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .input::placeholder, .textarea::placeholder { color: var(--fg-40); }
+  .input:focus, .textarea:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.18);
+  }
+  .textarea { min-height: 120px; resize: vertical; }
+  .hint { margin-top: 8px; font-size: 13px; color: var(--fg-50); }
+
+  /* Project card */
+  .proj {
+    display: grid; gap: 16px;
+    padding: 20px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: 14px;
+    text-decoration: none; color: inherit;
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .proj:hover {
+    transform: translateY(-3px);
+    border-color: rgba(var(--accent-rgb), 0.5);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(var(--accent-rgb), 0.2);
+  }
+  .proj .thumb {
+    aspect-ratio: 16/10; border-radius: 8px;
+    background:
+      linear-gradient(135deg, var(--bg-surface-2), var(--bg-tertiary)),
+      repeating-linear-gradient(135deg, var(--fg-05) 0 10px, transparent 10px 20px);
+    background-blend-mode: overlay;
+    border: 1px solid var(--border-subtle);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-40);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .proj .head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  }
+  .proj h3 {
+    margin: 0; font-family: 'Montserrat', sans-serif; font-weight: 600;
+    font-size: 20px; letter-spacing: -0.01em; color: var(--fg);
+  }
+  .proj .year { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--fg-50); }
+  .proj p { margin: 0; color: var(--fg-60); font-size: 13px; line-height: 1.5; }
+  .proj .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* Floating nav preview */
+  .floatnav {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 8px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--nav-border);
+    border-radius: 999px;
+  }
+  .floatnav .dot {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fg-40);
+    font-family: 'Montserrat'; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em;
+    transition: all .2s ease;
+    cursor: pointer;
+  }
+  .floatnav .dot:hover { color: var(--fg); background: var(--fg-06); }
+  .floatnav .dot.active {
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.12);
+    box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.3) inset;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 96px 0 48px;
+    background: var(--bg-footer);
+    color: #fff;
+    margin-top: 96px;
+  }
+  .footer .row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .footer h4 {
+    margin: 0 0 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer a {
+    display: block;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    padding: 5px 0; font-size: 14px;
+    transition: color .2s ease;
+  }
+  .footer a:hover { color: var(--accent); }
+  .footer .brand-big {
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 36px; line-height: 1; letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .footer .brand-big em { color: var(--accent); font-style: normal; }
+  .footer small { font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.4); font-size: 11px; }
+  .footer .bottom {
+    display: flex; justify-content: space-between;
+    max-width: 1200px; margin: 64px auto 0; padding: 24px 32px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Mock */
+  .mock { border: 1px solid var(--border-card); border-radius: 12px; overflow: hidden; background: var(--bg-primary); }
+  .mock .mock-bar { height: 32px; background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; padding: 0 12px; gap: 6px; }
+  .mock .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--fg-15); }
+  .mock .mock-body { padding: 48px 40px; position: relative; }
+  .mock .mock-body::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 50% 40% at 30% 20%, rgba(var(--accent-rgb),0.08), transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Utility */
+  .stack-4 > * + * { margin-top: 16px; }
+  .row-gap-4 { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .muted { color: var(--fg-60); }
+  .accent-text { color: var(--accent); }
+
+  @media (max-width: 880px) {
+    .g-3, .g-4 { grid-template-columns: repeat(2, 1fr); }
+    .swatches { grid-template-columns: repeat(2, 1fr); }
+    .sec-head { grid-template-columns: 1fr; }
+    .sec-head p { grid-column: 1; }
+    .specimen { grid-template-columns: 1fr; }
+    .footer .row { grid-template-columns: 1fr 1fr; }
+    .ladder { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media print {
+    .topbar, .toggle { display: none; }
+    body { background: #fff; color: #111; }
+    section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body data-screen-label="Design System" data-theme="dark">
+
+<header class="topbar">
+  <div class="inner">
+    <div class="brand">Ahmed Soudan<em>.</em></div>
+    <nav class="topnav">
+      <a href="#foundations">Foundations</a>
+      <a href="#type">Type</a>
+      <a href="#color">Color</a>
+      <a href="#space">Space</a>
+      <a href="#components">Components</a>
+      <a href="#pages">Pages</a>
+    </nav>
+    <button class="toggle" id="themeToggle">Light</button>
+  </div>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">v1.0 — Design System</div>
+    <h1><b>asoudan</b><em>.com</em><br />design system.</h1>
+    <p class="lede">Dark-first. Montserrat. A single cyan accent that glows. A small set of tokens and components extracted directly from the live codebase — ready to mirror in Figma.</p>
+    <div class="meta">
+      <div>Direction<b>Immersive · Editorial</b></div>
+      <div>Font<b>Montserrat 100–900</b></div>
+      <div>Accent<b>#00F1F1 Cyan</b></div>
+      <div>Themes<b>Dark (default) · Light</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOUNDATIONS ============================ -->
+<section id="foundations">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">01 — Foundations</div>
+      <h2>Principles</h2>
+      <p>Four rules extracted from the live site that keep the system coherent. Dark canvas, bright point of focus, quiet chrome.</p>
+    </div>
+
+    <div class="grid g-4">
+      <div class="card stack-4">
+        <div class="label">01</div>
+        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">Dark is the default</h3>
+        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">The site opens dark and stays dark. Light is a courtesy, not a baseline.</p>
+      </div>
+      <div class="card stack-4">
+        <div class="label">02</div>
+        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">One glowing accent</h3>
+        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">Cyan #00F1F1 is the only hue with saturation. Use it to point, never to decorate.</p>
+      </div>
+      <div class="card stack-4">
+        <div class="label">03</div>
+        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">Foreground by opacity</h3>
+        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">Twelve opacity steps of the foreground replace a grey scale. Hierarchy by alpha, not hue.</p>
+      </div>
+      <div class="card stack-4">
+        <div class="label">04</div>
+        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">Motion scales with scroll</h3>
+        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">Transitions use <span class="sp-mono">--motion-scale</span> so fast readers get snappy UI, slow readers get soft.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TYPE ============================ -->
+<section id="type">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">02 — Typography</div>
+      <h2>Type system</h2>
+      <p>Montserrat carries everything, using the full 100–900 weight range for hierarchy. JetBrains Mono is added for tokens, metadata, and code — a supporting voice, never decorative.</p>
+    </div>
+
+    <div>
+      <div class="specimen">
+        <div class="tag">Display<b>Montserrat 88 / 100</b></div>
+        <div class="sp-display">Design, <em style="color:var(--accent);font-weight:300">moving.</em></div>
+      </div>
+      <div class="specimen">
+        <div class="tag">H1<b>Montserrat 64 / 200</b></div>
+        <div class="sp-h1">Twenty years of work.</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">H2<b>Montserrat 44 / 300</b></div>
+        <div class="sp-h2">Selected case studies</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">H3<b>Montserrat 28 / 500</b></div>
+        <div class="sp-h3">Org-level Reports</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">H4<b>Montserrat 20 / 600</b></div>
+        <div class="sp-h4">Section subhead</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">Lede<b>Montserrat 20 / 300</b></div>
+        <div class="sp-lede">A short paragraph that sits under a title, carrying the argument in a line or two before the body takes over.</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">Body<b>Montserrat 16 / 400</b></div>
+        <div class="sp-body">The body sets at 16px with a 1.6 line-height. Measure caps at about 62 characters. Body copy runs at the 70%-foreground opacity step, so headings at full strength always read as the senior element on the page.</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">Small<b>Montserrat 14 / 400</b></div>
+        <div class="sp-small">Captions, hints, and secondary copy live here. Tone is quieter but never below 14px.</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">Mono<b>JetBrains Mono 13</b></div>
+        <div class="sp-mono">--accent: #00F1F1;</div>
+      </div>
+      <div class="specimen">
+        <div class="tag">Eyebrow<b>Montserrat 11 / 600, 0.24em</b></div>
+        <div class="sp-eyebrow">— Case study · 2024 · 12 min read</div>
+      </div>
+    </div>
+
+    <h3 style="font-weight:500;font-size:22px;margin:64px 0 16px;letter-spacing:-0.01em;">Scale tokens</h3>
+    <table class="scale">
+      <thead><tr><th>Role</th><th>Size / line</th><th>Weight</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>Eyebrow</td><td>11 / 14</td><td>600 · tracked 0.24em</td><td>Section numbers, metadata</td></tr>
+        <tr><td>Caption</td><td>12 / 18</td><td>500</td><td>UI labels, meta</td></tr>
+        <tr><td>Small</td><td>14 / 22</td><td>400</td><td>Captions, hints</td></tr>
+        <tr><td>Body</td><td>16 / 26</td><td>400 · fg-70</td><td>Default prose</td></tr>
+        <tr><td>Body L</td><td>18 / 28</td><td>400</td><td>Nav, emphasis</td></tr>
+        <tr><td>Lede</td><td>20 / 30</td><td>300 · fg-70</td><td>Intros</td></tr>
+        <tr><td>H4</td><td>20 / 26</td><td>600</td><td>Card headings</td></tr>
+        <tr><td>H3</td><td>28 / 34</td><td>500</td><td>Subsections</td></tr>
+        <tr><td>H2</td><td>44 / 46</td><td>300</td><td>Page titles</td></tr>
+        <tr><td>H1</td><td>64 / 64</td><td>200</td><td>Hero</td></tr>
+        <tr><td>Display</td><td>88 / 84</td><td>100</td><td>Cinematic entrance</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================ COLOR ============================ -->
+<section id="color">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">03 — Color</div>
+      <h2>Palette</h2>
+      <p>Deep blue-black canvas. Off-white foreground stepped down by opacity for hierarchy. One saturated cyan does every pointing job. Footer stays dark even in light mode.</p>
+    </div>
+
+    <h3 style="font-weight:500;font-size:22px;margin:24px 0 16px;letter-spacing:-0.01em;">Surface — dark (default)</h3>
+    <div class="swatches">
+      <div class="sw">
+        <div class="chip" style="background:#0a0c14"></div>
+        <div class="meta-row"><span>--bg-primary</span><span>#0a0c14</span></div>
+        <div class="name">Canvas</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#141620"></div>
+        <div class="meta-row"><span>--bg-secondary</span><span>#141620</span></div>
+        <div class="name">Section fill</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#111322"></div>
+        <div class="meta-row"><span>--bg-tertiary</span><span>#111322</span></div>
+        <div class="name">Inset</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#1a1d2e"></div>
+        <div class="meta-row"><span>--bg-surface</span><span>#1a1d2e</span></div>
+        <div class="name">Card</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#23273a"></div>
+        <div class="meta-row"><span>--bg-surface-2</span><span>#23273a</span></div>
+        <div class="name">Input / raised</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#0d0f1a"></div>
+        <div class="meta-row"><span>--bg-footer</span><span>#0d0f1a</span></div>
+        <div class="name">Footer</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#00F1F1"></div>
+        <div class="meta-row"><span>--accent</span><span>#00F1F1</span></div>
+        <div class="name">Cyan</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#00c8c8"></div>
+        <div class="meta-row"><span>--accent-hover</span><span>#00c8c8</span></div>
+        <div class="name">Cyan — hover</div>
+      </div>
+    </div>
+
+    <h3 style="font-weight:500;font-size:22px;margin:56px 0 16px;letter-spacing:-0.01em;">Foreground opacity ladder</h3>
+    <p class="muted" style="margin:0 0 16px;max-width:60ch;font-size:14px;">The site does not keep a separate grey scale — instead, the foreground token <span class="sp-mono">rgba(255,255,255,α)</span> steps through twelve opacities. Mirror these one-for-one in Figma as colour styles.</p>
+    <div class="ladder">
+      <div class="step" style="background:rgba(255,255,255,1);color:#0a0c14">fg / 1.00<small style="color:rgba(10,12,20,0.6)">Headings</small></div>
+      <div class="step" style="background:rgba(255,255,255,0.7);color:#0a0c14">fg-70<small style="color:rgba(10,12,20,0.6)">Body</small></div>
+      <div class="step" style="background:rgba(255,255,255,0.5);color:#0a0c14">fg-50<small style="color:rgba(10,12,20,0.6)">Meta</small></div>
+      <div class="step" style="background:rgba(255,255,255,0.3)">fg-30<small>Disabled</small></div>
+      <div class="step" style="background:rgba(255,255,255,0.15)">fg-15<small>Dividers</small></div>
+      <div class="step" style="background:rgba(255,255,255,0.06)">fg-06<small>Tag bg</small></div>
+    </div>
+
+    <h3 style="font-weight:500;font-size:22px;margin:56px 0 16px;letter-spacing:-0.01em;">Light theme pairs</h3>
+    <div class="swatches">
+      <div class="sw">
+        <div class="chip" style="background:#f8f8f8"></div>
+        <div class="meta-row"><span>--bg-primary</span><span>#f8f8f8</span></div>
+        <div class="name">Canvas</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#eceef1"></div>
+        <div class="meta-row"><span>--bg-secondary</span><span>#eceef1</span></div>
+        <div class="name">Section</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#ffffff;border-bottom:1px solid rgba(22,25,42,0.12)"></div>
+        <div class="meta-row"><span>--bg-surface</span><span>#ffffff</span></div>
+        <div class="name">Card</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:rgb(22,25,42)"></div>
+        <div class="meta-row" style="color:#fff;background:rgb(22,25,42)"><span>--fg</span><span>#16192A</span></div>
+        <div class="name">Ink</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#008b8b"></div>
+        <div class="meta-row" style="color:#fff;background:#008b8b"><span>--accent</span><span>#008b8b</span></div>
+        <div class="name">Cyan — dark</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#006f6f"></div>
+        <div class="meta-row" style="color:#fff;background:#006f6f"><span>--accent-hover</span><span>#006f6f</span></div>
+        <div class="name">Cyan — darker</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#1a1d2e"></div>
+        <div class="meta-row" style="color:#fff;background:#1a1d2e"><span>--bg-footer</span><span>#1a1d2e</span></div>
+        <div class="name">Footer (still dark)</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:rgba(22,25,42,0.10)"></div>
+        <div class="meta-row"><span>--border-card</span><span>fg × 0.12</span></div>
+        <div class="name">Card border</div>
+      </div>
+    </div>
+
+    <h3 style="font-weight:500;font-size:22px;margin:56px 0 16px;letter-spacing:-0.01em;">Selection &amp; focus</h3>
+    <div class="grid g-3">
+      <div class="card">
+        <div class="label">Selection</div>
+        <p style="margin:10px 0 0;font-size:14px;"><span style="background:rgba(0,241,241,0.3);color:#fff;padding:2px 6px;">Selected text</span> uses the accent at 30% opacity with white ink.</p>
+      </div>
+      <div class="card">
+        <div class="label">Focus ring</div>
+        <p style="margin:10px 0 0;font-size:14px;">2px solid accent · 2px offset. No exceptions.</p>
+      </div>
+      <div class="card">
+        <div class="label">Scrollbar</div>
+        <p style="margin:10px 0 0;font-size:14px;">6px rail, track matches canvas, thumb is cyan at 3px radius.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SPACE ============================ -->
+<section id="space">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">04 — Space · Radius · Borders</div>
+      <h2>Rhythm tokens</h2>
+      <p>Tailwind's default 4px step scale. Borders are all variations of the foreground opacity ladder, so light/dark stay perfectly paired. No hard shadows — depth comes from glow.</p>
+    </div>
+
+    <h3 style="font-weight:500;font-size:22px;margin:24px 0 16px;letter-spacing:-0.01em;">Spacing scale</h3>
+    <div class="stack-4">
+      <div class="space-row"><span class="token">4</span><div class="bar" style="width:4px"></div><span>0.25rem</span></div>
+      <div class="space-row"><span class="token">8</span><div class="bar" style="width:8px"></div><span>0.5rem</span></div>
+      <div class="space-row"><span class="token">12</span><div class="bar" style="width:12px"></div><span>0.75rem</span></div>
+      <div class="space-row"><span class="token">16</span><div class="bar" style="width:16px"></div><span>1rem</span></div>
+      <div class="space-row"><span class="token">24</span><div class="bar" style="width:24px"></div><span>1.5rem</span></div>
+      <div class="space-row"><span class="token">32</span><div class="bar" style="width:32px"></div><span>2rem</span></div>
+      <div class="space-row"><span class="token">48</span><div class="bar" style="width:48px"></div><span>3rem</span></div>
+      <div class="space-row"><span class="token">64</span><div class="bar" style="width:64px"></div><span>4rem</span></div>
+      <div class="space-row"><span class="token">96</span><div class="bar" style="width:96px"></div><span>6rem</span></div>
+      <div class="space-row"><span class="token">128</span><div class="bar" style="width:128px"></div><span>8rem</span></div>
+    </div>
+
+    <div class="grid g-2" style="margin-top:56px">
+      <div>
+        <h3 style="font-weight:500;font-size:22px;margin:0 0 16px;letter-spacing:-0.01em;">Radius</h3>
+        <div class="grid g-4">
+          <div class="sample" style="border-radius:4px"><span>4 · sm</span></div>
+          <div class="sample" style="border-radius:8px"><span>8 · md</span></div>
+          <div class="sample" style="border-radius:12px"><span>12 · lg</span></div>
+          <div class="sample" style="border-radius:999px"><span>pill</span></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-weight:500;font-size:22px;margin:0 0 16px;letter-spacing:-0.01em;">Glow (elevation)</h3>
+        <div class="grid g-3">
+          <div class="sample" style="border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.3)"><span>shadow · base</span></div>
+          <div class="sample" style="border-radius:12px;box-shadow:0 0 24px rgba(0,241,241,0.25)"><span>glow · soft</span></div>
+          <div class="sample" style="border-radius:12px;box-shadow:0 0 40px rgba(0,241,241,0.45)"><span>glow · hover</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-weight:500;font-size:22px;margin:56px 0 16px;letter-spacing:-0.01em;">Grid &amp; motion</h3>
+    <table class="scale">
+      <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>max-width</td><td>1200px</td><td>Content container</td></tr>
+        <tr><td>page gutter</td><td>32px</td><td>Edge inset</td></tr>
+        <tr><td>measure</td><td>62ch</td><td>Body text max-width</td></tr>
+        <tr><td>--motion-scale</td><td>1 → 0.35</td><td>Scroll-velocity-driven transition multiplier</td></tr>
+        <tr><td>transition base</td><td>0.3s × scale, ease</td><td>Background / border / color</td></tr>
+        <tr><td>theme-switch</td><td>0.35s ease</td><td>Body bg/color cross-fade</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================ COMPONENTS ============================ -->
+<section id="components">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">05 — Components</div>
+      <h2>Core library</h2>
+      <p>The pieces used across the home page, case studies, and template sub-sites. All rebuilt in Figma with the tokens above.</p>
+    </div>
+
+    <!-- Buttons -->
+    <h3 style="font-weight:500;font-size:22px;margin:24px 0 16px;letter-spacing:-0.01em;">Buttons</h3>
+    <div class="card">
+      <div class="row-gap-4">
+        <button class="btn btn-primary">View case study <span class="arrow">→</span></button>
+        <button class="btn btn-secondary">Get in touch</button>
+        <button class="btn btn-ghost">Skip</button>
+      </div>
+      <p class="hint" style="margin-top:20px">44px height · pill radius · 12px / 600 / 0.12em tracked label. Primary carries a soft cyan halo that brightens on hover.</p>
+    </div>
+
+    <!-- Links -->
+    <h3 style="font-weight:500;font-size:22px;margin:40px 0 16px;letter-spacing:-0.01em;">Links</h3>
+    <div class="card">
+      <p style="margin:0;color:var(--fg-70);">Inline text uses the accent with a subtle underline — for example, a <a class="link-inline" href="#">link to a case study</a>. Standalone CTAs use the arrow form so the motion is the signal:</p>
+      <div style="margin-top:20px" class="row-gap-4">
+        <a class="link-arrow" href="#">Read more <span class="arrow">→</span></a>
+        <a class="link-arrow" href="#">View all work <span class="arrow">→</span></a>
+        <a class="link-arrow" href="#">Download CV <span class="arrow">↓</span></a>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <h3 style="font-weight:500;font-size:22px;margin:40px 0 16px;letter-spacing:-0.01em;">Tags</h3>
+    <div class="card row-gap-4">
+      <span class="tag">UX Research</span>
+      <span class="tag">Product Design</span>
+      <span class="tag accent">Featured</span>
+      <span class="tag outline">EdTech</span>
+      <span class="tag">12 min read</span>
+      <span class="tag">2024</span>
+    </div>
+
+    <!-- Form -->
+    <h3 style="font-weight:500;font-size:22px;margin:40px 0 16px;letter-spacing:-0.01em;">Form</h3>
+    <div class="card">
+      <div class="grid g-2">
+        <div>
+          <label class="field">Name</label>
+          <input class="input" placeholder="Your name" />
+          <p class="hint">10px / 600 / 0.16em tracked label. Focus ring is accent with 18% glow.</p>
+        </div>
+        <div>
+          <label class="field">Email</label>
+          <input class="input" type="email" placeholder="you@domain.com" />
+          <p class="hint">Inputs sit on <span class="sp-mono">--bg-surface-2</span> against the card.</p>
+        </div>
+      </div>
+      <div style="margin-top:20px">
+        <label class="field">Message</label>
+        <textarea class="textarea" placeholder="A line or two…"></textarea>
+      </div>
+      <div class="row-gap-4" style="margin-top:20px;justify-content:flex-end">
+        <button class="btn btn-ghost">Cancel</button>
+        <button class="btn btn-primary">Send message <span class="arrow">→</span></button>
+      </div>
+    </div>
+
+    <!-- Floating nav -->
+    <h3 style="font-weight:500;font-size:22px;margin:40px 0 16px;letter-spacing:-0.01em;">Floating nav</h3>
+    <div class="card" style="display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+      <div class="floatnav">
+        <div class="dot active">H</div>
+        <div class="dot">W</div>
+        <div class="dot">CV</div>
+        <div class="dot">C</div>
+      </div>
+      <p class="hint" style="margin:0;flex:1;min-width:260px;">Pill-shaped, blurred background (<span class="sp-mono">--nav-bg</span>). Active dot gets the accent at 12% with a 1px inset ring.</p>
+    </div>
+
+    <!-- Project cards -->
+    <h3 style="font-weight:500;font-size:22px;margin:40px 0 16px;letter-spacing:-0.01em;">Project tile</h3>
+    <div class="grid g-3">
+      <a class="proj" href="#">
+        <div class="thumb">CASE STUDY · 16:10</div>
+        <div class="head"><h3>Org-level Reports</h3><span class="year">2024</span></div>
+        <p>Redesigning analytics for a 1,000-person research team.</p>
+        <div class="tags"><span class="tag">UX</span><span class="tag">EdTech</span></div>
+      </a>
+      <a class="proj" href="#">
+        <div class="thumb">CASE STUDY · 16:10</div>
+        <div class="head"><h3>Cinematic Entrance</h3><span class="year">2023</span></div>
+        <p>A scroll-linked homepage opener with motion scaling.</p>
+        <div class="tags"><span class="tag">Motion</span><span class="tag">Product</span></div>
+      </a>
+      <a class="proj" href="#">
+        <div class="thumb">TEMPLATE · 16:10</div>
+        <div class="head"><h3>Elite Diner</h3><span class="year">2025</span></div>
+        <p>A restaurant booking template built on the same token set.</p>
+        <div class="tags"><span class="tag">Template</span><span class="tag accent">Featured</span></div>
+      </a>
+    </div>
+
+    <!-- Header -->
+    <h3 style="font-weight:500;font-size:22px;margin:56px 0 16px;letter-spacing:-0.01em;">Header</h3>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px;border-bottom:1px solid var(--border-subtle);background:var(--nav-bg)">
+        <div class="brand">Ahmed Soudan<em>.</em></div>
+        <nav class="topnav"><a>Work</a><a>CV</a><a>Templates</a><a>Contact</a></nav>
+        <a class="link-arrow" href="#">Book a call <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PAGES ============================ -->
+<section id="pages">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">06 — Applied</div>
+      <h2>Pages in use</h2>
+      <p>The tokens assembled into the two surfaces the site spends most of its life in — the cinematic entrance and a case-study open.</p>
+    </div>
+
+    <div class="grid g-2">
+      <div class="mock">
+        <div class="mock-bar"><i></i><i></i><i></i></div>
+        <div class="mock-body">
+          <div class="eyebrow">Hero</div>
+          <h2 style="font-weight:200;font-size:56px;line-height:1;letter-spacing:-0.03em;margin:24px 0 16px">Ahmed Soudan<br/><em style="color:var(--accent);font-weight:300;font-style:normal">designs products</em><br/>that move.</h2>
+          <p style="font-weight:300;font-size:16px;color:var(--fg-70);max-width:48ch;margin:0 0 32px">Digital Product Designer — 20 years, 300+ projects, specialising in UX research and EdTech.</p>
+          <div style="display:flex;gap:16px"><button class="btn btn-primary">View work <span class="arrow">→</span></button><button class="btn btn-secondary">Book a call</button></div>
+        </div>
+      </div>
+
+      <div class="mock">
+        <div class="mock-bar"><i></i><i></i><i></i></div>
+        <div class="mock-body">
+          <div class="eyebrow">Case study · 12 min</div>
+          <h2 style="font-weight:300;font-size:36px;line-height:1.05;letter-spacing:-0.025em;margin:24px 0 12px">Org-level Reports</h2>
+          <p style="font-weight:300;font-size:17px;color:var(--fg-70);margin:0 0 24px">Redesigning analytics for a 1,000-person research team.</p>
+          <p style="font-size:14px;color:var(--fg-60);max-width:56ch">The team needed a single view of programme health across faculties. Existing tooling <a class="link-inline" href="#">fragmented the signal</a> across six dashboards.</p>
+          <div style="display:flex;gap:6px;margin-top:20px"><span class="tag">UX Research</span><span class="tag">EdTech</span><span class="tag accent">Shipped</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div class="row">
+    <div>
+      <div class="brand-big">Ahmed Soudan<em>.</em></div>
+      <p style="color:rgba(255,255,255,0.6);max-width:40ch;margin:16px 0 0;font-size:14px;line-height:1.55;">Digital Product Designer. 20 years of work, shipped from the UK.</p>
+    </div>
+    <div>
+      <h4>Site</h4>
+      <a>Work</a><a>CV</a><a>Templates</a><a>Contact</a>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <a>LinkedIn</a><a>Behance</a><a>GitHub</a><a>Email</a>
+    </div>
+    <div>
+      <h4>System</h4>
+      <a>v1.0 · Apr 2026</a>
+      <a>Figma library →</a>
+      <a>Download tokens</a>
+    </div>
+  </div>
+  <div class="bottom">
+    <small>© 2026 Ahmed Soudan. Set in Montserrat.</small>
+    <small>Design system v1.0</small>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  const root = document.body;
+  const saved = localStorage.getItem('asoudan-ds-theme');
+  if (saved) root.dataset.theme = saved;
+  btn.textContent = root.dataset.theme === 'dark' ? 'Light' : 'Dark';
+  btn.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    btn.textContent = next === 'dark' ? 'Light' : 'Dark';
+    localStorage.setItem('asoudan-ds-theme', next);
+  });
+</script>
+</body>
+</html>
