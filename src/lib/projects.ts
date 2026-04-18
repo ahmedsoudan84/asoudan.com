@@ -2452,30 +2452,30 @@ export const projectsData: ProjectDetail[] = [
         "type": "timeline",
         "label": "Timeline",
         "heading": "16 weeks, 5 phases",
-        "items": [
+        "timelineSteps": [
           {
-            "week": "Weeks 1–3",
-            "phase": "Audit",
+            "phase": "Weeks 1–3",
+            "title": "Audit",
             "description": "Screen frequency mapping, fork inventory, accessibility gap analysis across all four components."
           },
           {
-            "week": "Weeks 4–7",
-            "phase": "Briefs & Specs",
+            "phase": "Weeks 4–7",
+            "title": "Briefs & Specs",
             "description": "Anatomy definitions, variant matrices, keyboard contracts, ARIA specifications for each component."
           },
           {
-            "week": "Weeks 8–10",
-            "phase": "Tokens & Theming",
+            "phase": "Weeks 8–10",
+            "title": "Tokens & Theming",
             "description": "62 token definitions across 6 families. Theming architecture. Motion grammar agreement with engineering."
           },
           {
-            "week": "Weeks 11–13",
-            "phase": "Migration",
+            "phase": "Weeks 11–13",
+            "title": "Migration",
             "description": "Pilot squad migration. Spec validation. Edge case coverage. Storybook parity review."
           },
           {
-            "week": "Weeks 14–16",
-            "phase": "Governance",
+            "phase": "Weeks 14–16",
+            "title": "Governance",
             "description": "Intake rules, contribution model, and usage guidelines. Shipped in v2.4."
           }
         ],
