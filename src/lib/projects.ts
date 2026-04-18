@@ -2074,20 +2074,20 @@ export const projectsData: ProjectDetail[] = [
     "coverStyle": "browser",
     "images": [
       {
-        "src": "/images/projects/components-production-new/fragments/tab-production.svg",
-        "alt": "TabList production handoff sheet"
+        "src": "/images/projects/components-production-new/Tab Button.svg",
+        "alt": "TabList spotlight — state matrix, live anatomy, keyboard and ARIA contract"
       },
       {
-        "src": "/images/projects/components-production-new/fragments/ring-hero.svg",
-        "alt": "Progress Ring at 67% — the primitive"
+        "src": "/images/projects/components-production-new/Progress ring.svg",
+        "alt": "Progress Ring spotlight — hero, thresholds, motion, ARIA, and size scale"
       },
       {
-        "src": "/images/projects/components-production-new/fragments/card-gallery.svg",
-        "alt": "Card system gallery — six variants, one primitive"
+        "src": "/images/projects/components-production-new/Skill card.svg",
+        "alt": "Skill Card spotlight — slots, elevation system, and interaction states"
       },
       {
-        "src": "/images/projects/components-production-new/fragments/list-production.svg",
-        "alt": "ListItem production example — course queue"
+        "src": "/images/projects/components-production-new/List item.svg",
+        "alt": "ListItem spotlight — comfortable and compact densities, slot anatomy, decision tree"
       }
     ],
     "behanceUrl": "",
@@ -2196,6 +2196,15 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "split",
+        "label": "01 · Spotlight",
+        "heading": "The full TabList on a single surface — four systems, one page.",
+        "body": "The spotlight above is the diagram engineers read first. **Top rows:** a 2×4 state matrix (selected/unselected across default, hover, focused, disabled) — every cell rendered with the same token, never a raw hex. **Bottom-left:** a live TabList anatomy with the 4px active indicator annotated and `color-text-primary` called out on the label. **Bottom-right top:** the keyboard contract — arrow keys cycle, Home/End jump, Tab exits the component. **Bottom-right bottom:** the ARIA schema — `role=\"tab\"`, `aria-selected=\"true\"`, `aria-controls=\"panel-id\"`. Everything else in sections 01.1–01.3 is a zoom into one of those regions.",
+        "image": "/images/projects/components-production-new/Tab Button.svg",
+        "imagePosition": "right",
+        "bg": "dark"
+      },
+      {
+        "type": "split",
         "label": "01.1 · State Matrix",
         "heading": "Two axes. Every cell named. No \"we'll figure it out\" left.",
         "body": "Selection crosses interaction — selected/unselected against default, hover, focused, disabled. Eight permutations before loading, twelve with it. Each cell references a token, never a raw hex. The matrix is the spec: if a state isn't in this grid, it doesn't exist in the component.",
@@ -2230,16 +2239,10 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "showcase",
-        "label": "01.4 · Production Spec",
-        "heading": "Four fragments, one handoff sheet — engineering built from this page in a single sprint.",
-        "body": "The matrix, the indicator, the state tokens, the keyboard and ARIA contract — all four fragments above live on a single deliverable. No design file chasing. No Slack threads. One sheet, signed off, and the TabList was in production.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/tab-production.svg",
-          "alt": "TabList production handoff sheet — matrix, tokens, state grid, and keyboard + ARIA contract assembled into one spec page"
-        },
-        "caption": "Production handoff — every fragment from 01.1–01.3 reassembled as the page the engineers signed off against.",
-        "showcaseBg": "#F0FAF9",
+        "type": "text",
+        "label": "01.4 · Outcome",
+        "heading": "Built in a single sprint. Zero clarifications.",
+        "body": "The fragments above — matrix, indicator, keyboard, ARIA — plus the spotlight at the top of this section were the entire handoff. No Figma links trailing into Slack, no \"can you confirm the focused state\" DMs, no mid-sprint re-specs. Four squads rolled the same TabList into production within two weeks of the page being signed off.",
         "bg": "dark"
       },
       {
@@ -2248,6 +2251,15 @@ export const projectsData: ProjectDetail[] = [
         "label": "Component · Progress Ring",
         "heading": "A 60-pixel component with a physics problem at its centre.",
         "body": "The Progress Ring looks trivial until you try to specify it. What happens at zero? At one hundred? When the user has reduced-motion enabled? When a screen reader encounters it mid-update? Each of those questions got its own slice of the spec — shown below as its own fragment. The whole ring is the sum of those decisions, not the starting point for them.",
+        "bg": "dark"
+      },
+      {
+        "type": "split",
+        "label": "02 · Spotlight",
+        "heading": "The whole ring, annotated — geometry, colour, motion, voice, scale.",
+        "body": "The spotlight is the handoff sheet. **Left:** the 67% hero, with a `stroke-dasharray = circumference × %` callout pointing at the arc and a `color-progress-fill → teal-500` token reference on the fill. **Top-right:** the three colour thresholds — at risk (<25%), in progress (25–75%), on track (>75%) — each token-wired. **Middle-right:** the ease-out-quart motion curve, 400ms, honouring prefers-reduced-motion. **Lower-right:** the ARIA block — `role=\"progressbar\"`, `aria-valuenow=67`, `aria-valuetext=\"4 of 6\"`. **Bottom row:** the size scale (24/36/56) and the 100% celebration variant. Sections 02.1–02.5 each zoom in on one of those annotations.",
+        "image": "/images/projects/components-production-new/Progress ring.svg",
+        "imagePosition": "left",
         "bg": "dark"
       },
       {
@@ -2327,6 +2339,15 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "split",
+        "label": "03 · Spotlight",
+        "heading": "The Skill Card — every slot, elevation, and interaction on one surface.",
+        "body": "The spotlight shows the full Skill Card assembled, with **numbered callouts** on the left (01 media, 02 body, 03 footer) and **system panels** on the right. **Top-right: ELEVATION** — three tokens, three z-indices (flat z-0 · raised z-1 · elevated z-2), each picked explicitly, never automatic. **Bottom-right: INTERACTION** — hover (`translateY(-2px) · 200ms`), focused (`3px ring · color-focus`), pressed (`bg-tint · 8% accent`). The hero card itself fills four slots and overlays the mastery badge — and the mini Progress Ring inside it is the 40px variant of the ring primitive from section 02, imported unchanged. Sections 03.1–03.3 zoom into specific parts of this view.",
+        "image": "/images/projects/components-production-new/Skill card.svg",
+        "imagePosition": "right",
+        "bg": "light"
+      },
+      {
+        "type": "split",
         "label": "03.1 · Five Slots",
         "heading": "Every variant lives in the same anatomy.",
         "body": "Media, header, body, footer, overlay. That's the whole surface area. Domain cards — Skill, content, dashboard metric — fill those slots differently. They don't extend the primitive. They don't add regions. The slot overlay below is the contract every card in the system signs.",
@@ -2383,6 +2404,15 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "split",
+        "label": "04 · Spotlight",
+        "heading": "Both densities, all four slots, and the decision tree — assembled on one page.",
+        "body": "The spotlight carries the whole ListItem system. **Top: COMFORTABLE (72px)** — a single browsing-density row showing the leading media slot (U4 avatar), the title + metadata pair, a 14-stroke progress ring in the status slot, and a trailing chevron. **Middle: COMPACT (56px)** — three dense rows with status icons (✓ · ! · ○) replacing avatars, each honouring the same slot contract. **Annotation strip:** dashed callouts name `leading`, `primary · line-clamp 2`, `status`, `trailing` — the overflow rules enforced in the component itself. **Bottom: WHEN TO USE** — the ListItem / Table / Card decision tree, outlined card showing which of the three ships. Sections 04.1–04.3 zoom in.",
+        "image": "/images/projects/components-production-new/List item.svg",
+        "imagePosition": "left",
+        "bg": "dark"
+      },
+      {
+        "type": "split",
         "label": "04.1 · Slot Anatomy",
         "heading": "Four regions. Truncation named where it lives.",
         "body": "Leading, title, metadata, trailing. Titles clamp at two lines; metadata clamps at one. Nothing ever pushes the trailing slot off-screen — the rule is enforced in the component, not in the content. Teams stopped losing hours every sprint to content that \"somehow\" broke their layout.",
@@ -2417,16 +2447,10 @@ export const projectsData: ProjectDetail[] = [
         "bg": "dark"
       },
       {
-        "type": "showcase",
-        "label": "04.4 · Production Spec",
-        "heading": "Real data. Real truncation. Real touch targets.",
-        "body": "A production course queue built from the ListItem primitive — avatar + title + metadata + status ring + trailing action + locked state, all in sequence, all obeying the slot contract. The long Speaking Evaluation title truncates at the two-line clamp; the trailing arrow never drifts off-screen; the 72px row preserves the 64px touch guarantee. This is the page the team finally stopped debating in sprint planning.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/list-production.svg",
-          "alt": "ListItem production example — course queue with avatar, truncated title, metadata, status ring, pending badge, completion, and locked state"
-        },
-        "caption": "Production example — six rows, four row types, one primitive.",
-        "showcaseBg": "#F0FAF9",
+        "type": "text",
+        "label": "04.4 · Outcome",
+        "heading": "Four hundred rows. Three data shapes. No sprint re-specs.",
+        "body": "Real data finally stopped breaking layout. Long titles clamped at two lines without pushing the trailing chevron off-screen. Both densities preserved the 64px touch guarantee. The \"should this be a ListItem or a Table\" debate — which used to recur every sprint — ended when the decision tree shipped with the component instead of trailing six weeks behind it.",
         "bg": "dark"
       },
       {
