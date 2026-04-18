@@ -1,0 +1,102 @@
+<svg width="640" height="440" viewBox="0 0 640 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="440" rx="16" fill="#F7F9FB"></rect>
+
+  <text x="36" y="40" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">ACCESSIBILITY · FOUR PILLARS · WCAG 2.1 AA</text>
+  <text x="36" y="56" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" fill="#8A97B0">Documented per component, never bolted on — most-referenced page in developer onboarding</text>
+
+  
+  <rect x="36" y="82" width="278" height="148" rx="10" fill="#FFFFFF" stroke="#E4E9F0"></rect>
+  <text x="52" y="106" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#8A97B0">01 · FOCUS RING</text>
+  <text x="52" y="124" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1A2035">Visible at 3:1 against any surface</text>
+
+  
+  <rect x="58" y="146" width="88" height="32" rx="6" fill="#1A2035"></rect>
+  <rect x="54" y="142" width="96" height="40" rx="8" stroke="#26A69A" stroke-width="2" fill="none"></rect>
+  <text x="102" y="166" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">Continue</text>
+
+  
+  <line x1="54" y1="196" x2="150" y2="196" stroke="#26A69A" stroke-width="1"></line>
+  <line x1="54" y1="192" x2="54" y2="200" stroke="#26A69A" stroke-width="1"></line>
+  <line x1="150" y1="192" x2="150" y2="200" stroke="#26A69A" stroke-width="1"></line>
+  <text x="102" y="212" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#26A69A" text-anchor="middle">2px ring · 2px offset · token.focus</text>
+
+  <text x="170" y="168" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">never outline:none</text>
+  <text x="170" y="182" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">never on mouseDown</text>
+  <text x="170" y="196" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">:focus-visible only</text>
+  <text x="170" y="210" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#26A69A">AA ✓ contrast 3.8</text>
+
+  
+  <rect x="326" y="82" width="278" height="148" rx="10" fill="#FFFFFF" stroke="#E4E9F0"></rect>
+  <text x="342" y="106" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#8A97B0">02 · ARIA SCHEMA</text>
+  <text x="342" y="124" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1A2035">Role-first, not attribute-first</text>
+
+  
+  <rect x="342" y="138" width="248" height="80" rx="6" fill="#F7F9FB"></rect>
+  <text x="352" y="154" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#5A6784">&lt;div</text>
+  <text x="380" y="154" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#26A69A">role</text>
+  <text x="400" y="154" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#5A6784">=</text>
+  <text x="408" y="154" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">&#34;progressbar&#34;</text>
+  <text x="352" y="168" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#26A69A">  aria-valuenow</text>
+  <text x="448" y="168" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#5A6784">=</text>
+  <text x="456" y="168" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">{67}</text>
+  <text x="352" y="182" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#26A69A">  aria-valuemin</text>
+  <text x="448" y="182" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#5A6784">=</text>
+  <text x="456" y="182" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">{0}</text>
+  <text x="352" y="196" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#26A69A">  aria-valuetext</text>
+  <text x="448" y="196" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#5A6784">=</text>
+  <text x="456" y="196" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">&#34;67%, 4 of 6&#34;</text>
+  <text x="352" y="210" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#5A6784">/&gt;</text>
+
+  
+  <rect x="36" y="246" width="278" height="166" rx="10" fill="#FFFFFF" stroke="#E4E9F0"></rect>
+  <text x="52" y="270" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#8A97B0">03 · KEYBOARD TABLE</text>
+  <text x="52" y="288" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1A2035">Every component, every key, documented</text>
+
+  
+  <line x1="52" y1="302" x2="298" y2="302" stroke="#E4E9F0"></line>
+  <text x="52" y="316" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" font-weight="600" fill="#8A97B0">KEY</text>
+  <text x="142" y="316" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" font-weight="600" fill="#8A97B0">EFFECT</text>
+  <line x1="52" y1="324" x2="298" y2="324" stroke="#E4E9F0"></line>
+
+  <rect x="52" y="332" width="60" height="16" rx="3" fill="#1A2035"></rect>
+  <text x="82" y="343" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#FFFFFF" text-anchor="middle">←  →</text>
+  <text x="142" y="343" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">cycle selection</text>
+
+  <rect x="52" y="352" width="60" height="16" rx="3" fill="#1A2035"></rect>
+  <text x="82" y="363" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#FFFFFF" text-anchor="middle">Home End</text>
+  <text x="142" y="363" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">jump to edges</text>
+
+  <rect x="52" y="372" width="60" height="16" rx="3" fill="#1A2035"></rect>
+  <text x="82" y="383" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#FFFFFF" text-anchor="middle">Tab ↹</text>
+  <text x="142" y="383" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">exit component</text>
+
+  <rect x="52" y="392" width="60" height="16" rx="3" fill="#1A2035"></rect>
+  <text x="82" y="403" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#FFFFFF" text-anchor="middle">Esc</text>
+  <text x="142" y="403" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">close / dismiss</text>
+
+  
+  <rect x="326" y="246" width="278" height="166" rx="10" fill="#FFFFFF" stroke="#E4E9F0"></rect>
+  <text x="342" y="270" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#8A97B0">04 · CONTRAST VERIFICATION</text>
+  <text x="342" y="288" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1A2035">Every token pair · verified AA</text>
+
+  
+  <rect x="342" y="302" width="28" height="20" rx="3" fill="#1A2035"></rect>
+  <rect x="374" y="302" width="28" height="20" rx="3" fill="#FFFFFF" stroke="#E4E9F0"></rect>
+  <text x="412" y="316" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">text.primary / surface</text>
+  <text x="590" y="316" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" font-weight="700" fill="#26A69A" text-anchor="end">16.2 ✓</text>
+
+  <rect x="342" y="328" width="28" height="20" rx="3" fill="#5A6784"></rect>
+  <rect x="374" y="328" width="28" height="20" rx="3" fill="#FFFFFF" stroke="#E4E9F0"></rect>
+  <text x="412" y="342" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">text.secondary / surface</text>
+  <text x="590" y="342" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" font-weight="700" fill="#26A69A" text-anchor="end">8.4 ✓</text>
+
+  <rect x="342" y="354" width="28" height="20" rx="3" fill="#FFFFFF"></rect>
+  <rect x="374" y="354" width="28" height="20" rx="3" fill="#26A69A"></rect>
+  <text x="412" y="368" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">text.inverse / primary</text>
+  <text x="590" y="368" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" font-weight="700" fill="#26A69A" text-anchor="end">4.7 ✓</text>
+
+  <rect x="342" y="380" width="28" height="20" rx="3" fill="#8A97B0"></rect>
+  <rect x="374" y="380" width="28" height="20" rx="3" fill="#FFFFFF" stroke="#E4E9F0"></rect>
+  <text x="412" y="394" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#1A2035">text.muted / surface</text>
+  <text x="590" y="394" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" font-weight="700" fill="#26A69A" text-anchor="end">4.6 ✓</text>
+</svg>

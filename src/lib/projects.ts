@@ -2710,6 +2710,336 @@ export const projectsData: ProjectDetail[] = [
     ]
   },
   {
+    "id": "design-system",
+    "slug": "design-system",
+    "title": "Design System",
+    "subtitle": "asoudan.com v1.0",
+    "category": "DESIGN SYSTEM",
+    "number": "14",
+    "description": "A dark-first design system for asoudan.com — Montserrat across the 100–900 weight range, a single cyan accent, and twelve opacity steps replacing a grey scale. Tokens, type, colour, rhythm, and core components extracted directly from the live codebase and mirrored in Figma.",
+    "tags": [
+      "Design System",
+      "Design Tokens",
+      "Typography",
+      "Figma",
+      "Accessibility"
+    ],
+    "color": "#00F1F1",
+    "cover": "/images/projects/design-system/card-hero.svg",
+    "coverStyle": "contain",
+    "images": [
+      {
+        "src": "/images/projects/design-system/card-hero.svg",
+        "alt": "Design System — Cover"
+      }
+    ],
+    "behanceUrl": "",
+    "role": "Designer & Author",
+    "timeline": "2026",
+    "team": "Solo",
+    "tools": "Figma, Next.js, Tailwind",
+    "platform": "Web",
+    "caseStudy": [
+      {
+        "type": "tldr",
+        "label": "Overview",
+        "heading": "Design System v1.0 at a glance",
+        "bullets": [
+          "Goal: Extract the design language of asoudan.com into a portable system so the site, case studies, and template sub-sites share one source of truth.",
+          "Approach: Read the live globals.css, distilled four principles, then documented type, colour, rhythm, and a core component library — each with Figma parity.",
+          "Output: Dark-first tokens, twelve-step foreground opacity ladder, Montserrat type scale (100–900), cyan #00F1F1 accent, and nine component families with full states and ARIA.",
+          "Use: Powers the homepage hero, every case study template, and downstream template sub-sites like Elite Diner and Real Estate."
+        ],
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "Principles",
+        "heading": "Four rules that keep the system coherent",
+        "body": "Before tokens, before components, four principles extracted from the live site: **Dark is the default** — the site opens dark and stays dark; light is a courtesy, not a baseline. **One glowing accent** — cyan #00F1F1 is the only hue with saturation; use it to point, never to decorate. **Foreground by opacity** — twelve opacity steps of the foreground replace a grey scale; hierarchy by alpha, not hue. **Motion scales with scroll** — transitions use a --motion-scale multiplier so fast readers get snappy UI and slow readers get soft. Every token and component downstream is a consequence of these four rules.",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "Typography",
+        "heading": "One typeface, the full 100–900 weight range, one supporting voice",
+        "body": "Montserrat carries everything — from the 88/100 cinematic display down to the 11px tracked eyebrow — using the full 100–900 weight range for hierarchy instead of layering in a second serif. Weights do the work: 200 for H1, 300 for H2 and lede, 500 for H3, 600 for H4 and eyebrows. JetBrains Mono is added for tokens, metadata, and code — a supporting voice, never decorative. The scale locks to a clear role per size (Display, H1–H4, Lede, Body, Small, Caption, Eyebrow, Mono) with a 62-character measure cap on body copy and body running at the 70%-foreground opacity step so headings at full strength always read as the senior element.",
+        "bg": "light"
+      },
+      {
+        "type": "text",
+        "label": "Colour",
+        "heading": "A deep blue-black canvas, one cyan, and a twelve-step opacity ladder",
+        "body": "The palette is intentionally small: six surface tokens stepping from #0a0c14 (canvas) up through #23273a (raised), one accent (#00F1F1) with its hover pair (#00c8c8), and the footer pinned to #0d0f1a even in light mode. Instead of a parallel grey scale, the foreground token steps through twelve opacities — 1.00, 0.70, 0.60, 0.50, 0.40, 0.30, 0.20, 0.15, 0.10, 0.08, 0.06, 0.05 — each mapped to a role (headings, body, meta, disabled, dividers, tag backgrounds). Light theme mirrors the token structure with inked #16192A on an off-white #f8f8f8 canvas; the accent shifts to #008b8b to hold contrast. Selection is the accent at 30% opacity, focus is a 2px accent ring with 2px offset — no exceptions.",
+        "bg": "dark"
+      },
+      {
+        "type": "text",
+        "label": "Rhythm",
+        "heading": "Tailwind's 4px scale, pill radii, and glow instead of shadow",
+        "body": "Spacing follows Tailwind's default 4px step scale (4, 8, 12, 16, 24, 32, 48, 64, 96, 128) so engineering can read directly from the design. Radii are quantised to four values: 4 (sm), 8 (md), 12 (lg), and 999 (pill). Borders are all variations of the foreground opacity ladder so light and dark stay paired. Depth is handled by glow, not hard shadow — a soft cyan halo at 25% opacity for resting state, 45% on hover. The content container caps at 1200px with 32px page gutters and a 62ch measure for body text.",
+        "bg": "light"
+      },
+      {
+        "type": "showcase",
+        "label": "Component — Tab Button",
+        "heading": "Anatomy, states, spacing, and keyboard model in one spec",
+        "body": "The Tab Button defines the system's interactive rhythm — pill radius, 12px tracked label, focus ring geometry, and a 2-axis state matrix (selection × interaction). The spec covers anatomy, spacing tokens, layout, keyboard navigation, and ARIA pattern in one sheet.",
+        "image": {
+          "src": "/images/projects/design-system/tab-anatomy.svg",
+          "alt": "Tab Button — anatomy with token references"
+        },
+        "caption": "Tab Button anatomy — every measurement a token, never a raw value",
+        "showcaseBg": "#0a0c14",
+        "bg": "dark"
+      },
+      {
+        "type": "screen-gallery",
+        "label": "Tab Button — full spec",
+        "heading": "States, layout, keyboard, and ARIA",
+        "screens": [
+          {
+            "image": {
+              "src": "/images/projects/design-system/tab-matrix.svg",
+              "alt": "Tab Button — state matrix"
+            },
+            "label": "State matrix"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/tab-layout-spacing.svg",
+              "alt": "Tab Button — layout and spacing"
+            },
+            "label": "Layout & spacing"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/tab-keyboard.svg",
+              "alt": "Tab Button — keyboard model"
+            },
+            "label": "Keyboard"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/tab-aria.svg",
+              "alt": "Tab Button — ARIA pattern"
+            },
+            "label": "ARIA"
+          }
+        ],
+        "columns": 2,
+        "caption": "Tab Button — the 2-axis state matrix, 4px-grid spacing, WAI-ARIA Tabs pattern, and full keyboard model",
+        "bg": "light"
+      },
+      {
+        "type": "showcase",
+        "label": "Component — Progress Ring",
+        "heading": "SVG stroke-dasharray, motion that respects preferences, ARIA that speaks",
+        "body": "The Progress Ring renders via SVG stroke-dasharray with a CSS transition that disables under prefers-reduced-motion. Colour thresholds provide contextual feedback — green above 75%, amber 25–75%, red below 25% — and screen readers receive live updates via aria-valuenow plus a human-readable aria-valuetext.",
+        "image": {
+          "src": "/images/projects/design-system/ring-hero.svg",
+          "alt": "Progress Ring — hero composition"
+        },
+        "caption": "Progress Ring — geometry, thresholds, and motion all derived from the same token set",
+        "showcaseBg": "#0a0c14",
+        "bg": "dark"
+      },
+      {
+        "type": "screen-gallery",
+        "label": "Progress Ring — full spec",
+        "heading": "Geometry, sizes, thresholds, motion, and ARIA",
+        "screens": [
+          {
+            "image": {
+              "src": "/images/projects/design-system/ring-geometry.svg",
+              "alt": "Progress Ring — SVG geometry"
+            },
+            "label": "Geometry"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/ring-sizes.svg",
+              "alt": "Progress Ring — size presets"
+            },
+            "label": "Sizes"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/ring-thresholds.svg",
+              "alt": "Progress Ring — colour thresholds"
+            },
+            "label": "Thresholds"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/ring-motion.svg",
+              "alt": "Progress Ring — motion spec"
+            },
+            "label": "Motion"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/ring-aria.svg",
+              "alt": "Progress Ring — ARIA live region"
+            },
+            "label": "ARIA"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/ring-celebrate.svg",
+              "alt": "Progress Ring — celebration state"
+            },
+            "label": "100% state"
+          }
+        ],
+        "columns": 3,
+        "caption": "Progress Ring — three sizes, threshold colours, motion fallback for reduced-motion, ARIA live updates, and a celebratory 100% state",
+        "bg": "light"
+      },
+      {
+        "type": "showcase",
+        "label": "Component — Skill Card",
+        "heading": "A slot-based card that composes without forking",
+        "body": "The Skill Card extends the base Card with five slots — media, header, body, footer, overlay — and three elevation levels. Clickable cards receive a translateY -2px hover with an expanding cyan glow; every variant on the platform derives from this one base, no detached instances.",
+        "image": {
+          "src": "/images/projects/design-system/card-hero.svg",
+          "alt": "Skill Card — hero composition"
+        },
+        "caption": "Skill Card — one base, infinite compositions",
+        "showcaseBg": "#0a0c14",
+        "bg": "dark"
+      },
+      {
+        "type": "screen-gallery",
+        "label": "Card — full spec",
+        "heading": "Slots, elevations, interactions, and gallery",
+        "screens": [
+          {
+            "image": {
+              "src": "/images/projects/design-system/card-slots.svg",
+              "alt": "Card — slot architecture"
+            },
+            "label": "Slots"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/card-elevations.svg",
+              "alt": "Card — three elevation levels"
+            },
+            "label": "Elevations"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/card-interactions.svg",
+              "alt": "Card — interaction states"
+            },
+            "label": "Interactions"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/card-gallery.svg",
+              "alt": "Card — variant gallery"
+            },
+            "label": "Gallery"
+          }
+        ],
+        "columns": 2,
+        "caption": "Card system — five slots, three elevations, hover/focus/active interactions, and a gallery of every variant in context",
+        "bg": "light"
+      },
+      {
+        "type": "showcase",
+        "label": "Component — List Item",
+        "heading": "Dense data, clear hierarchy, compliant touch targets",
+        "body": "The List Item handles the platform's data-dense surfaces — comfortable and compact densities, slot-based anatomy, and a decision tree for when to use a list, a card, or a table. A 64px minimum touch target keeps every density WCAG-compliant.",
+        "image": {
+          "src": "/images/projects/design-system/list-slots.svg",
+          "alt": "List Item — slot anatomy"
+        },
+        "caption": "List Item — slots, densities, and the decision tree",
+        "showcaseBg": "#0a0c14",
+        "bg": "dark"
+      },
+      {
+        "type": "screen-gallery",
+        "label": "List — full spec",
+        "heading": "Slots, densities, and decision tree",
+        "screens": [
+          {
+            "image": {
+              "src": "/images/projects/design-system/list-comfortable.svg",
+              "alt": "List — comfortable density"
+            },
+            "label": "Comfortable"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/list-compact.svg",
+              "alt": "List — compact density"
+            },
+            "label": "Compact"
+          },
+          {
+            "image": {
+              "src": "/images/projects/design-system/list-decision.svg",
+              "alt": "List vs. Card vs. Table — decision tree"
+            },
+            "label": "Decision tree"
+          }
+        ],
+        "columns": 3,
+        "caption": "List component — two densities with 64px touch targets, plus a decision tree for list vs. card vs. table",
+        "bg": "light"
+      },
+      {
+        "type": "image",
+        "label": "Accessibility",
+        "heading": "WCAG compliance baked into every spec",
+        "body": "Every component ships with an accessibility summary: ARIA role mappings, keyboard interaction tables, focus ring geometry, screen reader scripts, and contrast verification. The summary is the most-referenced page in developer onboarding.",
+        "image": {
+          "src": "/images/projects/design-system/accessibility-summary.svg",
+          "alt": "Accessibility summary across the component library"
+        },
+        "caption": "Accessibility summary — ARIA, keyboard, focus, and contrast for every component in one sheet",
+        "bg": "dark"
+      },
+      {
+        "type": "stats",
+        "label": "System at a glance",
+        "heading": "What v1.0 ships with",
+        "stats": [
+          {
+            "value": "12",
+            "label": "Opacity steps replacing a grey scale",
+            "context": "one foreground token, alpha for hierarchy"
+          },
+          {
+            "value": "9",
+            "label": "Weights of Montserrat in use",
+            "context": "100–900, plus JetBrains Mono for tokens"
+          },
+          {
+            "value": "1",
+            "label": "Saturated hue across the whole system",
+            "context": "cyan #00F1F1 — points, never decorates"
+          },
+          {
+            "value": "2",
+            "label": "Themes paired via the opacity ladder",
+            "context": "dark default, light courtesy"
+          }
+        ],
+        "bg": "accent"
+      },
+      {
+        "type": "reflection",
+        "label": "Reflection",
+        "heading": "What extracting a system from a live site taught me",
+        "body": "The most useful decision was to start from globals.css rather than a blank Figma file. The live site is already a working system — its tokens, spacing, and motion rules have been battle-tested by the user who reads them. Documenting that system after the fact forced honesty: every inconsistency surfaced, every one-off style had to either justify itself or fold back into a token. The payoff is portability — the same system now drives the portfolio, every case study, and the template sub-sites, and the next time I open Figma the starting point is not a blank canvas but a small, opinionated kit that already knows the answers."
+      }
+    ]
+  },
+  {
     "id": "nano-gps",
     "slug": "nano-gps",
     "title": "Nano GPS",

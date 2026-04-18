@@ -1,0 +1,24 @@
+<svg width="420" height="260" viewBox="0 0 420 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="260" rx="16" fill="#0A0C14"></rect>
+
+  <text x="36" y="40" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">SCREEN READER</text>
+  <text x="36" y="56" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" fill="#5A6784">Visual progress that speaks the same truth</text>
+
+  
+  <rect x="36" y="80" width="348" height="88" rx="8" fill="#0F1322"></rect>
+  <text x="52" y="102" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#5A6784">&lt;div</text>
+  <text x="64" y="118" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#26A69A">role=</text>
+  <text x="104" y="118" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#F0F4F8">&#34;progressbar&#34;</text>
+  <text x="64" y="134" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#26A69A">aria-valuenow=</text>
+  <text x="176" y="134" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#F0F4F8">&#34;67&#34;</text>
+  <text x="64" y="150" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#26A69A">aria-valuetext=</text>
+  <text x="184" y="150" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#F0F4F8">&#34;4 of 6 units complete&#34;</text>
+  <text x="52" y="166" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#5A6784">/&gt;</text>
+
+  
+  <path d="M 36 196 L 60 196 L 60 188 L 72 196 L 384 196 L 384 232 L 36 232 Z" fill="#0F1322"></path>
+  <circle cx="54" cy="214" r="8" fill="#26A69A"></circle>
+  <text x="54" y="218" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="9" font-weight="700" fill="#0A0C14" text-anchor="middle">♪</text>
+  <text x="80" y="214" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" fill="#F0F4F8" font-style="italic">&#34;Progress bar: 4 of 6 units complete&#34;</text>
+  <text x="80" y="227" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#5A6784">NVDA · VoiceOver · JAWS — consistent phrasing</text>
+</svg>

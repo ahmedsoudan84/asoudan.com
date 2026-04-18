@@ -1,0 +1,39 @@
+<svg width="420" height="360" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="360" rx="16" fill="#0A0C14"></rect>
+
+  <text x="36" y="46" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">COLOUR THRESHOLDS</text>
+  <text x="36" y="62" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" fill="#5A6784">Context without a legend</text>
+
+  
+  <rect x="36" y="92" width="348" height="68" rx="10" fill="#0F1322"></rect>
+  <g transform="translate(80, 126)">
+    <circle cx="0" cy="0" r="18" stroke="#161A2A" stroke-width="4" fill="none"></circle>
+    <circle cx="0" cy="0" r="18" stroke="#EB5757" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="22 91" stroke-dashoffset="17" transform="rotate(-90)"></circle>
+    <text x="0" y="4" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" font-weight="700" fill="#F0F4F8" text-anchor="middle">19</text>
+  </g>
+  <text x="128" y="120" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8">At risk</text>
+  <text x="128" y="138" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" fill="#6B7A9A">Under 25% · color-feedback-warning-bold</text>
+  <text x="370" y="134" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#EB5757" text-anchor="end">&lt; 25%</text>
+
+  
+  <rect x="36" y="172" width="348" height="68" rx="10" fill="#0F1322"></rect>
+  <g transform="translate(80, 206)">
+    <circle cx="0" cy="0" r="18" stroke="#161A2A" stroke-width="4" fill="none"></circle>
+    <circle cx="0" cy="0" r="18" stroke="#E8A838" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="65 48" stroke-dashoffset="30" transform="rotate(-90)"></circle>
+    <text x="0" y="4" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" font-weight="700" fill="#F0F4F8" text-anchor="middle">52</text>
+  </g>
+  <text x="128" y="200" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8">In progress</text>
+  <text x="128" y="218" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" fill="#6B7A9A">25–75% · color-feedback-info-bold</text>
+  <text x="370" y="214" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#E8A838" text-anchor="end">25–75%</text>
+
+  
+  <rect x="36" y="252" width="348" height="68" rx="10" fill="#0F1322"></rect>
+  <g transform="translate(80, 286)">
+    <circle cx="0" cy="0" r="18" stroke="#161A2A" stroke-width="4" fill="none"></circle>
+    <circle cx="0" cy="0" r="18" stroke="#27AE60" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="102 11" stroke-dashoffset="8" transform="rotate(-90)"></circle>
+    <text x="0" y="4" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" font-weight="700" fill="#F0F4F8" text-anchor="middle">90</text>
+  </g>
+  <text x="128" y="280" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8">On track</text>
+  <text x="128" y="298" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" fill="#6B7A9A">Over 75% · color-feedback-success-bold</text>
+  <text x="370" y="294" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#27AE60" text-anchor="end">&gt; 75%</text>
+</svg>

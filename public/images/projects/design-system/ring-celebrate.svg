@@ -1,0 +1,35 @@
+<svg width="420" height="260" viewBox="0 0 420 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="260" rx="16" fill="#0A0C14"></rect>
+
+  <text x="36" y="40" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#27AE60">EDGE · 100%</text>
+  <text x="36" y="56" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" fill="#5A6784">Celebration, but only if motion is allowed</text>
+
+  
+  <circle cx="210" cy="152" r="48" stroke="#27AE60" stroke-width="5" fill="none" stroke-linecap="round"></circle>
+
+  
+  <text x="210" y="148" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="22" font-weight="700" fill="#27AE60" text-anchor="middle" dominant-baseline="middle">✓</text>
+  <text x="210" y="172" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#6B7A9A" text-anchor="middle">COMPLETE</text>
+
+  
+  <circle cx="148" cy="108" r="2" fill="#26A69A"></circle>
+  <circle cx="136" cy="134" r="1.5" fill="#E8A838"></circle>
+  <circle cx="154" cy="170" r="2" fill="#27AE60"></circle>
+  <circle cx="272" cy="108" r="2" fill="#26A69A"></circle>
+  <circle cx="286" cy="130" r="1.5" fill="#E8A838"></circle>
+  <circle cx="266" cy="172" r="1.5" fill="#27AE60"></circle>
+  <circle cx="160" cy="92" r="1.5" fill="#F0F4F8" opacity="0.4"></circle>
+  <circle cx="258" cy="90" r="1.5" fill="#F0F4F8" opacity="0.4"></circle>
+
+  
+  <line x1="196" y1="82" x2="194" y2="74" stroke="#26A69A" stroke-width="1.5" stroke-linecap="round"></line>
+  <line x1="224" y1="82" x2="226" y2="74" stroke="#27AE60" stroke-width="1.5" stroke-linecap="round"></line>
+  <line x1="210" y1="80" x2="210" y2="68" stroke="#E8A838" stroke-width="1.5" stroke-linecap="round"></line>
+
+  
+  <line x1="36" y1="212" x2="384" y2="212" stroke="#161A2A"></line>
+  <text x="36" y="232" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#26A69A">motion-safe</text>
+  <text x="118" y="232" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#6B7A9A">→ confetti + 800ms scale</text>
+  <text x="36" y="246" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#E8A838">motion-reduce</text>
+  <text x="118" y="246" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#6B7A9A">→ opacity pulse only</text>
+</svg>

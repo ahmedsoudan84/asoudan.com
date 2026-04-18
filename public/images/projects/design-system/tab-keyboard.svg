@@ -1,0 +1,25 @@
+<svg width="420" height="220" viewBox="0 0 420 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="220" rx="16" fill="#0A0C14"></rect>
+
+  <text x="36" y="40" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">KEYBOARD CONTRACT</text>
+  <text x="36" y="56" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" fill="#5A6784">WAI-ARIA Tabs Pattern · no guesses</text>
+
+  
+  <rect x="36" y="82" width="42" height="30" rx="4" fill="#161A2A" stroke="#26A69A"></rect>
+  <text x="57" y="102" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="11" fill="#26A69A" text-anchor="middle">←</text>
+  <rect x="84" y="82" width="42" height="30" rx="4" fill="#161A2A" stroke="#26A69A"></rect>
+  <text x="105" y="102" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="11" fill="#26A69A" text-anchor="middle">→</text>
+  <text x="138" y="102" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" fill="#F0F4F8">cycle between tabs</text>
+
+  
+  <rect x="36" y="120" width="52" height="30" rx="4" fill="#161A2A" stroke="#26A69A"></rect>
+  <text x="62" y="140" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#26A69A" text-anchor="middle">Home</text>
+  <rect x="94" y="120" width="42" height="30" rx="4" fill="#161A2A" stroke="#26A69A"></rect>
+  <text x="115" y="140" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#26A69A" text-anchor="middle">End</text>
+  <text x="146" y="140" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" fill="#F0F4F8">jump to first / last</text>
+
+  
+  <rect x="36" y="158" width="52" height="30" rx="4" fill="#161A2A" stroke="#26A69A"></rect>
+  <text x="62" y="178" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="10" fill="#26A69A" text-anchor="middle">Tab</text>
+  <text x="96" y="178" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="11" fill="#F0F4F8">exits the component entirely</text>
+</svg>

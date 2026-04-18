@@ -1,0 +1,33 @@
+<svg width="420" height="220" viewBox="0 0 420 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="420" height="220" rx="16" fill="#0A0C14"></rect>
+
+  <text x="36" y="40" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">SIZE SCALE</text>
+  <text x="36" y="56" font-family="&#39;Inter&#39;, system-ui, sans-serif" font-size="10" fill="#5A6784">One primitive · three scales · zero redraws</text>
+
+  
+  <g transform="translate(86, 132)">
+    <circle cx="0" cy="0" r="12" stroke="#161A2A" stroke-width="3" fill="none"></circle>
+    <circle cx="0" cy="0" r="12" stroke="#26A69A" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="50 26" stroke-dashoffset="19" transform="rotate(-90)"></circle>
+    <text x="0" y="40" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#6B7A9A" text-anchor="middle">sm · 24</text>
+    <text x="0" y="54" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#5A6784" text-anchor="middle">stroke 3</text>
+  </g>
+
+  
+  <g transform="translate(210, 132)">
+    <circle cx="0" cy="0" r="20" stroke="#161A2A" stroke-width="4" fill="none"></circle>
+    <circle cx="0" cy="0" r="20" stroke="#26A69A" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="84 42" stroke-dashoffset="31" transform="rotate(-90)"></circle>
+    <text x="0" y="48" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#6B7A9A" text-anchor="middle">md · 40</text>
+    <text x="0" y="62" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#5A6784" text-anchor="middle">stroke 4</text>
+  </g>
+
+  
+  <g transform="translate(340, 132)">
+    <circle cx="0" cy="0" r="30" stroke="#161A2A" stroke-width="6" fill="none"></circle>
+    <circle cx="0" cy="0" r="30" stroke="#26A69A" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="126 63" stroke-dashoffset="47" transform="rotate(-90)"></circle>
+    <text x="0" y="58" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#6B7A9A" text-anchor="middle">lg · 60</text>
+    <text x="0" y="72" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="8" fill="#5A6784" text-anchor="middle">stroke 6</text>
+  </g>
+
+  
+  <text x="210" y="198" font-family="&#39;Menlo&#39;, &#39;Consolas&#39;, monospace" font-size="9" fill="#5A6784" text-anchor="middle">stroke-width = diameter / 10 · unchanging ratio</text>
+</svg>
