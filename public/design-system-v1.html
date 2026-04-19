@@ -288,7 +288,7 @@
     align-items: start;
   }
   .specimen:last-child { border-bottom: 0; }
-  .specimen .tag {
+  .specimen .tag { display: block; height: auto; padding: 0; border-radius: 0; background: transparent; border: 0; text-transform: none; letter-spacing: 0.02em;
     font-family: 'JetBrains Mono', monospace; font-size: 11px;
     letter-spacing: 0.02em; color: var(--fg-50);
   }
@@ -326,7 +326,7 @@
     background: var(--bg-surface);
     border: 1px solid var(--border-card);
     aspect-ratio: 1.4 / 1;
-    display: flex; align-items: flex-end; padding: 14px;
+    display: flex; align-items: center; justify-content: center; padding: 14px;
     font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-60);
   }
 
@@ -834,7 +834,7 @@
       <div class="space-row"><span class="token">128</span><div class="bar" style="width:128px"></div><span>8rem</span></div>
     </div>
 
-    <div class="grid g-2" style="margin-top:56px">
+    <div class="grid g-2" style="margin-top:56px;align-items:start">
       <div>
         <h3 style="font-weight:500;font-size:22px;margin:0 0 16px;letter-spacing:-0.01em;">Radius</h3>
         <div class="grid g-4">
