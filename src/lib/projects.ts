@@ -2326,11 +2326,11 @@ export const projectsData: ProjectDetail[] = [
       "Accessibility"
     ],
     "color": "#00F1F1",
-    "cover": "/images/projects/design-system/card-hero.svg",
+    "cover": "/images/projects/design-system/cover.svg",
     "coverStyle": "contain",
     "images": [
       {
-        "src": "/images/projects/design-system/card-hero.svg",
+        "src": "/images/projects/design-system/cover.svg",
         "alt": "Design System — Cover"
       }
     ],
