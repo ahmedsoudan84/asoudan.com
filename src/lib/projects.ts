@@ -55,6 +55,9 @@ export interface CaseStudySection {
   quote?: string;
   attribution?: string;
   showcaseBg?: string;
+  cropViewBox?: string;
+  svgNaturalWidth?: number;
+  svgNaturalHeight?: number;
   screens?: ScreenItem[];
   columns?: number;
   stepNumber?: number | string;
@@ -1848,44 +1851,36 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "split",
-        "label": "TabList — State Matrix",
-        "heading": "Two axes. Ten states. Zero ambiguity.",
-        "body": "The interaction matrix maps every combination of selection state (selected, unselected) against interaction state (default, hover, active, focused, disabled) — every cell explicitly specified. Engineers build from the matrix directly; no state is left to interpretation or guesswork.",
+        "type": "showcase",
+        "label": "TabList — States & Matrix",
+        "heading": "Ten states. Two axes. Every interaction specified.",
+        "body": "The full Tab Button spec opens with the complete interaction matrix — every combination of selection state (selected / unselected) and interaction state (default, hover, active, focused, disabled) — along with individual button states and animation specs. No interpretation needed at build time.",
         "image": {
-          "src": "/images/projects/components-production-new/fragments/tab-matrix.svg",
-          "alt": "TabList interaction matrix — selected and unselected states mapped across all five interaction states"
+          "src": "/images/projects/components-production-new/tab-button-clean.svg",
+          "alt": "TabList — states, interaction matrix, and button spec"
         },
-        "imagePosition": "right",
+        "caption": "Tab Button spec — states, matrix, and interaction rules",
+        "showcaseBg": "#0F1E24",
+        "cropViewBox": "40 438 7280 2662",
+        "svgNaturalWidth": 7360,
+        "svgNaturalHeight": 7216,
         "bg": "dark"
       },
       {
-        "type": "split",
-        "label": "TabList — Anatomy",
-        "heading": "Every region named. Every measurement a token.",
-        "body": "The anatomy sheet names every slot — container, tab, count badge, active indicator, label — and ties each measurement to its design token. No raw values anywhere: every number traces back to the token system, so a theme change propagates automatically without touching the component.",
+        "type": "showcase",
+        "label": "TabList — Anatomy & Accessibility",
+        "heading": "Every token named. Every ARIA attribute mapped.",
+        "body": "The lower half of the spec covers anatomy (every slot, every measurement tied to a design token) and the full accessibility contract — keyboard interaction table, ARIA role and attribute mapping per element and state. This is the sheet engineers kept open during implementation.",
         "image": {
-          "src": "/images/projects/components-production-new/fragments/tab-anatomy.svg",
-          "alt": "TabList anatomy — component regions, token references, and measurement annotations"
+          "src": "/images/projects/components-production-new/tab-button-clean.svg",
+          "alt": "TabList — anatomy, token references, and ARIA specification"
         },
-        "imagePosition": "left",
+        "caption": "Tab Button — anatomy, tokens, keyboard, and ARIA on one sheet",
+        "showcaseBg": "#F8FCFC",
+        "cropViewBox": "40 2900 7280 3260",
+        "svgNaturalWidth": 7360,
+        "svgNaturalHeight": 7216,
         "bg": "light"
-      },
-      {
-        "type": "image-pair",
-        "label": "TabList — Accessibility",
-        "heading": "Accessible by specification — keyboard and ARIA mapped per state",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/tab-keyboard.svg",
-          "alt": "TabList keyboard navigation — key actions mapped for every state and focus position"
-        },
-        "caption": "Keyboard — Left/Right cycles, Home/End jumps, Tab exits the group",
-        "image2": {
-          "src": "/images/projects/components-production-new/fragments/tab-aria.svg",
-          "alt": "TabList ARIA specification — roles, attributes, and values per element and state"
-        },
-        "caption2": "ARIA — roles and attributes mapped per element, per state",
-        "bg": "dark"
       },
       {
         "type": "process-step",
@@ -1893,60 +1888,39 @@ export const projectsData: ProjectDetail[] = [
         "label": "Component: Progress Ring",
         "heading": "Progress Ring — a tiny surface that carries a lot of meaning",
         "body": "On OEH, Progress Ring is how learners see at a glance whether they're on track: unit completion on the dashboard, module progress in a course, task status on a practice activity. Because it appears so often and at small sizes, it had to be unambiguous. I specified three sizes (sm 32px, md 48px, lg 64px) with locked stroke-width ratios so the ring reads the same visual weight at any scale, and three colour thresholds — green above 75%, amber 25–75%, red below 25% — tied to semantic tokens so theming ripples through automatically. Motion is a smooth stroke-dasharray transition on change, short enough to feel responsive and silenced entirely under prefers-reduced-motion.",
+        "bg": "dark"
+      },
+      {
+        "type": "showcase",
+        "label": "Progress Ring — Sizes & States",
+        "heading": "Three sizes, locked geometry, consistent weight at every scale.",
+        "body": "The top half of the spec shows all three sizes (sm 32px, md 48px, lg 64px) with stroke-width ratios locked across them, every visual state at each threshold colour, and the geometry annotations that keep the ring readable at 32px in a list row and at 64px as a dashboard hero element.",
+        "image": {
+          "src": "/images/projects/components-production-new/progress-ring-clean.svg",
+          "alt": "Progress Ring — sizes, geometry, and visual states"
+        },
+        "caption": "Progress Ring — sizes, geometry, thresholds, and visual states",
+        "showcaseBg": "#0F1E24",
+        "cropViewBox": "40 180 6072 2400",
+        "svgNaturalWidth": 6112,
+        "svgNaturalHeight": 6969,
         "bg": "light"
       },
       {
         "type": "showcase",
-        "label": "Progress Ring — in context",
-        "heading": "One component. Every placement it needs to serve.",
-        "body": "The hero sheet shows the Progress Ring across all its real-world placements — dashboard tile, course card, practice activity — at each of the three sizes, demonstrating that the locked stroke-width ratios hold consistent visual weight at 32px, 48px, and 64px.",
+        "label": "Progress Ring — Motion & Accessibility",
+        "heading": "Motion rules, reduced-motion fallback, and the full ARIA schema.",
+        "body": "The lower half covers the stroke-dasharray transition rules, the celebration animation at 100% (motion-safe only), the colour threshold logic tied to semantic tokens, and the ARIA contract — aria-valuenow for the raw number, aria-valuetext for the human string. Assistive tech users get the same information as sighted users, not a worse version.",
         "image": {
-          "src": "/images/projects/components-production-new/fragments/ring-hero.svg",
-          "alt": "Progress Ring in context — all three sizes across dashboard, course card, and activity placements"
+          "src": "/images/projects/components-production-new/progress-ring-clean.svg",
+          "alt": "Progress Ring — motion rules, thresholds, and ARIA accessibility spec"
         },
-        "caption": "Progress Ring — three sizes, every placement, consistent weight",
+        "caption": "Progress Ring — motion, thresholds, and ARIA schema",
         "showcaseBg": "#0F1E24",
+        "cropViewBox": "40 2780 6072 2100",
+        "svgNaturalWidth": 6112,
+        "svgNaturalHeight": 6969,
         "bg": "dark"
-      },
-      {
-        "type": "split",
-        "label": "Progress Ring — Geometry",
-        "heading": "Stroke ratios locked. Visual weight constant.",
-        "body": "The geometry spec locks the relationship between ring diameter and stroke width across all three sizes. The ratio ensures the ring reads the same relative thickness whether it's in a compact list row or a full-width dashboard tile — no visual recalibration needed when placing the component in a new context.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/ring-geometry.svg",
-          "alt": "Progress Ring geometry — diameter, stroke width, and ratio calculations across all three sizes"
-        },
-        "imagePosition": "right",
-        "bg": "light"
-      },
-      {
-        "type": "split",
-        "label": "Progress Ring — Sizes",
-        "heading": "Three sizes. Three contexts. One component.",
-        "body": "sm (32px) fits inline in a ListItem trailing slot without dominating the row. md (48px) is the default for card contexts where the ring anchors a quick scan. lg (64px) is reserved for hero moments — the top of a course view where completion is the primary signal. Each size ships with its own track and indicator token references.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/ring-sizes.svg",
-          "alt": "Progress Ring size variants — 32px, 48px, and 64px with token references and usage context"
-        },
-        "imagePosition": "left",
-        "bg": "dark"
-      },
-      {
-        "type": "image-pair",
-        "label": "Progress Ring — Accessibility",
-        "heading": "What the screen reader hears — and when the ring gets to celebrate",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/ring-aria.svg",
-          "alt": "Progress Ring ARIA specification — aria-valuenow, aria-valuetext, and live region schema"
-        },
-        "caption": "ARIA — live region, valuenow, and human-readable valuetext per state",
-        "image2": {
-          "src": "/images/projects/components-production-new/fragments/ring-celebrate.svg",
-          "alt": "Progress Ring celebration — 100% completion animation, motion-safe only"
-        },
-        "caption2": "Celebration — fires once at 100%, silenced under prefers-reduced-motion",
-        "bg": "light"
       },
       {
         "type": "process-step",
@@ -1960,13 +1934,16 @@ export const projectsData: ProjectDetail[] = [
         "type": "showcase",
         "label": "Cards — Skill Card",
         "heading": "The Skill Card — full specification",
-        "body": "The Skill Card is the proof that the base held up without forking. It composes the same five-slot anatomy — media, header, body, footer, overlay — and adds a mastery badge plus an inline Progress Ring in the trailing slot. Elevation, spacing, hover, and focus all inherit from the base rules. The full spec documents every state, every slot measurement, and the ARIA attributes for the interactive variant.",
+        "body": "The Skill Card is the proof that the base held up without forking. It composes the same five-slot anatomy — media, header, body, footer, overlay — and adds a mastery badge plus an inline Progress Ring in the trailing slot. The full spec documents every state, every slot measurement, and the ARIA attributes — the card base with a learner-specific lens.",
         "image": {
-          "src": "/images/projects/components-production-new/skill-card.svg",
+          "src": "/images/projects/components-production-new/skill-card-clean.svg",
           "alt": "Skill Card — full component specification: all states, slot measurements, and ARIA mapping"
         },
         "caption": "Skill Card — complete spec: states, anatomy, tokens, and accessibility in one sheet",
-        "showcaseBg": "#F0FAF9",
+        "showcaseBg": "#0F1E24",
+        "cropViewBox": "40 160 5237 3000",
+        "svgNaturalWidth": 5277,
+        "svgNaturalHeight": 5952,
         "bg": "dark"
       },
       {

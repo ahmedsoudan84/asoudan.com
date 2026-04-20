@@ -535,6 +535,56 @@ function BrowserFrameSection({ section, color }: { section: CaseStudySection; co
 /* ─── Showcase section ─── */
 function ShowcaseSection({ section, color }: { section: CaseStudySection; color: string }) {
   if (!section.image) return null;
+  const src = resolveImage(section.image!).src;
+  const alt = section.caption || section.heading || "Showcase";
+
+  // SVG crop: CSS-based viewport into a larger SVG using cropViewBox "x y w h"
+  if (section.cropViewBox && section.svgNaturalWidth && section.svgNaturalHeight) {
+    const [cx, cy, cw, ch] = section.cropViewBox.split(" ").map(Number);
+    const { svgNaturalWidth: svgW, svgNaturalHeight: svgH } = section;
+    const imgWidthPct = (svgW / cw) * 100;
+    const leftPct = -(cx / cw) * 100;
+    const topPct = -(cy / ch) * 100;
+    return (
+      <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+        <div className="max-w-5xl mx-auto px-6 lg:px-0">
+          <Reveal>
+            <SectionLabel label={section.label} color={color} />
+            <SectionHeading heading={section.heading} />
+            {section.body && (
+              <p className="[color:var(--fg-60)] leading-relaxed mb-8">{section.body}</p>
+            )}
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                aspectRatio: `${cw} / ${ch}`,
+                background: section.showcaseBg || "var(--bg-secondary)",
+                boxShadow: "0 25px 80px -20px rgba(0,0,0,0.5), 0 0 0 1px var(--border-subtle)",
+                position: "relative",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt={alt}
+                style={{
+                  position: "absolute",
+                  width: `${imgWidthPct}%`,
+                  height: "auto",
+                  left: `${leftPct}%`,
+                  top: `${topPct}%`,
+                }}
+              />
+            </div>
+            {section.caption && (
+              <p className="[color:var(--fg-30)] text-sm mt-3 text-center">{section.caption}</p>
+            )}
+          </Reveal>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
@@ -550,8 +600,8 @@ function ShowcaseSection({ section, color }: { section: CaseStudySection; color:
             }}
           >
             <SafeImage
-              src={resolveImage(section.image!).src}
-              alt={section.caption || section.heading || "Showcase"}
+              src={src}
+              alt={alt}
               width={1200}
               height={800}
               className="block w-full h-auto"
