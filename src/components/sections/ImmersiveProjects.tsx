@@ -170,6 +170,16 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  const [mouseRot, setMouseRot] = useState({ x: 0, y: 0 });
+  const handleTilt = (e: React.MouseEvent) => {
+    if (isMobile) return;
+    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setMouseRot({
+      x: ((e.clientY - r.top)  / r.height * 2 - 1) * -7,
+      y: ((e.clientX - r.left) / r.width  * 2 - 1) *  7,
+    });
+  };
+
   // showDetails: always true on touch devices; toggled by hover on desktop
   const showDetails = isMobile || hovered;
 
@@ -202,11 +212,15 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
       id={`project-${project.id}`}
       onClick={handleClick}
       onMouseEnter={handleEnter}
-      onMouseLeave={() => setHovered(false)}
-      animate={{ scale, opacity, rotateY, y }}
+      onMouseLeave={() => { setHovered(false); setMouseRot({ x: 0, y: 0 }); }}
+      onMouseMove={handleTilt}
+      animate={{ scale, opacity, rotateY: rotateY + mouseRot.y, rotateX: mouseRot.x, y }}
       transition={{
         scale:   { type: "spring", stiffness: 260, damping: 28, mass: 0.7 },
-        rotateY: { type: "spring", stiffness: 200, damping: 26, mass: 0.7 },
+        rotateY: hovered
+          ? { type: "spring", stiffness: 450, damping: 30 }
+          : { type: "spring", stiffness: 200, damping: 26, mass: 0.7 },
+        rotateX: { type: "spring", stiffness: 450, damping: 30 },
         y:       { type: "spring", stiffness: 240, damping: 28 },
         opacity: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
       }}
