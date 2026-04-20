@@ -1,6 +1,26 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+
+function MagneticWrap({ children, strength = 0.38 }: { children: React.ReactNode; strength?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0); const sx = useSpring(x, { stiffness: 350, damping: 25 });
+  const y = useMotionValue(0); const sy = useSpring(y, { stiffness: 350, damping: 25 });
+  const onMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    x.set((e.clientX - r.left - r.width  / 2) * strength);
+    y.set((e.clientY - r.top  - r.height / 2) * strength);
+  };
+  const onLeave = () => { x.set(0); y.set(0); };
+  return (
+    <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}
+      style={{ x: sx, y: sy, display: "inline-block" }}>
+      {children}
+    </motion.div>
+  );
+}
 
 const socials = [
   {
@@ -41,6 +61,7 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           {/* Left */}
           <div>
+            <MagneticWrap>
             <h3 className="text-[28px] font-bold relative inline-block cursor-pointer group" style={{ color: "var(--fg)" }}>
               <span className="relative z-10 group-hover:text-[var(--accent)] transition-colors duration-300">Let&apos;s work together</span>
               <span className="absolute bottom-0 left-0 w-full h-[2px] overflow-hidden">
@@ -59,7 +80,8 @@ export default function Footer() {
                 initial={{ opacity: 0 }}
               />
             </h3>
-            <a
+            </MagneticWrap>
+            <MagneticWrap><a
               href="mailto:ahmedsoudan@gmail.com"
               className="text-[16px] mt-2 flex w-fit items-center gap-2 hover:opacity-80 transition-opacity group"
               style={{ color: "var(--accent)" }}
@@ -71,8 +93,8 @@ export default function Footer() {
               <span className="border-b border-current/30 group-hover:border-current transition-colors">
                 ahmedsoudan@gmail.com
               </span>
-            </a>
-            <a
+            </a></MagneticWrap>
+            <MagneticWrap><a
               href="tel:+447774921967"
               className="text-[15px] mt-3 flex w-fit items-center gap-2 hover:opacity-80 transition-opacity group"
               style={{ color: "var(--accent)" }}
@@ -84,7 +106,7 @@ export default function Footer() {
               <span className="border-b border-current/30 group-hover:border-current transition-colors">
                 +44 777 492 1967
               </span>
-            </a>
+            </a></MagneticWrap>
             <p className="text-[14px] mt-3" style={{ color: "var(--fg-50)" }}>London, UK</p>
           </div>
 
