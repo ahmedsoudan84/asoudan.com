@@ -1988,6 +1988,7 @@ function ComponentGallerySection({
   section: CaseStudySection;
   color: string;
   activeIndex: number;
+  onIndexChange?: (i: number) => void;
 }) {
   const comps = section.galleryComponents;
   if (!comps || comps.length === 0) return null;
@@ -2149,8 +2150,23 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
 
+  // Derive active mode for filtering sections
   const gallerySection = project.caseStudy?.find(s => s.type === "component-gallery");
+  const activeMode = gallerySection?.galleryComponents?.[activeGalleryIndex]?.id;
   const galleryComponents = gallerySection?.galleryComponents ?? [];
+
+  const filteredSections = project.caseStudy?.filter(section => {
+    if (!section.mode) return true;
+    return section.mode === activeMode;
+  });
+
+  const handleComponentChange = (idx: number) => {
+    setActiveGalleryIndex(idx);
+    if (galleryRef.current) {
+      const top = galleryRef.current.offsetTop;
+      window.scrollTo({ top: top - 80, behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
@@ -2159,7 +2175,7 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
         <FloatingComponentToggle
           components={galleryComponents}
           activeIndex={activeGalleryIndex}
-          onChange={setActiveGalleryIndex}
+          onChange={handleComponentChange}
           color={color}
           sectionRef={galleryRef}
         />
@@ -2293,20 +2309,27 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
       </section>
 
       {/* ── Case study sections ── */}
-      {project.caseStudy?.map((section, i) => {
-        if (section.type === "component-gallery") {
-          return (
-            <div key={i} ref={galleryRef}>
+      <div ref={galleryRef}>
+        {filteredSections?.map((section, i) => {
+          if (section.type === "component-gallery") {
+            return (
               <ComponentGallerySection
+                key={i}
                 section={section}
                 color={color}
                 activeIndex={activeGalleryIndex}
+                onIndexChange={(idx) => {
+                  setActiveGalleryIndex(idx);
+                  // Scroll to top of gallery when switching components
+                  const top = galleryRef.current?.offsetTop || 0;
+                  window.scrollTo({ top: top - 80, behavior: 'smooth' });
+                }}
               />
-            </div>
-          );
-        }
-        return <Section key={i} section={section} color={color} onImageClick={setLightboxImage} />;
-      })}
+            );
+          }
+          return <Section key={i} section={section} color={color} onImageClick={setLightboxImage} />;
+        })}
+      </div>
 
       {/* ── Project navigation ── */}
       {(prevProject || nextProject) && (

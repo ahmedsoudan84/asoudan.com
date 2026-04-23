@@ -1,0 +1,43 @@
+<svg width="420" height="200" viewBox="0 0 420 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="listItemShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#26A69A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="420" height="200" rx="16" fill="#F7F9FB"/>
+
+  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">COMFORTABLE · 72px</text>
+  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Browsing density · touch-target-safe</text>
+
+  <!-- Single row -->
+  <g filter="url(#listItemShadow)">
+    <rect x="36" y="82" width="348" height="72" rx="10" fill="#FFFFFF"/>
+  </g>
+  <rect x="36" y="82" width="348" height="72" rx="10" stroke="#E4E9F0"/>
+
+  <!-- Leading -->
+  <rect x="52" y="98" width="40" height="40" rx="8" fill="#26A69A"/>
+  <text x="72" y="124" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">U4</text>
+
+  <!-- Title + meta -->
+  <text x="104" y="112" font-family="'Inter', system-ui, sans-serif" font-size="14" font-weight="600" fill="#1A2035">Academic Vocabulary · Unit 4</text>
+  <text x="104" y="130" font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#8A97B0">Started 2 days ago · 4 of 6 lessons complete</text>
+
+  <!-- Status ring -->
+  <g transform="translate(298, 118)">
+    <circle cx="0" cy="0" r="14" stroke="#EEF2F7" stroke-width="3" fill="none"/>
+    <circle cx="0" cy="0" r="14" stroke="#26A69A" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="59 30" stroke-dashoffset="22" transform="rotate(-90)"/>
+    <text x="0" y="4" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#1A2035" text-anchor="middle">67</text>
+  </g>
+
+  <!-- Trailing -->
+  <rect x="334" y="102" width="36" height="32" rx="6" fill="#F7F9FB"/>
+  <text x="352" y="123" font-family="'Inter', system-ui, sans-serif" font-size="14" fill="#5A6784" text-anchor="middle">→</text>
+
+  <!-- Touch target annotation -->
+  <line x1="36" y1="172" x2="36" y2="184" stroke="#26A69A" stroke-width="1"/>
+  <line x1="36" y1="184" x2="108" y2="184" stroke="#26A69A" stroke-width="1"/>
+  <line x1="108" y1="172" x2="108" y2="184" stroke="#26A69A" stroke-width="1"/>
+  <text x="72" y="194" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#26A69A" text-anchor="middle">64 touch-safe</text>
+</svg>

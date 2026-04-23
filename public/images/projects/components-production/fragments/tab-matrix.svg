@@ -1,0 +1,51 @@
+<svg width="600" height="280" viewBox="0 0 600 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="280" rx="20" fill="#0A0C14"/>
+
+  <g opacity="0.04">
+    <line x1="0" y1="80" x2="600" y2="80" stroke="#26A69A"/>
+    <line x1="0" y1="160" x2="600" y2="160" stroke="#26A69A"/>
+    <line x1="0" y1="240" x2="600" y2="240" stroke="#26A69A"/>
+  </g>
+
+  <text x="36" y="44" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">STATE MATRIX</text>
+  <text x="36" y="60" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784" letter-spacing="0.04em">Two axes · eight named cells · every one token-driven</text>
+  <text x="564" y="44" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784" text-anchor="end">— 01.1 · extract</text>
+
+  <text x="36" y="118" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784" letter-spacing="0.12em" font-weight="600">SELECTED</text>
+  <text x="36" y="220" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784" letter-spacing="0.12em" font-weight="600">UNSELECTED</text>
+
+  <text x="170" y="102" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784" text-anchor="middle">default</text>
+  <text x="294" y="102" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784" text-anchor="middle">hover</text>
+  <text x="418" y="102" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784" text-anchor="middle">focused</text>
+  <text x="542" y="102" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784" text-anchor="middle">disabled</text>
+
+  <rect x="122" y="112" width="96" height="44" rx="4" fill="transparent"/>
+  <rect x="122" y="152" width="96" height="4" rx="2" fill="#26A69A"/>
+  <text x="170" y="139" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">Overview</text>
+
+  <rect x="246" y="112" width="96" height="44" rx="4" fill="#111524"/>
+  <rect x="246" y="152" width="96" height="4" rx="2" fill="#26A69A"/>
+  <text x="294" y="139" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">Overview</text>
+
+  <rect x="368" y="110" width="100" height="48" rx="6" stroke="#26A69A" stroke-width="2" fill="none"/>
+  <rect x="370" y="112" width="96" height="44" rx="4" fill="transparent"/>
+  <rect x="370" y="152" width="96" height="4" rx="2" fill="#26A69A"/>
+  <text x="418" y="139" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">Overview</text>
+
+  <rect x="494" y="112" width="96" height="44" rx="4" fill="transparent" opacity="0.4"/>
+  <rect x="494" y="152" width="96" height="4" rx="2" fill="#26A69A" opacity="0.25"/>
+  <text x="542" y="139" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle" opacity="0.35">Overview</text>
+
+  <rect x="122" y="204" width="96" height="44" rx="4" fill="transparent"/>
+  <text x="170" y="231" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#6B7A9A" text-anchor="middle">Vocabulary</text>
+
+  <rect x="246" y="204" width="96" height="44" rx="4" fill="#111524"/>
+  <text x="294" y="231" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#A0AABF" text-anchor="middle">Vocabulary</text>
+
+  <rect x="368" y="202" width="100" height="48" rx="6" stroke="#26A69A" stroke-width="2" fill="none"/>
+  <rect x="370" y="204" width="96" height="44" rx="4" fill="transparent"/>
+  <text x="418" y="231" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#A0AABF" text-anchor="middle">Vocabulary</text>
+
+  <rect x="494" y="204" width="96" height="44" rx="4" fill="transparent" opacity="0.4"/>
+  <text x="542" y="231" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="400" fill="#6B7A9A" text-anchor="middle" opacity="0.4">Vocabulary</text>
+</svg>

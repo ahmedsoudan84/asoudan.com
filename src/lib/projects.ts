@@ -98,6 +98,7 @@ export interface CaseStudySection {
   }>;
   chartItems?: Array<{ label: string; value: number; note?: string; total?: number; color?: string }>;
   chartLayout?: string;
+  mode?: "progress-ring" | "tab-list" | "tab-button" | "skill-card";
 }
 
 export interface ProjectDetail {
@@ -1788,16 +1789,16 @@ export const projectsData: ProjectDetail[] = [
     "coverStyle": "browser",
     "images": [
       {
-        "src": "/images/projects/components-production-new/tab-button.svg",
-        "alt": "TabList — Tab Button anatomy & states"
+        "src": "/images/projects/components-production/fragments/ring-hero.svg",
+        "alt": "Progress Ring — anatomy and sizes"
       },
       {
-        "src": "/images/projects/components-production-new/progress-ring.svg",
-        "alt": "Progress Ring — anatomy, states, and thresholds"
+        "src": "/images/projects/components-production/fragments/tab-anatomy.svg",
+        "alt": "TabList — anatomy and layout"
       },
       {
-        "src": "/images/projects/components-production-new/skill-card.svg",
-        "alt": "Skill Card — composed from the Cards base"
+        "src": "/images/projects/components-production/fragments/card-hero.svg",
+        "alt": "Skill Card — anatomy and slots"
       }
     ],
     "behanceUrl": "",
@@ -1814,10 +1815,10 @@ export const projectsData: ProjectDetail[] = [
         "label": "Overview",
         "heading": "Components Production at a glance",
         "bullets": [
-          "Problem: As OEH evolves and expands, the demand for new components or upgrades to existing ones increases. Each component must address a need identified through our usability audit or a specific feature requirement.",
-          "Approach: Each component went through a formal RFC cycle — approved by team leads and Application Architects before design work began — then co-designed with engineering: full anatomy, interaction states, motion rules, and ARIA patterns, paired with usage guidance tied to real user journeys.",
-          "Shipped: TabList, Progress Ring, ListItems and Cards — specified in Figma, built in Storybook by the Dev. team, adopted across four product squads as the default building blocks.",
-          "Role: Led the component design, authored specs and usage guidance, and partnered with engineers day-to-day through production."
+          "Problem: As OEH grows, the demand for new components or upgrades increases. Each must address an audited usability need or a specific feature requirement.",
+          "Approach: Each component cleared a formal RFC cycle before design. Co-designed with engineering: anatomy, interaction matrix, motion, and ARIA patterns.",
+          "Shipped: Progress Ring, TabList, and Skill Card — specified in Figma, built in Storybook, and adopted across four product squads.",
+          "Role: Led the component design, authored specs and usage guidance, and partnered with engineers through production."
         ],
         "bg": "dark"
       },
@@ -1825,191 +1826,147 @@ export const projectsData: ProjectDetail[] = [
         "type": "stats",
         "label": "Delivery at a glance",
         "stats": [
-          { "value": "4", "label": "Platform components shipped", "context": "TabList, Progress Ring, ListItems, Cards" },
-          { "value": "12", "label": "Weeks from kickoff to adoption", "context": "design, build, docs and rollout" },
-          { "value": "4", "label": "Product squads adopted", "context": "used in learner and admin journeys" },
-          { "value": "1:1", "label": "Design ↔ engineering pairing", "context": "1 designer, 4 engineers" }
+          { "value": "4", "label": "Components shipped", "context": "Progress Ring, Tabs, ListItems, Cards" },
+          { "value": "12", "label": "Weeks to adoption", "context": "design, build, docs and rollout" },
+          { "value": "4", "label": "Squads adopted", "context": "learner and admin journeys" },
+          { "value": "1:1", "label": "Design ↔ engineering", "context": "1 designer, 4 engineers" }
         ],
         "bg": "accent"
       },
       {
-        "type": "text",
-        "label": "The Challenge",
-        "heading": "Same patterns, four versions — and no shared way to use them",
-        "body": "As Oxford English Hub grew, the platform's most-used UI patterns had quietly drifted apart. Tabs on the learner dashboard behaved differently from tabs in admin settings. Progress rings varied in thresholds, motion, and labelling. Lists of courses, downloads, and tasks each shipped their own row layout. Cards had inconsistent elevation, spacing, and hover behaviour. The design problem wasn't aesthetic — it was delivery: every squad re-litigated the same decisions, and every new screen was a chance to introduce another variant. I scoped a tight, production-focused set of components to fix the patterns that appeared everywhere — and paired them with clear guidance on when and how to use them, so that consistency came from use, not policing.",
-        "bg": "dark"
-      },
-      {
-        "type": "split",
-        "label": "Governance",
-        "heading": "Before a pixel is drawn — the RFC cycle",
-        "body": "At Oxford English Hub, creating a new platform component is a formal process, not a solo design call. Every proposal begins as an RFC — a written brief reviewed by team leads and Application Architects before any design work starts. The panel pressure-tests scope, conflicts with in-flight work, and long-term maintainability. Approval unlocks the design phase; the cycle adds deliberate friction, and that friction is the feature.",
-        "bullets": [
-          "**RFC submitted.** Designer writes the case: the problem, why existing patterns don't cover it, the proposed API surface, and the ownership model.",
-          "**Panel review.** Team leads and Application Architects test for scope, conflicts with in-flight work, and long-term maintainability.",
-          "**Approval unlocks design.** Only approved RFCs proceed. Rejections go back for reconsideration — not abandonment.",
-          "**Four components, four approvals.** TabList, Progress Ring, Cards, and ListItems each cleared this cycle before a frame was opened."
-        ],
-        "imagePosition": "right",
-        "bg": "light"
-      },
-      {
-        "type": "split",
-        "label": "Principles",
-        "heading": "Four principles that shaped every component",
-        "body": "Every component was designed against the same four principles — so reviewers, engineers, and future contributors could measure proposals against a shared rubric rather than taste.",
-        "bullets": [
-          "**Journey-first.** Start from a real learner or admin moment and design the component to serve it.",
-          "**Composable, not configurable.** Solve common cases with slots and variants; resist props that encode one screen's quirk.",
-          "**Accessible by default.** Keyboard, focus, and ARIA patterns baked into the spec — not tacked on in review.",
-          "**Docs are part of the component.** A component without usage guidance is a component that will drift."
-        ],
-        "imagePosition": "right",
-        "bg": "dark"
-      },
-      {
-        "type": "process-step",
-        "stepNumber": "01",
-        "label": "Component: TabList",
-        "heading": "TabList — one navigation pattern, clear rules for when to use it",
-        "body": "TabList is the platform's go-to pattern for switching between peer views inside a single context — a learner's Courses vs. Assignments, an admin's Org Overview vs. Members. I defined the anatomy (container, tab, optional count badge, active indicator) and every interaction state across a two-axis matrix: selection (selected / unselected) × interaction (default, hover, active, focused, disabled). Keyboard follows the WAI-ARIA Tabs pattern — Left/Right cycles, Home/End jumps, Tab exits the group — and the active indicator animates to the new tab on selection, suppressed under prefers-reduced-motion. The usage guidance matters as much as the spec: TabList is for peer views inside the same page, not for navigating between unrelated sections and not for filtering lists.",
-        "bg": "light"
-      },
-      {
-        "type": "process-step",
-        "stepNumber": "02",
-        "label": "Component: Progress Ring",
-        "heading": "Progress Ring — a tiny surface that carries a lot of meaning",
-        "body": "On OEH, Progress Ring is how learners see at a glance whether they're on track: unit completion on the dashboard, module progress in a course, task status on a practice activity. Because it appears so often and at small sizes, it had to be unambiguous. I specified three sizes (sm 32px, md 48px, lg 64px) with locked stroke-width ratios so the ring reads the same visual weight at any scale, and three colour thresholds — green above 75%, amber 25–75%, red below 25% — tied to semantic tokens so theming ripples through automatically. Motion is a smooth stroke-dasharray transition on change, short enough to feel responsive and silenced entirely under prefers-reduced-motion.",
-        "bg": "dark"
-      },
-      {
-        "type": "process-step",
-        "stepNumber": "03",
-        "label": "Component: Cards",
-        "heading": "Cards — one base, every surface it needs to serve",
-        "body": "Cards on OEH carry a lot: a course in the catalogue, a lesson in progress, a score on a results page, a resource in a download list. Rather than one Card per use case, I designed a single slot-based base — media, header, body, footer, optional overlay — with three elevation levels, two density options, and clear rules for when a card is clickable versus informational. Hover lifts the card 2px with a matched shadow expansion; focus shows a 3px accent ring; loading and empty states are part of the component, not a separate Skeleton. The guidance makes the harder calls explicit: cards are for objects users can act on, not for everything that happens to be rectangular.",
-        "bg": "light"
-      },
-      {
         "type": "component-gallery",
-        "label": "Component Specs",
+        "label": "Deep Dive",
         "bg": "dark",
         "galleryComponents": [
           {
-            "id": "tab-button",
-            "toggleLabel": "Tab Button",
-            "label": "TabList — States & Matrix",
-            "heading": "Ten states. Two axes. Every interaction specified.",
-            "body": "The full Tab Button spec opens with the complete interaction matrix — every combination of selection state (selected / unselected) and interaction state (default, hover, active, focused, disabled) — along with individual button states and animation specs. No interpretation needed at build time.",
-            "caption": "Tab Button spec — states, matrix, and interaction rules",
-            "image": {
-              "src": "/images/projects/components-production-new/tab-button-clean.svg",
-              "alt": "TabList — states, interaction matrix, and button spec"
-            },
-            "showcaseBg": "#0F1E24",
-            "cropViewBox": "40 438 7280 2662",
-            "svgNaturalWidth": 7360,
-            "svgNaturalHeight": 7216
-          },
-          {
             "id": "progress-ring",
             "toggleLabel": "Progress Ring",
-            "label": "Progress Ring — Sizes & States",
-            "heading": "Three sizes, locked geometry, consistent weight at every scale.",
-            "body": "The spec shows all three sizes (sm 32px, md 48px, lg 64px) with stroke-width ratios locked across them, every visual state at each threshold colour, and the geometry annotations that keep the ring readable at 32px in a list row and at 64px as a dashboard hero element.",
-            "caption": "Progress Ring — sizes, geometry, thresholds, and visual states",
-            "image": {
-              "src": "/images/projects/components-production-new/progress-ring-clean.svg",
-              "alt": "Progress Ring — sizes, geometry, and visual states"
-            },
-            "showcaseBg": "#0F1E24",
-            "cropViewBox": "40 180 6072 2400",
-            "svgNaturalWidth": 6112,
-            "svgNaturalHeight": 6969
+            "label": "Component: Progress Ring"
+          },
+          {
+            "id": "tab-list",
+            "toggleLabel": "Tabs",
+            "label": "Component: Tabs"
           },
           {
             "id": "skill-card",
             "toggleLabel": "Skill Card",
-            "label": "Cards — Skill Card",
-            "heading": "The Skill Card — full specification",
-            "body": "The Skill Card is the proof that the base held up without forking. It composes the same five-slot anatomy — media, header, body, footer, overlay — and adds a mastery badge plus an inline Progress Ring in the trailing slot. The full spec documents every state, every slot measurement, and the ARIA attributes — the card base with a learner-specific lens.",
-            "caption": "Skill Card — complete spec: states, anatomy, tokens, and accessibility in one sheet",
-            "image": {
-              "src": "/images/projects/components-production-new/skill-card-clean.svg",
-              "alt": "Skill Card — full component specification"
-            },
-            "showcaseBg": "#0F1E24",
-            "cropViewBox": "40 160 5237 3000",
-            "svgNaturalWidth": 5277,
-            "svgNaturalHeight": 5952
+            "label": "Component: Skill Card"
           }
         ]
       },
+      /* Progress Ring Sections */
       {
+        "mode": "progress-ring",
         "type": "showcase",
-        "label": "Cards — Gallery",
-        "heading": "Six variants in production. One primitive. Zero forks.",
-        "body": "The card gallery shows every variant the platform ships — base card, skill card, content card, results card, resource card, and loading skeleton — all composed from the same five-slot primitive. Every padding value, every shadow step, every hover lift traces back to the base. Adding a new variant means extending the base, never copying it.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/card-gallery.svg",
-          "alt": "Card system gallery — all six production variants composed from the same base primitive"
-        },
-        "caption": "Six variants, one base — no forks in production",
-        "showcaseBg": "#0F1E24",
-        "bg": "light"
-      },
-      {
-        "type": "process-step",
-        "stepNumber": "04",
-        "label": "Component: ListItems",
-        "heading": "ListItems — dense data without the density anti-patterns",
-        "body": "ListItems is the pattern that turned out to have the most variants in production — courses, units, downloads, tasks, members, sessions — each had shipped its own row. I replaced them with one component built around four slots: leading media (icon, cover, or avatar), a two-line text block with explicit truncation rules, a trailing action area (status pill, progress ring, or overflow menu), and an inline description for denser contexts. Every row clears a 64px touch target, spacing follows the 4px grid, and the whole row can be made the interactive element — with a single focus ring around the row rather than a fiddly one on the trailing button. Two densities, explicit truncation behaviour, and a clear state hierarchy: the calls squads used to re-litigate in every review are now part of the spec.",
+        "label": "Geometry",
+        "heading": "Three sizes, locked geometry",
+        "body": "Progress Ring shows unit completion and task status. I specified three sizes (sm 32px, md 48px, lg 64px) with locked stroke-width ratios to maintain visual weight at any scale.",
+        "image": "/images/projects/components-production/fragments/ring-hero.svg",
+        "showcaseBg": "#0A0C14",
         "bg": "dark"
       },
       {
-        "type": "text",
-        "label": "Usage guidance",
-        "heading": "Guidance that lives next to the component, not in a separate doc nobody reads",
-        "body": "The hardest part of shipping a shared component isn't the spec — it's making sure it's used in the moments it was designed for. For every component, I wrote a short usage block pinned next to the Figma and Storybook entries: what the component is for, what it's explicitly not for, the pattern it pairs with, and a worked example from a real OEH screen. TabList vs. segmented control vs. filter chips. Progress Ring vs. linear progress bar vs. a plain text percentage. ListItems vs. a Card grid. These were the calls squads used to re-litigate in every review — so I made the answers part of the component, not the conversation.",
+        "mode": "progress-ring",
+        "type": "showcase",
+        "label": "Thresholds",
+        "heading": "Colour thresholds",
+        "body": "Three colour thresholds — green (>75%), amber (25–75%), and red (<25%) — are tied to semantic tokens so theming ripples through automatically.",
+        "image": "/images/projects/components-production/fragments/ring-thresholds.svg",
+        "showcaseBg": "#0A0C14",
         "bg": "light"
       },
       {
+        "mode": "progress-ring",
+        "type": "showcase",
+        "label": "Motion",
+        "heading": "Micro-interaction & Animation",
+        "body": "A smooth stroke-dasharray transition on change. Short enough to feel responsive; suppressed under prefers-reduced-motion.",
+        "image": "/images/projects/components-production/fragments/ring-motion.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "dark"
+      },
+      {
+        "mode": "progress-ring",
         "type": "showcase",
         "label": "Accessibility",
-        "heading": "One sheet. Every component. The full accessibility contract.",
-        "body": "The accessibility summary consolidates the ARIA roles, keyboard patterns, focus management rules, and reduced-motion fallbacks for all four components. It lives alongside the Figma specs and Storybook stories — the first page engineers opened during component onboarding.",
-        "image": {
-          "src": "/images/projects/components-production-new/fragments/accessibility-summary.svg",
-          "alt": "Accessibility summary — ARIA roles, keyboard patterns, focus rules, and motion fallbacks across all four components"
-        },
-        "caption": "Keyboard, ARIA, focus, and motion — all four components on one reference sheet",
-        "showcaseBg": "#0F1E24",
-        "bg": "dark"
-      },
-      {
-        "type": "quote",
-        "quote": "The usage guidance changed our reviews more than the components did. We stopped arguing about which pattern to use — the answer was already on the page.",
-        "attribution": "Senior Front-End Engineer, OEH Platform Team",
-        "bg": "dark"
-      },
-      {
-        "type": "stats",
-        "label": "Impact",
-        "stats": [
-          { "value": "4", "label": "Components shipped to production", "context": "TabList, Progress Ring, ListItems, Cards" },
-          { "value": "4", "label": "Squads using them as defaults", "context": "learner, admin, assessment, content" },
-          { "value": "100%", "label": "Accessibility patterns specified", "context": "ARIA, keyboard, focus, motion" },
-          { "value": "0", "label": "Forks after rollout", "context": "every new surface composed from the set" }
-        ],
-        "bg": "accent"
-      },
-      {
-        "type": "reflection",
-        "label": "Reflection",
-        "heading": "What shipping four components taught me about shipping systems",
-        "body": "I went in assuming the work was the components. It wasn't — it was the usage guidance. Four squads didn't want a bigger library; they wanted fewer decisions to re-make on every screen. Pinning the 'when' and 'when not' next to each component, with a real OEH example, changed the tone of every design review I walked into afterwards. The other thing I'd do differently: pair with engineering sooner. The cleanest parts of the spec are the ones an engineer and I drafted together in a shared Figma frame, and the messiest are the ones I finished alone and handed over. Next time, the spec starts as a conversation, not a deliverable.",
+        "heading": "WAI-ARIA Pattern",
+        "body": "Implemented with role='progressbar', aria-valuenow, and aria-valuetext to ensure the progress is communicated to assistive technologies.",
+        "image": "/images/projects/components-production/fragments/ring-aria.svg",
+        "showcaseBg": "#0A0C14",
         "bg": "light"
+      },
+      /* Tabs Sections */
+      {
+        "mode": "tab-list",
+        "type": "showcase",
+        "label": "Anatomy",
+        "heading": "TabList Anatomy",
+        "body": "Defined the container, tab buttons, optional count badges, and the active indicator bar. Layout spacing is token-sourced to ensure consistency.",
+        "image": "/images/projects/components-production/fragments/tab-anatomy.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "dark"
+      },
+      {
+        "mode": "tab-list",
+        "type": "showcase",
+        "label": "Matrix",
+        "heading": "Tab Button: State Matrix",
+        "body": "Ten states across two axes: selection (selected/unselected) and interaction (resting, hover, focus, active, disabled).",
+        "image": "/images/projects/components-production/fragments/tab-matrix.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "light"
+      },
+      {
+        "mode": "tab-list",
+        "type": "showcase",
+        "label": "Accessibility",
+        "heading": "Keyboard & Focus",
+        "body": "Keyboard follows WAI-ARIA: Left/Right cycles, Home/End jumps. Focus indicators are persistent and clear.",
+        "image": "/images/projects/components-production/fragments/tab-keyboard.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "dark"
+      },
+      {
+        "mode": "tab-list",
+        "type": "showcase",
+        "label": "ARIA",
+        "heading": "ARIA Contract",
+        "body": "Proper use of role='tablist', role='tab', and aria-selected to manage focus and selection state for screen readers.",
+        "image": "/images/projects/components-production/fragments/tab-aria.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "light"
+      },
+      /* Skill Card Sections */
+      {
+        "mode": "skill-card",
+        "type": "showcase",
+        "label": "Anatomy",
+        "heading": "Skill Card Anatomy",
+        "body": "Composed from the Cards base. Uses slots for media, header, body, and footer. Incorporates a Progress Ring in the footer for mastery visualization.",
+        "image": "/images/projects/components-production/fragments/card-hero.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "dark"
+      },
+      {
+        "mode": "skill-card",
+        "type": "showcase",
+        "label": "Elevations",
+        "heading": "Shadows & Polish",
+        "body": "Three defined elevation levels using glows rather than shadows. Hover lifts the card and intensifies the accent halo.",
+        "image": "/images/projects/components-production/fragments/card-elevations.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "light"
+      },
+      {
+        "mode": "skill-card",
+        "type": "showcase",
+        "label": "Gallery",
+        "heading": "Production Variants",
+        "body": "The base card holds up across six variants without forking, proving the slot-based architecture's success.",
+        "image": "/images/projects/components-production/fragments/card-gallery.svg",
+        "showcaseBg": "#0A0C14",
+        "bg": "dark"
       }
     ]
   },
