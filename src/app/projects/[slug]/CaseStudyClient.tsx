@@ -220,18 +220,26 @@ function SplitSection({ section, color, onImageClick }: { section: CaseStudySect
           >
             {section.image && (
               <div
-                className="w-full lg:w-1/2 relative rounded-2xl overflow-hidden shrink-0 cursor-pointer transition-transform duration-300 hover:scale-[1.01]"
+                className="w-full lg:w-1/2 relative rounded-2xl overflow-hidden shrink-0 cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl group/img"
                 onClick={() => splitSrc && onImageClick?.(splitSrc)}
+                style={{
+                  background: section.showcaseBg || (section.bg === 'light' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.2)'),
+                  border: '1px solid var(--border-subtle)',
+                }}
               >
-                <SafeImage
-                  src={splitSrc!}
-                  alt={typeof section.image === "string" ? (section.caption || section.heading || "") : (section.image?.alt || section.caption || section.heading || "")}
-                  width={700}
-                  height={500}
-                  className="w-full object-cover block"
-                />
+                <div className="p-4 lg:p-8 flex items-center justify-center min-h-[300px] lg:min-h-[450px]">
+                  <SafeImage
+                    src={splitSrc!}
+                    alt={typeof section.image === "string" ? (section.caption || section.heading || "") : (section.image?.alt || section.caption || section.heading || "")}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto max-h-[400px] object-contain block drop-shadow-2xl transition-transform duration-700 group-hover/img:scale-110"
+                  />
+                </div>
                 {section.caption && (
-                  <p className="[color:var(--fg-30)] text-sm mt-2 text-center">{section.caption}</p>
+                  <div className="absolute bottom-4 left-0 right-0">
+                    <p className="[color:var(--fg-30)] text-[10px] uppercase tracking-widest text-center">{section.caption}</p>
+                  </div>
                 )}
               </div>
             )}
@@ -2097,41 +2105,48 @@ function FloatingComponentToggle({
   return (
     <motion.div
       initial={false}
-      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 10 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40"
+      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 20 }}
+      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+      className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 px-4"
       style={{ pointerEvents: visible ? "auto" : "none" }}
-      aria-label="Switch component view"
+      aria-label="Switch component deep-dive"
       role="group"
     >
       <div
-        className="flex items-center gap-1 p-1 rounded-full border backdrop-blur-md shadow-[0_8px_32px_-8px_rgba(0,0,0,0.35)]"
+        className="flex items-center gap-1.5 p-1.5 rounded-full border backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-300"
         style={{
-          background: "var(--nav-bg)",
-          borderColor: "var(--nav-border)",
+          background: "rgba(10, 12, 20, 0.7)",
+          borderColor: "rgba(255, 255, 255, 0.08)",
         }}
       >
-        {components.map((comp, i) => (
-          <button
-            key={comp.id}
-            onClick={() => onChange(i)}
-            aria-pressed={activeIndex === i}
-            className="rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
-            style={
-              activeIndex === i
-                ? {
+        {components.map((comp, i) => {
+          const active = activeIndex === i;
+          return (
+            <button
+              key={comp.id}
+              onClick={() => onChange(i)}
+              aria-pressed={active}
+              className="relative rounded-full px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              style={{
+                fontFamily: "var(--font-montserrat), sans-serif",
+                color: active ? "#ffffff" : "rgba(255, 255, 255, 0.4)",
+              }}
+            >
+              {active && (
+                <motion.div
+                  layoutId="active-pill"
+                  className="absolute inset-0 rounded-full z-[-1]"
+                  style={{
                     background: color,
-                    color: "#fff",
-                    boxShadow: `0 2px 12px -2px ${color}55`,
-                  }
-                : {
-                    color: "var(--fg-50)",
-                  }
-            }
-          >
-            {comp.toggleLabel}
-          </button>
-        ))}
+                    boxShadow: `0 0 20px ${color}40`,
+                  }}
+                  transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                />
+              )}
+              {comp.toggleLabel}
+            </button>
+          );
+        })}
       </div>
     </motion.div>
   );
