@@ -41,7 +41,8 @@ export interface CaseStudySection {
     | "concept-model"
     | "horizontal-scroll-gallery"
     | "panorama"
-    | "component-showcase";
+    | "component-showcase"
+    | "component-gallery";
   label?: string;
   heading?: string;
   body?: string;
@@ -64,6 +65,19 @@ export interface CaseStudySection {
   components?: Array<{
     type: "tablist" | "tabbutton" | "progress-ring" | "skill-card" | "list-item";
     label?: string;
+  }>;
+  galleryComponents?: Array<{
+    id: string;
+    toggleLabel: string;
+    label?: string;
+    heading?: string;
+    body?: string;
+    caption?: string;
+    image: ImageRef;
+    showcaseBg?: string;
+    cropViewBox?: string;
+    svgNaturalWidth?: number;
+    svgNaturalHeight?: number;
   }>;
   stepNumber?: number | string;
   personas?: Array<{
@@ -1757,8 +1771,8 @@ export const projectsData: ProjectDetail[] = [
     ]
   },
   {
-    "id": "components-production-new",
-    "slug": "components-production-new",
+    "id": "components-production",
+    "slug": "components-production",
     "title": "Components Production",
     "subtitle": "Oxford English Hub",
     "category": "DESIGN SYSTEM",
@@ -1793,16 +1807,16 @@ export const projectsData: ProjectDetail[] = [
     "team": "1 Designer, 4 Engineers",
     "tools": "Figma, Storybook, Confluence",
     "platform": "Web (Responsive)",
-    "hidden": true,
+    "hidden": false,
     "caseStudy": [
       {
         "type": "tldr",
         "label": "Overview",
         "heading": "Components Production at a glance",
         "bullets": [
-          "Problem: Four feature squads were shipping the same UI patterns — tabs, progress rings, list items, cards — in four subtly different ways, slowing delivery and eroding consistency across key learner and admin journeys.",
+          "Problem: As OEH evolves and expands, the demand for new components or upgrades to existing ones increases. Each component must address a need identified through our usability audit or a specific feature requirement.",
           "Approach: Each component went through a formal RFC cycle — approved by team leads and Application Architects before design work began — then co-designed with engineering: full anatomy, interaction states, motion rules, and ARIA patterns, paired with usage guidance tied to real user journeys.",
-          "Shipped: TabList, Progress Ring, ListItems and Cards — specified in Figma, built in Storybook, adopted across four product squads as the default building blocks.",
+          "Shipped: TabList, Progress Ring, ListItems and Cards — specified in Figma, built in Storybook by the Dev. team, adopted across four product squads as the default building blocks.",
           "Role: Led the component design, authored specs and usage guidance, and partnered with engineers day-to-day through production."
         ],
         "bg": "dark"
@@ -1862,75 +1876,11 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "showcase",
-        "label": "TabList — States & Matrix",
-        "heading": "Ten states. Two axes. Every interaction specified.",
-        "body": "The full Tab Button spec opens with the complete interaction matrix — every combination of selection state (selected / unselected) and interaction state (default, hover, active, focused, disabled) — along with individual button states and animation specs. No interpretation needed at build time.",
-        "image": {
-          "src": "/images/projects/components-production-new/tab-button-clean.svg",
-          "alt": "TabList — states, interaction matrix, and button spec"
-        },
-        "caption": "Tab Button spec — states, matrix, and interaction rules",
-        "showcaseBg": "#0F1E24",
-        "cropViewBox": "40 438 7280 2662",
-        "svgNaturalWidth": 7360,
-        "svgNaturalHeight": 7216,
-        "bg": "dark"
-      },
-      {
-        "type": "showcase",
-        "label": "TabList — Anatomy & Accessibility",
-        "heading": "Every token named. Every ARIA attribute mapped.",
-        "body": "The lower half of the spec covers anatomy (every slot, every measurement tied to a design token) and the full accessibility contract — keyboard interaction table, ARIA role and attribute mapping per element and state. This is the sheet engineers kept open during implementation.",
-        "image": {
-          "src": "/images/projects/components-production-new/tab-button-clean.svg",
-          "alt": "TabList — anatomy, token references, and ARIA specification"
-        },
-        "caption": "Tab Button — anatomy, tokens, keyboard, and ARIA on one sheet",
-        "showcaseBg": "#F8FCFC",
-        "cropViewBox": "40 2900 7280 3260",
-        "svgNaturalWidth": 7360,
-        "svgNaturalHeight": 7216,
-        "bg": "light"
-      },
-      {
         "type": "process-step",
         "stepNumber": "02",
         "label": "Component: Progress Ring",
         "heading": "Progress Ring — a tiny surface that carries a lot of meaning",
         "body": "On OEH, Progress Ring is how learners see at a glance whether they're on track: unit completion on the dashboard, module progress in a course, task status on a practice activity. Because it appears so often and at small sizes, it had to be unambiguous. I specified three sizes (sm 32px, md 48px, lg 64px) with locked stroke-width ratios so the ring reads the same visual weight at any scale, and three colour thresholds — green above 75%, amber 25–75%, red below 25% — tied to semantic tokens so theming ripples through automatically. Motion is a smooth stroke-dasharray transition on change, short enough to feel responsive and silenced entirely under prefers-reduced-motion.",
-        "bg": "dark"
-      },
-      {
-        "type": "showcase",
-        "label": "Progress Ring — Sizes & States",
-        "heading": "Three sizes, locked geometry, consistent weight at every scale.",
-        "body": "The top half of the spec shows all three sizes (sm 32px, md 48px, lg 64px) with stroke-width ratios locked across them, every visual state at each threshold colour, and the geometry annotations that keep the ring readable at 32px in a list row and at 64px as a dashboard hero element.",
-        "image": {
-          "src": "/images/projects/components-production-new/progress-ring-clean.svg",
-          "alt": "Progress Ring — sizes, geometry, and visual states"
-        },
-        "caption": "Progress Ring — sizes, geometry, thresholds, and visual states",
-        "showcaseBg": "#0F1E24",
-        "cropViewBox": "40 180 6072 2400",
-        "svgNaturalWidth": 6112,
-        "svgNaturalHeight": 6969,
-        "bg": "light"
-      },
-      {
-        "type": "showcase",
-        "label": "Progress Ring — Motion & Accessibility",
-        "heading": "Motion rules, reduced-motion fallback, and the full ARIA schema.",
-        "body": "The lower half covers the stroke-dasharray transition rules, the celebration animation at 100% (motion-safe only), the colour threshold logic tied to semantic tokens, and the ARIA contract — aria-valuenow for the raw number, aria-valuetext for the human string. Assistive tech users get the same information as sighted users, not a worse version.",
-        "image": {
-          "src": "/images/projects/components-production-new/progress-ring-clean.svg",
-          "alt": "Progress Ring — motion rules, thresholds, and ARIA accessibility spec"
-        },
-        "caption": "Progress Ring — motion, thresholds, and ARIA schema",
-        "showcaseBg": "#0F1E24",
-        "cropViewBox": "40 2780 6072 2100",
-        "svgNaturalWidth": 6112,
-        "svgNaturalHeight": 6969,
         "bg": "dark"
       },
       {
@@ -1942,20 +1892,59 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       {
-        "type": "showcase",
-        "label": "Cards — Skill Card",
-        "heading": "The Skill Card — full specification",
-        "body": "The Skill Card is the proof that the base held up without forking. It composes the same five-slot anatomy — media, header, body, footer, overlay — and adds a mastery badge plus an inline Progress Ring in the trailing slot. The full spec documents every state, every slot measurement, and the ARIA attributes — the card base with a learner-specific lens.",
-        "image": {
-          "src": "/images/projects/components-production-new/skill-card-clean.svg",
-          "alt": "Skill Card — full component specification: all states, slot measurements, and ARIA mapping"
-        },
-        "caption": "Skill Card — complete spec: states, anatomy, tokens, and accessibility in one sheet",
-        "showcaseBg": "#0F1E24",
-        "cropViewBox": "40 160 5237 3000",
-        "svgNaturalWidth": 5277,
-        "svgNaturalHeight": 5952,
-        "bg": "dark"
+        "type": "component-gallery",
+        "label": "Component Specs",
+        "bg": "dark",
+        "galleryComponents": [
+          {
+            "id": "tab-button",
+            "toggleLabel": "Tab Button",
+            "label": "TabList — States & Matrix",
+            "heading": "Ten states. Two axes. Every interaction specified.",
+            "body": "The full Tab Button spec opens with the complete interaction matrix — every combination of selection state (selected / unselected) and interaction state (default, hover, active, focused, disabled) — along with individual button states and animation specs. No interpretation needed at build time.",
+            "caption": "Tab Button spec — states, matrix, and interaction rules",
+            "image": {
+              "src": "/images/projects/components-production-new/tab-button-clean.svg",
+              "alt": "TabList — states, interaction matrix, and button spec"
+            },
+            "showcaseBg": "#0F1E24",
+            "cropViewBox": "40 438 7280 2662",
+            "svgNaturalWidth": 7360,
+            "svgNaturalHeight": 7216
+          },
+          {
+            "id": "progress-ring",
+            "toggleLabel": "Progress Ring",
+            "label": "Progress Ring — Sizes & States",
+            "heading": "Three sizes, locked geometry, consistent weight at every scale.",
+            "body": "The spec shows all three sizes (sm 32px, md 48px, lg 64px) with stroke-width ratios locked across them, every visual state at each threshold colour, and the geometry annotations that keep the ring readable at 32px in a list row and at 64px as a dashboard hero element.",
+            "caption": "Progress Ring — sizes, geometry, thresholds, and visual states",
+            "image": {
+              "src": "/images/projects/components-production-new/progress-ring-clean.svg",
+              "alt": "Progress Ring — sizes, geometry, and visual states"
+            },
+            "showcaseBg": "#0F1E24",
+            "cropViewBox": "40 180 6072 2400",
+            "svgNaturalWidth": 6112,
+            "svgNaturalHeight": 6969
+          },
+          {
+            "id": "skill-card",
+            "toggleLabel": "Skill Card",
+            "label": "Cards — Skill Card",
+            "heading": "The Skill Card — full specification",
+            "body": "The Skill Card is the proof that the base held up without forking. It composes the same five-slot anatomy — media, header, body, footer, overlay — and adds a mastery badge plus an inline Progress Ring in the trailing slot. The full spec documents every state, every slot measurement, and the ARIA attributes — the card base with a learner-specific lens.",
+            "caption": "Skill Card — complete spec: states, anatomy, tokens, and accessibility in one sheet",
+            "image": {
+              "src": "/images/projects/components-production-new/skill-card-clean.svg",
+              "alt": "Skill Card — full component specification"
+            },
+            "showcaseBg": "#0F1E24",
+            "cropViewBox": "40 160 5237 3000",
+            "svgNaturalWidth": 5277,
+            "svgNaturalHeight": 5952
+          }
+        ]
       },
       {
         "type": "showcase",
@@ -2062,7 +2051,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "behanceUrl": "",
     "employer": "Oxford University Press",
-    "hidden": false,
+    "hidden": true,
     "role": "Lead Product Designer",
     "timeline": "Ongoing",
     "team": "1 Designer, 4 Engineers",

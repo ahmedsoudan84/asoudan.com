@@ -1913,6 +1913,8 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <ShowcaseSection section={section} color={color} />;
     case "component-showcase":
       return <ComponentShowcaseSection section={section} color={color} />;
+    case "component-gallery":
+      return null;
     case "screen-gallery":
       return <ScreenGallerySection section={section} color={color} onImageClick={onImageClick} />;
     case "reflection":
@@ -1977,6 +1979,163 @@ function FloatingBackButton() {
   );
 }
 
+/* ─── Component Gallery ─── */
+function ComponentGallerySection({
+  section,
+  color,
+  activeIndex,
+}: {
+  section: CaseStudySection;
+  color: string;
+  activeIndex: number;
+}) {
+  const comps = section.galleryComponents;
+  if (!comps || comps.length === 0) return null;
+  const active = comps[Math.min(activeIndex, comps.length - 1)];
+  const { src, alt } = resolveImage(active.image);
+
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <motion.div
+          key={active.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <SectionLabel label={active.label} color={color} />
+          <h2 className="font-montserrat font-bold [color:var(--fg)] mb-6 text-2xl lg:text-4xl leading-tight">
+            {active.heading}
+          </h2>
+          {active.body && (
+            <p className="[color:var(--fg-60)] text-base lg:text-lg leading-relaxed mb-10 max-w-3xl">
+              {active.body}
+            </p>
+          )}
+          {/* Showcase frame */}
+          {(() => {
+            if (active.cropViewBox && active.svgNaturalWidth && active.svgNaturalHeight) {
+              const [cx, cy, cw, ch] = active.cropViewBox.split(" ").map(Number);
+              const imgWidthPct = (active.svgNaturalWidth / cw) * 100;
+              const leftPct = -(cx / cw) * 100;
+              const topPct = -(cy / ch) * 100;
+              return (
+                <div
+                  className="rounded-2xl overflow-hidden"
+                  style={{
+                    aspectRatio: `${cw} / ${ch}`,
+                    background: active.showcaseBg || "#0F1E24",
+                    boxShadow: "0 25px 80px -20px rgba(0,0,0,0.5), 0 0 0 1px var(--border-subtle)",
+                    position: "relative",
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt={alt}
+                    style={{
+                      position: "absolute",
+                      width: `${imgWidthPct}%`,
+                      height: "auto",
+                      left: `${leftPct}%`,
+                      top: `${topPct}%`,
+                    }}
+                  />
+                </div>
+              );
+            }
+            return (
+              <div
+                className="rounded-2xl overflow-hidden"
+                style={{
+                  background: active.showcaseBg || "#0F1E24",
+                  boxShadow: "0 25px 80px -20px rgba(0,0,0,0.5), 0 0 0 1px var(--border-subtle)",
+                }}
+              >
+                <SafeImage src={src} alt={alt} width={1200} height={800} className="block w-full h-auto" />
+              </div>
+            );
+          })()}
+          {active.caption && (
+            <p className="[color:var(--fg-30)] text-sm mt-3 text-center">{active.caption}</p>
+          )}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Floating component toggle ─── */
+function FloatingComponentToggle({
+  components,
+  activeIndex,
+  onChange,
+  color,
+  sectionRef,
+}: {
+  components: Array<{ toggleLabel: string; id: string }>;
+  activeIndex: number;
+  onChange: (i: number) => void;
+  color: string;
+  sectionRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  const [visible, setVisible] = useState(false);
+
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.05, rootMargin: "0px 0px -80px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [sectionRef]);
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 10 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40"
+      style={{ pointerEvents: visible ? "auto" : "none" }}
+      aria-label="Switch component view"
+      role="group"
+    >
+      <div
+        className="flex items-center gap-1 p-1 rounded-full border backdrop-blur-md shadow-[0_8px_32px_-8px_rgba(0,0,0,0.35)]"
+        style={{
+          background: "var(--nav-bg)",
+          borderColor: "var(--nav-border)",
+        }}
+      >
+        {components.map((comp, i) => (
+          <button
+            key={comp.id}
+            onClick={() => onChange(i)}
+            aria-pressed={activeIndex === i}
+            className="rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+            style={
+              activeIndex === i
+                ? {
+                    background: color,
+                    color: "#fff",
+                    boxShadow: `0 2px 12px -2px ${color}55`,
+                  }
+                : {
+                    color: "var(--fg-50)",
+                  }
+            }
+          >
+            {comp.toggleLabel}
+          </button>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 /* ─── Main component ─── */
 interface Props {
   project: ProjectDetail;
@@ -1987,10 +2146,24 @@ interface Props {
 export default function CaseStudyClient({ project, prevProject, nextProject }: Props) {
   const color = project.color || "#26A69A";
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  const gallerySection = project.caseStudy?.find(s => s.type === "component-gallery");
+  const galleryComponents = gallerySection?.galleryComponents ?? [];
 
   return (
     <>
       <FloatingBackButton />
+      {galleryComponents.length > 0 && (
+        <FloatingComponentToggle
+          components={galleryComponents}
+          activeIndex={activeGalleryIndex}
+          onChange={setActiveGalleryIndex}
+          color={color}
+          sectionRef={galleryRef}
+        />
+      )}
       <main className="min-h-screen [background:var(--bg-primary)]">
       {/* ── Hero ── */}
       <div className="relative h-[92vh] overflow-hidden [background:var(--bg-primary)]">
@@ -2120,9 +2293,20 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
       </section>
 
       {/* ── Case study sections ── */}
-      {project.caseStudy?.map((section, i) => (
-        <Section key={i} section={section} color={color} onImageClick={setLightboxImage} />
-      ))}
+      {project.caseStudy?.map((section, i) => {
+        if (section.type === "component-gallery") {
+          return (
+            <div key={i} ref={galleryRef}>
+              <ComponentGallerySection
+                section={section}
+                color={color}
+                activeIndex={activeGalleryIndex}
+              />
+            </div>
+          );
+        }
+        return <Section key={i} section={section} color={color} onImageClick={setLightboxImage} />;
+      })}
 
       {/* ── Project navigation ── */}
       {(prevProject || nextProject) && (
