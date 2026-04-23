@@ -1841,31 +1841,33 @@ export const projectsData: ProjectDetail[] = [
           {
             "id": "progress-ring",
             "toggleLabel": "Progress Ring",
-            "label": "Component: Progress Ring"
+            "label": "Component: Progress Ring",
+            "heading": "Three sizes, locked geometry",
+            "body": "Progress Ring shows unit completion and task status. I specified three sizes (sm 32px, md 48px, lg 64px) with locked stroke-width ratios to maintain visual weight at any scale.",
+            "image": "/images/projects/components-production/fragments/ring-hero.svg",
+            "showcaseBg": "#0A0C14"
           },
           {
             "id": "tab-list",
             "toggleLabel": "Tabs",
-            "label": "Component: Tabs"
+            "label": "Component: Tabs",
+            "heading": "TabList Anatomy",
+            "body": "Defined the container, tab buttons, optional count badges, and the active indicator bar. Layout spacing is token-sourced to ensure consistency.",
+            "image": "/images/projects/components-production/fragments/tab-anatomy.svg",
+            "showcaseBg": "#0A0C14"
           },
           {
             "id": "skill-card",
             "toggleLabel": "Skill Card",
-            "label": "Component: Skill Card"
+            "label": "Component: Skill Card",
+            "heading": "Skill Card Anatomy",
+            "body": "Composed from the Cards base. Uses slots for media, header, body, and footer. Incorporates a Progress Ring in the footer for mastery visualization.",
+            "image": "/images/projects/components-production/fragments/card-hero.svg",
+            "showcaseBg": "#0A0C14"
           }
         ]
       },
       /* Progress Ring Sections */
-      {
-        "mode": "progress-ring",
-        "type": "showcase",
-        "label": "Geometry",
-        "heading": "Three sizes, locked geometry",
-        "body": "Progress Ring shows unit completion and task status. I specified three sizes (sm 32px, md 48px, lg 64px) with locked stroke-width ratios to maintain visual weight at any scale.",
-        "image": "/images/projects/components-production/fragments/ring-hero.svg",
-        "showcaseBg": "#0A0C14",
-        "bg": "dark"
-      },
       {
         "mode": "progress-ring",
         "type": "showcase",
@@ -1900,16 +1902,6 @@ export const projectsData: ProjectDetail[] = [
       {
         "mode": "tab-list",
         "type": "showcase",
-        "label": "Anatomy",
-        "heading": "TabList Anatomy",
-        "body": "Defined the container, tab buttons, optional count badges, and the active indicator bar. Layout spacing is token-sourced to ensure consistency.",
-        "image": "/images/projects/components-production/fragments/tab-anatomy.svg",
-        "showcaseBg": "#0A0C14",
-        "bg": "dark"
-      },
-      {
-        "mode": "tab-list",
-        "type": "showcase",
         "label": "Matrix",
         "heading": "Tab Button: State Matrix",
         "body": "Ten states across two axes: selection (selected/unselected) and interaction (resting, hover, focus, active, disabled).",
@@ -1938,16 +1930,6 @@ export const projectsData: ProjectDetail[] = [
         "bg": "light"
       },
       /* Skill Card Sections */
-      {
-        "mode": "skill-card",
-        "type": "showcase",
-        "label": "Anatomy",
-        "heading": "Skill Card Anatomy",
-        "body": "Composed from the Cards base. Uses slots for media, header, body, and footer. Incorporates a Progress Ring in the footer for mastery visualization.",
-        "image": "/images/projects/components-production/fragments/card-hero.svg",
-        "showcaseBg": "#0A0C14",
-        "bg": "dark"
-      },
       {
         "mode": "skill-card",
         "type": "showcase",
