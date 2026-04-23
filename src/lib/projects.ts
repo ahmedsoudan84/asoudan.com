@@ -40,7 +40,8 @@ export interface CaseStudySection {
     | "nav-proposals"
     | "concept-model"
     | "horizontal-scroll-gallery"
-    | "panorama";
+    | "panorama"
+    | "component-showcase";
   label?: string;
   heading?: string;
   body?: string;
@@ -57,6 +58,10 @@ export interface CaseStudySection {
   showcaseBg?: string;
   screens?: ScreenItem[];
   columns?: number;
+  components?: Array<{
+    type: "tablist" | "tabbutton" | "progress-ring" | "skill-card" | "list-item";
+    label?: string;
+  }>;
   stepNumber?: number | string;
   personas?: Array<{
     name: string;
@@ -998,13 +1003,19 @@ export const projectsData: ProjectDetail[] = [
         "caption": "Solution ideas mapped per role — kept lightweight so engineering and PM could react fast.",
         "bg": "dark"
       },
+{
+    "type": "component-showcase",
+    "label": "Updates",
+    "heading": "Component specifications — interactive",
+    "body": "Explore the TabList and TabButton specifications interactively. Use the floating toggle to switch between live component, individual spec sheet, and the full fragment gallery.",
+    "bg": "dark",
+    "components": [
       {
-        "type": "concept-model",
-        "label": "Concept Model",
-        "heading": "A single design model to connect both org experiences",
-        "caption": "Shared navigation layer + org context awareness + role-aware access — no platform rewrite required.",
-        "bg": "dark"
-      },
+        "type": "tablist",
+        "label": "TabList"
+      }
+    ]
+  },
       {
         "type": "text",
         "label": "Design Solutions",
@@ -1779,7 +1790,7 @@ export const projectsData: ProjectDetail[] = [
     "team": "1 Designer, 4 Engineers",
     "tools": "Figma, Storybook, Confluence",
     "platform": "Web (Responsive)",
-    "hidden": false,
+    "hidden": true,
     "caseStudy": [
       {
         "type": "tldr",
@@ -2034,7 +2045,7 @@ export const projectsData: ProjectDetail[] = [
     ],
     "behanceUrl": "",
     "employer": "Oxford University Press",
-    "hidden": true,
+    "hidden": false,
     "role": "Lead Product Designer",
     "timeline": "Ongoing",
     "team": "1 Designer, 4 Engineers",

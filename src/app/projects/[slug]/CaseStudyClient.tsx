@@ -1700,6 +1700,140 @@ function PanoramaSection({ section, color, onImageClick }: { section: CaseStudyS
   );
 }
 
+/* ─── Component Showcase section ─── */
+function ComponentShowcaseSection({ section, color }: { section: CaseStudySection; color: string }) {
+  if (!section.components) return null;
+  
+  return (
+    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <SectionLabel label={section.label} color={color} />
+          <SectionHeading heading={section.heading} />
+          {section.body && (
+            <p className="[color:var(--fg-60)] text-base lg:text-lg leading-relaxed mb-8">{section.body}</p>
+          )}
+          <div className="grid gap-6">
+            {section.components?.map((comp, i) => {
+              const isTabList = comp.type === "tablist";
+              return (
+                <div
+                  key={i}
+                  className="rounded-2xl border p-6 lg:p-8 transition-all duration-300 hover:shadow-[0_25px_80px_-20px_rgba(0,0,0,0.5)]"
+                  style={{ borderColor: "var(--border-card)" }}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-montserrat font-bold text-lg lg:text-xl [color:var(--fg)] capitalize">
+                      {comp.label || comp.type}
+                    </h3>
+                    <button
+                      onClick={() => console.log(`Viewing ${comp.type} specifications`)}
+                      className="text-[10px] font-semibold tracking-[0.12em] uppercase text-[var(--accent)] hover:opacity-80 transition-opacity"
+                    >
+                      View full spec →
+                    </button>
+                  </div>
+                  {isTabList ? (
+                    <div className="space-y-6">
+                      <div
+                        className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-card)] overflow-hidden"
+                        role="tablist"
+                        aria-label="Component specifications"
+                      >
+                        <div className="flex border-b border-[var(--border-card)]">
+                          <button
+                            role="tab"
+                            aria-selected="true"
+                            aria-controls="tabpanel-specs"
+                            id="tab-btn-1"
+                            className="flex-1 py-3 px-6 text-sm font-semibold text-[var(--fg-60)] hover:text-[var(--fg)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 transition-colors"
+                          >
+                            Structure
+                          </button>
+                          <button
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="tabpanel-api"
+                            id="tab-btn-2"
+                            className="flex-1 py-3 px-6 text-sm font-semibold text-[var(--fg-40)] hover:text-[var(--fg-60)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 transition-colors"
+                          >
+                            API
+                          </button>
+                          <button
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="tabpanel-accessibility"
+                            id="tab-btn-3"
+                            className="flex-1 py-3 px-6 text-sm font-semibold text-[var(--fg-40)] hover:text-[var(--fg-60)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 transition-colors"
+                          >
+                            Accessibility
+                          </button>
+                        </div>
+                        <div className="p-6 space-y-6">
+                          <div role="tabpanel" id="tabpanel-specs" aria-labelledby="tab-btn-1" className="space-y-4">
+                            <h4 className="font-montserrat font-bold text-sm [color:var(--fg-50)] uppercase tracking-[0.15em]">Layout Structure</h4>
+                            <div className="grid gap-3">
+                              <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--fg-05)] border border-[var(--fg-08)]">
+                                <div className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
+                                <span className="text-sm [color:var(--fg-60)]">TabList container with role="tablist"</span>
+                              </div>
+                              <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--fg-05)] border border-[var(--fg-08)]">
+                                <div className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
+                                <span className="text-sm [color:var(--fg-60)]">Tab buttons with role="tab" and aria-selected</span>
+                              </div>
+                              <div className="flex items-center gap-3 p-3 rounded-lg bg-[var(--fg-05)] border border-[var(--fg-08)]">
+                                <div className="w-2 h-2 rounded-full bg-[var(--accent)] shrink-0" />
+                                <span className="text-sm [color:var(--fg-60)]">Associated tabpanels with aria-controls</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div role="tabpanel" id="tabpanel-api" aria-labelledby="tab-btn-2" className="space-y-4 hidden">
+                            <h4 className="font-montserrat font-bold text-sm [color:var(--fg-50)] uppercase tracking-[0.15em]">API Endpoints</h4>
+                            <div className="font-mono text-xs [color:var(--fg-40)] bg-[var(--fg-05)] rounded-lg p-3 overflow-x-auto">
+                              <code>
+                                GET /api/components/production/tablist<br />
+                                POST /api/components/production/tablist/activate<br />
+                                GET /api/components/production/tablist/specs
+                              </code>
+                            </div>
+                          </div>
+                          <div role="tabpanel" id="tabpanel-accessibility" aria-labelledby="tab-btn-3" className="space-y-4 hidden">
+                            <h4 className="font-montserrat font-bold text-sm [color:var(--fg-50)] uppercase tracking-[0.15em]">Accessibility Checklist</h4>
+                            <div className="grid gap-2">
+                              <div className="flex items-center gap-2 text-sm [color:var(--fg-60)]">
+                                <span className="text-[var(--accent)]">✓</span> Keyboard navigable (← → Home End)
+                              </div>
+                              <div className="flex items-center gap-2 text-sm [color:var(--fg-60)]">
+                                <span className="text-[var(--accent)]">✓</span> Focus indicators visible (2-4px outline)
+                              </div>
+                              <div className="flex items-center gap-2 text-sm [color:var(--fg-60)]">
+                                <span className="text-[var(--accent)]">✓</span> ARIA live regions for state changes
+                              </div>
+                              <div className="flex items-center gap-2 text-sm [color:var(--fg-60)]">
+                                <span className="text-[var(--accent)]">✓</span> Screen reader announcements
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="rounded-xl border border-dashed border-[var(--border-card)] p-8 text-center">
+                        <p className="[color:var(--fg-40)] text-sm">{comp.type} component specifications coming soon...</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Section dispatcher ─── */
 function Section({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   switch (section.type) {
@@ -1727,6 +1861,8 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <BrowserFrameSection section={section} color={color} />;
     case "showcase":
       return <ShowcaseSection section={section} color={color} />;
+    case "component-showcase":
+      return <ComponentShowcaseSection section={section} color={color} />;
     case "screen-gallery":
       return <ScreenGallerySection section={section} color={color} onImageClick={onImageClick} />;
     case "reflection":
