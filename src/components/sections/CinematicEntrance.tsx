@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
 
 /* ── Fog particle system ── */
@@ -136,6 +136,12 @@ export default function CinematicEntrance() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Parallax springs — text drifts with cursor, photo moves against it
+  const pTx = useMotionValue(0); const sTx = useSpring(pTx, { stiffness: 80, damping: 28 });
+  const pTy = useMotionValue(0); const sTy = useSpring(pTy, { stiffness: 80, damping: 28 });
+  const pPx = useMotionValue(0); const sPx = useSpring(pPx, { stiffness: 55, damping: 22 });
+  const pPy = useMotionValue(0); const sPy = useSpring(pPy, { stiffness: 55, damping: 22 });
+
   useEffect(() => {
     const t1 = setTimeout(() => setPhase(2), 2200);
     const t2 = setTimeout(() => setPhase(3), 3800);
@@ -154,6 +160,11 @@ export default function CinematicEntrance() {
     window.addEventListener("mousemove", handleMove);
     return () => window.removeEventListener("mousemove", handleMove);
   }, []);
+
+  useEffect(() => {
+    pTx.set(mousePos.x * 14);  pTy.set(mousePos.y *  9);
+    pPx.set(mousePos.x * -22); pPy.set(mousePos.y * -14);
+  }, [mousePos, pTx, pTy, pPx, pPy]);
 
   const scrollTo = (id: string) => {
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -275,7 +286,7 @@ export default function CinematicEntrance() {
             </div>
 
             {/* Photo container — pushed to right side */}
-            <div className="absolute inset-0 flex items-center justify-center lg:justify-end">
+            <motion.div className="absolute inset-0 flex items-center justify-center lg:justify-end" style={{ x: sPx, y: sPy }}>
               <div className="relative w-[100vw] h-[90vh] max-w-[550px] lg:w-[50vw] lg:max-w-[700px] lg:h-[100vh] lg:mr-[5%] translate-y-[5%]">
                 <Image
                   src="/images/ahmed-cutout.png"
@@ -285,7 +296,7 @@ export default function CinematicEntrance() {
                   priority
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Blending overlays */}
             {/* Radial vignette — soft circular fade around photo */}
@@ -339,6 +350,7 @@ export default function CinematicEntrance() {
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
+              style={{ x: sTx, y: sTy }}
             >
               {/* Name SVG — mobile */}
               <motion.div className="w-[240px] mb-2 lg:hidden" style={{ color: "var(--fg)" }} variants={slideUp}>
