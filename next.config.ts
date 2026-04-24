@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // GitHub Pages deployment - standalone output
+  output: "standalone",
+
   // SEO and Performance optimizations
   compress: true,
   poweredByHeader: false,
