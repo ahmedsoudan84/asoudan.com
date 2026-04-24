@@ -1,5 +1,5 @@
 <svg width="420" height="260" viewBox="0 0 420 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="420" height="260" rx="16" fill="#0A0C14"/>
+  <rect width="420" height="260" rx="16" fill="#FFFFFF"/>
 
   <!-- Complete ring -->
   <circle cx="210" cy="152" r="48" stroke="#27AE60" stroke-width="5" fill="none" stroke-linecap="round"/>

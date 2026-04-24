@@ -1,5 +1,5 @@
 <svg width="420" height="260" viewBox="0 0 420 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="420" height="260" rx="16" fill="#0A0C14"/>
+  <rect width="420" height="260" rx="16" fill="#FFFFFF"/>
 
   <!-- Code block -->
   <rect x="36" y="80" width="348" height="88" rx="8" fill="#0F1322"/>
@@ -15,7 +15,7 @@
   <!-- Speech bubble mock -->
   <path d="M 36 196 L 60 196 L 60 188 L 72 196 L 384 196 L 384 232 L 36 232 Z" fill="#0F1322"/>
   <circle cx="54" cy="214" r="8" fill="#26A69A"/>
-  <text x="54" y="218" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="700" fill="#0A0C14" text-anchor="middle">♪</text>
+  <text x="54" y="218" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle">♪</text>
   <text x="80" y="214" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#F0F4F8" font-style="italic">"Progress bar: 4 of 6 units complete"</text>
   <text x="80" y="227" font-family="'Menlo', 'Consolas', monospace" font-size="8" fill="#5A6784">NVDA · VoiceOver · JAWS — consistent phrasing</text>
 </svg>

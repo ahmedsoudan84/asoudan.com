@@ -5,7 +5,7 @@
       <stop offset="100%" stop-color="#26A69A" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="420" height="360" rx="16" fill="#0A0C14"/>
+  <rect width="420" height="360" rx="16" fill="#FFFFFF"/>
 
   <!-- Glow -->
   <circle cx="210" cy="180" r="140" fill="url(#heroGlow)"/>
