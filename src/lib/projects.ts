@@ -44,6 +44,7 @@ export interface CaseStudySection {
     | "component-specification"
     | "component-showcase"
     | "component-gallery";
+  category?: string;
   label?: string;
   heading?: string;
   body?: string;
@@ -104,7 +105,7 @@ export interface CaseStudySection {
   }>;
   chartItems?: Array<{ label: string; value: number; note?: string; total?: number; color?: string }>;
   chartLayout?: string;
-  mode?: "progress-ring" | "tab-list" | "tab-button" | "skill-card";
+  mode?: "progress-ring" | "tab-list" | "tab-button" | "skill-card" | "any";
 }
 
 export interface ProjectDetail {
@@ -1923,24 +1924,6 @@ export const projectsData: ProjectDetail[] = [
         "heading": "Systems are for people",
         "body": "I went in assuming the work was the components. It wasn't — it was the usage guidance. Pinning the 'when' and 'when not' next to each component changed the tone of every design review. Pair with engineering sooner: the cleanest specs were co-designed in shared Figma frames.",
         "bg": "light"
-      }
-    ]
-  },
-        "body": "Every card has a clearly defined hover effect and focus ring. For interactive cards, the entire surface is the hit area, while for complex cards, specific actions within the footer are given priority.",
-        "image": "/images/projects/components-production/fragments/card-interactions.svg",
-        "imagePosition": "left",
-        "bg": "dark"
-      },
-      {
-        "mode": "skill-card",
-        "category": "Production",
-        "type": "split",
-        "label": "Section 4: Variants",
-        "heading": "Product Variants",
-        "body": "Six production variants (Learner, Admin, Content, Assessment) all stem from the same atomic Card component. This proves the robustness of the slot-based architecture.",
-        "image": "/images/projects/components-production/fragments/card-gallery.svg",
-        "imagePosition": "left",
-        "bg": "dark"
       }
     ]
   },
