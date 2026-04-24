@@ -1914,21 +1914,30 @@ function ProMaxFragment({
       </div>
 
       <div className="w-full relative group flex justify-center">
-        <div className="relative z-10 w-full max-w-4xl mx-auto">
-          <motion.img
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className={cls(
+            "relative z-10 w-full max-w-4xl mx-auto p-8 lg:p-16 rounded-[2rem] backdrop-blur-xl border shadow-2xl flex items-center justify-center overflow-hidden",
+            frag.invertInDarkMode
+              ? "bg-[#141620]/90 dark:bg-[#F8F9FA]/90 border-white/10 dark:border-black/5"
+              : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
+          )}
+        >
+          {/* Subtle inner glow for glass effect */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
+          
+          <img
             src={frag.imageSrc}
             alt={frag.title}
             className={cls(
-              "w-full h-auto object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_40px_100px_rgba(0,0,0,0.4)]",
+              "w-full h-auto object-contain relative z-10",
               frag.invertInDarkMode && "dark:invert"
             )}
           />
-          
-        </div>
+        </motion.div>
 
         {/* Technical context background decor */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center overflow-hidden">
