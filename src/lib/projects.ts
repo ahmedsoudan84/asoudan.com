@@ -1838,50 +1838,50 @@ export const projectsData: ProjectDetail[] = [
         "mode": "progress-ring",
         "componentName": "Progress Ring",
         "bg": "light",
-        "label": "Visualising Progress",
-        "body": "The Progress Ring represents completion contextually, mapping to different thresholds ranging from simple completion to celebration states.",
+        "label": "Progress Ring",
+        "body": "The Progress Ring provides an at-a-glance indicator of completion. It maps values to coloured arcs, animates transitions over 800ms using cubic-bezier(0.2, 0, 0, 1), and exposes full semantics for screen readers.",
         "fragments": [
           {
-            "title": "Anatomy & Geometry",
-            "subtitle": "The dasharray calculation",
-            "imageSrc": "/images/projects/components-production-new/fragments/ring-geometry.svg",
+            "title": "Anatomy",
+            "subtitle": "Circle, track, and stroke dasharray",
+            "imageSrc": "/images/projects/components-production-new/fragments/ring-anatomy.svg",
             "invertInDarkMode": true,
-            "description": "Percentage is not a property — it's a dasharray. By calculating the circumference (2πr) and applying it to the stroke-dasharray, we create a perfectly scalable progress indicator that leverages native browser rendering."
+            "description": "A progress ring consists of a background track (neutral) and an indicator arc whose stroke-dasharray represents the current value. The calculation uses circumference × (value / max) to determine the visible arc length."
           },
           {
-            "title": "Technical Spec (Sizing)",
-            "subtitle": "Standardised scale variants",
-            "imageSrc": "/images/projects/components-production-new/fragments/ring-sizes.svg",
+            "title": "Layout & Spacing",
+            "subtitle": "Four standard sizes with calibrated stroke widths",
+            "imageSrc": "/images/projects/components-production-new/fragments/ring-layout-spacing.svg",
             "invertInDarkMode": true,
-            "description": "Progress rings are provided in four standard sizes (XS, S, M, L), each with calibrated stroke weights to maintain visual balance and legibility across high-density displays."
+            "description": "Rings come in four sizes (XS 24px, S 32px, M 48px, L 64px). Stroke weight scales with size so the visual balance remains consistent across densities and breakpoints."
           },
           {
-            "title": "Threshold Logic",
-            "subtitle": "Semantic color mapping",
-            "imageSrc": "/images/projects/components-production-new/fragments/ring-thresholds.svg",
+            "title": "Value Types",
+            "subtitle": "Threshold colours and non-percentage values",
+            "imageSrc": "/images/projects/components-production-new/fragments/ring-value-type.svg",
             "invertInDarkMode": true,
-            "description": "Colors are mapped to performance thresholds: Neutral for low progress, Brand Teal for active progress, and Success Green for completion. This ensures immediate cognitive recognition of status."
+            "description": "Below 25% uses a warning colour (amber), 25–75% uses the brand teal, and above 75% uses success green. When max ≠ 100, aria-valuetext announces 'value out of max' to avoid percentage misinterpretation."
           },
           {
-            "title": "Motion Design",
-            "subtitle": "Duration and Easing curves",
-            "imageSrc": "/images/projects/components-production-new/fragments/ring-motion.svg",
+            "title": "Values & Motion",
+            "subtitle": "Transitions and easing",
+            "imageSrc": "/images/projects/components-production-new/fragments/ring-value.svg",
             "invertInDarkMode": true,
-            "description": "Updates follow a 400ms ease-out-quart curve. This specific duration provides a 'weighty' feel that reflects the significance of progress updates without feeling sluggish."
+            "description": "When the value updates, the stroke-dasharray animates over 800ms with cubic-bezier(0.2, 0, 0, 1). Under prefers-reduced-motion, the transition is disabled and the new value appears instantly."
           },
           {
-            "title": "Celebration States",
-            "subtitle": "Micro-interactions on 100%",
-            "imageSrc": "/images/projects/components-production-new/fragments/ring-celebrate.svg",
+            "title": "Completion States",
+            "subtitle": "Celebration micro-interaction",
+            "imageSrc": "/images/projects/components-production-new/fragments/ring-showcase.svg",
             "invertInDarkMode": true,
-            "description": "Upon reaching 100%, the component triggers a subtle scale-up and color shift to Success Green, providing positive reinforcement for learner achievements."
+            "description": "Crossing 100% triggers a subtle scale-up (1.05×) and a final colour shift to Success Green. This provides positive reinforcement without being distracting."
           },
           {
-            "title": "Accessibility (Aria)",
-            "subtitle": "Screen reader translations",
+            "title": "Accessibility Requirements",
+            "subtitle": "Labeling, semantics, and screen reader behaviour",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-aria.svg",
             "invertInDarkMode": true,
-            "description": "We map the visual progress to aria-valuenow, aria-valuemin, and aria-valuemax. Additionally, aria-label provides a human-readable summary (e.g., 'Progress: 67% complete')."
+            "description": "Every ring has a unique descriptive label linked via aria-labelledby or aria-label. Native <progress> or role='progressbar' exposes aria-valuenow/valuemin/valuemax. The decorative SVG has aria-hidden='true' and focusable='false' to prevent duplicate announcements. If a visible percentage is shown beside the ring, that text has aria-hidden='true' to avoid redundancy. When max ≠ 100, aria-valuetext reads 'value out of max'. Multiple rings on the same page all have distinct labels. Animations are suppressed under prefers-reduced-motion."
           }
         ]
       },
