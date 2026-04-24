@@ -44,8 +44,7 @@ export interface CaseStudySection {
     | "component-specification"
     | "component-showcase"
     | "component-gallery"
-    | "component-fragments"
-    | "component-deep-dive";
+    | "component-fragments";
   category?: string;
   label?: string;
   heading?: string;
@@ -101,16 +100,6 @@ export interface CaseStudySection {
     body: string;
     bullets?: string[];
   }>;
-  /* ── component-deep-dive fields ── */
-  componentId?: string;
-  componentIndex?: string;
-  specViews?: Array<{
-    label: string;
-    caption?: string;
-    cropViewBox: string;
-    showcaseBg?: string;
-  }>;
-  pillars?: Array<{ label: string; title: string; body: string }>;
   stepNumber?: number | string;
   personas?: Array<{
     name: string;
@@ -1810,10 +1799,10 @@ export const projectsData: ProjectDetail[] = [
     "subtitle": "Oxford English Hub",
     "category": "DESIGN SYSTEM",
     "number": "05",
-    "description": "Shipped three platform primitives — TabList, Progress Ring, and the Cards base (with Skill Card as a live composition) — to stop four squads re-inventing the same patterns. Production-grade specs paired with usage guidance, adopted across learner and admin journeys.",
+    "description": "Designed and shipped platform components (TabList, ListItems, Progress Ring, Cards) to accelerate delivery and ensure consistency. Authored usage guidance so components integrate cleanly across journeys and contexts.",
     "tags": [
       "Product Design",
-      "Design System",
+      "User Journey Mapping",
       "Component Design"
     ],
     "color": "#26A69A",
@@ -1856,36 +1845,42 @@ export const projectsData: ProjectDetail[] = [
             "title": "Anatomy & Geometry",
             "subtitle": "The dasharray calculation",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-geometry.svg",
+            "invertInDarkMode": true,
             "description": "Percentage is not a property — it's a dasharray. By calculating the circumference (2πr) and applying it to the stroke-dasharray, we create a perfectly scalable progress indicator that leverages native browser rendering."
           },
           {
             "title": "Technical Spec (Sizing)",
             "subtitle": "Standardised scale variants",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-sizes.svg",
+            "invertInDarkMode": true,
             "description": "Progress rings are provided in four standard sizes (XS, S, M, L), each with calibrated stroke weights to maintain visual balance and legibility across high-density displays."
           },
           {
             "title": "Threshold Logic",
             "subtitle": "Semantic color mapping",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-thresholds.svg",
+            "invertInDarkMode": true,
             "description": "Colors are mapped to performance thresholds: Neutral for low progress, Brand Teal for active progress, and Success Green for completion. This ensures immediate cognitive recognition of status."
           },
           {
             "title": "Motion Design",
             "subtitle": "Duration and Easing curves",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-motion.svg",
+            "invertInDarkMode": true,
             "description": "Updates follow a 400ms ease-out-quart curve. This specific duration provides a 'weighty' feel that reflects the significance of progress updates without feeling sluggish."
           },
           {
             "title": "Celebration States",
             "subtitle": "Micro-interactions on 100%",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-celebrate.svg",
+            "invertInDarkMode": true,
             "description": "Upon reaching 100%, the component triggers a subtle scale-up and color shift to Success Green, providing positive reinforcement for learner achievements."
           },
           {
             "title": "Accessibility (Aria)",
             "subtitle": "Screen reader translations",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-aria.svg",
+            "invertInDarkMode": true,
             "description": "We map the visual progress to aria-valuenow, aria-valuemin, and aria-valuemax. Additionally, aria-label provides a human-readable summary (e.g., 'Progress: 67% complete')."
           }
         ]
@@ -1901,33 +1896,57 @@ export const projectsData: ProjectDetail[] = [
           {
             "title": "Anatomy",
             "subtitle": "Core structure and active indicators",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-anatomy.svg",
+            "imageSrc": "/images/projects/components-production-new/tablist/Anatomy.svg",
+            "invertInDarkMode": true,
             "description": "The TabList is a collection of interactive triggers (TabButtons) that control the visibility of associated content panels. A key visual signature is the sliding 'active indicator', which provides immediate visual feedback on the current selection."
           },
           {
-            "title": "State Matrix",
+            "title": "TabButton Anatomy",
+            "subtitle": "Internal layout and target areas",
+            "imageSrc": "/images/projects/components-production-new/tablist/TabButton Anatomy.svg",
+            "invertInDarkMode": true,
+            "description": "Each TabButton is designed with a generous hit area to ensure ease of interaction on both desktop and touch devices. The internal layout is flexible, accommodating text, icons, and badges while maintaining consistent alignment."
+          },
+          {
+            "title": "Interaction States",
             "subtitle": "Focus, Hover, Pressed, and Selected states",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-matrix.svg",
-            "description": "Every interaction state is mapped to explicit token values. The matrix ensures complete parity across light and dark themes — no implicit or hard-coded colours."
+            "imageSrc": "/images/projects/components-production-new/tablist/States.svg",
+            "invertInDarkMode": true,
+            "description": "To ensure 100% accessibility, every interaction state is clearly defined. This includes high-contrast focus rings for keyboard users and subtle weight changes for hover and selection states."
+          },
+          {
+            "title": "Iconography",
+            "subtitle": "Leading and trailing icon support",
+            "imageSrc": "/images/projects/components-production-new/tablist/Icons.svg",
+            "invertInDarkMode": true,
+            "description": "The component supports both leading and trailing icons, allowing designers to add semantic meaning or visual cues. Icons are automatically scaled and tinted based on the button's state."
           },
           {
             "title": "Layout & Spacing",
             "subtitle": "Horizontal and Vertical rhythm tokens",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-layout-spacing.svg",
+            "imageSrc": "/images/projects/components-production-new/tablist/Layout and spacing.svg",
             "invertInDarkMode": true,
-            "description": "Spacing is governed by a strict token system, ensuring that the component maintains its visual integrity across different screen sizes and languages. The tab height is set to 64px to meet the WCAG 2.5.5 touch-target requirement."
+            "description": "Spacing is governed by a strict token system, ensuring that the component maintains its visual integrity across different screen sizes and languages."
           },
           {
-            "title": "Keyboard Contract",
-            "subtitle": "WAI-ARIA Tabs Pattern",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-keyboard.svg",
-            "description": "Arrow keys cycle focus within the tablist; Home and End jump to the first and last tab; Tab exits the widget entirely. These bindings follow the ARIA authoring practices guide with no deviations."
+            "title": "Overflow Strategy",
+            "subtitle": "Managing density with intelligent scrolling",
+            "imageSrc": "/images/projects/components-production-new/tablist/Overflow.svg",
+            "invertInDarkMode": true,
+            "description": "When the number of tabs exceeds the available horizontal space, the TabList transitions into a scrolling container with optional fade indicators to signal additional content."
           },
           {
-            "title": "ARIA Schema",
-            "subtitle": "Role, state, and property mapping",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-aria.svg",
-            "description": "Every required ARIA attribute is implemented: role=tablist, role=tab, aria-selected, aria-controls, and aria-labelledby. No attribute is optional — omitting any one breaks screen reader announcement."
+            "title": "Color Matrix",
+            "subtitle": "Theming and parity rules",
+            "imageSrc": "/images/projects/components-production-new/tablist/Matrix.svg",
+            "invertInDarkMode": true,
+            "description": "The component is built to be theme-agnostic. Using a standardized color matrix, it maintains perfect legibility and brand alignment in both light and dark modes."
+          },
+          {
+            "title": "Accessibility (Aria Schema)",
+            "subtitle": "Keyboard and Screen Reader implementation",
+            "imageSrc": "/images/projects/components-production-new/tablist/Accessibility.svg",
+            "invertInDarkMode": true
           }
         ]
       },

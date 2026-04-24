@@ -630,9 +630,6 @@ function ScreenGallerySection({ section, color, onImageClick }: { section: CaseS
         <Reveal>
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
-          {section.body && (
-            <p className="[color:var(--fg-60)] leading-relaxed mb-8">{section.body}</p>
-          )}
           {section.screens && (
             <div
               className={`grid gap-4 ${
@@ -1910,7 +1907,7 @@ function ProMaxFragment({
           {frag.title}
         </h3>
         {frag.subtitle && (
-          <p className="[color:var(--fg-40)] text-[10px] uppercase tracking-[4px] font-bold">
+          <p className="[color:var(--fg-60)] text-[10px] uppercase tracking-[4px] font-bold">
             {frag.subtitle}
           </p>
         )}
@@ -1930,6 +1927,7 @@ function ProMaxFragment({
               frag.invertInDarkMode && "dark:invert"
             )}
           />
+          
         </div>
 
         {/* Technical context background decor */}
@@ -1941,7 +1939,7 @@ function ProMaxFragment({
 
       {frag.description && (
         <div className="max-w-2xl mt-16 px-6 text-center">
-          <p className="[color:var(--fg-50)] text-base lg:text-lg leading-relaxed font-light">
+          <p className="[color:var(--fg-70)] text-base lg:text-lg leading-relaxed font-light">
             {frag.description}
           </p>
         </div>
@@ -1985,7 +1983,7 @@ function ComponentExplorer({
                       "w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 relative group",
                       isActive 
                         ? "[color:var(--fg)] bg-[var(--fg-05)] shadow-sm" 
-                        : "[color:var(--fg-40)] hover:[color:var(--fg-60)] hover:bg-[var(--fg-02)]"
+                        : "[color:var(--fg-60)] hover:[color:var(--fg)] hover:bg-[var(--fg-05)]"
                     )}
                   >
                     {isActive && (
@@ -2005,9 +2003,9 @@ function ComponentExplorer({
           <div className="pt-8 border-t [border-color:var(--border-subtle)]">
             <div className="flex items-center gap-2 mb-4">
                <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
-               <span className="text-[10px] font-bold uppercase tracking-wider [color:var(--fg-30)]">Documentation</span>
+               <span className="text-[10px] font-bold uppercase tracking-wider [color:var(--fg-50)]">Documentation</span>
             </div>
-            <p className="text-[11px] [color:var(--fg-40)] leading-relaxed">
+            <p className="text-[11px] [color:var(--fg-60)] leading-relaxed">
               Technical specifications, anatomy, and accessibility guidelines for production-ready design system components.
             </p>
           </div>
@@ -2387,7 +2385,7 @@ function FloatingComponentToggle({
       <div
         className="flex items-center gap-1.5 p-1.5 rounded-full border backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-300"
         style={{
-          background: "rgba(10, 12, 20, 0.85)",
+          background: "rgba(10, 12, 20, 0.7)",
           borderColor: "rgba(255, 255, 255, 0.08)",
         }}
       >
