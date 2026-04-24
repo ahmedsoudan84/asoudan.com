@@ -206,58 +206,56 @@ function FullwidthImageSection({ section, color, onImageClick }: { section: Case
 
 /* ─── Split section ─── */
 function SplitSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
-  const imageLeft = section.imagePosition !== "right";
   const splitSrc = section.image ? resolveImage(section.image).src : null;
   return (
-    <section className={cls("py-16 lg:py-24", sectionBg(section.bg))}>
+    <section className={cls("py-8 lg:py-12", sectionBg(section.bg))}>
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
         <Reveal>
-          <div
-            className={cls(
-              "flex flex-col lg:flex-row gap-10 lg:gap-16 items-center",
-              !imageLeft && "lg:flex-row-reverse"
-            )}
-          >
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
             {section.image && (
               <div
-                className="w-full lg:w-1/2 relative rounded-2xl overflow-hidden shrink-0 cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl group/img"
+                className="w-full lg:w-3/5 relative rounded-2xl overflow-hidden shrink-0 cursor-pointer transition-all duration-500 hover:shadow-2xl group/img"
                 onClick={() => splitSrc && onImageClick?.(splitSrc)}
                 style={{
-                  background: section.showcaseBg || (section.bg === 'light' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.2)'),
-                  border: '1px solid var(--border-subtle)',
+                  background: "rgba(255, 255, 255, 0.02)",
+                  border: "1px solid rgba(255, 255, 255, 0.04)",
                 }}
               >
-                <div className="p-4 lg:p-8 flex items-center justify-center min-h-[300px] lg:min-h-[450px]">
+                <div className="p-4 lg:p-6 flex items-center justify-center min-h-[260px] lg:min-h-[380px]">
                   <SafeImage
                     src={splitSrc!}
                     alt={typeof section.image === "string" ? (section.caption || section.heading || "") : (section.image?.alt || section.caption || section.heading || "")}
                     width={800}
                     height={600}
-                    className="w-full h-auto max-h-[400px] object-contain block drop-shadow-2xl transition-transform duration-700 group-hover/img:scale-110"
+                    className="w-full h-auto max-h-[320px] lg:max-h-[360px] object-contain block drop-shadow-xl transition-transform duration-700 group-hover/img:scale-105"
                   />
                 </div>
                 {section.caption && (
                   <div className="absolute bottom-4 left-0 right-0">
-                    <p className="[color:var(--fg-30)] text-[10px] uppercase tracking-widest text-center">{section.caption}</p>
+                    <p className="[color:var(--fg-20)] text-[9px] uppercase tracking-[3px] text-center">{section.caption}</p>
                   </div>
                 )}
               </div>
             )}
-            <div className={section.image ? "w-full lg:w-1/2" : "w-full max-w-4xl"}>
+            <div className="w-full lg:w-2/5 pt-4">
               <SectionLabel label={section.label} color={color} />
-              <SectionHeading heading={section.heading} />
+              <h4 className="font-montserrat font-bold [color:var(--fg)] text-lg lg:text-xl leading-tight mb-4">
+                {section.heading}
+              </h4>
               {section.body && (
-                <p className="[color:var(--fg-60)] leading-relaxed">{section.body}</p>
+                <p className="[color:var(--fg-50)] text-sm leading-relaxed antialiased">
+                  {section.body}
+                </p>
               )}
               {section.bullets && (
-                <ul className="space-y-3 mt-4">
+                <ul className="space-y-2.5 mt-6">
                   {section.bullets.map((b, i) => (
-                    <li key={i} className="flex gap-3">
+                    <li key={i} className="flex gap-3 items-start">
                       <span
-                        className="mt-2 w-1 h-1 rounded-full shrink-0"
+                        className="mt-1.5 w-1 h-1 rounded-full shrink-0"
                         style={{ background: color }}
                       />
-                      <p className="[color:var(--fg-60)] text-sm leading-relaxed">{b}</p>
+                      <p className="[color:var(--fg-50)] text-[13px] leading-snug">{b}</p>
                     </li>
                   ))}
                 </ul>
@@ -1893,6 +1891,105 @@ function ComponentShowcaseSection({ section, color }: { section: CaseStudySectio
 }
 
 /* ─── Section dispatcher ─── */
+/* ─── Component Specification (Native Deep Dive) ─── */
+function ComponentSpecificationSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
+  if (!section.image) return null;
+  const src = resolveImage(section.image!).src;
+
+  return (
+    <section className={cls("py-20 lg:py-32 overflow-hidden", sectionBg(section.bg))}>
+      <div className="max-w-6xl mx-auto px-6 lg:px-0">
+        <Reveal>
+          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+            {/* Technical side (Text & Specs) */}
+            <div className="w-full lg:w-2/5 pt-4">
+              <SectionLabel label={section.label} color={color} />
+              <h2 className="font-montserrat font-bold [color:var(--fg)] text-3xl lg:text-4xl leading-tight mb-6">
+                {section.heading}
+              </h2>
+              {section.body && (
+                <p className="[color:var(--fg-60)] text-base lg:text-lg leading-relaxed mb-12">
+                  {section.body}
+                </p>
+              )}
+
+              <div className="space-y-12">
+                {section.specifications?.map((spec, i) => (
+                  <div key={i} className="relative pl-8 border-l border-[var(--border-subtle)]">
+                    <div 
+                      className="absolute left-[-1px] top-0 w-[2px] h-6" 
+                      style={{ background: color }} 
+                    />
+                    <h3 className="text-[11px] font-bold uppercase tracking-[3px] mb-3" style={{ color }}>
+                      {spec.title}
+                    </h3>
+                    <p className="[color:var(--fg-50)] text-sm leading-relaxed antialiased">
+                      {spec.body}
+                    </p>
+                    {spec.bullets && (
+                      <ul className="mt-4 space-y-2">
+                        {spec.bullets.map((b, bi) => (
+                          <li key={bi} className="flex gap-2 text-xs [color:var(--fg-40)]">
+                            <span style={{ color }}>•</span> {b}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Visual side (Native Image) */}
+            <div className="w-full lg:w-3/5 relative">
+              <div 
+                className="relative group/native cursor-zoom-in transition-all duration-700"
+                onClick={() => onImageClick?.(src)}
+              >
+                {/* No background frame, just the component on the page background */}
+                <div className="relative z-10 p-4 lg:p-8 flex items-center justify-center min-h-[400px]">
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img
+                    src={src}
+                    alt={section.heading || "Component specification"}
+                    className="w-full h-auto max-h-[600px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-transform duration-700 group-hover/native:scale-[1.02]"
+                  />
+                </div>
+
+                {/* Technical measurement lines (decorative) */}
+                <div className="absolute inset-0 pointer-events-none opacity-20 group-hover/native:opacity-40 transition-opacity duration-700">
+                  <div className="absolute top-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-[var(--fg-30)] to-transparent" />
+                  <div className="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-[var(--fg-30)] to-transparent" />
+                  <div className="absolute left-0 top-10 bottom-10 w-px bg-gradient-to-b from-transparent via-[var(--fg-30)] to-transparent" />
+                  <div className="absolute right-0 top-10 bottom-10 w-px bg-gradient-to-b from-transparent via-[var(--fg-30)] to-transparent" />
+                </div>
+
+                {/* Enlarge Trigger */}
+                <div className="absolute top-4 right-4 z-20 opacity-0 group-hover/native:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] shadow-xl">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color }}>
+                      <path d="M9 1H13M13 1V5M13 1L8.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M5 13H1M1 13V9M1 13L5.5 8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span className="text-[9px] font-bold uppercase tracking-wider [color:var(--fg-70)]">Enlarge</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Caption */}
+              {section.caption && (
+                <p className="[color:var(--fg-20)] text-[10px] uppercase tracking-[4px] text-center mt-8">
+                  {section.caption}
+                </p>
+              )}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Section({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   switch (section.type) {
     case "tldr":
@@ -1919,6 +2016,8 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <BrowserFrameSection section={section} color={color} />;
     case "showcase":
       return <ShowcaseSection section={section} color={color} />;
+    case "component-specification":
+      return <ComponentSpecificationSection section={section} color={color} onImageClick={onImageClick} />;
     case "component-showcase":
       return <ComponentShowcaseSection section={section} color={color} />;
     case "component-gallery":
@@ -2325,25 +2424,82 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
 
       {/* ── Case study sections ── */}
       <div ref={galleryRef}>
-        {filteredSections?.map((section, i) => {
-          if (section.type === "component-gallery") {
+        {(() => {
+          // 1. Gather all sections for the active mode
+          const baseSections = project.caseStudy?.filter(section => {
+            if (section.mode === "any") return true; 
+            if (!section.mode) return true;
+            return section.mode === activeMode;
+          }) ?? [];
+
+          // 2. Separate component-gallery and specific fragments
+          const gallerySection = baseSections.find(s => s.type === "component-gallery");
+          const remainingSections = baseSections.filter(s => s.type !== "component-gallery" && s.type !== "tldr" && s.type !== "stats");
+
+          // 3. For components-production, use a linear flow. For others, group by category.
+          const isLinear = project.id === "components-production";
+
+          if (isLinear) {
             return (
-              <ComponentGallerySection
-                key={i}
-                section={section}
-                color={color}
-                activeIndex={activeGalleryIndex}
-                onIndexChange={(idx) => {
-                  setActiveGalleryIndex(idx);
-                  // Scroll to top of gallery when switching components
-                  const top = galleryRef.current?.offsetTop || 0;
-                  window.scrollTo({ top: top - 80, behavior: 'smooth' });
-                }}
-              />
+              <>
+                {/* TLDR & Stats always at top */}
+                {project.caseStudy?.filter(s => s.type === "tldr" || s.type === "stats").map((s, i) => (
+                  <Section key={`top-${i}`} section={s} color={color} onImageClick={setLightboxImage} />
+                ))}
+                {/* All other sections linearly */}
+                {remainingSections.map((section, i) => (
+                  <Section key={`sec-${i}`} section={section} color={color} onImageClick={setLightboxImage} />
+                ))}
+              </>
             );
           }
-          return <Section key={i} section={section} color={color} onImageClick={setLightboxImage} />;
-        })}
+
+          const categories = remainingSections.reduce((acc, s) => {
+            const cat = s.category || "General";
+            if (!acc[cat]) acc[cat] = [];
+            acc[cat].push(s);
+            return acc;
+          }, {} as Record<string, CaseStudySection[]>);
+
+          return (
+            <>
+              {/* TLDR & Stats always at top */}
+              {project.caseStudy?.filter(s => s.type === "tldr" || s.type === "stats").map((s, i) => (
+                <Section key={`top-${i}`} section={s} color={color} onImageClick={setLightboxImage} />
+              ))}
+
+              {/* Toggle-driven Gallery (Hero) */}
+              {gallerySection && (
+                <ComponentGallerySection
+                  section={gallerySection}
+                  color={color}
+                  activeIndex={activeGalleryIndex}
+                  onIndexChange={handleComponentChange}
+                />
+              )}
+
+              {/* Categorized Technical Fragments */}
+              {Object.entries(categories).map(([category, sections], catIdx) => (
+                <div key={category} className="border-t [border-color:var(--border-subtle)] overflow-hidden">
+                  <div className="max-w-5xl mx-auto px-6 pt-20 pb-4">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                    >
+                      <h3 className="font-montserrat font-bold text-[14px] uppercase tracking-[6px] [color:var(--fg-30)] mb-10">
+                        {category}
+                      </h3>
+                    </motion.div>
+                  </div>
+                  {sections.map((section, sIdx) => (
+                    <Section key={`${category}-${sIdx}`} section={section} color={color} onImageClick={setLightboxImage} />
+                  ))}
+                </div>
+              ))}
+            </>
+          );
+        })()}
       </div>
 
       {/* ── Project navigation ── */}
