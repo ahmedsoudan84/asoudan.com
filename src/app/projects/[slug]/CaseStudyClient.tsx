@@ -624,6 +624,9 @@ function ScreenGallerySection({ section, color, onImageClick }: { section: CaseS
         <Reveal>
           <SectionLabel label={section.label} color={color} />
           <SectionHeading heading={section.heading} />
+          {section.body && (
+            <p className="[color:var(--fg-60)] leading-relaxed mb-8">{section.body}</p>
+          )}
           {section.screens && (
             <div
               className={`grid gap-4 ${
