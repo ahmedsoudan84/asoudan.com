@@ -1856,18 +1856,11 @@ export const projectsData: ProjectDetail[] = [
             "description": "Rings come in four sizes (XS 24px, S 32px, M 48px, L 64px). Stroke weight scales with size so the visual balance remains consistent across densities and breakpoints."
           },
           {
-            "title": "Value Types",
-            "subtitle": "Threshold colours and non-percentage values",
-            "imageSrc": "/images/projects/components-production-new/fragments/ring-value-type.svg",
-            "invertInDarkMode": true,
-            "description": "Below 25% uses a warning colour (amber), 25–75% uses the brand teal, and above 75% uses success green. When max ≠ 100, aria-valuetext announces 'value out of max' to avoid percentage misinterpretation."
-          },
-          {
-            "title": "Values & Motion",
-            "subtitle": "Transitions and easing",
+            "title": "Properties",
+            "subtitle": "Thresholds, values, and motion",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-value.svg",
             "invertInDarkMode": true,
-            "description": "When the value updates, the stroke-dasharray animates over 800ms with cubic-bezier(0.2, 0, 0, 1). Under prefers-reduced-motion, the transition is disabled and the new value appears instantly."
+            "description": "Threshold colours map to performance: amber (<25%), teal (25–75%), green (>75%). When the value updates, the stroke-dasharray animates over 800ms using cubic-bezier(0.2, 0, 0, 1). Under prefers-reduced-motion, the transition is disabled and the new value appears instantly. When max ≠ 100, aria-valuetext announces 'value out of max' to avoid percentage misinterpretation."
           },
           {
             "title": "Completion States",
