@@ -1842,37 +1842,51 @@ export const projectsData: ProjectDetail[] = [
         "body": "The Progress Ring represents completion contextually, mapping to different thresholds ranging from simple completion to celebration states.",
         "fragments": [
           {
-            "title": "Anatomy",
-            "subtitle": "Geometry and layout sizing",
+            "title": "Anatomy & Geometry",
+            "subtitle": "The dasharray calculation",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-geometry.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Percentage is not a property — it's a dasharray. By calculating the circumference (2πr) and applying it to the stroke-dasharray, we create a perfectly scalable progress indicator that leverages native browser rendering.",
+            "annotations": [
+              { "label": "Radius (r)", "x": 45, "y": 54 },
+              { "label": "Stroke Dasharray", "x": 8, "y": 12 },
+              { "label": "Formula Context", "x": 70, "y": 30 }
+            ]
           },
           {
-            "title": "Technical Spec.",
-            "subtitle": "Sizing, threshold rules, and celebration states",
+            "title": "Technical Spec (Sizing)",
+            "subtitle": "Standardised scale variants",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-sizes.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Progress rings are provided in four standard sizes (XS, S, M, L), each with calibrated stroke weights to maintain visual balance and legibility across high-density displays."
           },
           {
-            "title": "Technical Spec. (Thresholds)",
+            "title": "Threshold Logic",
+            "subtitle": "Semantic color mapping",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-thresholds.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Colors are mapped to performance thresholds: Neutral for low progress, Brand Teal for active progress, and Success Green for completion. This ensures immediate cognitive recognition of status."
           },
           {
-            "title": "Motion & Animation",
+            "title": "Motion Design",
+            "subtitle": "Duration and Easing curves",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-motion.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Updates follow a 400ms ease-out-quart curve. This specific duration provides a 'weighty' feel that reflects the significance of progress updates without feeling sluggish."
           },
           {
-            "title": "Celebration State",
+            "title": "Celebration States",
+            "subtitle": "Micro-interactions on 100%",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-celebrate.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Upon reaching 100%, the component triggers a subtle scale-up and color shift to Success Green, providing positive reinforcement for learner achievements."
           },
           {
-            "title": "Accessibility",
-            "subtitle": "ARIA schemas and screen reader translations",
+            "title": "Accessibility (Aria)",
+            "subtitle": "Screen reader translations",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-aria.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "We map the visual progress to aria-valuenow, aria-valuemin, and aria-valuemax. Additionally, aria-label provides a human-readable summary (e.g., 'Progress: 67% complete')."
           }
         ]
       },
@@ -1961,32 +1975,44 @@ export const projectsData: ProjectDetail[] = [
         "body": "A learner-specific variant that composes the base card with a mastery badge and an inline Progress Ring.",
         "fragments": [
           {
-            "title": "Anatomy",
-            "subtitle": "Slot architecture",
+            "title": "Anatomy & Slots",
+            "subtitle": "Composable architecture",
             "imageSrc": "/images/projects/components-production-new/fragments/card-slots.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "The Skill Card is built on a strict slot-based architecture (Media, Header, Stats, Body, Action). This allows for extreme variety in content while maintaining a single, testable base primitive.",
+            "annotations": [
+              { "label": "Media Slot", "x": 20, "y": 20 },
+              { "label": "Header Slot", "x": 25, "y": 30 },
+              { "label": "Action Slot", "x": 25, "y": 75 }
+            ]
           },
           {
-            "title": "Hero View",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-hero.svg",
-            "invertInDarkMode": true
-          },
-          {
-            "title": "Technical Spec.",
-            "subtitle": "Elevations and interactions",
+            "title": "Technical Spec (Depth)",
+            "subtitle": "Elevation and focus states",
             "imageSrc": "/images/projects/components-production-new/fragments/card-elevations.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Using a unified shadow system, we define three states of depth: Flat (default), Raised (on hover), and Pressed. This creates a tactile experience that guides the user's focus during interaction."
           },
           {
-            "title": "Interaction States",
+            "title": "Interaction Matrix",
+            "subtitle": "Handling tap and focus",
             "imageSrc": "/images/projects/components-production-new/fragments/card-interactions.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Interactions are non-destructive. Hovering scales the card by 1.02x and deepens the shadow, while focus adds a high-contrast ring outside the card's boundary to preserve visual clarity."
           },
           {
-            "title": "Accessibility",
-            "subtitle": "Summary of patterns",
+            "title": "Variant Gallery",
+            "subtitle": "One primitive, infinite variants",
+            "imageSrc": "/images/projects/components-production-new/fragments/card-gallery.svg",
+            "invertInDarkMode": true,
+            "description": "From Skeleton states to complex Mastery dashboards, every card on the platform is a configuration of the same base slots. This 'zero-fork' strategy drastically reduced our maintenance overhead."
+          },
+          {
+            "title": "Accessibility Summary",
+            "subtitle": "Semantic HTML & Keyboard support",
             "imageSrc": "/images/projects/components-production-new/fragments/accessibility-summary.svg",
-            "invertInDarkMode": true
+            "invertInDarkMode": true,
+            "description": "Cards are implemented as articles with clear heading hierarchies. If a card is interactive as a whole, it uses the 'nested link' pattern to ensure screen readers correctly announce the primary action."
           }
         ]
       },
