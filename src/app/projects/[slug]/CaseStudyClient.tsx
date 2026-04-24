@@ -1892,6 +1892,54 @@ function ComponentShowcaseSection({ section, color }: { section: CaseStudySectio
 
 /* ─── Section dispatcher ─── */
 /* ─── Component Specification (Native Deep Dive) ─── */
+/* ─── Component Fragments (Cutout Design) ─── */
+function ComponentFragmentsSection({ section, color }: { section: CaseStudySection; color: string }) {
+  if (!section.fragments) return null;
+  return (
+    <section className={cls("py-20 lg:py-32", sectionBg(section.bg))}>
+      <div className="max-w-5xl mx-auto px-6">
+        <Reveal>
+          <div className="text-center mb-24">
+            <h2 className="font-montserrat font-bold [color:var(--fg)] mb-6 text-3xl lg:text-5xl">
+              {section.componentName}
+            </h2>
+            {section.body && (
+              <p className="[color:var(--fg-60)] text-lg max-w-2xl mx-auto leading-relaxed">{section.body}</p>
+            )}
+          </div>
+
+          <div className="space-y-40">
+            {section.fragments.map((frag, idx) => (
+              <div key={idx} className="flex flex-col items-center">
+                <div className="text-center mb-12 max-w-2xl">
+                  <h3 className="font-montserrat font-bold [color:var(--fg)] text-xl lg:text-2xl mb-3">
+                    {frag.title}
+                  </h3>
+                  {frag.subtitle && (
+                    <p className="[color:var(--fg-40)] text-[10px] uppercase tracking-[3px] font-semibold">
+                      {frag.subtitle}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full flex justify-center">
+                  <img
+                    src={frag.imageSrc}
+                    alt={frag.title}
+                    className={cls(
+                      "max-w-full h-auto",
+                      frag.invertInDarkMode && "dark:invert"
+                    )}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function ComponentSpecificationSection({ section, color, onImageClick }: { section: CaseStudySection; color: string; onImageClick?: (src: string) => void }) {
   if (!section.image) return null;
   const src = resolveImage(section.image!).src;
@@ -2016,6 +2064,8 @@ function Section({ section, color, onImageClick }: { section: CaseStudySection; 
       return <BrowserFrameSection section={section} color={color} />;
     case "showcase":
       return <ShowcaseSection section={section} color={color} />;
+    case "component-fragments":
+      return <ComponentFragmentsSection section={section} color={color} />;
     case "component-specification":
       return <ComponentSpecificationSection section={section} color={color} onImageClick={onImageClick} />;
     case "component-showcase":
@@ -2262,11 +2312,16 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
   const color = project.color || "#26A69A";
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const [activeModeState, setActiveModeState] = useState<string | null>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
   // Derive active mode for filtering sections
   const gallerySection = project.caseStudy?.find(s => s.type === "component-gallery");
-  const activeMode = gallerySection?.galleryComponents?.[activeGalleryIndex]?.id;
+  const isComponentsProd = project.id === "components-production";
+  const activeMode = isComponentsProd 
+    ? (activeModeState || "progress-ring") 
+    : (gallerySection?.galleryComponents?.[activeGalleryIndex]?.id);
+
   const galleryComponents = gallerySection?.galleryComponents ?? [];
 
   const filteredSections = project.caseStudy?.filter(section => {
@@ -2276,6 +2331,14 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
 
   const handleComponentChange = (idx: number) => {
     setActiveGalleryIndex(idx);
+    if (galleryRef.current) {
+      const top = galleryRef.current.offsetTop;
+      window.scrollTo({ top: top - 80, behavior: 'smooth' });
+    }
+  };
+
+  const handleModeChange = (mode: string) => {
+    setActiveModeState(mode);
     if (galleryRef.current) {
       const top = galleryRef.current.offsetTop;
       window.scrollTo({ top: top - 80, behavior: 'smooth' });
@@ -2446,8 +2509,37 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
                 {project.caseStudy?.filter(s => s.type === "tldr" || s.type === "stats").map((s, i) => (
                   <Section key={`top-${i}`} section={s} color={color} onImageClick={setLightboxImage} />
                 ))}
-                {/* All other sections linearly */}
-                {remainingSections.map((section, i) => (
+
+                {/* Custom Toggle for Components Production */}
+                <div className="max-w-5xl mx-auto px-6 py-12 flex justify-center sticky top-20 z-40">
+                  <div className="inline-flex items-center p-1.5 rounded-full backdrop-blur-xl [background:var(--fg-05)] border [border-color:var(--border-subtle)] shadow-2xl">
+                    {[
+                      { id: "progress-ring", label: "Progress Ring" },
+                      { id: "tab-button", label: "Tab Button" },
+                      { id: "skill-card", label: "Skill Card" }
+                    ].map((btn) => (
+                      <button
+                        key={btn.id}
+                        onClick={() => handleModeChange(btn.id)}
+                        className={cls(
+                          "px-6 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-500",
+                          activeMode === btn.id
+                            ? "shadow-lg scale-105"
+                            : "[color:var(--fg-30)] hover:[color:var(--fg-60)]"
+                        )}
+                        style={{
+                          background: activeMode === btn.id ? color : "transparent",
+                          color: activeMode === btn.id ? "#000" : undefined
+                        }}
+                      >
+                        {btn.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Current Component Detail */}
+                {baseSections.map((section, i) => (
                   <Section key={`sec-${i}`} section={section} color={color} onImageClick={setLightboxImage} />
                 ))}
               </>
