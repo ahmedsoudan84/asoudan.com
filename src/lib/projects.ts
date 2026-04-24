@@ -104,7 +104,6 @@ export interface CaseStudySection {
   /* ── component-deep-dive fields ── */
   componentId?: string;
   componentIndex?: string;
-  componentName?: string;
   specViews?: Array<{
     label: string;
     caption?: string;
