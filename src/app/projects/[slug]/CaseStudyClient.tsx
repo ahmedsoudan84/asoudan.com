@@ -2657,7 +2657,7 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
 
                 {/* The Explorer View */}
                 <ComponentExplorer 
-                  activeMode={activeMode}
+                  activeMode={activeMode as string}
                   onModeChange={handleModeChange}
                   sections={baseSections.filter(s => s.type !== "tldr" && s.type !== "stats")}
                   color={color}

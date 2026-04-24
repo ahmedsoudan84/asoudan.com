@@ -71,6 +71,12 @@ export interface CaseStudySection {
     subtitle?: string;
     imageSrc: string;
     invertInDarkMode?: boolean;
+    description?: string;
+    annotations?: Array<{
+      label: string;
+      x: number;
+      y: number;
+    }>;
   }>;
   components?: Array<{
     type: "tablist" | "tabbutton" | "progress-ring" | "skill-card" | "list-item";
