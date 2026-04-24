@@ -1893,13 +1893,16 @@ function ComponentShowcaseSection({ section, color }: { section: CaseStudySectio
 /* ─── Section dispatcher ─── */
 /* ─── Component Specification (Native Deep Dive) ─── */
 /* ─── Component Fragments (Premium Deep Dive) ─── */
-function ProMaxFragment({ 
-  frag, 
-  color 
-}: { 
-  frag: any; 
+function ProMaxFragment({
+  frag,
+  color,
+  mode,
+}: {
+  frag: any;
   color: string;
+  mode?: string;
 }) {
+  const forceWhiteCard = mode === "progress-ring";
   return (
     <div className="flex flex-col items-center w-full mb-32 last:mb-0">
       <div className="text-center mb-16 max-w-2xl px-6">
@@ -1921,20 +1924,22 @@ function ProMaxFragment({
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className={cls(
             "relative z-10 w-full max-w-4xl mx-auto p-8 lg:p-16 rounded-[2rem] backdrop-blur-xl border shadow-2xl flex items-center justify-center overflow-hidden",
-            frag.invertInDarkMode
-              ? "bg-[#141620]/90 dark:bg-[#F8F9FA]/90 border-white/10 dark:border-black/5"
-              : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
+            forceWhiteCard
+              ? "bg-white/95 dark:bg-white/95 border-black/5"
+              : frag.invertInDarkMode
+                ? "bg-[#141620]/90 dark:bg-[#F8F9FA]/90 border-white/10 dark:border-black/5"
+                : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
           )}
         >
           {/* Subtle inner glow for glass effect */}
           <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
-          
+
           <img
             src={frag.imageSrc}
             alt={frag.title}
             className={cls(
               "w-full h-auto object-contain relative z-10",
-              frag.invertInDarkMode && "dark:invert"
+              !forceWhiteCard && frag.invertInDarkMode && "dark:invert"
             )}
           />
         </motion.div>
@@ -2029,7 +2034,7 @@ function ComponentExplorer({
               {section.type === "component-fragments" && section.fragments ? (
                 <div className="space-y-40">
                   {section.fragments.map((frag, fidx) => (
-                    <ProMaxFragment key={fidx} frag={frag} color={color} />
+                    <ProMaxFragment key={fidx} frag={frag} color={color} mode={section.mode} />
                   ))}
                 </div>
               ) : (
@@ -2061,7 +2066,7 @@ function ComponentFragmentsSection({ section, color }: { section: CaseStudySecti
 
           <div className="space-y-40">
             {section.fragments.map((frag, idx) => (
-              <ProMaxFragment key={idx} frag={frag} color={color} />
+              <ProMaxFragment key={idx} frag={frag} color={color} mode={section.mode} />
             ))}
           </div>
         </Reveal>
