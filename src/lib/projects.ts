@@ -1810,7 +1810,6 @@ export const projectsData: ProjectDetail[] = [
     "behanceUrl": "",
     "employer": "Oxford English Hub (Oxford University Press)",
     "role": "Lead Product Designer",
-    "timeline": "12 weeks",
     "team": "1 Designer, 4 Engineers",
     "tools": "Figma, Storybook, Confluence",
     "platform": "Web (Responsive)",
@@ -1874,38 +1873,75 @@ export const projectsData: ProjectDetail[] = [
       {
         "type": "component-fragments",
         "mode": "tab-button",
-        "componentName": "Tab Button",
+        "componentName": "TabList & TabButton",
         "bg": "dark",
         "label": "Navigation Elements",
-        "body": "Tab buttons handle massive arrays of interaction states cleanly across different states, including keyboard accessibility paths.",
+        "body": "The TabList is a structural primitive that manages selection state across a group of TabButtons. It supports keyboard navigation, horizontal and vertical orientations, and automatic overflow management.",
         "fragments": [
           {
             "title": "Anatomy",
-            "subtitle": "Layout and spacing",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-anatomy.svg",
-            "invertInDarkMode": true
+            "subtitle": "Core structure and active indicators",
+            "imageSrc": "/images/projects/components-production-new/tablist/Anatomy.svg",
+            "invertInDarkMode": true,
+            "description": "The TabList is a collection of interactive triggers (TabButtons) that control the visibility of associated content panels. A key visual signature is the sliding 'active indicator', which provides immediate visual feedback on the current selection.",
+            "annotations": [
+              { "label": "Label", "x": 10, "y": 55 },
+              { "label": "Active Indicator", "x": 10, "y": 28 },
+              { "label": "TabList Container", "x": 19, "y": 28 },
+              { "label": "TabButton", "x": 33, "y": 28 }
+            ]
           },
           {
-            "title": "Layout Spacing",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-layout-spacing.svg",
-            "invertInDarkMode": true
+            "title": "TabButton Anatomy",
+            "subtitle": "Internal layout and target areas",
+            "imageSrc": "/images/projects/components-production-new/tablist/TabButton Anatomy.svg",
+            "invertInDarkMode": true,
+            "description": "Each TabButton is designed with a generous hit area to ensure ease of interaction on both desktop and touch devices. The internal layout is flexible, accommodating text, icons, and badges while maintaining consistent alignment.",
+            "annotations": [
+               { "label": "Hit Area", "x": 20, "y": 30 },
+               { "label": "Content Container", "x": 50, "y": 50 },
+               { "label": "Text Label", "x": 80, "y": 70 }
+            ]
           },
           {
-            "title": "Technical Spec.",
-            "subtitle": "Interaction matrix",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-matrix.svg",
-            "invertInDarkMode": true
+            "title": "Interaction States",
+            "subtitle": "Focus, Hover, Pressed, and Selected states",
+            "imageSrc": "/images/projects/components-production-new/tablist/States.svg",
+            "invertInDarkMode": true,
+            "description": "To ensure 100% accessibility, every interaction state is clearly defined. This includes high-contrast focus rings for keyboard users and subtle weight changes for hover and selection states."
           },
           {
-            "title": "Accessibility",
-            "subtitle": "Keyboard navigation rules",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-keyboard.svg",
-            "invertInDarkMode": true
+            "title": "Iconography",
+            "subtitle": "Leading and trailing icon support",
+            "imageSrc": "/images/projects/components-production-new/tablist/Icons.svg",
+            "invertInDarkMode": true,
+            "description": "The component supports both leading and trailing icons, allowing designers to add semantic meaning or visual cues. Icons are automatically scaled and tinted based on the button's state."
           },
           {
-            "title": "Accessibility (ARIA)",
-            "subtitle": "Screen reader mappings",
-            "imageSrc": "/images/projects/components-production-new/fragments/tab-aria.svg",
+            "title": "Layout & Spacing",
+            "subtitle": "Horizontal and Vertical rhythm tokens",
+            "imageSrc": "/images/projects/components-production-new/tablist/Layout and spacing.svg",
+            "invertInDarkMode": true,
+            "description": "Spacing is governed by a strict token system, ensuring that the component maintains its visual integrity across different screen sizes and languages."
+          },
+          {
+            "title": "Overflow Strategy",
+            "subtitle": "Managing density with intelligent scrolling",
+            "imageSrc": "/images/projects/components-production-new/tablist/Overflow.svg",
+            "invertInDarkMode": true,
+            "description": "When the number of tabs exceeds the available horizontal space, the TabList transitions into a scrolling container with optional fade indicators to signal additional content."
+          },
+          {
+            "title": "Color Matrix",
+            "subtitle": "Theming and parity rules",
+            "imageSrc": "/images/projects/components-production-new/tablist/Matrix.svg",
+            "invertInDarkMode": true,
+            "description": "The component is built to be theme-agnostic. Using a standardized color matrix, it maintains perfect legibility and brand alignment in both light and dark modes."
+          },
+          {
+            "title": "Accessibility (Aria Schema)",
+            "subtitle": "Keyboard and Screen Reader implementation",
+            "imageSrc": "/images/projects/components-production-new/tablist/Accessibility.svg",
             "invertInDarkMode": true
           }
         ]

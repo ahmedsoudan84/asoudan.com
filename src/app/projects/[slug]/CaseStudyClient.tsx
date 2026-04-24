@@ -1892,6 +1892,170 @@ function ComponentShowcaseSection({ section, color }: { section: CaseStudySectio
 
 /* ─── Section dispatcher ─── */
 /* ─── Component Specification (Native Deep Dive) ─── */
+/* ─── Component Fragments (Premium Deep Dive) ─── */
+function ProMaxFragment({ 
+  frag, 
+  color 
+}: { 
+  frag: any; 
+  color: string;
+}) {
+  return (
+    <div className="flex flex-col items-center w-full mb-32 last:mb-0">
+      <div className="text-center mb-16 max-w-2xl px-6">
+        <h3 className="font-montserrat font-bold [color:var(--fg)] text-2xl lg:text-3xl mb-4">
+          {frag.title}
+        </h3>
+        {frag.subtitle && (
+          <p className="[color:var(--fg-40)] text-[10px] uppercase tracking-[4px] font-bold">
+            {frag.subtitle}
+          </p>
+        )}
+      </div>
+
+      <div className="w-full relative group flex justify-center">
+        <div className="relative z-10 w-full max-w-4xl mx-auto">
+          <motion.img
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            src={frag.imageSrc}
+            alt={frag.title}
+            className={cls(
+              "w-full h-auto object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_40px_100px_rgba(0,0,0,0.4)]",
+              frag.invertInDarkMode && "dark:invert"
+            )}
+          />
+          
+          {/* Native Text Overlays (Dynamic Annotations) */}
+          {frag.annotations && frag.annotations.map((ann: any, i: number) => (
+            <div 
+              key={i}
+              className="absolute pointer-events-none z-20"
+              style={{
+                left: `${ann.x}%`,
+                top: `${ann.y}%`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <div className="flex flex-col items-center">
+                <div 
+                  className="w-3 h-3 rounded-full border-2 bg-[var(--bg-primary)] shadow-[0_0_10px_rgba(0,0,0,0.1)] mb-1.5"
+                  style={{ borderColor: color }}
+                />
+                <span className="text-[9px] font-bold font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] shadow-xl [color:var(--fg)] whitespace-nowrap backdrop-blur-md bg-opacity-80">
+                  {ann.label}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Technical context background decor */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center overflow-hidden">
+           <div className="w-[150%] h-px bg-gradient-to-r from-transparent via-[var(--fg)] to-transparent rotate-12" />
+           <div className="w-[150%] h-px bg-gradient-to-r from-transparent via-[var(--fg)] to-transparent -rotate-12" />
+        </div>
+      </div>
+
+      {frag.description && (
+        <div className="max-w-2xl mt-16 px-6 text-center">
+          <p className="[color:var(--fg-50)] text-base lg:text-lg leading-relaxed font-light">
+            {frag.description}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ComponentExplorer({ 
+  activeMode, 
+  onModeChange, 
+  sections, 
+  color 
+}: { 
+  activeMode: string; 
+  onModeChange: (id: string) => void; 
+  sections: CaseStudySection[];
+  color: string;
+}) {
+  const components = [
+    { id: "progress-ring", label: "Progress Ring" },
+    { id: "tab-button", label: "TabList & TabButton" },
+    { id: "skill-card", label: "Skill Card" }
+  ];
+
+  return (
+    <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-0 lg:gap-12 px-6 lg:px-12 py-12">
+      {/* Sticky Sidebar Navigation */}
+      <aside className="w-full lg:w-64 lg:shrink-0 mb-12 lg:mb-0">
+        <div className="sticky top-32 space-y-8">
+          <div>
+            <h4 className="text-[10px] font-bold uppercase tracking-[4px] [color:var(--fg-30)] mb-6">Components</h4>
+            <nav className="space-y-1">
+              {components.map((comp) => {
+                const isActive = activeMode === comp.id;
+                return (
+                  <button
+                    key={comp.id}
+                    onClick={() => onModeChange(comp.id)}
+                    className={cls(
+                      "w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 relative group",
+                      isActive 
+                        ? "[color:var(--fg)] bg-[var(--fg-05)] shadow-sm" 
+                        : "[color:var(--fg-40)] hover:[color:var(--fg-60)] hover:bg-[var(--fg-02)]"
+                    )}
+                  >
+                    {isActive && (
+                      <motion.div 
+                        layoutId="sidebar-active"
+                        className="absolute left-0 top-3 bottom-3 w-1 rounded-full"
+                        style={{ background: color }}
+                      />
+                    )}
+                    {comp.label}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="pt-8 border-t [border-color:var(--border-subtle)]">
+            <div className="flex items-center gap-2 mb-4">
+               <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+               <span className="text-[10px] font-bold uppercase tracking-wider [color:var(--fg-30)]">Documentation</span>
+            </div>
+            <p className="text-[11px] [color:var(--fg-40)] leading-relaxed">
+              Technical specifications, anatomy, and accessibility guidelines for production-ready design system components.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      {/* Content Area */}
+      <main className="flex-1 min-w-0">
+        <div className="space-y-32">
+          {sections.map((section, idx) => (
+            <div key={idx}>
+              {section.type === "component-fragments" && section.fragments ? (
+                <div className="space-y-40">
+                  {section.fragments.map((frag, fidx) => (
+                    <ProMaxFragment key={fidx} frag={frag} color={color} />
+                  ))}
+                </div>
+              ) : (
+                <Section section={section} color={color} />
+              )}
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}
+
 /* ─── Component Fragments (Cutout Design) ─── */
 function ComponentFragmentsSection({ section, color }: { section: CaseStudySection; color: string }) {
   if (!section.fragments) return null;
@@ -1910,28 +2074,7 @@ function ComponentFragmentsSection({ section, color }: { section: CaseStudySecti
 
           <div className="space-y-40">
             {section.fragments.map((frag, idx) => (
-              <div key={idx} className="flex flex-col items-center">
-                <div className="text-center mb-12 max-w-2xl">
-                  <h3 className="font-montserrat font-bold [color:var(--fg)] text-xl lg:text-2xl mb-3">
-                    {frag.title}
-                  </h3>
-                  {frag.subtitle && (
-                    <p className="[color:var(--fg-40)] text-[10px] uppercase tracking-[3px] font-semibold">
-                      {frag.subtitle}
-                    </p>
-                  )}
-                </div>
-                <div className="w-full flex justify-center">
-                  <img
-                    src={frag.imageSrc}
-                    alt={frag.title}
-                    className={cls(
-                      "max-w-full h-auto",
-                      frag.invertInDarkMode && "dark:invert"
-                    )}
-                  />
-                </div>
-              </div>
+              <ProMaxFragment key={idx} frag={frag} color={color} />
             ))}
           </div>
         </Reveal>
@@ -2339,9 +2482,11 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
 
   const handleModeChange = (mode: string) => {
     setActiveModeState(mode);
+    // When switching components, we want to stay within the explorer view, 
+    // so we don't necessarily scroll to the very top of the page, but to the start of the explorer.
     if (galleryRef.current) {
       const top = galleryRef.current.offsetTop;
-      window.scrollTo({ top: top - 80, behavior: 'smooth' });
+      window.scrollTo({ top: top - 100, behavior: 'smooth' });
     }
   };
 
@@ -2504,45 +2649,20 @@ export default function CaseStudyClient({ project, prevProject, nextProject }: P
 
           if (isLinear) {
             return (
-              <>
+              <div className="relative">
                 {/* TLDR & Stats always at top */}
                 {project.caseStudy?.filter(s => s.type === "tldr" || s.type === "stats").map((s, i) => (
                   <Section key={`top-${i}`} section={s} color={color} onImageClick={setLightboxImage} />
                 ))}
 
-                {/* Custom Toggle for Components Production */}
-                <div className="max-w-5xl mx-auto px-6 py-12 flex justify-center sticky top-20 z-40">
-                  <div className="inline-flex items-center p-1.5 rounded-full backdrop-blur-xl [background:var(--fg-05)] border [border-color:var(--border-subtle)] shadow-2xl">
-                    {[
-                      { id: "progress-ring", label: "Progress Ring" },
-                      { id: "tab-button", label: "Tab Button" },
-                      { id: "skill-card", label: "Skill Card" }
-                    ].map((btn) => (
-                      <button
-                        key={btn.id}
-                        onClick={() => handleModeChange(btn.id)}
-                        className={cls(
-                          "px-6 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-500",
-                          activeMode === btn.id
-                            ? "shadow-lg scale-105"
-                            : "[color:var(--fg-30)] hover:[color:var(--fg-60)]"
-                        )}
-                        style={{
-                          background: activeMode === btn.id ? color : "transparent",
-                          color: activeMode === btn.id ? "#000" : undefined
-                        }}
-                      >
-                        {btn.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Current Component Detail */}
-                {baseSections.map((section, i) => (
-                  <Section key={`sec-${i}`} section={section} color={color} onImageClick={setLightboxImage} />
-                ))}
-              </>
+                {/* The Explorer View */}
+                <ComponentExplorer 
+                  activeMode={activeMode}
+                  onModeChange={handleModeChange}
+                  sections={baseSections.filter(s => s.type !== "tldr" && s.type !== "stats")}
+                  color={color}
+                />
+              </div>
             );
           }
 
