@@ -1,9 +1,6 @@
 <svg width="640" height="320" viewBox="0 0 640 320" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="640" height="320" rx="16" fill="#F7F9FB"/>
 
-  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">LAYOUT · SPACING</text>
-  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Every gap, padding, and hit-area measured in tokens</text>
-
   <!-- TabList container -->
   <rect x="36" y="100" width="568" height="64" rx="8" fill="#FFFFFF" stroke="#E4E9F0"/>
 

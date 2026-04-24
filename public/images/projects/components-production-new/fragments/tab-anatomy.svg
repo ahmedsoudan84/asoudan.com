@@ -14,10 +14,6 @@
     <line x1="0" y1="160" x2="420" y2="160" stroke="#26A69A"/>
   </g>
 
-  <text x="28" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">ACTIVE INDICATOR</text>
-  <text x="28" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784" letter-spacing="0.04em">4px bar · glow trace · token-sourced colour</text>
-  <text x="392" y="40" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784" text-anchor="end">— 01.2 · extract</text>
-
   <rect x="28" y="80" width="280" height="56" rx="6" fill="#0F1322"/>
 
   <text x="68" y="112" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="600" fill="#F0F4F8" text-anchor="middle">My Tasks</text>

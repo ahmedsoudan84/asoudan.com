@@ -7,10 +7,6 @@
     <line x1="0" y1="240" x2="600" y2="240" stroke="#26A69A"/>
   </g>
 
-  <text x="36" y="44" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">STATE MATRIX</text>
-  <text x="36" y="60" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784" letter-spacing="0.04em">Two axes · eight named cells · every one token-driven</text>
-  <text x="564" y="44" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#5A6784" text-anchor="end">— 01.1 · extract</text>
-
   <text x="36" y="118" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784" letter-spacing="0.12em" font-weight="600">SELECTED</text>
   <text x="36" y="220" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784" letter-spacing="0.12em" font-weight="600">UNSELECTED</text>
 

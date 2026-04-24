@@ -44,7 +44,8 @@ export interface CaseStudySection {
     | "component-specification"
     | "component-showcase"
     | "component-gallery"
-    | "component-fragments";
+    | "component-fragments"
+    | "component-deep-dive";
   category?: string;
   label?: string;
   heading?: string;
@@ -100,6 +101,17 @@ export interface CaseStudySection {
     body: string;
     bullets?: string[];
   }>;
+  /* ── component-deep-dive fields ── */
+  componentId?: string;
+  componentIndex?: string;
+  componentName?: string;
+  specViews?: Array<{
+    label: string;
+    caption?: string;
+    cropViewBox: string;
+    showcaseBg?: string;
+  }>;
+  pillars?: Array<{ label: string; title: string; body: string }>;
   stepNumber?: number | string;
   personas?: Array<{
     name: string;
@@ -1799,10 +1811,10 @@ export const projectsData: ProjectDetail[] = [
     "subtitle": "Oxford English Hub",
     "category": "DESIGN SYSTEM",
     "number": "05",
-    "description": "Designed and shipped platform components (TabList, ListItems, Progress Ring, Cards) to accelerate delivery and ensure consistency. Authored usage guidance so components integrate cleanly across journeys and contexts.",
+    "description": "Shipped three platform primitives — TabList, Progress Ring, and the Cards base (with Skill Card as a live composition) — to stop four squads re-inventing the same patterns. Production-grade specs paired with usage guidance, adopted across learner and admin journeys.",
     "tags": [
       "Product Design",
-      "User Journey Mapping",
+      "Design System",
       "Component Design"
     ],
     "color": "#26A69A",
