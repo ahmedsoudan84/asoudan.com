@@ -7,9 +7,6 @@
 
   <rect width="420" height="360" rx="16" fill="#F7F9FB"/>
 
-  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">INTERACTIONS</text>
-  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Only interactive cards respond — never decorative ones</text>
-
   <!-- Hover -->
   <g filter="url(#hoverShadow)">
     <rect x="36" y="82" width="348" height="58" rx="10" fill="#FFFFFF" transform="translate(0 -2)"/>

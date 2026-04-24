@@ -1,9 +1,6 @@
 <svg width="420" height="220" viewBox="0 0 420 220" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="420" height="220" rx="16" fill="#0A0C14"/>
 
-  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">SIZE SCALE</text>
-  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784">One primitive · three scales · zero redraws</text>
-
   <!-- sm -->
   <g transform="translate(86, 132)">
     <circle cx="0" cy="0" r="12" stroke="#161A2A" stroke-width="3" fill="none"/>

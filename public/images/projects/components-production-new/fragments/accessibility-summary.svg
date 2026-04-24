@@ -1,9 +1,6 @@
 <svg width="640" height="440" viewBox="0 0 640 440" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="640" height="440" rx="16" fill="#F7F9FB"/>
 
-  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">ACCESSIBILITY · FOUR PILLARS · WCAG 2.1 AA</text>
-  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Documented per component, never bolted on — most-referenced page in developer onboarding</text>
-
   <!-- Pillar 1: Focus ring -->
   <rect x="36" y="82" width="278" height="148" rx="10" fill="#FFFFFF" stroke="#E4E9F0"/>
   <text x="52" y="106" font-family="'Menlo', 'Consolas', monospace" font-size="9" fill="#8A97B0">01 · FOCUS RING</text>

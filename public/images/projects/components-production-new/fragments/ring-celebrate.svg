@@ -1,9 +1,6 @@
 <svg width="420" height="260" viewBox="0 0 420 260" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="420" height="260" rx="16" fill="#0A0C14"/>
 
-  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#27AE60">EDGE · 100%</text>
-  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#5A6784">Celebration, but only if motion is allowed</text>
-
   <!-- Complete ring -->
   <circle cx="210" cy="152" r="48" stroke="#27AE60" stroke-width="5" fill="none" stroke-linecap="round"/>
 

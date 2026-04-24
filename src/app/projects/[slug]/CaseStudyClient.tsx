@@ -1930,29 +1930,6 @@ function ProMaxFragment({
               frag.invertInDarkMode && "dark:invert"
             )}
           />
-          
-          {/* Native Text Overlays (Dynamic Annotations) */}
-          {frag.annotations && frag.annotations.map((ann: any, i: number) => (
-            <div 
-              key={i}
-              className="absolute pointer-events-none z-20"
-              style={{
-                left: `${ann.x}%`,
-                top: `${ann.y}%`,
-                transform: 'translate(-50%, -50%)'
-              }}
-            >
-              <div className="flex flex-col items-center">
-                <div 
-                  className="w-3 h-3 rounded-full border-2 bg-[var(--bg-primary)] shadow-[0_0_10px_rgba(0,0,0,0.1)] mb-1.5"
-                  style={{ borderColor: color }}
-                />
-                <span className="text-[9px] font-bold font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] shadow-xl [color:var(--fg)] whitespace-nowrap backdrop-blur-md bg-opacity-80">
-                  {ann.label}
-                </span>
-              </div>
-            </div>
-          ))}
         </div>
 
         {/* Technical context background decor */}
@@ -2410,7 +2387,7 @@ function FloatingComponentToggle({
       <div
         className="flex items-center gap-1.5 p-1.5 rounded-full border backdrop-blur-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-300"
         style={{
-          background: "rgba(10, 12, 20, 0.7)",
+          background: "rgba(10, 12, 20, 0.85)",
           borderColor: "rgba(255, 255, 255, 0.08)",
         }}
       >

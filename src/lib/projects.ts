@@ -1856,47 +1856,36 @@ export const projectsData: ProjectDetail[] = [
             "title": "Anatomy & Geometry",
             "subtitle": "The dasharray calculation",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-geometry.svg",
-            "invertInDarkMode": true,
-            "description": "Percentage is not a property — it's a dasharray. By calculating the circumference (2πr) and applying it to the stroke-dasharray, we create a perfectly scalable progress indicator that leverages native browser rendering.",
-            "annotations": [
-              { "label": "Radius (r)", "x": 46.4, "y": 53.8 },
-              { "label": "Stroke Dasharray", "x": 8.5, "y": 12.7 },
-              { "label": "Formula Context", "x": 64, "y": 30 }
-            ]
+            "description": "Percentage is not a property — it's a dasharray. By calculating the circumference (2πr) and applying it to the stroke-dasharray, we create a perfectly scalable progress indicator that leverages native browser rendering."
           },
           {
             "title": "Technical Spec (Sizing)",
             "subtitle": "Standardised scale variants",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-sizes.svg",
-            "invertInDarkMode": true,
             "description": "Progress rings are provided in four standard sizes (XS, S, M, L), each with calibrated stroke weights to maintain visual balance and legibility across high-density displays."
           },
           {
             "title": "Threshold Logic",
             "subtitle": "Semantic color mapping",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-thresholds.svg",
-            "invertInDarkMode": true,
             "description": "Colors are mapped to performance thresholds: Neutral for low progress, Brand Teal for active progress, and Success Green for completion. This ensures immediate cognitive recognition of status."
           },
           {
             "title": "Motion Design",
             "subtitle": "Duration and Easing curves",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-motion.svg",
-            "invertInDarkMode": true,
             "description": "Updates follow a 400ms ease-out-quart curve. This specific duration provides a 'weighty' feel that reflects the significance of progress updates without feeling sluggish."
           },
           {
             "title": "Celebration States",
             "subtitle": "Micro-interactions on 100%",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-celebrate.svg",
-            "invertInDarkMode": true,
             "description": "Upon reaching 100%, the component triggers a subtle scale-up and color shift to Success Green, providing positive reinforcement for learner achievements."
           },
           {
             "title": "Accessibility (Aria)",
             "subtitle": "Screen reader translations",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-aria.svg",
-            "invertInDarkMode": true,
             "description": "We map the visual progress to aria-valuenow, aria-valuemin, and aria-valuemax. Additionally, aria-label provides a human-readable summary (e.g., 'Progress: 67% complete')."
           }
         ]
@@ -1912,68 +1901,33 @@ export const projectsData: ProjectDetail[] = [
           {
             "title": "Anatomy",
             "subtitle": "Core structure and active indicators",
-            "imageSrc": "/images/projects/components-production-new/tablist/Anatomy.svg",
-            "invertInDarkMode": true,
-            "description": "The TabList is a collection of interactive triggers (TabButtons) that control the visibility of associated content panels. A key visual signature is the sliding 'active indicator', which provides immediate visual feedback on the current selection.",
-            "annotations": [
-              { "label": "Label", "x": 10, "y": 55 },
-              { "label": "Active Indicator", "x": 10, "y": 28 },
-              { "label": "TabList Container", "x": 19, "y": 28 },
-              { "label": "TabButton", "x": 33, "y": 28 }
-            ]
+            "imageSrc": "/images/projects/components-production-new/fragments/tab-anatomy.svg",
+            "description": "The TabList is a collection of interactive triggers (TabButtons) that control the visibility of associated content panels. A key visual signature is the sliding 'active indicator', which provides immediate visual feedback on the current selection."
           },
           {
-            "title": "TabButton Anatomy",
-            "subtitle": "Internal layout and target areas",
-            "imageSrc": "/images/projects/components-production-new/tablist/TabButton Anatomy.svg",
-            "invertInDarkMode": true,
-            "description": "Each TabButton is designed with a generous hit area to ensure ease of interaction on both desktop and touch devices. The internal layout is flexible, accommodating text, icons, and badges while maintaining consistent alignment.",
-            "annotations": [
-               { "label": "Hit Area", "x": 20, "y": 30 },
-               { "label": "Content Container", "x": 50, "y": 50 },
-               { "label": "Text Label", "x": 80, "y": 70 }
-            ]
-          },
-          {
-            "title": "Interaction States",
+            "title": "State Matrix",
             "subtitle": "Focus, Hover, Pressed, and Selected states",
-            "imageSrc": "/images/projects/components-production-new/tablist/States.svg",
-            "invertInDarkMode": true,
-            "description": "To ensure 100% accessibility, every interaction state is clearly defined. This includes high-contrast focus rings for keyboard users and subtle weight changes for hover and selection states."
-          },
-          {
-            "title": "Iconography",
-            "subtitle": "Leading and trailing icon support",
-            "imageSrc": "/images/projects/components-production-new/tablist/Icons.svg",
-            "invertInDarkMode": true,
-            "description": "The component supports both leading and trailing icons, allowing designers to add semantic meaning or visual cues. Icons are automatically scaled and tinted based on the button's state."
+            "imageSrc": "/images/projects/components-production-new/fragments/tab-matrix.svg",
+            "description": "Every interaction state is mapped to explicit token values. The matrix ensures complete parity across light and dark themes — no implicit or hard-coded colours."
           },
           {
             "title": "Layout & Spacing",
             "subtitle": "Horizontal and Vertical rhythm tokens",
-            "imageSrc": "/images/projects/components-production-new/tablist/Layout and spacing.svg",
+            "imageSrc": "/images/projects/components-production-new/fragments/tab-layout-spacing.svg",
             "invertInDarkMode": true,
-            "description": "Spacing is governed by a strict token system, ensuring that the component maintains its visual integrity across different screen sizes and languages."
+            "description": "Spacing is governed by a strict token system, ensuring that the component maintains its visual integrity across different screen sizes and languages. The tab height is set to 64px to meet the WCAG 2.5.5 touch-target requirement."
           },
           {
-            "title": "Overflow Strategy",
-            "subtitle": "Managing density with intelligent scrolling",
-            "imageSrc": "/images/projects/components-production-new/tablist/Overflow.svg",
-            "invertInDarkMode": true,
-            "description": "When the number of tabs exceeds the available horizontal space, the TabList transitions into a scrolling container with optional fade indicators to signal additional content."
+            "title": "Keyboard Contract",
+            "subtitle": "WAI-ARIA Tabs Pattern",
+            "imageSrc": "/images/projects/components-production-new/fragments/tab-keyboard.svg",
+            "description": "Arrow keys cycle focus within the tablist; Home and End jump to the first and last tab; Tab exits the widget entirely. These bindings follow the ARIA authoring practices guide with no deviations."
           },
           {
-            "title": "Color Matrix",
-            "subtitle": "Theming and parity rules",
-            "imageSrc": "/images/projects/components-production-new/tablist/Matrix.svg",
-            "invertInDarkMode": true,
-            "description": "The component is built to be theme-agnostic. Using a standardized color matrix, it maintains perfect legibility and brand alignment in both light and dark modes."
-          },
-          {
-            "title": "Accessibility (Aria Schema)",
-            "subtitle": "Keyboard and Screen Reader implementation",
-            "imageSrc": "/images/projects/components-production-new/tablist/Accessibility.svg",
-            "invertInDarkMode": true
+            "title": "ARIA Schema",
+            "subtitle": "Role, state, and property mapping",
+            "imageSrc": "/images/projects/components-production-new/fragments/tab-aria.svg",
+            "description": "Every required ARIA attribute is implemented: role=tablist, role=tab, aria-selected, aria-controls, and aria-labelledby. No attribute is optional — omitting any one breaks screen reader announcement."
           }
         ]
       },
@@ -1990,12 +1944,7 @@ export const projectsData: ProjectDetail[] = [
             "subtitle": "Composable architecture",
             "imageSrc": "/images/projects/components-production-new/fragments/card-slots.svg",
             "invertInDarkMode": true,
-            "description": "The Skill Card is built on a strict slot-based architecture (Media, Header, Stats, Body, Action). This allows for extreme variety in content while maintaining a single, testable base primitive.",
-            "annotations": [
-              { "label": "Media Slot", "x": 8.5, "y": 30.5 },
-              { "label": "Header Slot", "x": 8.5, "y": 46.1 },
-              { "label": "Composition Note", "x": 8.5, "y": 94 }
-            ]
+            "description": "The Skill Card is built on a strict slot-based architecture (Media, Header, Stats, Body, Action). This allows for extreme variety in content while maintaining a single, testable base primitive."
           },
           {
             "title": "Technical Spec (Depth)",

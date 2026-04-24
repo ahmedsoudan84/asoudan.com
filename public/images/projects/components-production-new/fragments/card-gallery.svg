@@ -10,9 +10,6 @@
 
   <rect width="640" height="440" rx="16" fill="#F7F9FB"/>
 
-  <text x="36" y="40" font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.18em" fill="#26A69A">CARD GALLERY · 6 VARIANTS · ONE PRIMITIVE</text>
-  <text x="36" y="56" font-family="'Inter', system-ui, sans-serif" font-size="10" fill="#8A97B0">Same five slots, filled differently — no component was forked to build this page</text>
-
   <!-- Row 1 -->
   <!-- Content Card -->
   <g filter="url(#cardShadow)">
