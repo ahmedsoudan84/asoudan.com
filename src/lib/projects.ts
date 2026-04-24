@@ -77,6 +77,15 @@ export interface CaseStudySection {
       x: number;
       y: number;
     }>;
+    requirements?: Array<{
+      heading: string;
+      feature?: string;
+      scenarios?: Array<{
+        title: string;
+        steps: string[];
+      }>;
+      note?: string;
+    }>;
   }>;
   components?: Array<{
     type: "tablist" | "tabbutton" | "progress-ring" | "skill-card" | "list-item";
@@ -1874,7 +1883,118 @@ export const projectsData: ProjectDetail[] = [
             "subtitle": "Labeling, semantics, and screen reader behaviour",
             "imageSrc": "/images/projects/components-production-new/fragments/ring-aria.svg",
             "invertInDarkMode": true,
-            "description": "<strong>1. Labeling & Association</strong><br/><strong>Feature:</strong> Progress ring labeling<br/><strong>Scenario:</strong> Each progress ring has a meaningful label<br/>• Given a progress ring is rendered on the page<br/>• When a screen reader user navigates to the component<br/>• Then the user hears a descriptive label that explains the purpose (e.g., 'Pronunciation')<br/><strong>Scenario:</strong> Label is programmatically associated<br/>• Given a progress ring with a visible or offscreen label element<br/>• When the component is inspected<br/>• Then the label is associated to the progress semantics via <code>aria-labelledby</code> or an equivalent mechanism<br/><br/><strong>2. Semantics (Native or ARIA)</strong><br/><strong>Feature:</strong> Progress semantics exposed<br/><strong>Scenario:</strong> Determinate progress using native semantics<br/>• Given a progress ring representing a known value<br/>• When the component is rendered with a native <code>&lt;progress&gt;</code> element<br/>• Then the <code>&lt;progress&gt;</code> element has a <code>value</code> attribute and a <code>max</code> attribute<br/>• And a screen reader announces the label and the current percentage or value<br/><br/><strong>3. Decorative SVG (No Duplicate Announcements)</strong><br/><strong>Feature:</strong> Decorative SVG does not duplicate semantics<br/><strong>Scenario:</strong> SVG is hidden from assistive technologies<br/>• Given a progress ring uses an SVG for visual appearance<br/>• When the component is inspected<br/>• Then the SVG has <code>aria-hidden='true'</code> and <code>focusable='false'</code><br/>• And the accessible name and values come from the semantic element (<code>&lt;progress&gt;</code> or <code>role='progressbar'</code>)<br/><br/><strong>4. Text Alternative / Visible Value</strong><br/><strong>Feature:</strong> Visible text alternative<br/><strong>Scenario:</strong> If a visible percentage or summary is provided<br/>• Given a determinate progress ring<br/>• When the component is rendered<br/>• Then if a visible text alternative such as '62%' or '62% complete' is displayed adjacent to the ring<br/>• And this visible text is not redundantly announced (e.g., it has <code>aria-hidden='true'</code> if separate from the semantic element)<br/><br/><strong>5. Reduced Motion</strong><br/><strong>Feature:</strong> Respects reduced motion preferences<br/><strong>Scenario:</strong> Animations are disabled or simplified when user prefers reduced motion<br/>• Given the user has enabled 'Reduce Motion' at the OS or browser level<br/>• When the value of the progress ring changes there is no animation of the green ring<br/><br/><strong>6. Multiple Indicators (Uniqueness)</strong><br/><strong>Feature:</strong> Multiple progress rings have unique labels<br/><strong>Scenario:</strong> Unique labels for each ring in a list<br/>• Given a page displays multiple progress rings at once<br/>• When a screen reader user navigates through them<br/>• Then each ring has a unique, descriptive label (e.g., 'File A upload', 'File B upload')<br/>• And there is no ambiguity about which label belongs to which ring<br/><br/><strong>7. Non-percentage values</strong><br/><strong>Feature:</strong> Prevent fractions being converted to percentages for screen readers<br/><strong>Scenario:</strong> A score is given as a fraction<br/>• Given the max value is not 100<br/>• When a screen reader user navigates to the component<br/>• Then an assisted technology user hears the value as a fraction not a percentage<br/><em>Suggested way to achieve this:</em> If max is not 100 then add <code>aria-valuetext</code> 'value out of max'"
+            "requirements": [
+              {
+                "heading": "1. Labeling & Association",
+                "feature": "Progress ring labeling",
+                "scenarios": [
+                  {
+                    "title": "Each progress ring has a meaningful label",
+                    "steps": [
+                      "Given a progress ring is rendered on the page",
+                      "When a screen reader user navigates to the component",
+                      "Then the user hears a descriptive label that explains the purpose (e.g., 'Pronunciation')"
+                    ]
+                  },
+                  {
+                    "title": "Label is programmatically associated",
+                    "steps": [
+                      "Given a progress ring with a visible or offscreen label element",
+                      "When the component is inspected",
+                      "Then the label is associated to the progress semantics via aria-labelledby or an equivalent mechanism"
+                    ]
+                  }
+                ]
+              },
+              {
+                "heading": "2. Semantics (Native or ARIA)",
+                "feature": "Progress semantics exposed",
+                "scenarios": [
+                  {
+                    "title": "Determinate progress using native semantics",
+                    "steps": [
+                      "Given a progress ring representing a known value",
+                      "When the component is rendered with a native <progress> element",
+                      "Then the <progress> element has a value attribute and a max attribute",
+                      "And a screen reader announces the label and the current percentage or value"
+                    ]
+                  }
+                ]
+              },
+              {
+                "heading": "3. Decorative SVG (No Duplicate Announcements)",
+                "feature": "Decorative SVG does not duplicate semantics",
+                "scenarios": [
+                  {
+                    "title": "SVG is hidden from assistive technologies",
+                    "steps": [
+                      "Given a progress ring uses an SVG for visual appearance",
+                      "When the component is inspected",
+                      "Then the SVG has aria-hidden='true' and focusable='false'",
+                      "And the accessible name and values come from the semantic element (<progress> or role='progressbar')"
+                    ]
+                  }
+                ]
+              },
+              {
+                "heading": "4. Text Alternative / Visible Value",
+                "feature": "Visible text alternative",
+                "scenarios": [
+                  {
+                    "title": "If a visible percentage or summary is provided",
+                    "steps": [
+                      "Given a determinate progress ring",
+                      "When the component is rendered",
+                      "Then if a visible text alternative such as '62%' or '62% complete' is displayed adjacent to the ring",
+                      "And this visible text is not redundantly announced (e.g., it has aria-hidden='true' if separate from the semantic element)"
+                    ]
+                  }
+                ]
+              },
+              {
+                "heading": "5. Reduced Motion",
+                "feature": "Respects reduced motion preferences",
+                "scenarios": [
+                  {
+                    "title": "Animations are disabled or simplified when user prefers reduced motion",
+                    "steps": [
+                      "Given the user has enabled 'Reduce Motion' at the OS or browser level",
+                      "When the value of the progress ring changes there is no animation of the green ring"
+                    ]
+                  }
+                ]
+              },
+              {
+                "heading": "6. Multiple Indicators (Uniqueness)",
+                "feature": "Multiple progress rings have unique labels",
+                "scenarios": [
+                  {
+                    "title": "Unique labels for each ring in a list",
+                    "steps": [
+                      "Given a page displays multiple progress rings at once",
+                      "When a screen reader user navigates through them",
+                      "Then each ring has a unique, descriptive label (e.g., 'File A upload', 'File B upload')",
+                      "And there is no ambiguity about which label belongs to which ring"
+                    ]
+                  }
+                ]
+              },
+              {
+                "heading": "7. Non-percentage values",
+                "feature": "Prevent fractions being converted to percentages for screen readers",
+                "scenarios": [
+                  {
+                    "title": "A score is given as a fraction",
+                    "steps": [
+                      "Given the max value is not 100",
+                      "When a screen reader user navigates to the component",
+                      "Then an assisted technology user hears the value as a fraction not a percentage"
+                    ]
+                  }
+                ],
+                "note": "Suggested implementation: if max is not 100, add aria-valuetext 'value out of max'."
+              }
+            ]
           }
         ]
       },

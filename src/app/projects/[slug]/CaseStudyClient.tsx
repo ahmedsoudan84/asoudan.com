@@ -7,6 +7,13 @@ import { motion, useInView } from "framer-motion";
 import { ProjectDetail, CaseStudySection, ImageRef, ScreenItem } from "@/lib/projects";
 import { useTheme } from "@/contexts/ThemeContext";
 
+type RequirementGroup = {
+  heading: string;
+  feature?: string;
+  scenarios?: Array<{ title: string; steps: string[] }>;
+  note?: string;
+};
+
 /* Resolve ImageRef to {src, alt, darkSrc?} */
 function resolveImage(img: ImageRef, fallbackAlt = ""): { src: string; alt: string; darkSrc?: string } {
   if (typeof img === "string") return { src: img, alt: fallbackAlt };
@@ -1893,13 +1900,16 @@ function ComponentShowcaseSection({ section, color }: { section: CaseStudySectio
 /* ─── Section dispatcher ─── */
 /* ─── Component Specification (Native Deep Dive) ─── */
 /* ─── Component Fragments (Premium Deep Dive) ─── */
-function ProMaxFragment({ 
-  frag, 
-  color 
-}: { 
-  frag: any; 
+function ProMaxFragment({
+  frag,
+  color,
+  sectionMode
+}: {
+  frag: any;
   color: string;
+  sectionMode?: string;
 }) {
+  const isProgressRing = sectionMode === "progress-ring";
   return (
     <div className="flex flex-col items-center w-full mb-32 last:mb-0">
       <div className="text-center mb-16 max-w-2xl px-6">
@@ -1921,20 +1931,22 @@ function ProMaxFragment({
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className={cls(
             "relative z-10 w-full max-w-4xl mx-auto p-8 lg:p-16 rounded-[2rem] backdrop-blur-xl border shadow-2xl flex items-center justify-center overflow-hidden",
-            frag.invertInDarkMode
+            isProgressRing
+              ? "bg-white dark:bg-[#F8F9FA] border-black/5"
+              : frag.invertInDarkMode
               ? "bg-[#141620]/90 dark:bg-[#F8F9FA]/90 border-white/10 dark:border-black/5"
               : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
           )}
         >
           {/* Subtle inner glow for glass effect */}
           <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
-          
+
           <img
             src={frag.imageSrc}
             alt={frag.title}
             className={cls(
               "w-full h-auto object-contain relative z-10",
-              frag.invertInDarkMode && "dark:invert"
+              !isProgressRing && frag.invertInDarkMode && "dark:invert"
             )}
           />
         </motion.div>
@@ -1951,6 +1963,45 @@ function ProMaxFragment({
           <p className="[color:var(--fg-70)] text-base lg:text-lg leading-relaxed font-light">
             {frag.description}
           </p>
+        </div>
+      )}
+
+      {frag.requirements && frag.requirements.length > 0 && (
+        <div className="max-w-3xl w-full mt-16 px-6 text-left space-y-10">
+          {(frag.requirements as RequirementGroup[]).map((group, gIdx) => (
+            <div key={gIdx} className="space-y-4">
+              <h4
+                className="font-montserrat font-bold [color:var(--fg)] text-lg lg:text-xl"
+                style={{ color }}
+              >
+                {group.heading}
+              </h4>
+              {group.feature && (
+                <p className="[color:var(--fg-70)] text-sm lg:text-base leading-relaxed">
+                  <span className="font-semibold [color:var(--fg)]">Feature: </span>
+                  {group.feature}
+                </p>
+              )}
+              {group.scenarios?.map((scenario, sIdx) => (
+                <div key={sIdx} className="space-y-2">
+                  <p className="[color:var(--fg-70)] text-sm lg:text-base leading-relaxed">
+                    <span className="font-semibold [color:var(--fg)]">Scenario: </span>
+                    {scenario.title}
+                  </p>
+                  <ul className="list-disc pl-6 space-y-1 [color:var(--fg-70)] text-sm lg:text-base leading-relaxed">
+                    {scenario.steps.map((step, stIdx) => (
+                      <li key={stIdx}>{step}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              {group.note && (
+                <p className="[color:var(--fg-60)] text-sm italic leading-relaxed">
+                  {group.note}
+                </p>
+              )}
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -2029,7 +2080,7 @@ function ComponentExplorer({
               {section.type === "component-fragments" && section.fragments ? (
                 <div className="space-y-40">
                   {section.fragments.map((frag, fidx) => (
-                    <ProMaxFragment key={fidx} frag={frag} color={color} />
+                    <ProMaxFragment key={fidx} frag={frag} color={color} sectionMode={section.mode} />
                   ))}
                 </div>
               ) : (
@@ -2061,7 +2112,7 @@ function ComponentFragmentsSection({ section, color }: { section: CaseStudySecti
 
           <div className="space-y-40">
             {section.fragments.map((frag, idx) => (
-              <ProMaxFragment key={idx} frag={frag} color={color} />
+              <ProMaxFragment key={idx} frag={frag} color={color} sectionMode={section.mode} />
             ))}
           </div>
         </Reveal>
