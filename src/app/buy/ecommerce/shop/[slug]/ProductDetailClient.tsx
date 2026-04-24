@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
 import ProductImage from "@/components/ecommerce/ProductImage";
+import ProductImageWebGL from "@/components/ecommerce/ProductImageWebGL";
 import { type Product, CATEGORY_META } from "@/lib/ecommerce/products";
 import { recommendFrom } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
@@ -365,7 +366,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 borderColor: "var(--border-subtle)",
               }}
             >
-              <ProductImage
+              <ProductImageWebGL
                 src={gallery[activeImage]}
                 alt={product.name}
                 fallbackSeed={`${product.slug}-${activeImage}`}

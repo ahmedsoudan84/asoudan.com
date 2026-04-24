@@ -12,6 +12,7 @@ import {
   recordView,
   getScarcityMessage,
 } from "@/lib/real-estate/smart-logic";
+import PanoSection from "@/components/property/PanoSection";
 
 function getStatusStyle(status: string): { bg: string; color: string; border: string } {
   const isRent = status === "To Let" || status === "Let Agreed";
@@ -412,6 +413,16 @@ export default function PropertyDetailClient({ property }: { property: Property 
               </button>
             ))}
           </div>
+        </motion.div>
+
+
+        {/* 360° Virtual Tour */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <PanoSection property={property} />
         </motion.div>
 
         {/* Main Content */}
