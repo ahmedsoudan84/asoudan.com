@@ -1848,9 +1848,9 @@ export const projectsData: ProjectDetail[] = [
             "invertInDarkMode": true,
             "description": "Percentage is not a property — it's a dasharray. By calculating the circumference (2πr) and applying it to the stroke-dasharray, we create a perfectly scalable progress indicator that leverages native browser rendering.",
             "annotations": [
-              { "label": "Radius (r)", "x": 45, "y": 54 },
-              { "label": "Stroke Dasharray", "x": 8, "y": 12 },
-              { "label": "Formula Context", "x": 70, "y": 30 }
+              { "label": "Radius (r)", "x": 46.4, "y": 53.8 },
+              { "label": "Stroke Dasharray", "x": 8.5, "y": 12.7 },
+              { "label": "Formula Context", "x": 64, "y": 30 }
             ]
           },
           {
@@ -1981,9 +1981,9 @@ export const projectsData: ProjectDetail[] = [
             "invertInDarkMode": true,
             "description": "The Skill Card is built on a strict slot-based architecture (Media, Header, Stats, Body, Action). This allows for extreme variety in content while maintaining a single, testable base primitive.",
             "annotations": [
-              { "label": "Media Slot", "x": 20, "y": 20 },
-              { "label": "Header Slot", "x": 25, "y": 30 },
-              { "label": "Action Slot", "x": 25, "y": 75 }
+              { "label": "Media Slot", "x": 8.5, "y": 30.5 },
+              { "label": "Header Slot", "x": 8.5, "y": 46.1 },
+              { "label": "Composition Note", "x": 8.5, "y": 94 }
             ]
           },
           {
