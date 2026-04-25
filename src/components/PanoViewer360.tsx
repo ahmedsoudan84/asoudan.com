@@ -25,7 +25,7 @@ export default function PanoViewer360({
   const posRef = useRef(0);
   const dragRef = useRef({ active: false, startX: 0, startPos: 0 });
   const autoTimeRef = useRef<number | undefined>(undefined);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | undefined>(undefined);
   const [isDragging, setIsDragging] = useState(false);
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
 
