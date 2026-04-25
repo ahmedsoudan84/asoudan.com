@@ -1907,18 +1907,31 @@ function ProMaxFragment({
   color: string;
   mode?: string;
 }) {
-  const forceWhiteCard = mode === "progress-ring";
+  const isProgressRing = mode === "progress-ring";
+  const forceWhiteCard = isProgressRing;
+
+  // Colour bullet chars and highlight <strong> for Progress Ring long-form text
+  const descHtml = frag.description
+    ? isProgressRing
+      ? frag.description.replace(/•/g, `<span style="color:${color}">•</span>`)
+      : frag.description
+    : undefined;
+
   return (
     <div className="flex flex-col items-center w-full mb-32 last:mb-0">
+      {/* Header — subtitle (label) above title */}
       <div className="text-center mb-16 max-w-2xl px-6">
-        <h3 className="font-montserrat font-bold [color:var(--fg)] text-2xl lg:text-3xl mb-4">
-          {frag.title}
-        </h3>
         {frag.subtitle && (
-          <p className="[color:var(--fg-60)] text-[10px] uppercase tracking-[4px] font-bold">
+          <p
+            className="text-[10px] uppercase tracking-[4px] font-bold mb-3"
+            style={{ color }}
+          >
             {frag.subtitle}
           </p>
         )}
+        <h3 className="font-montserrat font-bold [color:var(--fg)] text-2xl lg:text-3xl">
+          {frag.title}
+        </h3>
       </div>
 
       <div className="w-full relative group flex justify-center">
@@ -1929,9 +1942,11 @@ function ProMaxFragment({
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className={cls(
             "relative z-10 w-full max-w-4xl mx-auto p-8 lg:p-16 rounded-[2rem] backdrop-blur-xl border shadow-2xl flex items-center justify-center overflow-hidden",
-            forceWhiteCard || frag.invertInDarkMode
+            forceWhiteCard
               ? "bg-white/95 dark:bg-white/95 border-black/5"
-              : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
+              : frag.invertInDarkMode
+                ? "bg-[#141620]/90 dark:bg-[#F8F9FA]/90 border-white/10 dark:border-black/5"
+                : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
           )}
         >
           {/* Subtle inner glow for glass effect */}
@@ -1946,16 +1961,28 @@ function ProMaxFragment({
 
         {/* Technical context background decor */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center overflow-hidden">
-           <div className="w-[150%] h-px bg-gradient-to-r from-transparent via-[var(--fg)] to-transparent rotate-12" />
-           <div className="w-[150%] h-px bg-gradient-to-r from-transparent via-[var(--fg)] to-transparent -rotate-12" />
+          <div className="w-[150%] h-px bg-gradient-to-r from-transparent via-[var(--fg)] to-transparent rotate-12" />
+          <div className="w-[150%] h-px bg-gradient-to-r from-transparent via-[var(--fg)] to-transparent -rotate-12" />
         </div>
       </div>
 
-      {frag.description && (
-        <div className="max-w-2xl mt-16 px-6 text-center">
-          <p
-            className="[color:var(--fg-70)] text-base lg:text-lg leading-relaxed font-light [&_strong]:[color:var(--fg)] [&_strong]:font-semibold [&_code]:font-mono [&_code]:text-sm [&_code]:[color:var(--fg-60)]"
-            dangerouslySetInnerHTML={{ __html: frag.description }}
+      {descHtml && (
+        <div
+          className={cls(
+            "max-w-3xl mt-16 px-6",
+            isProgressRing ? "text-left" : "text-center"
+          )}
+        >
+          <div
+            style={isProgressRing ? ({ "--frag-accent": color } as React.CSSProperties) : undefined}
+            className={cls(
+              "[color:var(--fg-70)] text-base lg:text-lg leading-relaxed font-light",
+              "[&_strong]:font-semibold [&_code]:font-mono [&_code]:text-sm",
+              isProgressRing
+                ? "[&_strong]:[color:var(--frag-accent)] [&_code]:[color:var(--frag-accent)]"
+                : "[&_strong]:[color:var(--fg)] [&_code]:[color:var(--fg-60)]"
+            )}
+            dangerouslySetInnerHTML={{ __html: descHtml }}
           />
         </div>
       )}

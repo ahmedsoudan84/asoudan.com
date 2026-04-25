@@ -10,10 +10,14 @@ interface PanoSectionProps {
 export default function PanoSection({ property }: PanoSectionProps) {
   const [activePano, setActivePano] = useState(0);
 
+  // Upscale Unsplash images to a wide panoramic ratio for the viewer
+  const toPanoUrl = (url: string) =>
+    url.replace(/w=\d+/, 'w=1800').replace(/h=\d+/, 'h=600');
+
   // Default panoramas if property doesn't have them
   const panoramas = property.images?.map((img, idx) => ({
     id: `pano-${idx}`,
-    imageUrl: img,
+    imageUrl: toPanoUrl(img),
     markers: [
       {
         id: `marker-${idx}-0`,
@@ -36,7 +40,7 @@ export default function PanoSection({ property }: PanoSectionProps) {
     ]
   })) || [{
     id: 'pano-default',
-    imageUrl: property.images?.[0] || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=800&fit=crop',
+    imageUrl: toPanoUrl(property.images?.[0] || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1800&h=600&fit=crop'),
     markers: [
       {
         id: 'marker-living',

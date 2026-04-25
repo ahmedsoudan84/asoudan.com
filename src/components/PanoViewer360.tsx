@@ -14,15 +14,20 @@ interface PanoViewer360Props {
   height?: number;
 }
 
+const FALLBACK_URL =
+  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1800&h=600&fit=crop';
+
 export default function PanoViewer360({
   imageUrl,
   markers = [],
-  height = 500
+  height = 500,
 }: PanoViewer360Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
+  const [activeMarker, setActiveMarker] = useState<string | null>(null);
 
   // Refs for animation state — avoids stale closure bugs in event listeners
   const isDraggingRef = useRef(false);
@@ -35,6 +40,17 @@ export default function PanoViewer360({
     setIsClient(true);
   }, []);
 
+  // Reset position and error state when switching to a different panorama
+  useEffect(() => {
+    setImgFailed(false);
+    setActiveMarker(null);
+    translateRef.current = 0;
+    lastTimeRef.current = null;
+    if (stripRef.current) {
+      stripRef.current.style.transform = 'translateX(0px)';
+    }
+  }, [imageUrl]);
+
   useEffect(() => {
     if (!containerRef.current || !stripRef.current || !isClient) return;
 
@@ -43,7 +59,7 @@ export default function PanoViewer360({
 
     const getWidth = () => container.offsetWidth;
 
-    // Wrap translate so it always stays within one image-width cycle
+    // Keep translate within one image-width cycle for seamless looping
     const wrap = (t: number) => {
       const w = getWidth();
       if (w === 0) return t;
@@ -56,13 +72,12 @@ export default function PanoViewer360({
       strip.style.transform = `translateX(${t}px)`;
     };
 
-    // Auto-rotation loop — pauses while dragging
+    // Auto-rotation loop — pauses while the user is dragging
     const autoLoop = (time: number) => {
       if (!isDraggingRef.current) {
         if (lastTimeRef.current !== null) {
           const delta = time - lastTimeRef.current;
           const w = getWidth();
-          // 30 s per full revolution
           translateRef.current = wrap(translateRef.current - (w / 30000) * delta);
           applyTranslate(translateRef.current);
         }
@@ -130,6 +145,8 @@ export default function PanoViewer360({
     };
   }, [isClient]);
 
+  const resolvedUrl = imgFailed ? FALLBACK_URL : imageUrl;
+
   return (
     <div
       ref={containerRef}
@@ -152,11 +169,14 @@ export default function PanoViewer360({
           // eslint-disable-next-line @next/next/no-img-element
           <img
             key={i}
-            src={imageUrl}
+            src={resolvedUrl}
             alt=""
             draggable={false}
             className="pointer-events-none object-cover"
             style={{ width: '33.333%', height: '100%', flexShrink: 0 }}
+            onError={() => {
+              if (!imgFailed) setImgFailed(true);
+            }}
           />
         ))}
       </div>
@@ -164,32 +184,47 @@ export default function PanoViewer360({
       {/* Depth gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 pointer-events-none" />
 
-      {/* Interactive markers */}
-      {isClient && markers.map((marker) => (
-        <div
-          key={marker.id}
-          className="absolute w-8 h-8 cursor-pointer group/marker"
-          style={{
-            left: `${50 + 40 * Math.sin((marker.longitude * Math.PI) / 180)}%`,
-            top: `${50 - 30 * Math.sin((marker.latitude * Math.PI) / 180)}%`,
-            transform: 'translate(-50%, -50%)',
-          }}
-          role="button"
-          tabIndex={0}
-          aria-label={marker.tooltip}
-        >
-          <div className="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping" />
-          <div className="absolute inset-0 rounded-full border-2 border-cyan-400/60" />
-          <div className="absolute inset-2 rounded-full bg-cyan-400/80 flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-full bg-white" />
+      {/* Interactive markers — click to pin/dismiss tooltip, hover also works */}
+      {isClient && markers.map((marker) => {
+        const isPinned = activeMarker === marker.id;
+        return (
+          <div
+            key={marker.id}
+            className="absolute w-8 h-8 cursor-pointer group/marker z-10"
+            style={{
+              left: `${50 + 40 * Math.sin((marker.longitude * Math.PI) / 180)}%`,
+              top: `${50 - 30 * Math.sin((marker.latitude * Math.PI) / 180)}%`,
+              transform: 'translate(-50%, -50%)',
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label={marker.tooltip}
+            aria-pressed={isPinned}
+            onClick={() => setActiveMarker(isPinned ? null : marker.id)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActiveMarker(isPinned ? null : marker.id);
+              }
+            }}
+          >
+            <div className="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping" />
+            <div className={`absolute inset-0 rounded-full border-2 transition-colors duration-150 ${isPinned ? 'border-cyan-300' : 'border-cyan-400/60'}`} />
+            <div className={`absolute inset-2 rounded-full flex items-center justify-center transition-colors duration-150 ${isPinned ? 'bg-cyan-300' : 'bg-cyan-400/80'}`}>
+              <div className="w-1.5 h-1.5 rounded-full bg-white" />
+            </div>
+
+            {/* Tooltip — shows on hover OR when pinned via click */}
+            <div
+              className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg transition-all duration-200 whitespace-nowrap pointer-events-none
+                ${isPinned ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1 group-hover/marker:opacity-100 group-hover/marker:translate-y-0'}`}
+            >
+              {marker.tooltip}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90" />
+            </div>
           </div>
-          {/* Tooltip */}
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg opacity-0 group-hover/marker:opacity-100 translate-y-1 group-hover/marker:translate-y-0 transition-all duration-200 whitespace-nowrap pointer-events-none">
-            {marker.tooltip}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90" />
-          </div>
-        </div>
-      ))}
+        );
+      })}
 
       {/* Spinner before hydration */}
       {!isClient && (
@@ -201,7 +236,7 @@ export default function PanoViewer360({
       {/* HUD */}
       <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white/60 text-sm pointer-events-none">
         <span>Drag to look around</span>
-        <span>Scroll to zoom</span>
+        <span className="hidden sm:inline">Click markers to explore</span>
       </div>
     </div>
   );
