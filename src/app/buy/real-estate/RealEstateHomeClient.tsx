@@ -85,7 +85,7 @@ export default function RealEstateHomeClient() {
   const featured = properties.slice(0, 3);
 
   return (
-    <div style={{ background: "var(--bg-primary)" }}>
+    <div>
       <LondonSkylineParallax />
 
       {/* ── Hero ─────────────────────────────────────────── */}
