@@ -1953,9 +1953,10 @@ function ProMaxFragment({
 
       {frag.description && (
         <div className="max-w-2xl mt-16 px-6 text-center">
-          <p className="[color:var(--fg-70)] text-base lg:text-lg leading-relaxed font-light">
-            {frag.description}
-          </p>
+          <p
+            className="[color:var(--fg-70)] text-base lg:text-lg leading-relaxed font-light [&_strong]:[color:var(--fg)] [&_strong]:font-semibold [&_code]:font-mono [&_code]:text-sm [&_code]:[color:var(--fg-60)]"
+            dangerouslySetInnerHTML={{ __html: frag.description }}
+          />
         </div>
       )}
     </div>
