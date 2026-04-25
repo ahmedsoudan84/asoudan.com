@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 
 interface PanoMarker {
   id: string;
@@ -15,164 +14,156 @@ interface PanoViewer360Props {
   height?: number;
 }
 
-export default function PanoViewer360({ 
-  imageUrl, 
+export default function PanoViewer360({
+  imageUrl,
   markers = [],
-  height = 500 
+  height = 500
 }: PanoViewer360Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [rotation, setRotation] = useState(0);
   const [isClient, setIsClient] = useState(false);
+
+  // Refs for animation state — avoids stale closure bugs in event listeners
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const translateRef = useRef(0);
+  const autoRafRef = useRef<number>(0);
+  const lastTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Implement 360° rotation with mouse/touch drag
   useEffect(() => {
-    if (!containerRef.current || !isClient) return;
+    if (!containerRef.current || !stripRef.current || !isClient) return;
 
     const container = containerRef.current;
-    const img = container.querySelector('img');
-    if (!img) return;
+    const strip = stripRef.current;
 
-    let startX = 0;
-    let startRotation = 0;
-    let currentRotation = 0;
-    let animationFrame: number;
+    const getWidth = () => container.offsetWidth;
 
-    const updateRotation = () => {
-      if (img) {
-        img.style.transform = `translateX(${currentRotation}%)`;
-      }
-      animationFrame = requestAnimationFrame(updateRotation);
+    // Wrap translate so it always stays within one image-width cycle
+    const wrap = (t: number) => {
+      const w = getWidth();
+      if (w === 0) return t;
+      if (t > 0) t -= w;
+      if (t < -w) t += w;
+      return t;
     };
 
-    const handleMouseDown = (e: MouseEvent) => {
+    const applyTranslate = (t: number) => {
+      strip.style.transform = `translateX(${t}px)`;
+    };
+
+    // Auto-rotation loop — pauses while dragging
+    const autoLoop = (time: number) => {
+      if (!isDraggingRef.current) {
+        if (lastTimeRef.current !== null) {
+          const delta = time - lastTimeRef.current;
+          const w = getWidth();
+          // 30 s per full revolution
+          translateRef.current = wrap(translateRef.current - (w / 30000) * delta);
+          applyTranslate(translateRef.current);
+        }
+        lastTimeRef.current = time;
+      } else {
+        lastTimeRef.current = null;
+      }
+      autoRafRef.current = requestAnimationFrame(autoLoop);
+    };
+
+    autoRafRef.current = requestAnimationFrame(autoLoop);
+
+    const onMouseDown = (e: MouseEvent) => {
+      isDraggingRef.current = true;
       setIsDragging(true);
-      startX = e.clientX;
-      startRotation = currentRotation;
+      startXRef.current = e.clientX - translateRef.current;
       container.style.cursor = 'grabbing';
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return;
-      const deltaX = e.clientX - startX;
-      currentRotation = startRotation - deltaX * 0.5;
-      // Wrap around
-      if (currentRotation < -100) currentRotation += 100;
-      if (currentRotation > 0) currentRotation -= 100;
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDraggingRef.current) return;
+      translateRef.current = wrap(e.clientX - startXRef.current);
+      applyTranslate(translateRef.current);
     };
 
-    const handleMouseUp = () => {
+    const onMouseUp = () => {
+      isDraggingRef.current = false;
       setIsDragging(false);
       container.style.cursor = 'grab';
     };
 
-    // Touch events
-    const handleTouchStart = (e: TouchEvent) => {
+    const onTouchStart = (e: TouchEvent) => {
+      isDraggingRef.current = true;
       setIsDragging(true);
-      startX = e.touches[0].clientX;
-      startRotation = currentRotation;
+      startXRef.current = e.touches[0].clientX - translateRef.current;
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!isDragging) return;
-      const deltaX = e.touches[0].clientX - startX;
-      currentRotation = startRotation - deltaX * 0.5;
-      if (currentRotation < -100) currentRotation += 100;
-      if (currentRotation > 0) currentRotation -= 100;
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDraggingRef.current) return;
       e.preventDefault();
+      translateRef.current = wrap(e.touches[0].clientX - startXRef.current);
+      applyTranslate(translateRef.current);
     };
 
-    const handleTouchEnd = () => {
+    const onTouchEnd = () => {
+      isDraggingRef.current = false;
       setIsDragging(false);
     };
 
-    container.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    container.addEventListener('touchstart', handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd);
-
-    updateRotation();
+    container.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    container.addEventListener('touchstart', onTouchStart, { passive: false });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd);
 
     return () => {
-      container.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-      container.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
-      if (animationFrame) cancelAnimationFrame(animationFrame);
+      cancelAnimationFrame(autoRafRef.current);
+      container.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      container.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
     };
-  }, [isClient, isDragging]);
-
-  // Auto-rotation when not dragging
-  useEffect(() => {
-    if (!containerRef.current || !isClient || isDragging) return;
-
-    const container = containerRef.current;
-    const img = container.querySelector('img');
-    if (!img) return;
-
-    let startTime: number;
-    const duration = 30000; // 30 seconds for full rotation
-
-    const autoRotate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = ((timestamp - startTime) % duration) / duration;
-      const autoRotation = -progress * 100;
-      
-      if (img && !isDragging) {
-        img.style.transform = `translateX(${autoRotation}%)`;
-      }
-      
-      requestAnimationFrame(autoRotate);
-    };
-
-    const id = requestAnimationFrame(autoRotate);
-
-    return () => cancelAnimationFrame(id);
-  }, [isClient, isDragging]);
+  }, [isClient]);
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="relative rounded-2xl overflow-hidden"
-      style={{ 
+      className="relative rounded-2xl overflow-hidden select-none"
+      style={{
         height: `${height}px`,
         background: 'var(--bg-secondary)',
         cursor: isDragging ? 'grabbing' : 'grab',
-        userSelect: 'none'
       }}
       role="img"
       aria-label={`Interactive 360° panorama. ${markers.length} points of interest available.`}
     >
-      {/* Main panorama image */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="flex">
-          {/* Triple the image for seamless looping */}
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="flex-shrink-0 w-full h-full relative">
-              <Image
-                src={imageUrl}
-                alt=""
-                fill
-                className="object-cover pointer-events-none"
-                style={{ objectPosition: 'center center' }}
-                priority={i === 1}
-              />
-            </div>
-          ))}
-        </div>
+      {/* Panorama strip — 3 copies side by side for seamless looping */}
+      <div
+        ref={stripRef}
+        className="absolute inset-y-0 left-0 flex"
+        style={{ width: '300%', willChange: 'transform' }}
+      >
+        {[0, 1, 2].map((i) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={i}
+            src={imageUrl}
+            alt=""
+            draggable={false}
+            className="pointer-events-none object-cover"
+            style={{ width: '33.333%', height: '100%', flexShrink: 0 }}
+          />
+        ))}
       </div>
 
-      {/* Overlay gradient for depth */}
+      {/* Depth gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 pointer-events-none" />
-      
+
       {/* Interactive markers */}
       {isClient && markers.map((marker) => (
         <div
@@ -192,62 +183,26 @@ export default function PanoViewer360({
           <div className="absolute inset-2 rounded-full bg-cyan-400/80 flex items-center justify-center">
             <div className="w-1.5 h-1.5 rounded-full bg-white" />
           </div>
-          
           {/* Tooltip */}
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg opacity-0 group-hover/marker:opacity-100 group-hover/marker:translate-y-0 translate-y-1 transition-all duration-200 whitespace-nowrap pointer-events-none">
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg opacity-0 group-hover/marker:opacity-100 translate-y-1 group-hover/marker:translate-y-0 transition-all duration-200 whitespace-nowrap pointer-events-none">
             {marker.tooltip}
             <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90" />
           </div>
         </div>
       ))}
 
-      {/* Loading state */}
+      {/* Spinner before hydration */}
       {!isClient && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <div className="w-10 h-10 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin" />
         </div>
       )}
 
-      {/* Instructions */}
+      {/* HUD */}
       <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white/60 text-sm pointer-events-none">
         <span>Drag to look around</span>
         <span>Scroll to zoom</span>
       </div>
-
-      {/* Zoom controls */}
-      <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button 
-          className="w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm text-white text-lg flex items-center justify-center hover:bg-black/80 transition-colors"
-          aria-label="Zoom in"
-          onClick={() => {
-            const img = containerRef.current?.querySelector('img');
-            if (img) img.style.transform += ' scale(1.1)';
-          }}
-        >
-          +
-        </button>
-        <button 
-          className="w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm text-white text-lg flex items-center justify-center hover:bg-black/80 transition-colors"
-          aria-label="Zoom out"
-          onClick={() => {
-            const img = containerRef.current?.querySelector('img');
-            if (img) img.style.transform += ' scale(0.9)';
-          }}
-        >
-          −
-        </button>
-      </div>
-
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0; transform: scale(0.8); }
-          50% { opacity: 1; transform: scale(1); }
-        }
-        
-        .cursor-grab:active {
-          cursor: grabbing;
-        }
-      `}</style>
     </div>
   );
 }
