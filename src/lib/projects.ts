@@ -79,7 +79,7 @@ export interface CaseStudySection {
     }>;
   }>;
   components?: Array<{
-    type: "tablist" | "tabbutton" | "progress-ring" | "skill-card" | "list-item";
+    type: "tablist" | "tabbutton" | "progress-ring" | "skill-card" | "list-item" | "product-card";
     label?: string;
   }>;
   galleryComponents?: Array<{
@@ -119,7 +119,7 @@ export interface CaseStudySection {
   }>;
   chartItems?: Array<{ label: string; value: number; note?: string; total?: number; color?: string }>;
   chartLayout?: string;
-  mode?: "progress-ring" | "tab-list" | "tab-button" | "skill-card" | "any";
+  mode?: "progress-ring" | "tab-list" | "tab-button" | "skill-card" | "product-card" | "any";
 }
 
 export interface ProjectDetail {
@@ -1959,46 +1959,46 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "component-fragments",
-        "mode": "skill-card",
-        "componentName": "Skill Card",
-        "bg": "light",
-        "label": "Domain-Specific Architecture",
-        "body": "A learner-specific variant that composes the base card with a mastery badge and an inline Progress Ring.",
+        "mode": "product-card",
+        "componentName": "Product Card",
+        "bg": "dark",
+        "label": "Content & Commerce",
+        "body": "A learner-facing card that surfaces course products with clear hierarchy, 5 interaction states, and full accessibility compliance — designed for handoff with defined spacing tokens and ARIA patterns.",
         "fragments": [
           {
-            "title": "Anatomy & Slots",
-            "subtitle": "Composable architecture",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-slots.svg",
+            "title": "Anatomy",
+            "subtitle": "Slots, hierarchy, and structure",
+            "imageSrc": "/images/projects/components-production-new/product-card/Anatomy.svg",
             "invertInDarkMode": true,
-            "description": "The Skill Card is built on a strict slot-based architecture (Media, Header, Stats, Body, Action). This allows for extreme variety in content while maintaining a single, testable base primitive."
+            "description": "The Product Card is built on a slot-based anatomy: Media, Header, Metadata, and Action. Each slot has a defined role, allowing the card to surface course products consistently while remaining flexible enough to accommodate varying content lengths and product types."
           },
           {
-            "title": "Technical Spec (Depth)",
-            "subtitle": "Elevation and focus states",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-elevations.svg",
+            "title": "Properties",
+            "subtitle": "5 interaction states and configuration options",
+            "imageSrc": "/images/projects/components-production-new/product-card/Properties.svg",
             "invertInDarkMode": true,
-            "description": "Using a unified shadow system, we define three states of depth: Flat (default), Raised (on hover), and Pressed. This creates a tactile experience that guides the user's focus during interaction."
+            "description": "Five interaction states are fully specified: Default, Hover, Focus, Hover+Focus, and Responsive. State changes are communicated through elevation shifts, border highlights, and colour transitions — all within WCAG AA contrast thresholds. Configuration properties control content truncation, badge visibility, and action affordance."
           },
           {
-            "title": "Interaction Matrix",
-            "subtitle": "Handling tap and focus",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-interactions.svg",
+            "title": "Spacing",
+            "subtitle": "Token-governed internal rhythm",
+            "imageSrc": "/images/projects/components-production-new/product-card/Spacing.svg",
             "invertInDarkMode": true,
-            "description": "Interactions are non-destructive. Hovering scales the card by 1.02x and deepens the shadow, while focus adds a high-contrast ring outside the card's boundary to preserve visual clarity."
+            "description": "All internal spacing is governed by the platform token system. Padding, gap, and margin values are expressed as named tokens rather than raw pixels, ensuring the card maintains its visual rhythm across density changes and localisation — particularly important for languages with longer string lengths."
           },
           {
-            "title": "Variant Gallery",
-            "subtitle": "One primitive, infinite variants",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-gallery.svg",
+            "title": "Responsive Layout",
+            "subtitle": "Adaptive layout from mobile to desktop",
+            "imageSrc": "/images/projects/components-production-new/product-card/Responsive Layout.svg",
             "invertInDarkMode": true,
-            "description": "From Skeleton states to complex Mastery dashboards, every card on the platform is a configuration of the same base slots. This 'zero-fork' strategy drastically reduced our maintenance overhead."
+            "description": "The card adapts across three breakpoints. On mobile, the media slot moves to a stacked layout with a reduced footprint. At 200% zoom, the layout reflows gracefully without clipping or overflow. Minimum touch target sizes are preserved at all breakpoints per WCAG 2.5.5."
           },
           {
-            "title": "Accessibility Summary",
-            "subtitle": "Semantic HTML & Keyboard support",
-            "imageSrc": "/images/projects/components-production-new/fragments/accessibility-summary.svg",
+            "title": "Accessibility",
+            "subtitle": "ARIA patterns, keyboard support, and screen reader behaviour",
+            "imageSrc": "/images/projects/components-production-new/product-card/Accessibility.svg",
             "invertInDarkMode": true,
-            "description": "Cards are implemented as articles with clear heading hierarchies. If a card is interactive as a whole, it uses the 'nested link' pattern to ensure screen readers correctly announce the primary action."
+            "description": "The card uses the nested interactive element pattern: the card surface is a non-interactive container (<article>) with a clearly labelled primary action link. This prevents screen readers from announcing duplicate interactive targets. aria-labelledby associates the product title with the action. Focus is visible on the action link only, preserving a clean tab order through lists of cards."
           }
         ]
       },
