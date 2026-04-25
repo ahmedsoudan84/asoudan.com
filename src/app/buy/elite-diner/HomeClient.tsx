@@ -298,36 +298,49 @@ export default function HomeClient() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group p-4 rounded-[2rem] border transition-all hover:bg-fg-05 hover:-translate-y-2 hover:shadow-2xl hover:shadow-accent/5"
-                style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
               >
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
-                  <img 
-                    src={dish.image} 
-                    alt={dish.name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                  />
-                </div>
-                <div className="px-2">
-                  <div className="flex items-center justify-between gap-4 mb-2">
-                    <h3 className="font-montserrat text-xl font-bold">{dish.name}</h3>
-                    <span className="text-accent font-bold">£{dish.price}</span>
+                <Link
+                  href={`/buy/elite-diner/menu/${dish.slug}`}
+                  className="group block p-4 rounded-[2rem] border transition-all hover:bg-fg-05 hover:-translate-y-2 hover:shadow-2xl hover:shadow-accent/5"
+                  style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+                >
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6">
+                    <img
+                      src={dish.image}
+                      alt={dish.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      crossOrigin="anonymous"
+                      loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.dataset.fallbackTried !== "1") {
+                          target.dataset.fallbackTried = "1";
+                          target.src = `https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=800`;
+                        }
+                      }}
+                    />
                   </div>
-                  <p className="text-fg-40 text-sm line-clamp-2 leading-relaxed mb-6">
-                    {dish.description}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    {dish.dietaryTags.map(tag => (
-                      <span 
-                        key={tag} 
-                        className="px-3 py-1 rounded-full bg-accent text-[9px] uppercase font-bold shadow-sm"
-                        style={{ color: "var(--bg-primary)" }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="px-2">
+                    <div className="flex items-center justify-between gap-4 mb-2">
+                      <h3 className="font-montserrat text-xl font-bold group-hover:text-accent transition-colors">{dish.name}</h3>
+                      <span className="text-accent font-bold">£{dish.price}</span>
+                    </div>
+                    <p className="text-fg-40 text-sm line-clamp-2 leading-relaxed mb-6">
+                      {dish.description}
+                    </p>
+                    <div className="flex items-center gap-2">
+                      {dish.dietaryTags.map(tag => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 rounded-full bg-accent text-[9px] uppercase font-bold shadow-sm"
+                          style={{ color: "var(--bg-primary)" }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>

@@ -1,5 +1,6 @@
 export interface MenuItem {
   id: string;
+  slug: string;
   name: string;
   description: string;
   price: number;
@@ -15,6 +16,7 @@ export const menuItems: MenuItem[] = [
   // ── Starters ──────────────────────────────────────────
   {
     id: "s1",
+    slug: "seared-diver-scallops",
     name: "Seared Diver Scallops",
     description:
       "Pan-roasted hand-dived scallops with cauliflower purée, crispy pancetta lardons, and truffle oil. Finished with a micro herb salad and Maldon sea salt.",
@@ -28,6 +30,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "s2",
+    slug: "heritage-beetroot-carpaccio",
     name: "Heritage Beetroot Carpaccio",
     description:
       "Thinly sliced roasted heritage beetroot with whipped goat's curd, candied walnuts, watercress, and aged balsamic reduction.",
@@ -41,6 +44,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "s3",
+    slug: "hereford-beef-tartare",
     name: "Hereford Beef Tartare",
     description:
       "Hand-cut Hereford beef with cornichons, capers, shallots, Dijon, quail egg yolk, and toasted sourdough crisps.",
@@ -54,6 +58,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "s4",
+    slug: "burrata-heirloom-tomatoes",
     name: "Burrata & Heirloom Tomatoes",
     description:
       "Creamy Puglian burrata with sun-ripened heirloom tomatoes, basil oil, aged balsamic, and Maldon sea salt from Essex.",
@@ -67,6 +72,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "s5",
+    slug: "spicy-crispy-calamari",
     name: "Spicy Crispy Calamari",
     description:
       "Lightly dusted squid rings with ají amarillo aioli, charred lime wedges, and pickled jalapeño. A London twist on a Mediterranean classic.",
@@ -80,6 +86,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "s6",
+    slug: "truffle-arancini",
     name: "Truffle Arancini",
     description:
       "Golden-fried risotto balls with black truffle, fontina cheese, and an earthy mushroom dipping sauce. Served with a rocket garnish.",
@@ -95,6 +102,7 @@ export const menuItems: MenuItem[] = [
   // ── Mains ─────────────────────────────────────────────
   {
     id: "m1",
+    slug: "dry-aged-ribeye",
     name: "35-Day Dry-Aged Ribeye",
     description:
       "British grass-fed ribeye, dry-aged for 35 days, with bone marrow butter, watercress, triple-cooked chips, and béarnaise sauce. Our signature dish.",
@@ -108,6 +116,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m2",
+    slug: "cornish-sea-bass",
     name: "Cornish Sea Bass",
     description:
       "Whole roasted line-caught sea bass from Cornwall with samphire, Jersey Royals, and lemon verbena beurre blanc.",
@@ -121,6 +130,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m3",
+    slug: "wild-mushroom-risotto",
     name: "Wild Mushroom Risotto",
     description:
       "Arborio rice with foraged wild mushrooms, aged Parmigiano-Reggiano, truffle shavings, and crispy sage. Chestnuts in season.",
@@ -134,6 +144,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m4",
+    slug: "herb-crusted-lamb-rump",
     name: "Herb-Crusted Lamb Rump",
     description:
       "Slow-roasted British lamb rump with rosemary roast potatoes, seasonal greens, rich red wine jus, and mint gremolata.",
@@ -147,6 +158,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m5",
+    slug: "thai-red-curry",
     name: "Thai Red Curry (V)",
     description:
       "Fragrant red curry with coconut cream, Thai basil, seasonal vegetables, and steamed jasmine rice. Plant-based with remarkable depth.",
@@ -160,6 +172,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m6",
+    slug: "crispy-duck-confit",
     name: "Crispy Duck Confit",
     description:
       "Confit duck leg with cherry gastrique, Puy lentils, braised red cabbage, and parsnip purée. Classic French technique, London ingredients.",
@@ -173,6 +186,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m7",
+    slug: "wagyu-beef-wellington",
     name: "Wagyu Beef Wellington",
     description:
       "Japanese A5 wagyu wrapped in mushroom duxelles and buttery puff pastry, with red wine reduction and seasonal root vegetables.",
@@ -186,6 +200,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m8",
+    slug: "fresh-pasta-of-the-day",
     name: "Fresh Pasta of the Day",
     description:
       "Hand-rolled pasta crafted daily by our chef. Ask your server for today's preparation — often features seasonal British ingredients.",
@@ -199,6 +214,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "m9",
+    slug: "grilled-lobster-thermidor",
     name: "Grilled Lobster Thermidor",
     description:
       "Half native lobster with creamy thermidor sauce, Gruyère gratin, hand-cut chips, and dressed salad. A timeless celebration dish.",
@@ -214,6 +230,7 @@ export const menuItems: MenuItem[] = [
   // ── Desserts ──────────────────────────────────────────
   {
     id: "d1",
+    slug: "sticky-toffee-pudding",
     name: "Sticky Toffee Pudding",
     description:
       "Warm date sponge with salted caramel sauce, vanilla bean ice cream, and toffee shavings. The ultimate British comfort.",
@@ -227,6 +244,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "d2",
+    slug: "dark-chocolate-fondant",
     name: "Dark Chocolate Fondant",
     description:
       "Valrhona chocolate with molten centre, raspberry coulis, and Cornish clotted cream. Please allow 20 minutes — cooked to order.",
@@ -240,6 +258,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "d3",
+    slug: "lemon-posset",
     name: "Lemon Posset",
     description:
       "Zesty lemon posset with shortbread biscuit crumb, Italian meringue, and fresh seasonal berries. A bright, refreshing finish.",
@@ -253,6 +272,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "d4",
+    slug: "artisan-cheese-selection",
     name: "Artisan Cheese Selection",
     description:
       "Five British and European artisan cheeses with honeycomb, fig compote, oat biscuits, and Medjool dates. Ask for today's selection.",
@@ -266,6 +286,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "d5",
+    slug: "vegan-chocolate-mousse",
     name: "Vegan Chocolate Mousse",
     description:
       "Silky aquafaba mousse with premium dark chocolate, extra virgin olive oil, sea salt flakes, and toasted almonds. Plant-based luxury.",
@@ -281,6 +302,7 @@ export const menuItems: MenuItem[] = [
   // ── Drinks ────────────────────────────────────────────
   {
     id: "dr1",
+    slug: "espresso-martini",
     name: "Espresso Martini",
     description:
       "Ketel One vodka, Kahlúa, fresh double espresso, vanilla syrup. Shaken not stirred — our house signature cocktail.",
@@ -294,6 +316,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "dr2",
+    slug: "hickory-smoked-negroni",
     name: "Hickory Smoked Negroni",
     description:
       "Tanqueray gin, Campari, Cocchi di Torino, finished with hickory smoke under a glass cloche. Served over a hand-carved ice cube.",
@@ -307,6 +330,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "dr3",
+    slug: "passion-fruit-sour",
     name: "Passion Fruit Sour",
     description:
       "Grey Goose vodka, fresh passion fruit, lime juice, sugar syrup, aquafaba foam. Bright, tart, and immensely refreshing.",
@@ -320,6 +344,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "dr4",
+    slug: "seasonal-house-mocktail",
     name: "Seasonal House Mocktail",
     description:
       "Fresh seasonal fruits, garden herbs, elderflower cordial, and premium soda. Ask your server for today's creation — always delightful.",
@@ -335,6 +360,7 @@ export const menuItems: MenuItem[] = [
   // ── Wine List ─────────────────────────────────────────
   {
     id: "w1",
+    slug: "chablis-moreau-2022",
     name: "Chablis, Moreau 2022",
     description:
       "Classic Chablis from Burgundy — crisp, mineral-driven, with citrus and flint. Perfect with seafood starters.",
@@ -348,6 +374,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "w2",
+    slug: "pinot-noir-acustic-2021",
     name: "Pinot Noir, Acustic 2021",
     description:
       "Spanish organic Pinot — soft, fruity, light body. Versatile enough for most mains, especially mushroom risotto.",
@@ -361,6 +388,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "w3",
+    slug: "cotes-du-rhone-guigal-2020",
     name: "Côtes du Rhône, Guigal 2020",
     description:
       "Grenache-Syrah-Mourvèdre blend — full-bodied, spiced, with dark fruit and a long finish. Ideal with red meat.",
@@ -374,6 +402,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "w4",
+    slug: "rose-whispering-angel-2023",
     name: "Rosé, Whispering Angel 2023",
     description:
       "Provence style — pale salmon, bone-dry, notes of white peach and strawberry. Summer in a glass, elegant year-round.",
@@ -387,6 +416,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: "w5",
+    slug: "champagne-billecart-salmon",
     name: "Champagne, Billecart-Salmon NV",
     description:
       "Non-vintage brut — fine persistent bubbles, orchard fruit, brioche notes. The perfect celebration pour.",
@@ -425,3 +455,13 @@ export const dietaryFilters = [
   { id: "popular", label: "Popular" },
   { id: "light", label: "Light" },
 ];
+
+export function getMenuItemBySlug(slug: string): MenuItem | undefined {
+  return menuItems.find((item) => item.slug === slug);
+}
+
+export function getRelatedItems(item: MenuItem, count = 3): MenuItem[] {
+  return menuItems
+    .filter((m) => m.id !== item.id && m.category === item.category)
+    .slice(0, count);
+}

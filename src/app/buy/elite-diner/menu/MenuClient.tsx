@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useCallback } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
@@ -223,40 +224,47 @@ export default function MenuClient() {
                 className="group flex flex-col p-4 rounded-[2rem] border transition-all hover:bg-fg-05 hover:shadow-2xl hover:shadow-accent/5"
                 style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
               >
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-6">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    crossOrigin="anonymous"
-                    loading="lazy"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `https://picsum.photos/800/600?random=${item.id}`;
-                    }}
-                  />
-                  <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                    {item.dietaryTags.map((tag) => (
-                      <span 
-                        key={tag} 
-                        className="px-2.5 py-1 rounded-lg bg-accent/90 backdrop-blur-md border border-white/10 text-[8px] uppercase font-bold tracking-widest shadow-sm"
-                        style={{ color: "var(--bg-primary)" }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <Link href={`/buy/elite-diner/menu/${item.slug}`} className="block">
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-6">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      crossOrigin="anonymous"
+                      loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.dataset.fallbackTried !== "1") {
+                          target.dataset.fallbackTried = "1";
+                          target.src = `https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=800`;
+                        }
+                      }}
+                    />
+                    <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                      {item.dietaryTags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 rounded-lg bg-accent/90 backdrop-blur-md border border-white/10 text-[8px] uppercase font-bold tracking-widest shadow-sm"
+                          style={{ color: "var(--bg-primary)" }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </Link>
 
                 <div className="flex-1 flex flex-col px-2">
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <h3 className="font-montserrat text-lg font-bold group-hover:text-accent transition-colors">{item.name}</h3>
-                    <span className="font-bold text-accent">£{item.price.toFixed(2)}</span>
-                  </div>
-                  <p className="text-sm text-fg-50 line-clamp-3 leading-relaxed mb-6 flex-1">
-                    {item.description}
-                  </p>
-                  
+                  <Link href={`/buy/elite-diner/menu/${item.slug}`} className="block">
+                    <div className="flex items-start justify-between gap-4 mb-2">
+                      <h3 className="font-montserrat text-lg font-bold group-hover:text-accent transition-colors">{item.name}</h3>
+                      <span className="font-bold text-accent">£{item.price.toFixed(2)}</span>
+                    </div>
+                    <p className="text-sm text-fg-50 line-clamp-3 leading-relaxed mb-6 flex-1">
+                      {item.description}
+                    </p>
+                  </Link>
+
                   <div className="flex items-center justify-between gap-4 pt-4 border-t" style={{ borderColor: "var(--border-subtle)" }}>
                     <div className="flex flex-col">
                       <span className="text-[10px] uppercase font-bold tracking-wider opacity-30">Pairing</span>
