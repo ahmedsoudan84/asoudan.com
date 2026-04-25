@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
 import ProductImage from "@/components/ecommerce/ProductImage";
-import ProductImageWebGL from "@/components/ecommerce/ProductImageWebGL";
 import { type Product, CATEGORY_META } from "@/lib/ecommerce/products";
 import { recommendFrom } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
@@ -360,18 +359,73 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="relative aspect-square rounded-3xl overflow-hidden border"
+              className="group relative aspect-square rounded-3xl overflow-hidden border"
               style={{
                 background: "var(--fg-05)",
                 borderColor: "var(--border-subtle)",
               }}
             >
-              <ProductImageWebGL
+              <ProductImage
                 src={gallery[activeImage]}
                 alt={product.name}
                 fallbackSeed={`${product.slug}-${activeImage}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
               />
+
+              {/* Hover overlay — product details */}
+              <div
+                className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.18) 55%, transparent 100%)",
+                }}
+              >
+                <div className="translate-y-3 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span
+                      className="px-2 py-0.5 rounded font-montserrat text-[9px] uppercase tracking-[2px] font-bold"
+                      style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
+                    >
+                      {product.brand}
+                    </span>
+                    <span className="font-montserrat text-[9px] uppercase tracking-[2px] text-white/50">
+                      {CATEGORY_META[product.category].label}
+                    </span>
+                  </div>
+                  <h3 className="font-montserrat font-black text-white text-xl leading-tight mb-1">
+                    {product.name}
+                  </h3>
+                  <p className="font-montserrat text-sm text-white/70 mb-3 line-clamp-2">
+                    {product.tagline}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="font-montserrat font-black text-xl"
+                      style={{ color: "var(--accent)" }}
+                    >
+                      £{product.price.toLocaleString()}
+                    </span>
+                    <div className="flex items-center gap-0.5">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <EcomIcons.Star
+                          key={i}
+                          className="w-3 h-3"
+                          style={{
+                            color:
+                              i < Math.floor(product.rating)
+                                ? "var(--accent)"
+                                : "rgba(255,255,255,0.2)",
+                          }}
+                        />
+                      ))}
+                      <span className="font-montserrat text-[10px] text-white/50 ml-1">
+                        {product.rating}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {product.compareAtPrice && (
                 <span
                   className="absolute top-5 left-5 px-3 py-1.5 rounded-full text-[10px] font-montserrat uppercase tracking-[2px] font-bold"

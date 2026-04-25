@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
 import { menuItems } from "@/lib/elite-diner/menu-data";
-import LondonSkylineParallax from "@/components/parallax/LondonSkylineParallax";
 
 const HERO_CHIPS = [
   { label: "Date Night", query: "romantic" },
@@ -273,9 +272,6 @@ export default function HomeClient() {
           </motion.div>
         </div>
       </section>
-
-      {/* ── London Skyline Parallax ──────────────────────── */}
-      <LondonSkylineParallax />
 
       {/* ── Featured Menu ────────────────────────────────── */}
       <section className="py-32 px-6 bg-secondary" style={{ background: "var(--bg-secondary)" }}>
