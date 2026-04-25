@@ -1869,8 +1869,13 @@ function ComponentShowcaseSection({ section, color }: { section: CaseStudySectio
                                 <span className="text-[var(--accent)]">✓</span> Screen reader announcements
                               </div>
                             </div>
-                          </div>
-                        </div>
+               </div>
+               {section.notes && (
+                 <p className="mt-6 text-sm italic [color:var(--fg-40)]">
+                   {section.notes}
+                 </p>
+               )}
+             </div>
                       </div>
                     </div>
                   ) : (
@@ -2104,10 +2109,12 @@ function ComponentSpecificationSection({ section, color, onImageClick }: { secti
                       className="absolute left-[-1px] top-0 w-[2px] h-6" 
                       style={{ background: color }} 
                     />
-                    <h3 className="text-[11px] font-bold uppercase tracking-[3px] mb-3" style={{ color }}>
-                      {spec.title}
-                    </h3>
-                    <p className="[color:var(--fg-50)] text-sm leading-relaxed antialiased">
+                     {spec.title && (
+                       <h3 className="text-[11px] font-bold uppercase tracking-[3px] mb-3" style={{ color }}>
+                         {spec.title}
+                       </h3>
+                     )}
+                    <p className="[color:var(--fg-50)] text-sm leading-relaxed antialiased whitespace-pre-line">
                       {spec.body}
                     </p>
                     {spec.bullets && (
