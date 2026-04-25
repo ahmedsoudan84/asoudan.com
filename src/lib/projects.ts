@@ -1930,13 +1930,6 @@ export const projectsData: ProjectDetail[] = [
             "description": "When the number of tabs exceeds the available horizontal space, the TabList transitions into a scrolling container with optional fade indicators to signal additional content."
           },
           {
-            "title": "Color Matrix",
-            "subtitle": "Theming and parity rules",
-            "imageSrc": "/images/projects/components-production-new/tablist/Matrix.svg",
-            "invertInDarkMode": true,
-            "description": "The component is built to be theme-agnostic. Using a standardized color matrix, it maintains perfect legibility and brand alignment in both light and dark modes."
-          },
-          {
             "title": "Accessibility (Aria Schema)",
             "subtitle": "Keyboard and Screen Reader implementation",
             "imageSrc": "/images/projects/components-production-new/tablist/Accessibility.svg",

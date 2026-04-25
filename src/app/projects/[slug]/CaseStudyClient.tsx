@@ -1943,10 +1943,10 @@ function ProMaxFragment({
           className={cls(
             "relative z-10 w-full max-w-4xl mx-auto p-8 lg:p-16 rounded-[2rem] backdrop-blur-xl border shadow-2xl flex items-center justify-center overflow-hidden",
             forceWhiteCard
-              ? "bg-white/95 dark:bg-white/95 border-black/5"
+              ? "bg-white border-black/10"
               : frag.invertInDarkMode
-                ? "bg-[#141620]/90 dark:bg-[#F8F9FA]/90 border-white/10 dark:border-black/5"
-                : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
+                ? "bg-[#141620] border-white/10"
+                : "bg-white/5 border-white/8"
           )}
         >
           {/* Subtle inner glow for glass effect */}
