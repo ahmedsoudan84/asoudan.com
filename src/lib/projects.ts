@@ -119,7 +119,7 @@ export interface CaseStudySection {
   }>;
   chartItems?: Array<{ label: string; value: number; note?: string; total?: number; color?: string }>;
   chartLayout?: string;
-  mode?: "progress-ring" | "tab-list" | "tab-button" | "skill-card" | "any";
+  mode?: "progress-ring" | "tab-list" | "tab-button" | "product-card" | "any";
 }
 
 export interface ProjectDetail {
@@ -1811,7 +1811,7 @@ export const projectsData: ProjectDetail[] = [
     "images": [
       { "src": "/images/projects/components-production-new/tab-button.svg", "alt": "TabList Anatomy" },
       { "src": "/images/projects/components-production-new/progress-ring.svg", "alt": "Progress Ring Specs" },
-      { "src": "/images/projects/components-production-new/skill-card.svg", "alt": "Skill Card Composition" }
+      { "src": "/images/projects/components-production-new/product-card.svg", "alt": "Product Card Composition" }
     ],
     "behanceUrl": "",
     "employer": "Oxford English Hub (Oxford University Press)",
@@ -1827,7 +1827,7 @@ export const projectsData: ProjectDetail[] = [
         "heading": "Designing the Core Components",
         "bullets": [
           "Problem: Expanding Oxford English Hub led to fragmented design with inconsistent implementations and widespread accessibility violations.",
-          "Approach: Audited the existing components, then designed production-ready structural primitives: TabList, Progress Ring, and Skill Card.",
+          "Approach: Audited the existing components, then designed production-ready structural primitives: TabList, Progress Ring, and Product Card.",
           "Impact: Ensured 100% WCAG AA compliance across these elements, improved UI creation speed, and provided strict guidelines without stripping away engineering autonomy.",
           "Role: Lead Product Designer."
         ],
@@ -1929,13 +1929,6 @@ export const projectsData: ProjectDetail[] = [
             "description": "When the number of tabs exceeds the available horizontal space, the TabList transitions into a scrolling container with optional fade indicators to signal additional content."
           },
           {
-            "title": "Color Matrix",
-            "subtitle": "Theming and parity rules",
-            "imageSrc": "/images/projects/components-production-new/tablist/Matrix.svg",
-            "invertInDarkMode": true,
-            "description": "The component is built to be theme-agnostic. Using a standardized color matrix, it maintains perfect legibility and brand alignment in both light and dark modes."
-          },
-          {
             "title": "Accessibility (Aria Schema)",
             "subtitle": "Keyboard and Screen Reader implementation",
             "imageSrc": "/images/projects/components-production-new/tablist/Accessibility.svg",
@@ -1959,46 +1952,46 @@ export const projectsData: ProjectDetail[] = [
       },
       {
         "type": "component-fragments",
-        "mode": "skill-card",
-        "componentName": "Skill Card",
+        "mode": "product-card",
+        "componentName": "Product Card",
         "bg": "light",
-        "label": "Domain-Specific Architecture",
-        "body": "A learner-specific variant that composes the base card with a mastery badge and an inline Progress Ring.",
+        "label": "Learner-Facing Card Component",
+        "body": "Designed for the Student Dashboard — a mobile-first card with defined spacing tokens, 5 interaction states, ARIA patterns, and full anatomy documentation for engineering handoff.",
         "fragments": [
           {
-            "title": "Anatomy & Slots",
-            "subtitle": "Composable architecture",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-slots.svg",
+            "title": "Anatomy",
+            "subtitle": "Slots and structure",
+            "imageSrc": "/images/projects/components-production-new/product-card/Anatomy.svg",
             "invertInDarkMode": true,
-            "description": "The Skill Card is built on a strict slot-based architecture (Media, Header, Stats, Body, Action). This allows for extreme variety in content while maintaining a single, testable base primitive."
+            "description": "The Product Card is divided into four distinct slots — Media, Header, Body, and Action. Each slot has fixed padding tokens and a defined content hierarchy, ensuring layout stability across all content configurations."
           },
           {
-            "title": "Technical Spec (Depth)",
-            "subtitle": "Elevation and focus states",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-elevations.svg",
+            "title": "Spacing & Tokens",
+            "subtitle": "Density scale and padding rules",
+            "imageSrc": "/images/projects/components-production-new/product-card/Spacing.svg",
             "invertInDarkMode": true,
-            "description": "Using a unified shadow system, we define three states of depth: Flat (default), Raised (on hover), and Pressed. This creates a tactile experience that guides the user's focus during interaction."
+            "description": "Eight spacing variants map to the platform's 4px base grid. Internal padding, gap between slots, and media aspect ratio are all token-driven, making the card trivially resizable without layout breakage."
           },
           {
-            "title": "Interaction Matrix",
-            "subtitle": "Handling tap and focus",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-interactions.svg",
+            "title": "Interaction States",
+            "subtitle": "All five states documented",
+            "imageSrc": "/images/projects/components-production-new/product-card/States.svg",
             "invertInDarkMode": true,
-            "description": "Interactions are non-destructive. Hovering scales the card by 1.02x and deepens the shadow, while focus adds a high-contrast ring outside the card's boundary to preserve visual clarity."
+            "description": "Five states are fully specified: Default, Hover (1.02× scale + deepened shadow), Focus (high-contrast outer ring), Hover+Focus (combined), and Responsive (stacked layout at narrow widths). Each state is non-destructive — no content shifts."
           },
           {
-            "title": "Variant Gallery",
-            "subtitle": "One primitive, infinite variants",
-            "imageSrc": "/images/projects/components-production-new/fragments/card-gallery.svg",
+            "title": "Responsive Layout",
+            "subtitle": "Mobile-first scaling at 200% zoom",
+            "imageSrc": "/images/projects/components-production-new/product-card/Responsive.svg",
             "invertInDarkMode": true,
-            "description": "From Skeleton states to complex Mastery dashboards, every card on the platform is a configuration of the same base slots. This 'zero-fork' strategy drastically reduced our maintenance overhead."
+            "description": "With 85% of learners on mobile, the card was designed mobile-first. At narrow breakpoints the layout switches from side-by-side to stacked. The spec also covers 200% browser zoom to meet WCAG 1.4.4 Resize Text at AA."
           },
           {
-            "title": "Accessibility Summary",
-            "subtitle": "Semantic HTML & Keyboard support",
-            "imageSrc": "/images/projects/components-production-new/fragments/accessibility-summary.svg",
+            "title": "Accessibility",
+            "subtitle": "ARIA patterns and keyboard support",
+            "imageSrc": "/images/projects/components-production-new/product-card/Accessibility.svg",
             "invertInDarkMode": true,
-            "description": "Cards are implemented as articles with clear heading hierarchies. If a card is interactive as a whole, it uses the 'nested link' pattern to ensure screen readers correctly announce the primary action."
+            "description": "Cards are implemented as <article> elements with an <h3> heading. When the card is interactive as a whole, the nested-link pattern is used: a single <a> stretches to cover the card via an ::after pseudo-element, keeping screen reader announcement clean and avoiding duplicate focus stops."
           }
         ]
       },

@@ -1976,7 +1976,7 @@ function ComponentExplorer({
   const components = [
     { id: "progress-ring", label: "Progress Ring" },
     { id: "tab-button", label: "TabList & TabButton" },
-    { id: "skill-card", label: "Skill Card" }
+    { id: "product-card", label: "Product Card" }
   ];
 
   return (
