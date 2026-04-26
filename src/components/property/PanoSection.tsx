@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 const PanoViewer360 = dynamic(() => import('../PanoViewer360'), { ssr: false });
 import { Property } from '@/lib/real-estate/properties';
@@ -10,6 +10,14 @@ interface PanoSectionProps {
 
 export default function PanoSection({ property }: PanoSectionProps) {
   const [activePano, setActivePano] = useState(0);
+  const [highlightedMarker, setHighlightedMarker] = useState<string | null>(null);
+  const cardsRef = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const handleMarkerClick = (markerId: string) => {
+    setHighlightedMarker(markerId);
+    cardsRef.current[markerId]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    window.setTimeout(() => setHighlightedMarker((curr) => (curr === markerId ? null : curr)), 2000);
+  };
 
   // Default panoramas if property doesn't have them
   const panoramas = property.images?.map((img, idx) => ({
@@ -96,28 +104,41 @@ export default function PanoSection({ property }: PanoSectionProps) {
             imageUrl={panoramas[activePano].imageUrl}
             markers={panoramas[activePano].markers}
             height={500}
+            onMarkerClick={handleMarkerClick}
           />
         </div>
 
         {/* Room Navigation */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {panoramas[activePano].markers.map((marker) => (
-            <div
-              key={marker.id}
-              className="group bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-all cursor-pointer border border-white/10 hover:border-cyan-500/30"
-            >
-              <div className="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+          {panoramas[activePano].markers.map((marker) => {
+            const isHighlighted = highlightedMarker === marker.id;
+            return (
+              <div
+                key={marker.id}
+                ref={(el) => { cardsRef.current[marker.id] = el; }}
+                className={`group rounded-xl p-4 transition-all cursor-pointer border ${
+                  isHighlighted
+                    ? 'bg-cyan-500/15 border-cyan-400/60 ring-2 ring-cyan-400/40'
+                    : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-cyan-500/30'
+                }`}
+              >
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 transition-transform ${
+                  isHighlighted
+                    ? 'bg-cyan-400/40 border border-cyan-300 scale-110'
+                    : 'bg-cyan-500/20 border border-cyan-500/40 group-hover:scale-110'
+                }`}>
+                  <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <h4 className="font-montserrat font-semibold text-sm mb-1">{marker.tooltip}</h4>
+                <p className="font-montserrat text-xs" style={{ color: 'var(--fg-50)' }}>
+                  Click marker in viewer
+                </p>
               </div>
-              <h4 className="font-montserrat font-semibold text-sm mb-1">{marker.tooltip}</h4>
-              <p className="font-montserrat text-xs" style={{ color: 'var(--fg-50)' }}>
-                Click marker in viewer
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Features */}

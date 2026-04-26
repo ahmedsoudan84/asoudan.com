@@ -12,12 +12,14 @@ interface PanoViewer360Props {
   imageUrl: string;
   markers?: PanoMarker[];
   height?: number;
+  onMarkerClick?: (markerId: string) => void;
 }
 
 export default function PanoViewer360({
   imageUrl,
   markers = [],
-  height = 500
+  height = 500,
+  onMarkerClick,
 }: PanoViewer360Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
@@ -184,7 +186,10 @@ export default function PanoViewer360({
             type="button"
             data-pano-marker
             aria-label={marker.tooltip}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMarkerClick?.(marker.id);
+            }}
             onMouseDown={(e) => e.stopPropagation()}
             onTouchStart={(e) => e.stopPropagation()}
             className="pointer-events-auto relative block w-8 h-8 rounded-full cursor-pointer group/marker focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 transition-transform duration-200 hover:scale-125 active:scale-110"
