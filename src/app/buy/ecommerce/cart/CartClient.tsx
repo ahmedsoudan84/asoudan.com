@@ -565,10 +565,11 @@ function EmptyCart() {
         </Link>
         <Link
           href="/buy/ecommerce/ai-tools"
-          className="px-6 py-3 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] border"
+          className="px-6 py-3 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] border transition-all"
           style={{
-            borderColor: "var(--border-card)",
-            color: "var(--fg-70)",
+            borderColor: "var(--secondary)",
+            color: "var(--secondary)",
+            boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)",
           }}
         >
           Ask the stylist

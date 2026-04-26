@@ -386,7 +386,7 @@ export default function HomeClient() {
             <Link
               href="/buy/elite-diner/book"
               className="w-full sm:w-auto px-10 py-5 rounded-2xl border font-montserrat text-xs font-bold uppercase tracking-[2px] transition-all hover:bg-fg-05"
-              style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.2), 0 0 18px rgba(var(--secondary-rgb),0.25)" }}
+              style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)" }}
             >
               Book a Table
             </Link>

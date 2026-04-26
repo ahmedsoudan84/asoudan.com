@@ -413,7 +413,7 @@ export default function RealEstateHomeClient() {
               style={{
                 borderColor: "var(--secondary)",
                 color: "var(--secondary)",
-                boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.2), 0 0 18px rgba(var(--secondary-rgb),0.25)",
+                boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)",
               }}
             >
               Contact About Pricing

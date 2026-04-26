@@ -5,7 +5,7 @@ import FloatingNav from "@/components/layout/FloatingNav";
 
 const ImmersiveProjects = dynamic(() => import("@/components/sections/ImmersiveProjects"));
 const ImmersiveCV = dynamic(() => import("@/components/sections/ImmersiveCV"));
-const Footer = dynamic(() => import("@/components/sections/Footer"), { ssr: false });
+const Footer = dynamic(() => import("@/components/sections/Footer"));
 
 export const metadata: Metadata = {
   title: "Home",
