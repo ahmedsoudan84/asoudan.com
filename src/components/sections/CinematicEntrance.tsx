@@ -398,8 +398,8 @@ export default function CinematicEntrance() {
                 </button>
                 <button
                   onClick={() => scrollTo("#experience")}
-                  className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500 hover:shadow-[0_0_20px_rgba(var(--secondary-rgb),0.4)]"
-                  style={{ borderColor: "var(--secondary)", color: "var(--secondary)" }}
+                  className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
+                  style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.25), 0 0 18px rgba(var(--secondary-rgb),0.3)" }}
                 >
                   Experience
                 </button>
