@@ -64,7 +64,7 @@ function CoverMedia({ project }: { project: Project }) {
               alt={alt}
               fill
               draggable={false}
-              loading="eager"
+              loading="lazy"
               className="object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
               sizes={sizes}
             />
@@ -90,7 +90,7 @@ function CoverMedia({ project }: { project: Project }) {
             alt={alt}
             fill
             draggable={false}
-            loading="eager"
+            loading="lazy"
             className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
             sizes="(max-width: 640px) 40vw, 200px"
           />
@@ -108,7 +108,7 @@ function CoverMedia({ project }: { project: Project }) {
             alt={alt}
             fill
             draggable={false}
-            loading="eager"
+            loading="lazy"
             className="object-contain transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
             sizes={sizes}
           />
@@ -125,7 +125,7 @@ function CoverMedia({ project }: { project: Project }) {
         alt={alt}
         fill
         draggable={false}
-        loading="eager"
+        loading="lazy"
         className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
         sizes={sizes}
       />

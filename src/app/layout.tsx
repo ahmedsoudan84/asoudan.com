@@ -69,6 +69,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased" data-theme="dark" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preload" as="font" href="https://fonts.gstatic.com/s/montserrat/v29/JTVSjBV8_OTBrgkfI0bYkZ1Q.woff2" type="font/woff2" crossOrigin="anonymous" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.setAttribute('data-theme',t)}else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('theme','dark')}}catch(e){}})()`,

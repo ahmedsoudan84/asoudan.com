@@ -3,7 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
-import LondonSkylineParallax from "@/components/parallax/LondonSkylineParallax";
+import dynamic from "next/dynamic";
+const LondonSkylineParallax = dynamic(() => import("@/components/parallax/LondonSkylineParallax"), { ssr: false });
 
 function getStatusStyle(status: string): { bg: string; color: string; border: string } {
   const isRent = status === "To Let" || status === "Let Agreed";

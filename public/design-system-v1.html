@@ -44,6 +44,10 @@
     --accent-rgb:   0, 241, 241;
     --accent-hover: #00c8c8;
 
+    --secondary:       #F0A840;
+    --secondary-rgb:   240, 168, 64;
+    --secondary-hover: #d4922a;
+
     --nav-bg:       rgba(10,12,20,0.70);
     --nav-border:   rgba(255,255,255,0.06);
     --border-subtle: rgba(255,255,255,0.06);
@@ -78,6 +82,10 @@
     --accent:       #008b8b;
     --accent-rgb:   0, 139, 139;
     --accent-hover: #006f6f;
+
+    --secondary:       #B45309;
+    --secondary-rgb:   180, 83, 9;
+    --secondary-hover: #92400E;
 
     --nav-bg:       rgba(236,238,241,0.88);
     --nav-border:   rgba(22,25,42,0.10);
@@ -346,8 +354,8 @@
     box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.25);
   }
   .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 0 32px rgba(var(--accent-rgb), 0.45); }
-  .btn-secondary { background: transparent; color: var(--fg); border-color: var(--border-card); }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary { background: transparent; color: var(--secondary); border-color: var(--secondary); box-shadow: 0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15); }
+  .btn-secondary:hover { border-color: var(--secondary-hover); color: var(--secondary-hover); box-shadow: 0 0 0 1px rgba(var(--secondary-rgb),0.25), 0 0 24px rgba(var(--secondary-rgb),0.35); }
   .btn-ghost { background: transparent; color: var(--fg-70); }
   .btn-ghost:hover { color: var(--accent); }
   .btn .arrow { transition: transform .2s ease; }
@@ -388,6 +396,7 @@
     border-color: rgba(var(--accent-rgb), 0.35);
   }
   .tag.outline { background: transparent; }
+  .tag.secondary { background: rgba(var(--secondary-rgb),0.08); color: var(--secondary); border-color: rgba(var(--secondary-rgb),0.2); }
 
   /* Form */
   .field {
@@ -569,12 +578,13 @@
   <div class="wrap">
     <div class="eyebrow">v1.0 — Design System</div>
     <h1><b>asoudan</b><em>.com</em><br />design system.</h1>
-    <p class="lede">Dark-first. Montserrat. A single cyan accent that glows. A small set of tokens and components extracted directly from the live codebase — ready to mirror in Figma.</p>
+    <p class="lede">Dark-first. Montserrat. Cyan primary (#00F1F1) + amber secondary (#F0A840). A small set of tokens and components extracted directly from the live codebase — ready to mirror in Figma.</p>
     <div class="meta">
       <div>Direction<b>Immersive · Editorial</b></div>
       <div>Font<b>Montserrat 100–900</b></div>
-      <div>Accent<b>#00F1F1 Cyan</b></div>
-      <div>Themes<b>Dark (default) · Light</b></div>
+      <div>Primary<b>#00F1F1 Cyan</b></div>
+      <div>Secondary<b>#F0A840 Amber</b></div>
+      <div>Themes<b>Dark · Light</b></div>
     </div>
   </div>
 </section>
@@ -596,8 +606,8 @@
       </div>
       <div class="card stack-4">
         <div class="label">02</div>
-        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">One glowing accent</h3>
-        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">Cyan #00F1F1 is the only hue with saturation. Use it to point, never to decorate.</p>
+        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">Two accent grades</h3>
+        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">Cyan #00F1F1 primary — points, never decorates. Amber #F0A840 secondary — highlights CTAs, tags, and interactive elements.</p>
       </div>
       <div class="card stack-4">
         <div class="label">03</div>
@@ -691,7 +701,7 @@
     <div class="sec-head">
       <div class="num">03 — Color</div>
       <h2>Palette</h2>
-      <p>Deep blue-black canvas. Off-white foreground stepped down by opacity for hierarchy. One saturated cyan does every pointing job. Footer stays dark even in light mode.</p>
+      <p>Deep blue-black canvas. Off-white foreground stepped down by opacity for hierarchy. Two accent tokens: cyan (#00F1F1) points, amber (#F0A840) highlights. Both grade down for light mode. Footer stays dark.</p>
     </div>
 
     <h3 style="font-weight:500;font-size:22px;margin:24px 0 16px;letter-spacing:-0.01em;">Surface — dark (default)</h3>
@@ -735,6 +745,16 @@
         <div class="chip" style="background:#00c8c8"></div>
         <div class="meta-row"><span>--accent-hover</span><span>#00c8c8</span></div>
         <div class="name">Cyan — hover</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#F0A840"></div>
+        <div class="meta-row"><span>--secondary</span><span>#F0A840</span></div>
+        <div class="name">Amber</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#d4922a"></div>
+        <div class="meta-row"><span>--secondary-hover</span><span>#d4922a</span></div>
+        <div class="name">Amber — hover</div>
       </div>
     </div>
 
@@ -780,6 +800,16 @@
         <div class="chip" style="background:#006f6f"></div>
         <div class="meta-row" style="color:#fff;background:#006f6f"><span>--accent-hover</span><span>#006f6f</span></div>
         <div class="name">Cyan — darker</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#B45309"></div>
+        <div class="meta-row" style="color:#fff;background:#B45309"><span>--secondary</span><span>#B45309</span></div>
+        <div class="name">Amber — light</div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#92400E"></div>
+        <div class="meta-row" style="color:#fff;background:#92400E"><span>--secondary-hover</span><span>#92400E</span></div>
+        <div class="name">Amber — darker</div>
       </div>
       <div class="sw">
         <div class="chip" style="background:#1a1d2e"></div>
@@ -883,10 +913,10 @@
     <div class="card">
       <div class="row-gap-4">
         <button class="btn btn-primary">View case study <span class="arrow">→</span></button>
-        <button class="btn btn-secondary">Get in touch</button>
+        <button class="btn btn-secondary">Experience</button>
         <button class="btn btn-ghost">Skip</button>
       </div>
-      <p class="hint" style="margin-top:20px">44px height · pill radius · 12px / 600 / 0.12em tracked label. Primary carries a soft cyan halo that brightens on hover.</p>
+      <p class="hint" style="margin-top:20px">44px height · pill radius · 12px / 600 / 0.12em tracked label. <b>Primary</b>: filled cyan, ink #0a0c14, cyan glow. <b>Secondary</b>: amber border + text, permanent double-ring glow (0 0 0 1px / 0 0 18px). <b>Ghost</b>: text-only fg-70, hover to accent.</p>
     </div>
 
     <!-- Links -->
@@ -906,6 +936,8 @@
       <span class="tag">UX Research</span>
       <span class="tag">Product Design</span>
       <span class="tag accent">Featured</span>
+      <span class="tag secondary">Design System</span>
+      <span class="tag secondary">Amber Tag</span>
       <span class="tag outline">EdTech</span>
       <span class="tag">12 min read</span>
       <span class="tag">2024</span>
@@ -999,7 +1031,7 @@
           <div class="eyebrow">Hero</div>
           <h2 style="font-weight:200;font-size:56px;line-height:1;letter-spacing:-0.03em;margin:24px 0 16px">Ahmed Soudan<br/><em style="color:var(--accent);font-weight:300;font-style:normal">designs products</em><br/>that move.</h2>
           <p style="font-weight:300;font-size:16px;color:var(--fg-70);max-width:48ch;margin:0 0 32px">Digital Product Designer — 20 years, 300+ projects, specialising in UX research and EdTech.</p>
-          <div style="display:flex;gap:16px"><button class="btn btn-primary">View work <span class="arrow">→</span></button><button class="btn btn-secondary">Book a call</button></div>
+          <div style="display:flex;gap:16px"><button class="btn btn-primary">Projects <span class="arrow">→</span></button><button class="btn btn-secondary">Experience</button></div>
         </div>
       </div>
 

@@ -386,8 +386,8 @@ export default function CinematicEntrance() {
               <motion.div className="mt-10 hidden lg:flex flex-wrap gap-4" variants={slideUp}>
                 <button
                   onClick={() => scrollTo("#projects")}
-                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500 hover:border-[var(--accent)]/60"
-                  style={{ color: "var(--fg-70)", background: "rgba(var(--accent-rgb), 0.04)", borderColor: "rgba(var(--accent-rgb), 0.2)" }}
+                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
+                  style={{ color: "var(--fg-70)", background: "rgba(var(--accent-rgb), 0.04)", borderColor: "rgba(var(--accent-rgb), 0.2)", boxShadow: "0 0 0 1px rgba(var(--accent-rgb),0.1), 0 0 18px rgba(var(--accent-rgb),0.15)" }}
                 >
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/10 to-[var(--accent)]/0"
@@ -399,7 +399,7 @@ export default function CinematicEntrance() {
                 <button
                   onClick={() => scrollTo("#experience")}
                   className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
-                  style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.25), 0 0 18px rgba(var(--secondary-rgb),0.3)" }}
+                  style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)" }}
                 >
                   Experience
                 </button>
