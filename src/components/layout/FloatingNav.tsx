@@ -118,29 +118,34 @@ export default function FloatingNav() {
   // `<div>` inside ImmersiveProjects) because we only rely on `top`, not
   // `height` — so a section activates the moment its anchor scrolls past the
   // line, and stays active while the user is inside its range.
+  //
+  // Section absolute Y positions are cached and only recomputed on resize /
+  // content changes; scroll-frame work is then a few number compares.
   useEffect(() => {
     if (isOnBuyPages) return;
     const ids = NAV_ITEMS.filter((i) => !i.href).map((item) => item.id);
+    let sections: { id: string; top: number }[] = [];
 
-    const updateActive = () => {
-      const entries = ids
+    const measure = () => {
+      sections = ids
         .map((id) => {
           const el = document.getElementById(id);
           if (!el) return null;
           const rect = el.getBoundingClientRect();
           return { id, top: rect.top + window.scrollY };
         })
-        .filter((e): e is { id: string; top: number } => !!e);
-      if (entries.length === 0) return;
+        .filter((e): e is { id: string; top: number } => !!e)
+        .sort((a, b) => a.top - b.top);
+    };
 
-      entries.sort((a, b) => a.top - b.top);
-
+    const updateActive = () => {
+      if (sections.length === 0) return;
       const scrollY = window.scrollY;
       const viewportH = window.innerHeight;
       const doc = document.documentElement;
       const atBottom = scrollY + viewportH >= doc.scrollHeight - 2;
       if (atBottom) {
-        setActiveSection(entries[entries.length - 1].id);
+        setActiveSection(sections[sections.length - 1].id);
         return;
       }
 
@@ -148,8 +153,8 @@ export default function FloatingNav() {
       // anchor has scrolled above this line and stays lit until the next
       // section's anchor crosses it.
       const line = scrollY + viewportH * 0.4;
-      let active = entries[0].id;
-      for (const entry of entries) {
+      let active = sections[0].id;
+      for (const entry of sections) {
         if (entry.top <= line) active = entry.id;
         else break;
       }
@@ -164,12 +169,27 @@ export default function FloatingNav() {
         updateActive();
       });
     };
+
+    const onResize = () => {
+      measure();
+      updateActive();
+    };
+
+    // ResizeObserver catches layout changes (image loads, dynamic content)
+    // without us having to re-measure on every scroll frame.
+    const ro = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(onResize)
+      : null;
+    ro?.observe(document.body);
+
+    measure();
     updateActive();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
+      ro?.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
   }, [isOnBuyPages, pathname]);

@@ -2021,7 +2021,7 @@ export const projectsData: ProjectDetail[] = [
     "subtitle": "asoudan.com v1.0",
     "category": "DESIGN SYSTEM",
     "number": "14",
-    "description": "A dark-first design system for asoudan.com — Montserrat across the 100–900 weight range, a single cyan accent, and twelve opacity steps replacing a grey scale. Tokens, type, colour, rhythm, and core components extracted directly from the live codebase and mirrored in Figma.",
+    "description": "A dark-first design system for asoudan.com — Montserrat across the 100–900 weight range, a cyan primary accent, a secondary amber-orange (#F0A840), and twelve opacity steps replacing a grey scale. Tokens, type, colour, rhythm, and core components extracted directly from the live codebase and mirrored in Figma.",
     "tags": [
       "Design System",
       "Design Tokens",
@@ -2052,7 +2052,7 @@ export const projectsData: ProjectDetail[] = [
         "bullets": [
           "Direction: immersive · editorial. Dark (default) + Light themes, cross-faded on theme switch.",
           "Font: Montserrat 100–900 across the full weight range. JetBrains Mono for tokens, metadata, and code.",
-          "Accent: cyan #00F1F1 — the only saturated hue, used to point never to decorate. Dark-theme hover #00c8c8; light-theme accent shifts to #008b8b / #006f6f.",
+          "Primary accent: cyan #00F1F1 — used to point, never to decorate. Dark hover #00c8c8; light shifts to #008b8b / #006f6f. Secondary: amber #F0A840 — for CTAs, project tags, and interactive highlights.",
           "Output: six surface tokens, a twelve-step foreground opacity ladder, an eleven-role type scale, ten-step spacing scale, and a core component library — all extracted from the live globals.css and mirrored in Figma."
         ],
         "bg": "dark"
@@ -2079,8 +2079,8 @@ export const projectsData: ProjectDetail[] = [
           },
           {
             "value": "04",
-            "label": "Motion scales with scroll",
-            "context": "Transitions use --motion-scale so fast readers get snappy UI, slow readers get soft."
+            "label": "Theme switch as fade",
+            "context": "Every surface inherits a 0.3s background-color/border/color transition, so toggling theme reads as a single coordinated fade."
           }
         ],
         "bg": "dark"
@@ -2096,7 +2096,7 @@ export const projectsData: ProjectDetail[] = [
         "type": "text",
         "label": "03 — Colour · surfaces",
         "heading": "Six surface tokens — deep blue-black, stepping up to raised",
-        "body": "The dark palette is six named surfaces with exact hex values: **--bg-primary #0a0c14** (canvas), **--bg-secondary #141620** (section fill), **--bg-tertiary #111322** (inset), **--bg-surface #1a1d2e** (card), **--bg-surface-2 #23273a** (input / raised), **--bg-footer #0d0f1a** (footer — stays dark even in light mode). Accent is **#00F1F1** with hover pair **#00c8c8**. Light theme mirrors the structure: #f8f8f8 canvas, #ffffff card, ink #16192A, accent shifts to #008b8b / #006f6f to hold contrast. Selection uses the accent at 30% opacity with white ink. Focus is 2px accent, 2px offset — no exceptions. Scrollbar is a 6px rail with a cyan thumb at 3px radius.",
+        "body": "The dark palette is six named surfaces: **--bg-primary #0a0c14** (canvas), **--bg-secondary #141620** (section fill), **--bg-tertiary #111322** (inset), **--bg-surface #1a1d2e** (card), **--bg-surface-2 #23273a** (input / raised), **--bg-footer #0d0f1a** (footer — stays dark even in light mode). Two accent tokens form a two-tier colour hierarchy: **primary --accent #00F1F1** (dark) / **#008b8b** (light), hover **#00c8c8** / **#006f6f** — used for primary CTAs, active states, and focus rings. **Secondary --secondary #F0A840** (dark) / **#B45309** (light), hover **#d4922a** / **#92400E** — used for secondary CTAs, project tags, footer social hover, and interactive highlights. Both tokens expose an `-rgb` triplet (`--accent-rgb`, `--secondary-rgb`) so `rgba(var(--token-rgb), α)` works everywhere without opacity hacks. Light theme mirrors the structure: #f8f8f8 canvas, #ffffff card, ink #16192A. Selection uses the accent at 30% opacity with white ink. Focus is 2px accent, 2px offset — no exceptions. Scrollbar is a 6px rail with a cyan thumb at 3px radius.",
         "bg": "dark"
       },
       {
@@ -2110,21 +2110,21 @@ export const projectsData: ProjectDetail[] = [
         "type": "text",
         "label": "04 — Space",
         "heading": "Tailwind's 4px scale, four radii, glow instead of shadow",
-        "body": "Spacing follows the default Tailwind 4px step scale — **4, 8, 12, 16, 24, 32, 48, 64, 96, 128** — so engineering reads directly from the design. Radii quantise to four values: **4 (sm), 8 (md), 12 (lg), 999 (pill)**. Depth is glow, not shadow: **base** 0 8px 24px rgba(0,0,0,0.3); **soft cyan halo** 0 0 24px rgba(0,241,241,0.25); **hover halo** 0 0 40px rgba(0,241,241,0.45). Grid and motion: **max-width 1200px** content container with **32px page gutters** and a **62ch** body measure. **--motion-scale** ranges 1 → 0.35, modulated by scroll velocity so transitions compress when the reader moves fast. Base transition is 0.3s × scale ease; theme switch is a 0.35s ease body cross-fade.",
+        "body": "Spacing follows the default Tailwind 4px step scale — **4, 8, 12, 16, 24, 32, 48, 64, 96, 128** — so engineering reads directly from the design. Radii quantise to four values: **4 (sm), 8 (md), 12 (lg), 999 (pill)**. Depth is glow, not shadow: **base** 0 8px 24px rgba(0,0,0,0.3); **soft cyan halo** 0 0 24px rgba(0,241,241,0.25); **hover halo** 0 0 40px rgba(0,241,241,0.45). Grid and motion: **max-width 1200px** content container with **32px page gutters** and a **62ch** body measure. Base transition is **0.3s ease** on background-color / border-color / color; theme switch is a **0.35s ease** body cross-fade. Continuous animations use framer-motion springs on transform/opacity only, so scroll stays at 60fps.",
         "bg": "light"
       },
       {
         "type": "text",
         "label": "05 — Components · chrome",
         "heading": "Header, buttons, links — the site's load-bearing pieces",
-        "body": "**Sticky header** — 64px high, --nav-bg with 12px backdrop blur, brand mark left (\"Ahmed Soudan.\" with the full stop rendered in accent and an accent text-shadow glow), tracked uppercase nav right (11px / 600 / 0.14em, colour fg-60, hover → accent), and a CTA arrow-link. **Buttons** — three hierarchies at 44px height, pill radius, 12px / 600 / 0.12em label: **primary** (filled cyan, ink #0a0c14, soft cyan halo that brightens on hover 0.25 → 0.45 opacity), **secondary** (outlined border-card, hover border and text to accent), **ghost** (text-only fg-70, hover to accent). **Links** — inline text (accent with a 35% accent underline), arrow-CTA (tracked uppercase with → that translates 3–4px on hover).",
+        "body": "**Sticky header** — 64px high, --nav-bg with 12px backdrop blur, brand mark left (\"Ahmed Soudan.\" with the full stop rendered in accent and an accent text-shadow glow), tracked uppercase nav right (11px / 600 / 0.14em, colour fg-60, hover → accent), and a CTA arrow-link. **Buttons** — three hierarchies at 44px height, pill radius, 12px / 600 / 0.12em label: **primary** (filled cyan, ink #0a0c14, soft cyan halo that brightens on hover 0.25 → 0.45 opacity), **secondary** (solid amber border + text, permanent double-ring glow `0 0 0 1px secondary/25%, 0 0 18px secondary/30%` — applied to hero Experience, template secondary CTAs, real-estate contact button, elite-diner Book a Table), **ghost** (text-only fg-70, hover to accent). **Links** — inline text (accent with a 35% accent underline), arrow-CTA (tracked uppercase with → that translates 3–4px on hover). **Social icons** — 44px pill, border-card at rest; hover lifts, border and text shift to secondary, a 24px amber glow at 50% opacity appears.",
         "bg": "dark"
       },
       {
         "type": "text",
         "label": "05 — Components · content",
         "heading": "Tags, form, floating nav, project tile",
-        "body": "**Tags** — pill, 26px high, 11px / 500 / 0.08em tracked label. Three variants: **default** (fg-06 background, fg-70 label, border-subtle), **accent** (accent at 12%, accent text, accent border at 35%), **outline** (transparent background, border-subtle). **Form fields** — sit on --bg-surface-2 with an 8px radius and border-card boundary. Field labels are 10px / 600 / 0.16em tracked uppercase at fg-60. Inputs are 15px / 400. Focus activates a 2px accent border and a 3px accent glow at 18% opacity. **Floating nav** — pill-shaped with --nav-bg blur, 40px circular dots at 10px / 700 / 0.1em; active dot carries accent at 12% with a 1px inset accent ring at 30%. **Project tile** — 16:10 thumbnail zone over a head row (title 20/600, year JetBrains Mono 12 at fg-50), body copy at fg-60 13/1.5, and a tag strip. Hover lifts -3px, brightens the border to accent at 50%, and adds a composite shadow plus accent ring.",
+        "body": "**Tags** — pill, 26px high, 11px / 500 / 0.08em tracked label. Four variants: **default** (fg-06 background, fg-70 label, border-subtle), **accent** (accent at 12%, accent text, accent border at 35%), **secondary** (secondary at 8% background, secondary text, secondary border at 20% — used on project tags in the carousel and template feature chips), **outline** (transparent background, border-subtle). **Form fields** — sit on --bg-surface-2 with an 8px radius and border-card boundary. Field labels are 10px / 600 / 0.16em tracked uppercase at fg-60. Inputs are 15px / 400. Focus activates a 2px accent border and a 3px accent glow at 18% opacity. **Floating nav** — pill-shaped with --nav-bg blur, 40px circular dots at 10px / 700 / 0.1em; active dot carries accent at 12% with a 1px inset accent ring at 30%. **Project tile** — 16:10 thumbnail zone over a head row (title 20/600, year JetBrains Mono 12 at fg-50), body copy at fg-60 13/1.5, and a tag strip. Hover lifts -3px, brightens the border to accent at 50%, and adds a composite shadow plus accent ring.",
         "bg": "dark"
       },
       {
@@ -2144,7 +2144,7 @@ export const projectsData: ProjectDetail[] = [
         "type": "text",
         "label": "06 — Applied",
         "heading": "Pages in use — hero entrance + case-study open",
-        "body": "The tokens assemble into the two surfaces the site spends most of its life in. **Hero entrance** — an Display 88/100 headline with a `<b>` brand word at weight 700 and an `<em>` accent fragment at weight 300 (\"Ahmed Soudan designs products that move.\"), a 20/300 lede at fg-70 capped at ~48 characters, and a primary + secondary button pair. The background carries a radial accent gradient at 8% opacity bleeding from 20% 30%. **Case-study open** — Eyebrow \"Case study · 12 min\", H2 36 / 1.05 / 300 title, a 17/300 lede at fg-70, a 14px body paragraph at fg-60 (with an inline accent link example), and a tag strip (default tags + an accent \"Shipped\" pill). Both surfaces inherit --motion-scale so scroll velocity modulates every transition.",
+        "body": "The tokens assemble into the key surfaces the site spends most of its life in. **Hero entrance** — Display 88/100 headline, 20/300 lede at fg-70, and a two-button CTA pair: primary (filled cyan) + secondary (amber outline, `border: var(--secondary)`, permanent amber glow). The background carries a radial accent gradient at 8% opacity. **Project carousel** — hover-reveal shows description, three secondary-coloured tags, and a CTA button using each project's own colour. **Template showcase** — feature chip tags use the secondary token (8% bg, secondary text, 20% border). **Case-study open** — Eyebrow, H2 36/1.05/300, lede at fg-70, body at fg-60, tag strip (default + accent \"Shipped\" pill). **Template sub-sites** — secondary buttons (Book a Table, Browse shop, Contact About Pricing, Meet the AI stylist) all share the secondary glow variant; the Real Estate \"Under Offer\" status badge now maps to --secondary instead of a hardcoded amber. All surfaces inherit the same 0.3s theme-fade transition.",
         "bg": "dark"
       },
       {

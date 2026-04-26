@@ -36,6 +36,10 @@
   --accent-rgb:   0, 241, 241;
   --accent-hover: #00c8c8;
 
+  --secondary:       #F0A840;
+  --secondary-rgb:   240, 168, 64;
+  --secondary-hover: #d4922a;
+
   --bg-primary-rgb: 10, 12, 20;
 
   --vignette-rgb: 10, 12, 20;
@@ -83,6 +87,9 @@
   --accent-rgb:   0, 139, 139;
   --accent-hover: #006f6f;
 
+  --secondary:       #B45309;
+  --secondary-rgb:   180, 83, 9;
+  --secondary-hover: #92400E;
   --bg-primary-rgb: 248, 248, 248;
 
   --vignette-rgb: 236, 238, 241;
@@ -105,6 +112,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-secondary: var(--secondary);
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);
   --color-fg-primary: var(--fg);
@@ -128,20 +136,12 @@ body {
 [data-theme="light"] .theme-text { color: var(--fg); }
 [data-theme="light"] .theme-text-muted { color: var(--fg-60); }
 
-/* ── Scroll-velocity motion scale ───────────────────────────────
-   --motion-scale is driven by ScrollSpeedTracker: 1 when the page is
-   at rest, shrinking toward ~0.35 while the user is scrolling fast.
-   This makes CSS transitions snappier for fast readers and softer
-   for slow ones. Defaults to 1 so behaviour is unchanged on SSR /
-   when the tracker has not yet mounted. */
-:root { --motion-scale: 1; }
-
 /* ── Smooth transitions on theme switch ─────────────────────── */
 *,
 *::before,
 *::after {
   transition-property: background-color, border-color, color;
-  transition-duration: calc(0.3s * var(--motion-scale));
+  transition-duration: 0.3s;
   transition-timing-function: ease;
 }
 /* Don't slow down animations */
@@ -196,6 +196,11 @@ body {
 }
 
 /* ── Aurora animation ──────────────────────────────────────────── */
+@keyframes scanline {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100vh); }
+}
+
 @keyframes aurora {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }

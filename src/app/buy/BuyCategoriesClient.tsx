@@ -65,7 +65,7 @@ function ComingSoonCard({ cat, i }: { cat: typeof categories[0]; i: number }) {
             <span
               key={tag}
               className="px-2.5 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-wider"
-              style={{ background: "var(--fg-06)", color: "var(--fg-50)" }}
+              style={{ background: "rgba(var(--secondary-rgb),0.08)", color: "var(--secondary)", border: "1px solid rgba(var(--secondary-rgb),0.2)" }}
             >
               {tag}
             </span>
@@ -198,8 +198,9 @@ export default function BuyCategoriesClient() {
                         key={tag}
                         className="px-2.5 py-1 rounded-full text-[10px] font-montserrat uppercase tracking-wider"
                         style={{
-                          background: "var(--fg-06)",
-                          color: "var(--fg-50)",
+                          background: "rgba(var(--secondary-rgb),0.08)",
+                          color: "var(--secondary)",
+                          border: "1px solid rgba(var(--secondary-rgb),0.2)",
                         }}
                       >
                         {tag}

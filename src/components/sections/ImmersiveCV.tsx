@@ -440,7 +440,7 @@ function TimelineEntry({
           <button
             onClick={() => setExpanded(!expanded)}
             className="mt-3 text-xs font-medium uppercase tracking-[2px] transition-colors duration-300 hover:opacity-80"
-            style={{ color: "var(--accent)" }}
+            style={{ color: "var(--secondary)" }}
           >
             {expanded ? "See less" : "See more"}
           </button>

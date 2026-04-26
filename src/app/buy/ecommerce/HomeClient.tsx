@@ -349,10 +349,11 @@ export default function HomeClient() {
               </Link>
               <Link
                 href="/buy/ecommerce/shop"
-                className="px-6 py-3.5 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] border transition-all hover:border-accent"
+                className="px-6 py-3.5 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] border transition-all"
                 style={{
-                  borderColor: "var(--border-card)",
-                  color: "var(--fg-70)",
+                  borderColor: "var(--secondary)",
+                  color: "var(--secondary)",
+                  boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)",
                 }}
               >
                 Browse shop
@@ -681,10 +682,11 @@ export default function HomeClient() {
               </Link>
               <Link
                 href="/buy/ecommerce/ai-tools"
-                className="w-full sm:w-auto px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] border transition-all hover:border-accent"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] border transition-all"
                 style={{
-                  borderColor: "var(--accent)",
-                  color: "var(--accent)",
+                  borderColor: "var(--secondary)",
+                  color: "var(--secondary)",
+                  boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)",
                 }}
               >
                 Meet the AI stylist

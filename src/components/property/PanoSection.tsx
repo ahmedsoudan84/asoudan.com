@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
-import PanoViewer360 from '../PanoViewer360';
+import dynamic from 'next/dynamic';
+const PanoViewer360 = dynamic(() => import('../PanoViewer360'), { ssr: false });
 import { Property } from '@/lib/real-estate/properties';
 
 interface PanoSectionProps {

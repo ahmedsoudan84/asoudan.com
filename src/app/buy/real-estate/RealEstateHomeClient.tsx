@@ -3,7 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
-import LondonSkylineParallax from "@/components/parallax/LondonSkylineParallax";
+import dynamic from "next/dynamic";
+const LondonSkylineParallax = dynamic(() => import("@/components/parallax/LondonSkylineParallax"), { ssr: false });
 
 function getStatusStyle(status: string): { bg: string; color: string; border: string } {
   const isRent = status === "To Let" || status === "Let Agreed";
@@ -26,9 +27,9 @@ function getStatusStyle(status: string): { bg: string; color: string; border: st
   
   if (status === "Under Offer") {
     return {
-      bg: "rgba(251, 191, 36, 0.9)",
-      color: "#1a1a1a",
-      border: "rgba(251, 191, 36, 0.5)",
+      bg: "rgba(var(--secondary-rgb), 0.9)",
+      color: "var(--bg-primary)",
+      border: "rgba(var(--secondary-rgb), 0.5)",
     };
   }
   
@@ -410,8 +411,9 @@ export default function RealEstateHomeClient() {
               href="/buy/real-estate/contact"
               className="px-8 py-3 rounded-xl font-montserrat text-sm font-semibold uppercase tracking-wider transition-all duration-300 border"
               style={{
-                borderColor: "var(--accent)",
-                color: "var(--accent)",
+                borderColor: "var(--secondary)",
+                color: "var(--secondary)",
+                boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)",
               }}
             >
               Contact About Pricing

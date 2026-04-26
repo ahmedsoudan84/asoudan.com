@@ -97,7 +97,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="group w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:text-[#3D9B9B] hover:border-[#3D9B9B]/60 hover:bg-[#3D9B9B]/10 hover:shadow-[0_6px_24px_-8px_rgba(61,155,155,0.55)]"
+                className="group w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:text-[var(--secondary)] hover:border-[var(--secondary)] hover:bg-[rgba(var(--secondary-rgb),0.1)] hover:shadow-[0_6px_24px_-8px_rgba(var(--secondary-rgb),0.5)]"
                 style={{ border: "1px solid var(--border-card)", color: "var(--fg-60)" }}
               >
                 {icon}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
 
@@ -61,8 +61,8 @@ const staggerContainer = {
 };
 
 const slideUp = {
-  hidden: { opacity: 0, y: 50, filter: "blur(8px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
 };
 
 const fadeIn = {
@@ -118,7 +118,6 @@ function YearCounter({ target, delay }: { target: number; delay: number }) {
 
 export default function CinematicEntrance() {
   const [phase, setPhase] = useState<1 | 2 | 3>(1);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Parallax springs — text drifts with cursor, photo moves against it
@@ -126,6 +125,8 @@ export default function CinematicEntrance() {
   const pTy = useMotionValue(0); const sTy = useSpring(pTy, { stiffness: 80, damping: 28 });
   const pPx = useMotionValue(0); const sPx = useSpring(pPx, { stiffness: 55, damping: 22 });
   const pPy = useMotionValue(0); const sPy = useSpring(pPy, { stiffness: 55, damping: 22 });
+  const lightX = useMotionValue(0); const sLx = useSpring(lightX, { stiffness: 50, damping: 30 });
+  const lightY = useMotionValue(0); const sLy = useSpring(lightY, { stiffness: 50, damping: 30 });
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase(2), 2200);
@@ -133,23 +134,23 @@ export default function CinematicEntrance() {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
-  useEffect(() => {
-    const handleMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      setMousePos({
-        x: (e.clientX - rect.left) / rect.width - 0.5,
-        y: (e.clientY - rect.top) / rect.height - 0.5,
-      });
-    };
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
+  const handleMove = useCallback((e: MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width - 0.5;
+    const relY = (e.clientY - rect.top) / rect.height - 0.5;
+    pTx.set(relX * 14);
+    pTy.set(relY * 9);
+    pPx.set(relX * -22);
+    pPy.set(relY * -14);
+    lightX.set(relX * rect.width * 0.2);
+    lightY.set(relY * rect.height * 0.2);
+  }, [pTx, pTy, pPx, pPy, lightX, lightY]);
 
   useEffect(() => {
-    pTx.set(mousePos.x * 14);  pTy.set(mousePos.y *  9);
-    pPx.set(mousePos.x * -22); pPy.set(mousePos.y * -14);
-  }, [mousePos, pTx, pTy, pPx, pPy]);
+    window.addEventListener("mousemove", handleMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, [handleMove]);
 
   const scrollTo = (id: string) => {
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -159,31 +160,39 @@ export default function CinematicEntrance() {
     <div ref={containerRef} className="font-montserrat relative min-h-screen overflow-hidden" style={{ background: "var(--bg-primary)" }}>
       {/* ── Vignette overlay ── */}
       <div className="pointer-events-none absolute inset-0 z-20" style={{
-        background: "radial-gradient(ellipse at center, transparent 30%, rgba(var(--vignette-rgb),0.8) 100%)",
+        background: "var(--bg-primary)",
+        WebkitMaskImage: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.8) 100%)",
+        maskImage: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.8) 100%)",
       }} />
 
       {/* ── Mouse-reactive light ── */}
       <motion.div
         className="pointer-events-none absolute z-10"
-        animate={{
-          left: `${50 + mousePos.x * 20}%`,
-          top: `${50 + mousePos.y * 20}%`,
-        }}
-        transition={{ type: "spring", stiffness: 50, damping: 30 }}
         style={{
-          width: 600, height: 600,
-          transform: "translate(-50%, -50%)",
+          left: "50%",
+          top: "50%",
+          marginLeft: -300,
+          marginTop: -300,
+          x: sLx,
+          y: sLy,
+          width: 600,
+          height: 600,
           background: "radial-gradient(circle, rgba(61,155,155,0.08) 0%, transparent 70%)",
           filter: "blur(60px)",
+          willChange: "transform",
         }}
       />
 
       {/* ── Subtle scan line ── */}
-      <motion.div
+      <div
         className="pointer-events-none absolute left-0 w-full z-30"
-        style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(145,251,255,0.15), transparent)" }}
-        animate={{ top: ["0%", "100%"] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        style={{
+          top: 0,
+          height: 1,
+          background: "linear-gradient(90deg, transparent, rgba(145,251,255,0.15), transparent)",
+          animation: "scanline 8s linear infinite",
+          willChange: "transform",
+        }}
       />
 
       {/* ── Phase 1 & 2: Mysterious Preloader ── */}
@@ -265,7 +274,7 @@ export default function CinematicEntrance() {
             </div>
 
             {/* Photo container — pushed to right side */}
-            <motion.div className="absolute inset-0 flex items-center justify-center lg:justify-end" style={{ x: sPx, y: sPy }}>
+            <motion.div className="absolute inset-0 flex items-center justify-center lg:justify-end" style={{ x: sPx, y: sPy, willChange: "transform" }}>
               <div className="relative w-[100vw] h-[90vh] max-w-[550px] lg:w-[50vw] lg:max-w-[700px] lg:h-[100vh] lg:mr-[5%] translate-y-[5%]">
                 <Image
                   src="/images/ahmed-cutout.png"
@@ -277,47 +286,59 @@ export default function CinematicEntrance() {
               </div>
             </motion.div>
 
-            {/* Blending overlays */}
+            {/* Blending overlays — solid bg-primary + mask for smooth theme transitions */}
             {/* Radial vignette — soft circular fade around photo */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: "radial-gradient(ellipse 60% 55% at 55% 38%, transparent 35%, rgba(var(--vignette-rgb),0.5) 60%, var(--bg-primary) 85%)",
+                background: "var(--bg-primary)",
+                WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 55% 38%, transparent 35%, rgba(0,0,0,0.5) 60%, black 85%)",
+                maskImage: "radial-gradient(ellipse 60% 55% at 55% 38%, transparent 35%, rgba(0,0,0,0.5) 60%, black 85%)",
               }}
             />
             {/* Bottom fade — dissolve shoulders/lower body */}
             <div
               className="absolute bottom-0 left-0 right-0 h-[50%] pointer-events-none"
               style={{
-                background: "linear-gradient(to top, var(--bg-primary) 0%, var(--bg-primary) 20%, rgba(var(--vignette-rgb),0.95) 40%, rgba(var(--vignette-rgb),0.6) 60%, transparent 100%)",
+                background: "var(--bg-primary)",
+                WebkitMaskImage: "linear-gradient(to top, black 0%, black 20%, rgba(0,0,0,0.95) 40%, rgba(0,0,0,0.6) 60%, transparent 100%)",
+                maskImage: "linear-gradient(to top, black 0%, black 20%, rgba(0,0,0,0.95) 40%, rgba(0,0,0,0.6) 60%, transparent 100%)",
               }}
             />
             {/* Left fade — text readability on mobile */}
             <div
               className="absolute inset-0 pointer-events-none lg:hidden"
               style={{
-                background: "linear-gradient(to right, rgba(var(--vignette-rgb),0.85) 0%, rgba(var(--vignette-rgb),0.5) 30%, transparent 60%)",
+                background: "var(--bg-primary)",
+                WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 30%, transparent 60%)",
+                maskImage: "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 30%, transparent 60%)",
               }}
             />
             {/* Left fade — desktop: solid on text area, then gentle fade */}
             <div
               className="absolute inset-0 pointer-events-none hidden lg:block"
               style={{
-                background: "linear-gradient(to right, var(--bg-primary) 0%, rgba(var(--vignette-rgb),0.95) 20%, rgba(var(--vignette-rgb),0.4) 35%, transparent 50%)",
+                background: "var(--bg-primary)",
+                WebkitMaskImage: "linear-gradient(to right, black 0%, rgba(0,0,0,0.95) 20%, rgba(0,0,0,0.4) 35%, transparent 50%)",
+                maskImage: "linear-gradient(to right, black 0%, rgba(0,0,0,0.95) 20%, rgba(0,0,0,0.4) 35%, transparent 50%)",
               }}
             />
             {/* Right edge fade */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: "linear-gradient(to left, var(--bg-primary) 0%, rgba(var(--vignette-rgb),0.7) 8%, transparent 20%)",
+                background: "var(--bg-primary)",
+                WebkitMaskImage: "linear-gradient(to left, black 0%, rgba(0,0,0,0.7) 8%, transparent 20%)",
+                maskImage: "linear-gradient(to left, black 0%, rgba(0,0,0,0.7) 8%, transparent 20%)",
               }}
             />
             {/* Top fade */}
             <div
               className="absolute top-0 left-0 right-0 h-[18%] pointer-events-none"
               style={{
-                background: "linear-gradient(to bottom, var(--bg-primary) 0%, rgba(var(--vignette-rgb),0.6) 50%, transparent 100%)",
+                background: "var(--bg-primary)",
+                WebkitMaskImage: "linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)",
+                maskImage: "linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)",
               }}
             />
           </motion.div>
@@ -329,7 +350,7 @@ export default function CinematicEntrance() {
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
-              style={{ x: sTx, y: sTy }}
+              style={{ x: sTx, y: sTy, willChange: "transform" }}
             >
               {/* Name SVG — mobile */}
               <motion.div className="w-[240px] mb-2 lg:hidden" style={{ color: "var(--fg)" }} variants={slideUp}>
@@ -365,8 +386,8 @@ export default function CinematicEntrance() {
               <motion.div className="mt-10 hidden lg:flex flex-wrap gap-4" variants={slideUp}>
                 <button
                   onClick={() => scrollTo("#projects")}
-                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500 hover:border-[var(--accent)]/60"
-                  style={{ color: "var(--fg-70)", background: "rgba(var(--accent-rgb), 0.04)", borderColor: "rgba(var(--accent-rgb), 0.2)" }}
+                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
+                  style={{ color: "var(--fg-70)", background: "rgba(var(--accent-rgb), 0.04)", borderColor: "rgba(var(--accent-rgb), 0.2)", boxShadow: "0 0 0 1px rgba(var(--accent-rgb),0.1), 0 0 18px rgba(var(--accent-rgb),0.15)" }}
                 >
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/10 to-[var(--accent)]/0"
@@ -378,7 +399,7 @@ export default function CinematicEntrance() {
                 <button
                   onClick={() => scrollTo("#experience")}
                   className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
-                  style={{ borderColor: "var(--fg-05)", color: "var(--fg-30)" }}
+                  style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)" }}
                 >
                   Experience
                 </button>
