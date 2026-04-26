@@ -167,34 +167,40 @@ export default function PanoViewer360({
       {/* Depth gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 pointer-events-none" />
 
-      {/* Interactive markers */}
+      {/* Interactive markers — wrapper handles positioning so the inner
+          button is free to use transform: scale(...) on hover without
+          fighting the centering translate. */}
       {isClient && markers.map((marker) => (
-        <button
+        <div
           key={marker.id}
-          type="button"
-          data-pano-marker
-          className="absolute w-8 h-8 cursor-pointer group/marker rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 transition-transform duration-200 hover:scale-125"
+          className="absolute pointer-events-none"
           style={{
             left: `${50 + 40 * Math.sin((marker.longitude * Math.PI) / 180)}%`,
             top: `${50 - 30 * Math.sin((marker.latitude * Math.PI) / 180)}%`,
             transform: 'translate(-50%, -50%)',
           }}
-          aria-label={marker.tooltip}
-          onClick={(e) => e.stopPropagation()}
-          onMouseDown={(e) => e.stopPropagation()}
-          onTouchStart={(e) => e.stopPropagation()}
         >
-          <span className="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping pointer-events-none" />
-          <span className="absolute inset-0 rounded-full border-2 border-cyan-400/60 group-hover/marker:border-cyan-300 pointer-events-none" />
-          <span className="absolute inset-2 rounded-full bg-cyan-400/80 group-hover/marker:bg-cyan-300 flex items-center justify-center pointer-events-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-white" />
-          </span>
-          {/* Tooltip */}
-          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg opacity-0 group-hover/marker:opacity-100 translate-y-1 group-hover/marker:translate-y-0 transition-all duration-200 whitespace-nowrap pointer-events-none">
-            {marker.tooltip}
-            <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90" />
-          </span>
-        </button>
+          <button
+            type="button"
+            data-pano-marker
+            aria-label={marker.tooltip}
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
+            className="pointer-events-auto relative block w-8 h-8 rounded-full cursor-pointer group/marker focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 transition-transform duration-200 hover:scale-125 active:scale-110"
+          >
+            <span className="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping pointer-events-none" />
+            <span className="absolute inset-0 rounded-full border-2 border-cyan-400/60 group-hover/marker:border-cyan-300 pointer-events-none" />
+            <span className="absolute inset-2 rounded-full bg-cyan-400/80 group-hover/marker:bg-cyan-300 flex items-center justify-center pointer-events-none">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+            </span>
+            {/* Tooltip */}
+            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg opacity-0 group-hover/marker:opacity-100 translate-y-1 group-hover/marker:translate-y-0 transition-all duration-200 whitespace-nowrap pointer-events-none">
+              {marker.tooltip}
+              <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90" />
+            </span>
+          </button>
+        </div>
       ))}
 
       {/* Spinner before hydration */}
