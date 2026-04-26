@@ -36,6 +36,10 @@
   --accent-rgb:   0, 241, 241;
   --accent-hover: #00c8c8;
 
+  --secondary:       #F0A840;
+  --secondary-rgb:   240, 168, 64;
+  --secondary-hover: #d4922a;
+
   --bg-primary-rgb: 10, 12, 20;
 
   --vignette-rgb: 10, 12, 20;
@@ -83,6 +87,10 @@
   --accent-rgb:   0, 139, 139;
   --accent-hover: #006f6f;
 
+  --secondary:       #d4852a;
+  --secondary-rgb:   212, 133, 42;
+  --secondary-hover: #b87220;
+
   --bg-primary-rgb: 248, 248, 248;
 
   --vignette-rgb: 236, 238, 241;
@@ -105,6 +113,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-secondary: var(--secondary);
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);
   --color-fg-primary: var(--fg);
