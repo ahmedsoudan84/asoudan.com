@@ -356,7 +356,7 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
                   <span
                     key={tag}
                     className="text-[10px] uppercase tracking-[1.5px] font-medium"
-                    style={{ color: "var(--fg-50)" }}
+                    style={{ color: "var(--secondary)" }}
                   >
                     {tag}
                   </span>

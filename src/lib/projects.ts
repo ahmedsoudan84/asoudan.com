@@ -2021,7 +2021,7 @@ export const projectsData: ProjectDetail[] = [
     "subtitle": "asoudan.com v1.0",
     "category": "DESIGN SYSTEM",
     "number": "14",
-    "description": "A dark-first design system for asoudan.com — Montserrat across the 100–900 weight range, a single cyan accent, and twelve opacity steps replacing a grey scale. Tokens, type, colour, rhythm, and core components extracted directly from the live codebase and mirrored in Figma.",
+    "description": "A dark-first design system for asoudan.com — Montserrat across the 100–900 weight range, a cyan primary accent, a secondary amber-orange (#F0A840), and twelve opacity steps replacing a grey scale. Tokens, type, colour, rhythm, and core components extracted directly from the live codebase and mirrored in Figma.",
     "tags": [
       "Design System",
       "Design Tokens",
@@ -2052,7 +2052,7 @@ export const projectsData: ProjectDetail[] = [
         "bullets": [
           "Direction: immersive · editorial. Dark (default) + Light themes, cross-faded on theme switch.",
           "Font: Montserrat 100–900 across the full weight range. JetBrains Mono for tokens, metadata, and code.",
-          "Accent: cyan #00F1F1 — the only saturated hue, used to point never to decorate. Dark-theme hover #00c8c8; light-theme accent shifts to #008b8b / #006f6f.",
+          "Primary accent: cyan #00F1F1 — used to point, never to decorate. Dark hover #00c8c8; light shifts to #008b8b / #006f6f. Secondary: amber #F0A840 — for CTAs, project tags, and interactive highlights.",
           "Output: six surface tokens, a twelve-step foreground opacity ladder, an eleven-role type scale, ten-step spacing scale, and a core component library — all extracted from the live globals.css and mirrored in Figma."
         ],
         "bg": "dark"
@@ -2096,7 +2096,7 @@ export const projectsData: ProjectDetail[] = [
         "type": "text",
         "label": "03 — Colour · surfaces",
         "heading": "Six surface tokens — deep blue-black, stepping up to raised",
-        "body": "The dark palette is six named surfaces with exact hex values: **--bg-primary #0a0c14** (canvas), **--bg-secondary #141620** (section fill), **--bg-tertiary #111322** (inset), **--bg-surface #1a1d2e** (card), **--bg-surface-2 #23273a** (input / raised), **--bg-footer #0d0f1a** (footer — stays dark even in light mode). Accent is **#00F1F1** with hover pair **#00c8c8**. Light theme mirrors the structure: #f8f8f8 canvas, #ffffff card, ink #16192A, accent shifts to #008b8b / #006f6f to hold contrast. Selection uses the accent at 30% opacity with white ink. Focus is 2px accent, 2px offset — no exceptions. Scrollbar is a 6px rail with a cyan thumb at 3px radius.",
+        "body": "The dark palette is six named surfaces with exact hex values: **--bg-primary #0a0c14** (canvas), **--bg-secondary #141620** (section fill), **--bg-tertiary #111322** (inset), **--bg-surface #1a1d2e** (card), **--bg-surface-2 #23273a** (input / raised), **--bg-footer #0d0f1a** (footer — stays dark even in light mode). Primary accent is **#00F1F1** with hover pair **#00c8c8**; secondary is **#F0A840** (amber-orange) with hover **#d4922a** — used for CTAs, project tags, and interactive highlights. Light theme mirrors the structure: #f8f8f8 canvas, #ffffff card, ink #16192A, accent shifts to #008b8b / #006f6f, secondary shifts to #d4852a. Selection uses the accent at 30% opacity with white ink. Focus is 2px accent, 2px offset — no exceptions. Scrollbar is a 6px rail with a cyan thumb at 3px radius.",
         "bg": "dark"
       },
       {
@@ -2117,7 +2117,7 @@ export const projectsData: ProjectDetail[] = [
         "type": "text",
         "label": "05 — Components · chrome",
         "heading": "Header, buttons, links — the site's load-bearing pieces",
-        "body": "**Sticky header** — 64px high, --nav-bg with 12px backdrop blur, brand mark left (\"Ahmed Soudan.\" with the full stop rendered in accent and an accent text-shadow glow), tracked uppercase nav right (11px / 600 / 0.14em, colour fg-60, hover → accent), and a CTA arrow-link. **Buttons** — three hierarchies at 44px height, pill radius, 12px / 600 / 0.12em label: **primary** (filled cyan, ink #0a0c14, soft cyan halo that brightens on hover 0.25 → 0.45 opacity), **secondary** (outlined border-card, hover border and text to accent), **ghost** (text-only fg-70, hover to accent). **Links** — inline text (accent with a 35% accent underline), arrow-CTA (tracked uppercase with → that translates 3–4px on hover).",
+        "body": "**Sticky header** — 64px high, --nav-bg with 12px backdrop blur, brand mark left (\"Ahmed Soudan.\" with the full stop rendered in accent and an accent text-shadow glow), tracked uppercase nav right (11px / 600 / 0.14em, colour fg-60, hover → accent), and a CTA arrow-link. **Buttons** — three hierarchies at 44px height, pill radius, 12px / 600 / 0.12em label: **primary** (filled cyan, ink #0a0c14, soft cyan halo that brightens on hover 0.25 → 0.45 opacity), **secondary** (solid amber-orange #F0A840 border and text, hover adds a 20px amber glow — used in hero for the Experience CTA), **ghost** (text-only fg-70, hover to accent). **Links** — inline text (accent with a 35% accent underline), arrow-CTA (tracked uppercase with → that translates 3–4px on hover).",
         "bg": "dark"
       },
       {
