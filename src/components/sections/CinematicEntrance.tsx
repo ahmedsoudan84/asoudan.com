@@ -89,33 +89,6 @@ function NameSVG() {
   );
 }
 
-/* ── Year counter animation ── */
-function YearCounter({ target, delay }: { target: number; delay: number }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const startTimeout = setTimeout(() => {
-      const duration = 1200;
-      const steps = 60;
-      const increment = target / steps;
-      let current = 0;
-      const interval = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          setCount(target);
-          clearInterval(interval);
-        } else {
-          setCount(Math.floor(current));
-        }
-      }, duration / steps);
-      return () => clearInterval(interval);
-    }, delay);
-    return () => clearTimeout(startTimeout);
-  }, [target, delay]);
-
-  return <span>{count}</span>;
-}
-
 export default function CinematicEntrance() {
   const [phase, setPhase] = useState<1 | 2 | 3>(1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -365,7 +338,7 @@ export default function CinematicEntrance() {
               {/* Title label with line + year counter */}
               <motion.div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4 mt-6" variants={slideUp}>
                 <p className="text-[11px] font-semibold uppercase tracking-[5px]" style={{ color: "var(--accent)" }}>
-                  Product Designer <span style={{ color: "var(--fg-30)" }}> · </span> <YearCounter target={20} delay={3800} /> yrs
+                  Product Designer <span style={{ color: "var(--fg-30)" }}> · </span> 20 yrs
                 </p>
                 <div className="w-12 h-px" style={{ background: "var(--accent)" }} />
               </motion.div>
@@ -386,7 +359,7 @@ export default function CinematicEntrance() {
               <motion.div className="mt-10 hidden lg:flex flex-wrap gap-4" variants={slideUp}>
                 <button
                   onClick={() => scrollTo("#projects")}
-                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
+                  className="cta-primary-glow group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px]"
                   style={{ color: "var(--fg-70)", background: "rgba(var(--accent-rgb), 0.04)", borderColor: "rgba(var(--accent-rgb), 0.2)", boxShadow: "0 0 0 1px rgba(var(--accent-rgb),0.1), 0 0 18px rgba(var(--accent-rgb),0.15)" }}
                 >
                   <motion.div
@@ -398,7 +371,7 @@ export default function CinematicEntrance() {
                 </button>
                 <button
                   onClick={() => scrollTo("#experience")}
-                  className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
+                  className="cta-secondary-glow rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px]"
                   style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)" }}
                 >
                   Experience

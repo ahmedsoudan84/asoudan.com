@@ -76,6 +76,8 @@ export default function PanoViewer360({
     autoRafRef.current = requestAnimationFrame(autoLoop);
 
     const onMouseDown = (e: MouseEvent) => {
+      // Don't capture drag if the press started on an interactive marker.
+      if ((e.target as HTMLElement).closest('[data-pano-marker]')) return;
       isDraggingRef.current = true;
       setIsDragging(true);
       startXRef.current = e.clientX - translateRef.current;
@@ -95,6 +97,7 @@ export default function PanoViewer360({
     };
 
     const onTouchStart = (e: TouchEvent) => {
+      if ((e.target as HTMLElement).closest('[data-pano-marker]')) return;
       isDraggingRef.current = true;
       setIsDragging(true);
       startXRef.current = e.touches[0].clientX - translateRef.current;
@@ -166,29 +169,32 @@ export default function PanoViewer360({
 
       {/* Interactive markers */}
       {isClient && markers.map((marker) => (
-        <div
+        <button
           key={marker.id}
-          className="absolute w-8 h-8 cursor-pointer group/marker"
+          type="button"
+          data-pano-marker
+          className="absolute w-8 h-8 cursor-pointer group/marker rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black/40 transition-transform duration-200 hover:scale-125"
           style={{
             left: `${50 + 40 * Math.sin((marker.longitude * Math.PI) / 180)}%`,
             top: `${50 - 30 * Math.sin((marker.latitude * Math.PI) / 180)}%`,
             transform: 'translate(-50%, -50%)',
           }}
-          role="button"
-          tabIndex={0}
           aria-label={marker.tooltip}
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
         >
-          <div className="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping" />
-          <div className="absolute inset-0 rounded-full border-2 border-cyan-400/60" />
-          <div className="absolute inset-2 rounded-full bg-cyan-400/80 flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-full bg-white" />
-          </div>
+          <span className="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping pointer-events-none" />
+          <span className="absolute inset-0 rounded-full border-2 border-cyan-400/60 group-hover/marker:border-cyan-300 pointer-events-none" />
+          <span className="absolute inset-2 rounded-full bg-cyan-400/80 group-hover/marker:bg-cyan-300 flex items-center justify-center pointer-events-none">
+            <span className="w-1.5 h-1.5 rounded-full bg-white" />
+          </span>
           {/* Tooltip */}
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg opacity-0 group-hover/marker:opacity-100 translate-y-1 group-hover/marker:translate-y-0 transition-all duration-200 whitespace-nowrap pointer-events-none">
+          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-black/90 backdrop-blur-sm text-white text-xs font-medium rounded-lg opacity-0 group-hover/marker:opacity-100 translate-y-1 group-hover/marker:translate-y-0 transition-all duration-200 whitespace-nowrap pointer-events-none">
             {marker.tooltip}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90" />
-          </div>
-        </div>
+            <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90" />
+          </span>
+        </button>
       ))}
 
       {/* Spinner before hydration */}

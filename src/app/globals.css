@@ -158,6 +158,30 @@ body {
 ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
+/* ── CTA hover states ──────────────────────────────────────── */
+.cta-primary-glow {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease,
+              box-shadow 0.3s ease, transform 0.3s ease;
+}
+.cta-primary-glow:hover {
+  background: rgba(var(--accent-rgb), 0.10);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.25), 0 0 28px rgba(var(--accent-rgb), 0.4);
+  transform: translateY(-1px);
+}
+.cta-secondary-glow {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease,
+              box-shadow 0.3s ease, transform 0.3s ease;
+}
+.cta-secondary-glow:hover {
+  background: rgba(var(--secondary-rgb), 0.08);
+  border-color: var(--secondary-hover);
+  color: var(--secondary-hover);
+  box-shadow: 0 0 0 1px rgba(var(--secondary-rgb), 0.3), 0 0 28px rgba(var(--secondary-rgb), 0.45);
+  transform: translateY(-1px);
+}
+
 /* ── Case study section backgrounds ────────────────────────── */
 .cs-section-light {
   background: var(--fg-05);
