@@ -204,6 +204,11 @@ body {
 }
 
 /* ── Aurora animation ──────────────────────────────────────────── */
+@keyframes scanline {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100vh); }
+}
+
 @keyframes aurora {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
