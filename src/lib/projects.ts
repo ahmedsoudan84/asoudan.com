@@ -2079,8 +2079,8 @@ export const projectsData: ProjectDetail[] = [
           },
           {
             "value": "04",
-            "label": "Motion scales with scroll",
-            "context": "Transitions use --motion-scale so fast readers get snappy UI, slow readers get soft."
+            "label": "Theme switch as fade",
+            "context": "Every surface inherits a 0.3s background-color/border/color transition, so toggling theme reads as a single coordinated fade."
           }
         ],
         "bg": "dark"
@@ -2110,7 +2110,7 @@ export const projectsData: ProjectDetail[] = [
         "type": "text",
         "label": "04 — Space",
         "heading": "Tailwind's 4px scale, four radii, glow instead of shadow",
-        "body": "Spacing follows the default Tailwind 4px step scale — **4, 8, 12, 16, 24, 32, 48, 64, 96, 128** — so engineering reads directly from the design. Radii quantise to four values: **4 (sm), 8 (md), 12 (lg), 999 (pill)**. Depth is glow, not shadow: **base** 0 8px 24px rgba(0,0,0,0.3); **soft cyan halo** 0 0 24px rgba(0,241,241,0.25); **hover halo** 0 0 40px rgba(0,241,241,0.45). Grid and motion: **max-width 1200px** content container with **32px page gutters** and a **62ch** body measure. **--motion-scale** ranges 1 → 0.35, modulated by scroll velocity so transitions compress when the reader moves fast. Base transition is 0.3s × scale ease; theme switch is a 0.35s ease body cross-fade.",
+        "body": "Spacing follows the default Tailwind 4px step scale — **4, 8, 12, 16, 24, 32, 48, 64, 96, 128** — so engineering reads directly from the design. Radii quantise to four values: **4 (sm), 8 (md), 12 (lg), 999 (pill)**. Depth is glow, not shadow: **base** 0 8px 24px rgba(0,0,0,0.3); **soft cyan halo** 0 0 24px rgba(0,241,241,0.25); **hover halo** 0 0 40px rgba(0,241,241,0.45). Grid and motion: **max-width 1200px** content container with **32px page gutters** and a **62ch** body measure. Base transition is **0.3s ease** on background-color / border-color / color; theme switch is a **0.35s ease** body cross-fade. Continuous animations use framer-motion springs on transform/opacity only, so scroll stays at 60fps.",
         "bg": "light"
       },
       {
@@ -2144,7 +2144,7 @@ export const projectsData: ProjectDetail[] = [
         "type": "text",
         "label": "06 — Applied",
         "heading": "Pages in use — hero entrance + case-study open",
-        "body": "The tokens assemble into the key surfaces the site spends most of its life in. **Hero entrance** — Display 88/100 headline, 20/300 lede at fg-70, and a two-button CTA pair: primary (filled cyan) + secondary (amber outline, `border: var(--secondary)`, permanent amber glow). The background carries a radial accent gradient at 8% opacity. **Project carousel** — hover-reveal shows description, three secondary-coloured tags, and a CTA button using each project's own colour. **Template showcase** — feature chip tags use the secondary token (8% bg, secondary text, 20% border). **Case-study open** — Eyebrow, H2 36/1.05/300, lede at fg-70, body at fg-60, tag strip (default + accent \"Shipped\" pill). **Template sub-sites** — secondary buttons (Book a Table, Browse shop, Contact About Pricing, Meet the AI stylist) all share the secondary glow variant; the Real Estate \"Under Offer\" status badge now maps to --secondary instead of a hardcoded amber. All surfaces inherit --motion-scale.",
+        "body": "The tokens assemble into the key surfaces the site spends most of its life in. **Hero entrance** — Display 88/100 headline, 20/300 lede at fg-70, and a two-button CTA pair: primary (filled cyan) + secondary (amber outline, `border: var(--secondary)`, permanent amber glow). The background carries a radial accent gradient at 8% opacity. **Project carousel** — hover-reveal shows description, three secondary-coloured tags, and a CTA button using each project's own colour. **Template showcase** — feature chip tags use the secondary token (8% bg, secondary text, 20% border). **Case-study open** — Eyebrow, H2 36/1.05/300, lede at fg-70, body at fg-60, tag strip (default + accent \"Shipped\" pill). **Template sub-sites** — secondary buttons (Book a Table, Browse shop, Contact About Pricing, Meet the AI stylist) all share the secondary glow variant; the Real Estate \"Under Offer\" status badge now maps to --secondary instead of a hardcoded amber. All surfaces inherit the same 0.3s theme-fade transition.",
         "bg": "dark"
       },
       {

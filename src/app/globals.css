@@ -136,20 +136,12 @@ body {
 [data-theme="light"] .theme-text { color: var(--fg); }
 [data-theme="light"] .theme-text-muted { color: var(--fg-60); }
 
-/* ── Scroll-velocity motion scale ───────────────────────────────
-   --motion-scale is driven by ScrollSpeedTracker: 1 when the page is
-   at rest, shrinking toward ~0.35 while the user is scrolling fast.
-   This makes CSS transitions snappier for fast readers and softer
-   for slow ones. Defaults to 1 so behaviour is unchanged on SSR /
-   when the tracker has not yet mounted. */
-:root { --motion-scale: 1; }
-
 /* ── Smooth transitions on theme switch ─────────────────────── */
 *,
 *::before,
 *::after {
   transition-property: background-color, border-color, color;
-  transition-duration: calc(0.3s * var(--motion-scale));
+  transition-duration: 0.3s;
   transition-timing-function: ease;
 }
 /* Don't slow down animations */

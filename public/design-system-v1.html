@@ -616,8 +616,8 @@
       </div>
       <div class="card stack-4">
         <div class="label">04</div>
-        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">Motion scales with scroll</h3>
-        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">Transitions use <span class="sp-mono">--motion-scale</span> so fast readers get snappy UI, slow readers get soft.</p>
+        <h3 style="font-weight:600;font-size:18px;margin:0;letter-spacing:-0.005em;">Theme switch as fade</h3>
+        <p class="muted" style="margin:0;font-size:13px;line-height:1.55;">Every surface inherits a <span class="sp-mono">0.3s</span> background-color / border / color transition, so toggling theme reads as a single coordinated fade.</p>
       </div>
     </div>
   </div>
@@ -891,8 +891,7 @@
         <tr><td>max-width</td><td>1200px</td><td>Content container</td></tr>
         <tr><td>page gutter</td><td>32px</td><td>Edge inset</td></tr>
         <tr><td>measure</td><td>62ch</td><td>Body text max-width</td></tr>
-        <tr><td>--motion-scale</td><td>1 → 0.35</td><td>Scroll-velocity-driven transition multiplier</td></tr>
-        <tr><td>transition base</td><td>0.3s × scale, ease</td><td>Background / border / color</td></tr>
+        <tr><td>transition base</td><td>0.3s ease</td><td>Background / border / color on every element</td></tr>
         <tr><td>theme-switch</td><td>0.35s ease</td><td>Body bg/color cross-fade</td></tr>
       </tbody>
     </table>
