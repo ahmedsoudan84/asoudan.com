@@ -2,7 +2,7 @@
 import React, { useRef, useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, useInView, AnimatePresence, animate, useAnimationControls } from "framer-motion";
+import { motion, useInView, AnimatePresence, animate, useAnimationControls, useMotionValue, useSpring } from "framer-motion";
 import { projectsData } from "@/lib/projects";
 
 /* ── Unified project list — case studies + Behance flow together ── */
@@ -143,10 +143,7 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
   const [hovered, setHovered] = useState(false);
   const active = offset === 0;
 
-  // Idle attractor — when the parent increments `wiggleTick` after 15s of
-  // no interaction, the card immediately to the right of the active one
-  // (offset === 1) does a subtle 1px horizontal wiggle to hint "there's
-  // more here." Anything else ignores the tick.
+  // Idle attractor
   const wiggle = useAnimationControls();
   useEffect(() => {
     if (wiggleTick === 0 || offset !== 1) return;
@@ -158,9 +155,7 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
     });
   }, [wiggleTick, offset, wiggle]);
 
-  // On touch/no-hover devices (phones, tablets) there is no hover state,
-  // so project details are always expanded — users browse by scrolling,
-  // not hovering. Click still navigates to the project as normal.
+  // On touch/no-hover devices project details are always expanded.
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
@@ -170,15 +165,18 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  const [mouseRot, setMouseRot] = useState({ x: 0, y: 0 });
+  // Tilt via MotionValue — updated directly in the handler, zero React re-renders.
+  // rotateX only: rotateY is already owned by the coverflow animate, so we avoid
+  // the conflict by tilting on the vertical axis alone.
+  const tiltX = useMotionValue(0);
+  const sTiltX = useSpring(tiltX, { stiffness: 450, damping: 30 });
+
   const handleTilt = (e: React.MouseEvent) => {
     if (isMobile) return;
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    setMouseRot({
-      x: ((e.clientY - r.top)  / r.height * 2 - 1) * -7,
-      y: ((e.clientX - r.left) / r.width  * 2 - 1) *  7,
-    });
+    tiltX.set(((e.clientY - r.top) / r.height * 2 - 1) * -7);
   };
+  const resetTilt = () => { tiltX.set(0); };
 
   // showDetails: always true on touch devices; toggled by hover on desktop
   const showDetails = isMobile || hovered;
@@ -194,7 +192,8 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
 
   const framed = project.coverStyle !== "fill" && project.coverStyle !== undefined;
 
-  // Continuous distance-from-center → 3D coverflow spring physics
+  // Coverflow spring physics — scale/opacity/rotateY based on distance from center.
+  // rotateX tilt is handled via MotionValue in style (no conflict with animate).
   const distance = Math.abs(offset);
   const clampedOffset = Math.max(-3, Math.min(3, offset));
   const rotateY = clampedOffset * -6;
@@ -212,21 +211,18 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
       id={`project-${project.id}`}
       onClick={handleClick}
       onMouseEnter={handleEnter}
-      onMouseLeave={() => { setHovered(false); setMouseRot({ x: 0, y: 0 }); }}
+      onMouseLeave={() => { setHovered(false); resetTilt(); }}
       onMouseMove={handleTilt}
-      animate={{ scale, opacity, rotateY: rotateY + mouseRot.y, rotateX: mouseRot.x, y }}
+      animate={{ scale, opacity, rotateY, y }}
       transition={{
         scale:   { type: "spring", stiffness: 260, damping: 28, mass: 0.7 },
-        rotateY: hovered
-          ? { type: "spring", stiffness: 450, damping: 30 }
-          : { type: "spring", stiffness: 200, damping: 26, mass: 0.7 },
-        rotateX: { type: "spring", stiffness: 450, damping: 30 },
+        rotateY: { type: "spring", stiffness: 200, damping: 26, mass: 0.7 },
         y:       { type: "spring", stiffness: 240, damping: 28 },
         opacity: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
       }}
       style={{
         transformPerspective: 1400,
-        transformStyle: "preserve-3d",
+        rotateX: sTiltX,
         border: `1px solid ${project.color}28`,
         boxShadow: active
           ? `0 32px 72px -24px ${project.color}50, 0 8px 32px -16px rgba(var(--bg-primary-rgb),0.5)`
@@ -434,19 +430,28 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
     };
   }, []);
 
-  // Track which card is centered
+  // Track which card is centered.
+  // Card center positions are cached in a ref so each scroll-rAF tick only
+  // does number comparisons — no offsetLeft / offsetWidth layout reads.
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
+
+    let cardCenters: number[] = [];
+    const measure = () => {
+      cardCenters = Array.from(el.children).map((child) => {
+        const node = child as HTMLElement;
+        return node.offsetLeft + node.offsetWidth / 2;
+      });
+    };
+
     let frame = 0;
     const update = () => {
       frame = 0;
       const center = el.scrollLeft + el.clientWidth / 2;
       let bestIdx = 0;
       let bestDist = Infinity;
-      Array.from(el.children).forEach((child, i) => {
-        const node = child as HTMLElement;
-        const c = node.offsetLeft + node.offsetWidth / 2;
+      cardCenters.forEach((c, i) => {
         const d = Math.abs(c - center);
         if (d < bestDist) { bestDist = d; bestIdx = i; }
       });
@@ -456,10 +461,18 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
       if (frame) return;
       frame = requestAnimationFrame(update);
     };
+
+    const ro = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(() => { measure(); update(); })
+      : null;
+    ro?.observe(el);
+
+    measure();
     update();
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       el.removeEventListener("scroll", onScroll);
+      ro?.disconnect();
       if (frame) cancelAnimationFrame(frame);
     };
   }, [projects.length]);

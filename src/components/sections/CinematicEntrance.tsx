@@ -4,22 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
 
-/* ── Fog particle system ── */
-function FogLayer({ delay, duration, direction }: { delay: number; duration: number; direction: 1 | -1 }) {
-  return (
-    <motion.div
-      className="pointer-events-none absolute inset-0"
-      style={{
-        background: `linear-gradient(${direction === 1 ? '90deg' : '270deg'}, transparent, rgba(61,155,155,0.03) 30%, rgba(61,155,155,0.06) 50%, rgba(61,155,155,0.03) 70%, transparent)`,
-        filter: "blur(40px)",
-        willChange: "transform",
-      }}
-      animate={{ x: [direction * -200, direction * 200] }}
-      transition={{ duration, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay }}
-    />
-  );
-}
-
 /* ── Glitch text effect ── */
 function GlitchText({ text, className }: { text: string; className?: string }) {
   return (
@@ -174,10 +158,6 @@ export default function CinematicEntrance() {
 
   return (
     <div ref={containerRef} className="font-montserrat relative min-h-screen overflow-hidden" style={{ background: "var(--bg-primary)" }}>
-      {/* ── Deep fog layers ── */}
-      <FogLayer delay={0} duration={20} direction={1} />
-      <FogLayer delay={5} duration={25} direction={-1} />
-
       {/* ── Vignette overlay ── */}
       <div className="pointer-events-none absolute inset-0 z-20" style={{
         background: "var(--bg-primary)",
@@ -280,17 +260,16 @@ export default function CinematicEntrance() {
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Glow behind photo */}
+            {/* Glow behind photo — static, no continuous animation */}
             <div className="absolute inset-0 flex items-center justify-end">
-              <motion.div
+              <div
                 className="w-[500px] h-[500px] lg:w-[700px] lg:h-[700px] rounded-full"
                 style={{
-                  background: "radial-gradient(circle, rgba(61,155,155,0.12) 0%, rgba(61,155,155,0.04) 40%, transparent 70%)",
+                  background: "radial-gradient(circle, rgba(61,155,155,0.10) 0%, rgba(61,155,155,0.03) 40%, transparent 70%)",
                   filter: "blur(80px)",
                   marginRight: "5%",
+                  opacity: 0.75,
                 }}
-                animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.9, 0.5] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
 
