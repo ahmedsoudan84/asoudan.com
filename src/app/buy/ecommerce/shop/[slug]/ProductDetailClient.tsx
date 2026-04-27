@@ -5,9 +5,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
 import ProductImage from "@/components/ecommerce/ProductImage";
-import { type Product, CATEGORY_META } from "@/lib/ecommerce/products";
+import { type Product, CATEGORY_META, products } from "@/lib/ecommerce/products";
+import { getAllProducts } from "@/lib/ecommerce/storage";
 import { recommendFrom } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
+import { useEffect } from "react";
 
 /* ── Reviews section component ──────────────────────────── */
 
@@ -304,14 +306,43 @@ function getReviews(product: Product) {
   );
 }
 
-export default function ProductDetailClient({ product }: { product: Product }) {
+export default function ProductDetailClient({ slug }: { slug: string }) {
+  const [product, setProduct] = useState<Product | null>(null);
+  const [related, setRelated] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const addItem = useCart((s) => s.addItem);
 
+  useEffect(() => {
+    const all = getAllProducts();
+    const p = all.find((x) => x.slug === slug);
+    if (p) {
+      setProduct(p);
+      setRelated(recommendFrom(p, 4));
+    }
+    setLoading(false);
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-primary)" }}>
+        <div className="w-12 h-12 rounded-full border-2 border-t-accent animate-spin" style={{ borderColor: "var(--border-subtle)", borderTopColor: "var(--accent)" }} />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: "var(--bg-primary)" }}>
+        <h1 className="font-montserrat text-4xl font-black mb-4">Product not found</h1>
+        <Link href="/buy/ecommerce/shop" className="text-accent underline font-montserrat">Return to shop</Link>
+      </div>
+    );
+  }
+
   const gallery = product.gallery.length > 0 ? product.gallery : [product.image];
-  const related = recommendFrom(product, 4);
 
   const handleAdd = () => {
     addItem(product, quantity);

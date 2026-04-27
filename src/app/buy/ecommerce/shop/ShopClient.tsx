@@ -7,10 +7,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
 import ProductImage from "@/components/ecommerce/ProductImage";
 import {
-  products,
   CATEGORY_META,
   type ProductCategory,
 } from "@/lib/ecommerce/products";
+import { getAllProducts } from "@/lib/ecommerce/storage";
 import { searchProducts, type SearchFilters } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
 
@@ -68,9 +68,13 @@ export default function ShopClient() {
   const [vibe, setVibe] = useState<string | null>(null);
   const [quick, setQuick] = useState<Set<QuickFilter>>(new Set());
 
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    setQuery(initialQuery);
-  }, [initialQuery]);
+    setAllProducts(getAllProducts());
+    setLoading(false);
+  }, []);
 
   const addItem = useCart((s) => s.addItem);
 
@@ -92,8 +96,8 @@ export default function ShopClient() {
       newOnly: quick.has("new"),
       onSale: quick.has("sale"),
       bestsellersOnly: quick.has("bestsellers"),
-    });
-  }, [query, category, priceIndex, sort, vibe, quick]);
+    }, allProducts);
+  }, [query, category, priceIndex, sort, vibe, quick, allProducts]);
 
   const hasActiveFilters =
     query.trim().length > 0 ||

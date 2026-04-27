@@ -5,9 +5,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
 import ProductImage from "@/components/ecommerce/ProductImage";
-import { products, CATEGORY_META, type ProductCategory } from "@/lib/ecommerce/products";
+import { CATEGORY_META, type ProductCategory, type Product } from "@/lib/ecommerce/products";
+import { getAllProducts } from "@/lib/ecommerce/storage";
 import { OCCASION_BUNDLES, getBundleProducts } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
+import { useEffect } from "react";
 
 const HERO_CHIPS = [
   { label: "Gift under £150", query: "gift under 150" },
@@ -49,12 +51,19 @@ const STATS = [
 
 export default function HomeClient() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const addItem = useCart((s) => s.addItem);
 
-  const bestsellers = products.filter((p) => p.isBestseller).slice(0, 4);
-  const newArrivals = products.filter((p) => p.isNew);
+  useEffect(() => {
+    setAllProducts(getAllProducts());
+  }, []);
+
+  const bestsellers = allProducts.filter((p) => p.isBestseller).slice(0, 4);
+  const newArrivals = allProducts.filter((p) => p.isNew);
   const featuredBundle = OCCASION_BUNDLES[0];
-  const bundleProducts = getBundleProducts(featuredBundle);
+  const bundleProducts = featuredBundle.productSlugs
+    .map((slug) => allProducts.find((p) => p.slug === slug))
+    .filter((p): p is Product => Boolean(p));
 
   return (
     <div style={{ background: "var(--bg-primary)" }}>

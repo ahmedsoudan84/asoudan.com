@@ -30,10 +30,39 @@ export default function CartClient() {
     }
   };
 
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    city: "",
+    postcode: "",
+    country: "United Kingdom",
+  });
+
   const goNext = () => {
     if (step === "cart") setStep("details");
-    else if (step === "details") setStep("payment");
+    else if (step === "details") {
+      if (!formData.email || !formData.firstName || !formData.address) {
+        alert("Please fill in all required details.");
+        return;
+      }
+      setStep("payment");
+    }
     else if (step === "payment") {
+      // Save order to storage
+      const { addOrder, type Order } from "@/lib/ecommerce/storage";
+      const order: Order = {
+        id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+        customer: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        items: items.map(i => ({ name: i.name, price: i.price, quantity: i.quantity })),
+        total: total - discount,
+        status: "Pending",
+        date: new Date().toISOString().split('T')[0]
+      };
+      addOrder(order);
+
       setStep("confirmed");
       setTimeout(() => clear(), 800);
     }
@@ -43,7 +72,7 @@ export default function CartClient() {
 
   return (
     <div style={{ background: "var(--bg-primary)" }}>
-      {/* Header */}
+      {/* ... (Header stays same) ... */}
       <section className="pt-14 pb-8 px-6 lg:px-10">
         <div className="max-w-[1200px] mx-auto">
           <Link
@@ -258,22 +287,51 @@ export default function CartClient() {
                         Where should we send it?
                       </h2>
                       <div className="grid md:grid-cols-2 gap-4">
-                        <FormField label="First name" placeholder="Alex" />
-                        <FormField label="Last name" placeholder="Stone" />
+                        <FormField 
+                          label="First name" 
+                          placeholder="Alex" 
+                          value={formData.firstName}
+                          onChange={v => setFormData({...formData, firstName: v})}
+                        />
+                        <FormField 
+                          label="Last name" 
+                          placeholder="Stone" 
+                          value={formData.lastName}
+                          onChange={v => setFormData({...formData, lastName: v})}
+                        />
                       </div>
                       <FormField
                         label="Email"
                         type="email"
                         placeholder="you@example.com"
+                        value={formData.email}
+                        onChange={v => setFormData({...formData, email: v})}
                       />
                       <FormField
                         label="Street address"
                         placeholder="42 Canonbury Square"
+                        value={formData.address}
+                        onChange={v => setFormData({...formData, address: v})}
                       />
                       <div className="grid md:grid-cols-3 gap-4">
-                        <FormField label="City" placeholder="London" />
-                        <FormField label="Postcode" placeholder="N1 2AN" />
-                        <FormField label="Country" placeholder="United Kingdom" />
+                        <FormField 
+                          label="City" 
+                          placeholder="London" 
+                          value={formData.city}
+                          onChange={v => setFormData({...formData, city: v})}
+                        />
+                        <FormField 
+                          label="Postcode" 
+                          placeholder="N1 2AN" 
+                          value={formData.postcode}
+                          onChange={v => setFormData({...formData, postcode: v})}
+                        />
+                        <FormField 
+                          label="Country" 
+                          placeholder="United Kingdom" 
+                          value={formData.country}
+                          onChange={v => setFormData({...formData, country: v})}
+                        />
                       </div>
                     </motion.div>
                   )}
@@ -493,10 +551,14 @@ function Row({
 function FormField({
   label,
   placeholder,
+  value,
+  onChange,
   type = "text",
 }: {
   label: string;
   placeholder?: string;
+  value?: string;
+  onChange?: (val: string) => void;
   type?: string;
 }) {
   return (
@@ -510,6 +572,8 @@ function FormField({
       <input
         type={type}
         placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange?.(e.target.value)}
         className="mt-2 w-full px-4 py-3 rounded-xl border outline-none font-montserrat text-sm transition-colors focus:border-accent"
         style={{
           background: "var(--bg-primary)",
