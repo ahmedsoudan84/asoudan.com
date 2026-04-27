@@ -677,7 +677,7 @@ export const properties: Property[] = [
     ],
     images: [
       "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600573472591-ee6981cf81f0?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop",
       "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&h=600&fit=crop",
     ],
     nearbySchools: [
