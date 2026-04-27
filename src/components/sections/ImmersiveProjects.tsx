@@ -368,7 +368,7 @@ function CarouselCard({ project, offset, wiggleTick }: { project: Project; offse
                 transition={{ delay: 0.1, duration: 0.3 }}
                 className="inline-flex items-center gap-2 mt-4 rounded-full px-4 py-2
                            text-[10px] font-semibold uppercase tracking-[2.5px]
-                           transition-all duration-300 hover:gap-3"
+                           transition-all duration-150 hover:gap-3 hover:-translate-y-0.5 hover:brightness-110 hover:scale-[1.04]"
                 style={{
                   color: "var(--fg)",
                   background: `${project.color}28`,
@@ -640,7 +640,7 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
             aria-label="Previous project"
             onClick={() => scrollToIdx(activeIdx - 1)}
             disabled={activeIdx === 0}
-            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-105"
+            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 hover:border-[rgba(var(--accent-rgb),0.65)] hover:text-[var(--accent)] hover:shadow-[0_0_18px_rgba(var(--accent-rgb),0.3)]"
             style={{ border: "1px solid var(--border-card)", color: "var(--fg)" }}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -652,7 +652,7 @@ function ProjectsCarousel({ projects }: { projects: Project[] }) {
             aria-label="Next project"
             onClick={() => scrollToIdx(activeIdx + 1)}
             disabled={activeIdx === projects.length - 1}
-            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-105"
+            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 hover:shadow-[0_0_28px_rgba(var(--accent-rgb),0.55)]"
             style={{ border: "1px solid var(--accent)", color: "var(--accent)", background: "rgba(var(--accent-rgb),0.08)" }}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -747,7 +747,7 @@ return (
                   key={cat}
                   type="button"
                   onClick={() => setActiveCat(cat)}
-                  className="relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-colors"
+                  className={`relative rounded-full px-4 py-1.5 text-[11px] uppercase tracking-[2px] transition-all duration-150${!active ? " hover:shadow-[inset_0_0_0_1px_rgba(var(--accent-rgb),0.55),0_0_14px_rgba(var(--accent-rgb),0.18)] hover:brightness-125" : " hover:brightness-110"}`}
                   style={{
                     color: active ? "var(--bg-primary)" : "var(--fg-60)",
                     background: active ? "var(--accent)" : "transparent",

@@ -365,7 +365,7 @@ export default function CinematicEntrance() {
               {/* Title label with line + year counter */}
               <motion.div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4 mt-6" variants={slideUp}>
                 <p className="text-[11px] font-semibold uppercase tracking-[5px]" style={{ color: "var(--accent)" }}>
-                  Product Designer <span style={{ color: "var(--fg-30)" }}> · </span> <YearCounter target={20} delay={3800} /> yrs
+                  Product Designer <span style={{ color: "var(--fg-30)" }}> · </span> <YearCounter target={22} delay={3800} /> yrs
                 </p>
                 <div className="w-12 h-px" style={{ background: "var(--accent)" }} />
               </motion.div>
@@ -377,7 +377,7 @@ export default function CinematicEntrance() {
               <motion.div className="mt-8 lg:mt-8 max-w-md relative" variants={fadeIn}>
                 <div className="border-l-2 pl-5" style={{ borderColor: "var(--accent)", opacity: 0.5 }}>
                   <p className="text-[15px] leading-[1.65]" style={{ color: "var(--fg-60)" }}>
-                    <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>20 years</span> crafting digital experiences — from architecture to product design. <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>300+ projects</span> delivered across the globe. Currently shaping the future of education at <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>Oxford University Press</span>.
+                    <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>22 years</span> crafting digital experiences — from architecture to product design. <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>300+ projects</span> delivered across the globe. Currently shaping the future of education at <span style={{ color: "var(--accent)", textShadow: "0 0 20px rgba(var(--accent-rgb), 0.35)" }}>Oxford University Press</span>.
                   </p>
                 </div>
               </motion.div>
@@ -386,7 +386,7 @@ export default function CinematicEntrance() {
               <motion.div className="mt-10 hidden lg:flex flex-wrap gap-4" variants={slideUp}>
                 <button
                   onClick={() => scrollTo("#projects")}
-                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500 hover:border-[var(--accent)]/60"
+                  className="group relative overflow-hidden rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-150 hover:border-[var(--accent)]/70 hover:scale-[1.04] hover:shadow-[0_0_32px_rgba(var(--accent-rgb),0.38)] hover:text-[var(--fg)]"
                   style={{ color: "var(--fg-70)", background: "rgba(var(--accent-rgb), 0.04)", borderColor: "rgba(var(--accent-rgb), 0.2)" }}
                 >
                   <motion.div
@@ -398,7 +398,7 @@ export default function CinematicEntrance() {
                 </button>
                 <button
                   onClick={() => scrollTo("#experience")}
-                  className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-500"
+                  className="rounded-full border px-8 py-3.5 text-[12px] font-medium uppercase tracking-[3px] transition-all duration-150 hover:border-[rgba(var(--accent-rgb),0.5)] hover:text-[var(--fg-70)] hover:bg-[rgba(var(--accent-rgb),0.08)] hover:scale-[1.04]"
                   style={{ borderColor: "var(--fg-05)", color: "var(--fg-30)" }}
                 >
                   Experience

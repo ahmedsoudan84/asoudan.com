@@ -767,7 +767,7 @@ export default function ImmersiveCV() {
             href="https://adplist.org/mentors/ahmed-soudan"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 mt-8 px-6 py-3 rounded-full text-[12px] font-semibold uppercase tracking-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/60 hover:shadow-[0_8px_30px_-10px_rgba(var(--accent-rgb),0.4)]"
+            className="inline-flex items-center gap-2.5 mt-8 px-6 py-3 rounded-full text-[12px] font-semibold uppercase tracking-[2px] transition-all duration-150 hover:-translate-y-1 hover:scale-[1.04] hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/60 hover:shadow-[0_8px_32px_-8px_rgba(var(--accent-rgb),0.55)]"
             style={{
               color: "var(--accent)",
               border: "1px solid rgba(var(--accent-rgb), 0.35)",

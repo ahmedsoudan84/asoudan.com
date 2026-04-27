@@ -339,19 +339,73 @@
     font-size: 12px; font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase;
     border: 1px solid transparent; cursor: pointer;
-    transition: all .2s ease;
+    transition: all .15s ease;
+    transform-origin: center;
   }
+  /* Primary — filled cyan, strong glow. Lift + brighter halo on hover. */
   .btn-primary {
     background: var(--accent); color: #0a0c14;
     box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.25);
   }
-  .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 0 32px rgba(var(--accent-rgb), 0.45); }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 44px rgba(var(--accent-rgb), 0.60);
+    transform: translateY(-2px) scale(1.03);
+  }
+  /* Secondary — outline, goes accent on hover with lift + soft glow. */
   .btn-secondary { background: transparent; color: var(--fg); border-color: var(--border-card); }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.22);
+  }
+  /* Ghost — text only. Accent + subtle lift on hover. */
   .btn-ghost { background: transparent; color: var(--fg-70); }
-  .btn-ghost:hover { color: var(--accent); }
-  .btn .arrow { transition: transform .2s ease; }
-  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-ghost:hover { color: var(--accent); transform: translateY(-1px); }
+  /* Accent outline — accent border + tinted bg. Intensifies on hover. */
+  .btn-accent-outline {
+    background: rgba(var(--accent-rgb), 0.10);
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.35);
+  }
+  .btn-accent-outline:hover {
+    background: rgba(var(--accent-rgb), 0.20);
+    border-color: rgba(var(--accent-rgb), 0.65);
+    box-shadow: 0 8px 32px -8px rgba(var(--accent-rgb), 0.55);
+    transform: translateY(-2px) scale(1.03);
+  }
+  /* Danger — error-state destructive action. */
+  .btn-danger {
+    background: transparent;
+    color: rgba(255, 80, 80, 0.80);
+    border-color: rgba(255, 80, 80, 0.28);
+  }
+  .btn-danger:hover {
+    background: rgba(255, 80, 80, 0.12);
+    color: rgb(255, 80, 80);
+    border-color: rgba(255, 80, 80, 0.60);
+    box-shadow: 0 0 22px rgba(255, 80, 80, 0.30);
+    transform: translateY(-2px) scale(1.03);
+  }
+  /* Icon — 44×44 circle, icon only. Scale + glow on hover. */
+  .btn-icon {
+    width: 44px; height: 44px; padding: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--fg-60);
+    border-color: var(--border-card);
+    justify-content: center;
+  }
+  .btn-icon:hover {
+    color: var(--accent);
+    border-color: rgba(var(--accent-rgb), 0.65);
+    background: rgba(var(--accent-rgb), 0.10);
+    transform: scale(1.12) translateY(-1px);
+    box-shadow: 0 0 22px rgba(var(--accent-rgb), 0.32);
+  }
+  .btn .arrow { transition: transform .15s ease; }
+  .btn:hover .arrow { transform: translateX(4px); }
 
   /* Link */
   .link-inline {
@@ -629,7 +683,7 @@
       </div>
       <div class="specimen">
         <div class="tag">H1<b>Montserrat 64 / 200</b></div>
-        <div class="sp-h1">Twenty years of work.</div>
+        <div class="sp-h1">Twenty-two years of work.</div>
       </div>
       <div class="specimen">
         <div class="tag">H2<b>Montserrat 44 / 300</b></div>
@@ -880,13 +934,75 @@
 
     <!-- Buttons -->
     <h3 style="font-weight:500;font-size:22px;margin:24px 0 16px;letter-spacing:-0.01em;">Buttons</h3>
-    <div class="card">
+
+    <!-- Primary -->
+    <div class="card stack-4" style="margin-bottom:16px">
+      <div class="label">Primary</div>
       <div class="row-gap-4">
         <button class="btn btn-primary">View case study <span class="arrow">→</span></button>
-        <button class="btn btn-secondary">Get in touch</button>
-        <button class="btn btn-ghost">Skip</button>
+        <button class="btn btn-primary">Send message <span class="arrow">→</span></button>
       </div>
-      <p class="hint" style="margin-top:20px">44px height · pill radius · 12px / 600 / 0.12em tracked label. Primary carries a soft cyan halo that brightens on hover.</p>
+      <p class="hint">Filled cyan. Hover: <span class="sp-mono">translateY(-2px) scale(1.03)</span> + halo brightens to <span class="sp-mono">rgba(accent, 0.60)</span>. Transition: <span class="sp-mono">150ms ease</span>.</p>
+    </div>
+
+    <!-- Secondary -->
+    <div class="card stack-4" style="margin-bottom:16px">
+      <div class="label">Secondary</div>
+      <div class="row-gap-4">
+        <button class="btn btn-secondary">Get in touch</button>
+        <button class="btn btn-secondary">Experience <span class="arrow">→</span></button>
+      </div>
+      <p class="hint">Border + transparent. Hover: accent border, accent text, soft glow + lift.</p>
+    </div>
+
+    <!-- Ghost -->
+    <div class="card stack-4" style="margin-bottom:16px">
+      <div class="label">Ghost</div>
+      <div class="row-gap-4">
+        <button class="btn btn-ghost">Skip</button>
+        <button class="btn btn-ghost">Cancel</button>
+      </div>
+      <p class="hint">Text only. Hover: accent colour + 1px lift. Used for low-emphasis actions in forms and modals.</p>
+    </div>
+
+    <!-- Accent Outline -->
+    <div class="card stack-4" style="margin-bottom:16px">
+      <div class="label">Accent Outline</div>
+      <div class="row-gap-4">
+        <button class="btn btn-accent-outline">Book a session <span class="arrow">→</span></button>
+        <button class="btn btn-accent-outline">Projects</button>
+      </div>
+      <p class="hint">Accent border + 10% accent fill. Hover: 20% fill, border <span class="sp-mono">rgba(accent, 0.65)</span>, strong glow + lift. Used for primary CTAs on dark sections (hero, mentoring).</p>
+    </div>
+
+    <!-- Danger -->
+    <div class="card stack-4" style="margin-bottom:16px">
+      <div class="label">Danger</div>
+      <div class="row-gap-4">
+        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger">Remove account</button>
+      </div>
+      <p class="hint">Red outline. Hover: 12% red fill + red glow + lift. Reserved for destructive, irreversible actions only.</p>
+    </div>
+
+    <!-- Icon -->
+    <div class="card stack-4">
+      <div class="label">Icon</div>
+      <div class="row-gap-4">
+        <button class="btn btn-icon" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8H3M7 13L2 8l5-5"/></svg>
+        </button>
+        <button class="btn btn-icon" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 3l5 5-5 5"/></svg>
+        </button>
+        <button class="btn btn-icon" aria-label="Share">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg>
+        </button>
+        <button class="btn btn-icon" aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg>
+        </button>
+      </div>
+      <p class="hint">44×44 circle · icon only. Hover: scale(1.12) + accent ring + glow. Used for carousel nav, social links, toolbars.</p>
     </div>
 
     <!-- Links -->
@@ -998,7 +1114,7 @@
         <div class="mock-body">
           <div class="eyebrow">Hero</div>
           <h2 style="font-weight:200;font-size:56px;line-height:1;letter-spacing:-0.03em;margin:24px 0 16px">Ahmed Soudan<br/><em style="color:var(--accent);font-weight:300;font-style:normal">designs products</em><br/>that move.</h2>
-          <p style="font-weight:300;font-size:16px;color:var(--fg-70);max-width:48ch;margin:0 0 32px">Digital Product Designer — 20 years, 300+ projects, specialising in UX research and EdTech.</p>
+          <p style="font-weight:300;font-size:16px;color:var(--fg-70);max-width:48ch;margin:0 0 32px">Digital Product Designer — 22 years, 300+ projects, specialising in UX research and EdTech.</p>
           <div style="display:flex;gap:16px"><button class="btn btn-primary">View work <span class="arrow">→</span></button><button class="btn btn-secondary">Book a call</button></div>
         </div>
       </div>
@@ -1022,7 +1138,7 @@
   <div class="row">
     <div>
       <div class="brand-big">Ahmed Soudan<em>.</em></div>
-      <p style="color:rgba(255,255,255,0.6);max-width:40ch;margin:16px 0 0;font-size:14px;line-height:1.55;">Digital Product Designer. 20 years of work, shipped from the UK.</p>
+      <p style="color:rgba(255,255,255,0.6);max-width:40ch;margin:16px 0 0;font-size:14px;line-height:1.55;">Digital Product Designer. 22 years of work, shipped from the UK.</p>
     </div>
     <div>
       <h4>Site</h4>
