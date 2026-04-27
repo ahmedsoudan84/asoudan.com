@@ -350,7 +350,7 @@
     transition: all .2s ease;
   }
   .btn-primary {
-    background: var(--accent); color: #0a0c14;
+    background: var(--accent); color: var(--bg-primary);
     box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.25);
   }
   .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 0 32px rgba(var(--accent-rgb), 0.45); }
@@ -827,7 +827,7 @@
     <div class="grid g-3">
       <div class="card">
         <div class="label">Selection</div>
-        <p style="margin:10px 0 0;font-size:14px;"><span style="background:rgba(0,241,241,0.3);color:#fff;padding:2px 6px;">Selected text</span> uses the accent at 30% opacity with white ink.</p>
+        <p style="margin:10px 0 0;font-size:14px;"><span style="background:var(--selection-bg);color:var(--selection-fg);padding:2px 6px;">Selected text</span> uses the theme-specific accent opacity and ink color.</p>
       </div>
       <div class="card">
         <div class="label">Focus ring</div>
@@ -878,8 +878,8 @@
         <h3 style="font-weight:500;font-size:22px;margin:0 0 16px;letter-spacing:-0.01em;">Glow (elevation)</h3>
         <div class="grid g-3">
           <div class="sample" style="border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.3)"><span>shadow · base</span></div>
-          <div class="sample" style="border-radius:12px;box-shadow:0 0 24px rgba(0,241,241,0.25)"><span>glow · soft</span></div>
-          <div class="sample" style="border-radius:12px;box-shadow:0 0 40px rgba(0,241,241,0.45)"><span>glow · hover</span></div>
+          <div class="sample" style="border-radius:12px;box-shadow:0 0 24px rgba(var(--accent-rgb),0.25)"><span>glow · soft</span></div>
+          <div class="sample" style="border-radius:12px;box-shadow:0 0 40px rgba(var(--accent-rgb),0.45)"><span>glow · hover</span></div>
         </div>
       </div>
     </div>
@@ -915,7 +915,7 @@
         <button class="btn btn-secondary">Experience</button>
         <button class="btn btn-ghost">Skip</button>
       </div>
-      <p class="hint" style="margin-top:20px">44px height · pill radius · 12px / 600 / 0.12em tracked label. <b>Primary</b>: filled cyan, ink #0a0c14, cyan glow. <b>Secondary</b>: amber border + text, permanent double-ring glow (0 0 0 1px / 0 0 18px). <b>Ghost</b>: text-only fg-70, hover to accent.</p>
+      <p class="hint" style="margin-top:20px">44px height · pill radius · 12px / 600 / 0.12em tracked label. <b>Primary</b>: filled accent, ink color, accent glow. <b>Secondary</b>: amber border + text, permanent double-ring glow (0 0 0 1px / 0 0 18px). <b>Ghost</b>: text-only fg-70, hover to accent.</p>
     </div>
 
     <!-- Links -->
