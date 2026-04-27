@@ -33,6 +33,7 @@ export interface Property {
   localAvgPrice: number;
   lat: number;
   lng: number;
+  isCustom?: boolean;
 }
 
 export const properties: Property[] = [

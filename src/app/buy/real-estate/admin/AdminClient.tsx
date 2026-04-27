@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { properties } from "@/lib/real-estate/properties";
+import { motion, AnimatePresence } from "framer-motion";
+import { getAllProperties, addProperty, deleteCustomProperty, getBlockedSlots, saveBlockedSlots, BlockedSlot } from "@/lib/real-estate/storage";
+import { type Property } from "@/lib/real-estate/properties";
 
 const ADMIN_PASSWORD = "aiestate2024";
 
@@ -47,6 +48,12 @@ function getStatusStyle(status: string): { bg: string; color: string; border: st
   };
 }
 
+const TIME_SLOTS = [
+  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
+];
+
 interface Lead {
   name: string;
   email: string;
@@ -72,7 +79,7 @@ const DEFAULT_SETTINGS: AgencySettings = {
   primaryColour: "#00F1F1",
 };
 
-type Tab = "dashboard" | "listings" | "leads" | "settings";
+type Tab = "dashboard" | "listings" | "availability" | "leads" | "settings";
 
 export default function AdminClient() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -82,6 +89,32 @@ export default function AdminClient() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [settings, setSettings] = useState<AgencySettings>(DEFAULT_SETTINGS);
   const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
+  const [allProperties, setAllProperties] = useState<Property[]>([]);
+  const [blockedSlots, setBlockedSlots] = useState<BlockedSlot[]>([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedDateForBlocking, setSelectedDateForBlocking] = useState<string | null>(null);
+
+  // Form State
+  const [newProp, setNewProp] = useState<Partial<Property>>({
+    title: "",
+    address: "",
+    price: 500000,
+    type: "Flat",
+    status: "For Sale",
+    beds: 2,
+    baths: 2,
+    sqft: 1000,
+    description: "",
+    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop"],
+    lat: 51.5074,
+    lng: -0.1278,
+    isCustom: true,
+  });
+
+  useEffect(() => {
+    setAllProperties(getAllProperties());
+    setBlockedSlots(getBlockedSlots());
+  }, []);
 
   useEffect(() => {
     if (!authenticated) return;
@@ -118,6 +151,59 @@ export default function AdminClient() {
 
   const saveSettings = () => {
     localStorage.setItem("ai-estate-settings", JSON.stringify(settings));
+  };
+
+  const handleAddProperty = (e: React.FormEvent) => {
+    e.preventDefault();
+    const slug = (newProp.title || "property").toLowerCase().replace(/ /g, "-");
+    const property: Property = {
+      slug,
+      title: newProp.title || "",
+      address: newProp.address || "",
+      price: newProp.price || 0,
+      priceLabel: `£${(newProp.price || 0).toLocaleString()}`,
+      type: newProp.type as any,
+      status: newProp.status as any,
+      beds: newProp.beds || 0,
+      baths: newProp.baths || 0,
+      sqft: newProp.sqft || 0,
+      description: newProp.description || "",
+      images: newProp.images || [],
+      features: ["Newly Added", "AI Integrated", "Smart Home"],
+      nearbySchools: [{ name: "Local Academy", distance: "0.2 miles", rating: "Outstanding", type: "Primary" }],
+      nearbyShops: [{ name: "High Street", distance: "0.4 miles", type: "Retail" }],
+      nearbyAmenities: [{ name: "Central Park", distance: "0.5 miles", type: "Park" }],
+      borough: "London",
+      station: "Central Station",
+      stationDistance: "0.3 miles",
+      localAvgPrice: newProp.price || 500000,
+      lat: 51.5074,
+      lng: -0.1278,
+      listingMode: (newProp.status === "To Let" || newProp.status === "Let Agreed") ? "rent" : "sale",
+      isCustom: true,
+    };
+    addProperty(property);
+    setAllProperties(getAllProperties());
+    setShowAddForm(false);
+  };
+
+  const handleDelete = (slug: string) => {
+    if (confirm("Are you sure you want to delete this custom listing?")) {
+      deleteCustomProperty(slug);
+      setAllProperties(getAllProperties());
+    }
+  };
+
+  const toggleSlot = (date: string, time?: string) => {
+    let newSlots: BlockedSlot[];
+    const exists = blockedSlots.find(s => s.date === date && s.time === time);
+    if (exists) {
+      newSlots = blockedSlots.filter(s => !(s.date === date && s.time === time));
+    } else {
+      newSlots = [...blockedSlots, { date, time }];
+    }
+    setBlockedSlots(newSlots);
+    saveBlockedSlots(newSlots);
   };
 
   const exportLeadsCSV = () => {
@@ -191,6 +277,7 @@ export default function AdminClient() {
   const TABS: { id: Tab; label: string }[] = [
     { id: "dashboard", label: "Dashboard" },
     { id: "listings", label: "Listings" },
+    { id: "availability", label: "Availability" },
     { id: "leads", label: "Leads" },
     { id: "settings", label: "Settings" },
   ];
@@ -217,7 +304,7 @@ export default function AdminClient() {
           {TABS.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => setActiveTab(tab.id as any)}
               className="flex-1 py-2.5 rounded-lg font-montserrat text-xs uppercase tracking-[2px] transition-all"
               style={{
                 background: activeTab === tab.id ? "var(--bg-surface)" : "transparent",
@@ -238,10 +325,10 @@ export default function AdminClient() {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: "Total Listings", value: properties.length },
+                { label: "Total Listings", value: allProperties.length },
                 { label: "Total Views", value: totalViews },
                 { label: "Leads Captured", value: leads.length },
-                { label: "For Sale", value: properties.filter((p) => p.status === "For Sale").length },
+                { label: "For Sale", value: allProperties.filter((p) => p.status === "For Sale").length },
               ].map((s) => (
                 <div
                   key={s.label}
@@ -292,11 +379,24 @@ export default function AdminClient() {
         {/* Listings Tab */}
         {activeTab === "listings" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="font-montserrat text-sm font-bold" style={{ color: "var(--fg)" }}>
+                {allProperties.length} Properties
+              </h3>
+              <button
+                onClick={() => setShowAddForm(true)}
+                className="px-4 py-2 rounded-lg font-montserrat text-xs font-semibold uppercase tracking-wider"
+                style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
+              >
+                + Add Listing
+              </button>
+            </div>
+
             <div className="space-y-3">
-              {properties.map((p) => (
+              {allProperties.map((p) => (
                 <div
                   key={p.slug}
-                  className="flex items-center gap-4 p-4 rounded-xl border"
+                  className="flex items-center gap-4 p-4 rounded-xl border group"
                   style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
                 >
                   <img src={p.images[0]} alt={p.title} className="w-16 h-16 rounded-lg object-cover shrink-0" />
@@ -308,29 +408,218 @@ export default function AdminClient() {
                       {p.priceLabel} &middot; {p.beds} bed &middot; {p.type}
                     </p>
                   </div>
-                  <div className="text-right shrink-0">
-                    <span
-                      className="inline-block px-2 py-0.5 rounded text-[10px] font-montserrat font-semibold"
-                      style={{
-                        background: getStatusStyle(p.status).bg,
-                        color: getStatusStyle(p.status).color,
-                        border: `1px solid ${getStatusStyle(p.status).border}`,
-                      }}
-                    >
-                      {p.status}
-                    </span>
-                    <p className="font-montserrat text-[10px] mt-1" style={{ color: "var(--fg-30)" }}>
-                      {viewCounts[p.slug] || 0} views
-                    </p>
+                  <div className="text-right shrink-0 flex items-center gap-4">
+                    <div className="hidden md:block">
+                      <span
+                        className="inline-block px-2 py-0.5 rounded text-[10px] font-montserrat font-semibold"
+                        style={{
+                          background: getStatusStyle(p.status).bg,
+                          color: getStatusStyle(p.status).color,
+                          border: `1px solid ${getStatusStyle(p.status).border}`,
+                        }}
+                      >
+                        {p.status}
+                      </span>
+                      <p className="font-montserrat text-[10px] mt-1" style={{ color: "var(--fg-30)" }}>
+                        {viewCounts[p.slug] || 0} views
+                      </p>
+                    </div>
+                    {/* Only show delete for custom properties (for demo purposes) */}
+                    {p.isCustom && (
+                      <button 
+                        onClick={() => handleDelete(p.slug)}
+                        className="p-2 rounded-lg hover:bg-red-500/10 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
-            <p className="font-montserrat text-xs mt-6 text-center" style={{ color: "var(--fg-30)" }}>
-              In production, you would add/edit/delete properties here. Data is stored in localStorage.
-            </p>
           </motion.div>
         )}
+
+        {/* Availability Tab */}
+        {activeTab === "availability" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className="p-8 rounded-xl border" style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}>
+              <h3 className="font-montserrat text-lg font-bold mb-2" style={{ color: "var(--fg)" }}>Booking Availability</h3>
+              <p className="font-montserrat text-xs mb-8" style={{ color: "var(--fg-40)" }}>
+                Click a date to block out the entire day, or leave unblocked to allow 30-minute viewing slots.
+              </p>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-10">
+                {Array.from({ length: 14 }).map((_, i) => {
+                  const d = new Date();
+                  d.setDate(d.getDate() + i);
+                  const dateStr = d.toISOString().split('T')[0];
+                  const isBlocked = blockedSlots.some(s => s.date === dateStr && !s.time);
+                  const isSunday = d.getDay() === 0;
+                  const isSelected = selectedDateForBlocking === dateStr;
+
+                  return (
+                    <button
+                      key={dateStr}
+                      disabled={isSunday}
+                      onClick={() => setSelectedDateForBlocking(dateStr)}
+                      className={`p-4 rounded-xl border text-center transition-all ${isSunday ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:scale-105'}`}
+                      style={{ 
+                        background: isSelected ? 'rgba(0, 241, 241, 0.1)' : isBlocked ? 'rgba(239, 68, 68, 0.1)' : 'var(--bg-tertiary)',
+                        borderColor: isSelected ? 'var(--accent)' : isBlocked ? '#ef4444' : 'var(--border-subtle)',
+                      }}
+                    >
+                      <p className="font-montserrat text-[10px] uppercase tracking-wider mb-1" style={{ color: isSelected ? 'var(--accent)' : isBlocked ? '#ef4444' : 'var(--fg-40)' }}>
+                        {d.toLocaleDateString('en-GB', { weekday: 'short' })}
+                      </p>
+                      <p className="font-montserrat text-lg font-bold" style={{ color: isSelected ? 'var(--accent)' : isBlocked ? '#ef4444' : 'var(--fg)' }}>
+                        {d.getDate()}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {selectedDateForBlocking && (
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="pt-6 border-t" style={{ borderColor: 'var(--border-card)' }}>
+                  <div className="flex items-center justify-between mb-6">
+                    <h4 className="font-montserrat text-sm font-bold" style={{ color: 'var(--fg)' }}>
+                      Slots for {new Date(selectedDateForBlocking).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}
+                    </h4>
+                    <button 
+                      onClick={() => toggleSlot(selectedDateForBlocking)}
+                      className="px-4 py-2 rounded-lg font-montserrat text-[10px] font-bold uppercase tracking-wider border"
+                      style={{ 
+                        background: blockedSlots.some(s => s.date === selectedDateForBlocking && !s.time) ? '#ef4444' : 'transparent',
+                        color: blockedSlots.some(s => s.date === selectedDateForBlocking && !s.time) ? '#fff' : '#ef4444',
+                        borderColor: '#ef4444'
+                      }}
+                    >
+                      {blockedSlots.some(s => s.date === selectedDateForBlocking && !s.time) ? 'Unblock Whole Day' : 'Block Whole Day'}
+                    </button>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                    {TIME_SLOTS.map(time => {
+                      const isBlocked = blockedSlots.some(s => s.date === selectedDateForBlocking && (s.time === time || !s.time));
+                      const isWhollyBlocked = blockedSlots.some(s => s.date === selectedDateForBlocking && !s.time);
+                      return (
+                        <button
+                          key={time}
+                          disabled={isWhollyBlocked}
+                          onClick={() => toggleSlot(selectedDateForBlocking, time)}
+                          className={`p-3 rounded-lg border text-center text-[10px] font-montserrat transition-all ${isWhollyBlocked ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}
+                          style={{
+                            background: isBlocked ? 'rgba(239, 68, 68, 0.1)' : 'var(--bg-tertiary)',
+                            borderColor: isBlocked ? '#ef4444' : 'var(--border-subtle)',
+                            color: isBlocked ? '#ef4444' : 'var(--fg-60)'
+                          }}
+                        >
+                          {time}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Add Listing Modal */}
+        <AnimatePresence>
+          {showAddForm && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
+                onClick={() => setShowAddForm(false)}
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] w-[90vw] max-w-lg max-h-[85vh] overflow-y-auto p-8 rounded-2xl border"
+                style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+              >
+                <h2 className="font-montserrat text-xl font-bold mb-6" style={{ color: "var(--fg)" }}>Add New Listing</h2>
+                <form onSubmit={handleAddProperty} className="space-y-4">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Property Title</label>
+                    <input 
+                      required
+                      className="w-full px-4 py-2 rounded-lg outline-none" 
+                      style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
+                      value={newProp.title}
+                      onChange={e => setNewProp({...newProp, title: e.target.value})}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Address</label>
+                    <input 
+                      required
+                      className="w-full px-4 py-2 rounded-lg outline-none" 
+                      style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
+                      value={newProp.address}
+                      onChange={e => setNewProp({...newProp, address: e.target.value})}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Price (£)</label>
+                      <input 
+                        type="number"
+                        required
+                        className="w-full px-4 py-2 rounded-lg outline-none" 
+                        style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
+                        value={newProp.price}
+                        onChange={e => setNewProp({...newProp, price: parseInt(e.target.value)})}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Type</label>
+                      <select 
+                        className="w-full px-4 py-2 rounded-lg outline-none" 
+                        style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
+                        value={newProp.type}
+                        onChange={e => setNewProp({...newProp, type: e.target.value as any})}
+                      >
+                        <option value="Flat">Flat</option>
+                        <option value="House">House</option>
+                        <option value="Penthouse">Penthouse</option>
+                        <option value="Maisonette">Maisonette</option>
+                        <option value="Townhouse">Townhouse</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Beds</label>
+                      <input type="number" className="w-full px-4 py-2 rounded-lg outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }} value={newProp.beds} onChange={e => setNewProp({...newProp, beds: parseInt(e.target.value)})} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Baths</label>
+                      <input type="number" className="w-full px-4 py-2 rounded-lg outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }} value={newProp.baths} onChange={e => setNewProp({...newProp, baths: parseInt(e.target.value)})} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Sqft</label>
+                      <input type="number" className="w-full px-4 py-2 rounded-lg outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }} value={newProp.sqft} onChange={e => setNewProp({...newProp, sqft: parseInt(e.target.value)})} />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full py-4 mt-4 rounded-xl font-montserrat text-sm font-bold uppercase tracking-widest"
+                    style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
+                  >
+                    Publish Listing
+                  </button>
+                </form>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
 
         {/* Leads Tab */}
         {activeTab === "leads" && (

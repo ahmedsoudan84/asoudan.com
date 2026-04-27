@@ -64,6 +64,8 @@ const TIME_SLOTS = [
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+import { getBlockedSlots } from "@/lib/real-estate/storage";
+
 function BookingModal({ property, onClose }: { property: Property; onClose: () => void }) {
   const [step, setStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -76,13 +78,30 @@ function BookingModal({ property, onClose }: { property: Property; onClose: () =
 
   const today = new Date();
   const dates: Date[] = [];
+  const blocked = getBlockedSlots();
+
   for (let i = 0; i < 14; i++) {
     const d = new Date(today);
     d.setDate(today.getDate() + i);
-    if (d.getDay() !== 0) dates.push(d);
+    const dateStr = d.toISOString().split('T')[0];
+    const isBlocked = blocked.some(s => s.date === dateStr && !s.time);
+    const isSunday = d.getDay() === 0;
+    
+    if (!isSunday && !isBlocked) dates.push(d);
   }
 
   const handleBook = () => {
+    // Record the lead
+    const lead = {
+      name,
+      email,
+      phone,
+      enquiryType: "Viewing",
+      message: `Viewing requested for ${property.title} on ${selectedDate?.toLocaleDateString()} at ${selectedTime}. Notes: ${notes}`,
+      timestamp: Date.now(),
+    };
+    const stored = JSON.parse(localStorage.getItem("ai-estate-leads") || "[]");
+    localStorage.setItem("ai-estate-leads", JSON.stringify([...stored, lead]));
     setIsBooked(true);
   };
 
@@ -207,6 +226,10 @@ function BookingModal({ property, onClose }: { property: Property; onClose: () =
                   <p className="font-montserrat text-xs mt-1 mb-6" style={{ color: "var(--fg-40)" }}>Available times for {selectedDate?.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}</p>
                   <div className="grid grid-cols-3 gap-2 max-h-[300px] overflow-y-auto">
                     {TIME_SLOTS.map((t) => {
+                      const dateStr = selectedDate?.toISOString().split('T')[0];
+                      const isBlocked = blocked.some(s => s.date === dateStr && s.time === t);
+                      if (isBlocked) return null;
+                      
                       const isSelected = selectedTime === t;
                       return (
                         <button

@@ -1,9 +1,10 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { properties, type Property } from "@/lib/real-estate/properties";
+import { type Property } from "@/lib/real-estate/properties";
+import { getAllProperties } from "@/lib/real-estate/storage";
 import { calculateWalkScore, walkScoreLabel, comparePriceToLocal } from "@/lib/real-estate/smart-logic";
 
 type ListingMode = "sale" | "rent" | "all";
@@ -141,6 +142,8 @@ const SearchIcon = () => (
   </svg>
 );
 
+
+
 export default function ListingsClient() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
@@ -153,11 +156,16 @@ export default function ListingsClient() {
   const [sortIdx, setSortIdx] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const [activeFiltersCount, setActiveFiltersCount] = useState(0);
+  const [allProperties, setAllProperties] = useState<Property[]>([]);
+
+  useEffect(() => {
+    setAllProperties(getAllProperties());
+  }, []);
 
   const priceRanges = listingMode === "rent" ? RENT_PRICE_RANGES : SALE_PRICE_RANGES;
 
   const filtered = useMemo(() => {
-    let results = properties
+    let results = allProperties
       .filter(p => {
         if (listingMode === "sale" && p.listingMode !== "sale") return false;
         if (listingMode === "rent" && p.listingMode !== "rent") return false;
@@ -189,10 +197,10 @@ export default function ListingsClient() {
     }
 
     return results.map((r) => r.property);
-  }, [query, listingMode, typeFilter, bedFilter, priceIdx, sortIdx, priceRanges]);
+  }, [allProperties, query, listingMode, typeFilter, bedFilter, priceIdx, sortIdx, priceRanges]);
 
-  const saleCount = properties.filter(p => p.listingMode === "sale").length;
-  const rentCount = properties.filter(p => p.listingMode === "rent").length;
+  const saleCount = allProperties.filter(p => p.listingMode === "sale").length;
+  const rentCount = allProperties.filter(p => p.listingMode === "rent").length;
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
@@ -220,7 +228,7 @@ export default function ListingsClient() {
                 color: listingMode === "all" ? "var(--bg-primary)" : "var(--fg-60)",
               }}
             >
-              All ({properties.length})
+              All ({allProperties.length})
             </button>
             <button
               onClick={() => { setListingMode("sale"); setPriceIdx(0); }}
