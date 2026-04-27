@@ -1907,7 +1907,10 @@ function ProMaxFragment({
   color: string;
   mode?: string;
 }) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const forceWhiteCard = mode === "progress-ring";
+  const forceDarkCard = mode === "tab-button" || mode === "product-card";
   return (
     <div className="flex flex-col items-center w-full mb-32 last:mb-0">
       <div className="text-center mb-16 max-w-2xl px-6">
@@ -1930,7 +1933,9 @@ function ProMaxFragment({
           className={cls(
             "relative z-10 w-full max-w-4xl mx-auto p-8 lg:p-16 rounded-[2rem] backdrop-blur-xl border shadow-2xl flex items-center justify-center overflow-hidden",
             forceWhiteCard
-              ? "bg-white/95 dark:bg-white/95 border-black/5"
+              ? "bg-white dark:bg-white border-black/5 shadow-xl"
+              : forceDarkCard
+              ? "bg-[#0a0a0a] dark:bg-[#0a0a0a] border-white/10 shadow-2xl"
               : "bg-white/50 dark:bg-black/50 border-black/5 dark:border-white/5"
           )}
         >
@@ -1940,7 +1945,10 @@ function ProMaxFragment({
           <img
             src={frag.imageSrc}
             alt={frag.title}
-            className="w-full h-auto object-contain relative z-10"
+            className={cls(
+              "w-full h-auto object-contain relative z-10",
+              (forceDarkCard || (isDark && frag.invertInDarkMode)) && "invert"
+            )}
           />
         </motion.div>
 
