@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
 import PricingSection from "@/components/buy/PricingSection";
+import FAQSection from "@/components/buy/FAQSection";
+import { REAL_ESTATE_FAQ } from "@/lib/buy/faqs";
 import { categories } from "@/lib/templates-data";
 import dynamic from "next/dynamic";
 const LondonSkylineParallax = dynamic(() => import("@/components/parallax/LondonSkylineParallax"), { ssr: false });
@@ -393,6 +395,9 @@ export default function RealEstateHomeClient() {
           />
         ) : null;
       })()}
+
+      {/* ── FAQ ──────────────────────────────────────────── */}
+      <FAQSection items={REAL_ESTATE_FAQ} contactHref="/buy/real-estate/contact" />
 
       {/* ── CTA ──────────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-12 text-center">

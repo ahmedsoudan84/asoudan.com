@@ -11,6 +11,8 @@ import { OCCASION_BUNDLES, getBundleProducts } from "@/lib/ecommerce/smart-logic
 import { useCart } from "@/lib/ecommerce/cart-store";
 import { useEffect } from "react";
 import PricingSection from "@/components/buy/PricingSection";
+import FAQSection from "@/components/buy/FAQSection";
+import { ECOMMERCE_FAQ } from "@/lib/buy/faqs";
 import { categories } from "@/lib/templates-data";
 
 const HERO_CHIPS = [
@@ -655,6 +657,9 @@ export default function HomeClient() {
           />
         ) : null;
       })()}
+
+      {/* ── FAQ ─────────────────────────────────────────────── */}
+      <FAQSection items={ECOMMERCE_FAQ} contactHref="/buy/ecommerce/contact" />
 
       {/* ── Bottom CTA ──────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-10">

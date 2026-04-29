@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
 import { menuItems } from "@/lib/elite-diner/menu-data";
 import PricingSection from "@/components/buy/PricingSection";
+import FAQSection from "@/components/buy/FAQSection";
+import { ELITE_DINER_FAQ } from "@/lib/buy/faqs";
 import { categories } from "@/lib/templates-data";
 
 const HERO_CHIPS = [
@@ -376,6 +378,9 @@ export default function HomeClient() {
           />
         ) : null;
       })()}
+
+      {/* ── FAQ ─────────────────────────────────────────── */}
+      <FAQSection items={ELITE_DINER_FAQ} contactHref="/buy/elite-diner/contact" />
 
       {/* ── Bottom CTA ───────────────────────────────────── */}
       <section className="py-32 px-6">
