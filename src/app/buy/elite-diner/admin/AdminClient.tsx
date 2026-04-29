@@ -1,145 +1,529 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { Icons } from "@/components/elite-diner/Icons";
-import { menuItems } from "@/lib/elite-diner/menu-data";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { menuItems, type MenuItem } from "@/lib/elite-diner/menu-data";
+import {
+  getReservations,
+  getDinerOrders,
+  updateDinerOrderStatus,
+  updateReservationStatus,
+  getRestaurantSettings,
+  saveRestaurantSettings,
+  type Reservation,
+  type DinerOrder,
+  type RestaurantSettings,
+} from "@/lib/elite-diner/storage";
 
-const STATS = [
-  { label: "Today's Orders", value: "42", change: "+12%", icon: <Icons.ShoppingBag className="w-5 h-5 text-accent" /> },
-  { label: "AI Upsells", value: "£1,240", change: "+24%", icon: <Icons.Sparkles className="w-5 h-5 text-accent" /> },
-  { label: "Reservations", value: "18", change: "+3", icon: <Icons.Calendar className="w-5 h-5 text-accent" /> },
-  { label: "Avg. Satisfaction", value: "4.9", change: "Stable", icon: <Icons.Star className="w-5 h-5 text-accent" /> },
-];
+const ADMIN_PASSWORD = "elitediner2024";
 
-const RECENT_ORDERS = [
-  { id: "#ED-9042", customer: "James R.", total: "£142.00", items: "Wagyu, Wine Pairing", status: "Preparing" },
-  { id: "#ED-9041", customer: "Sarah L.", total: "£85.50", items: "Lobster, Scallops", status: "Collected" },
-  { id: "#ED-9040", customer: "Robert M.", total: "£210.00", items: "Full Tasting Menu x2", status: "Delivering" },
-  { id: "#ED-9039", customer: "Emily W.", total: "£34.00", items: "Truffle Pasta", status: "Cancelled" },
-];
+type Tab = "dashboard" | "orders" | "reservations" | "menu" | "settings";
 
 export default function AdminClient() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState<Tab>("dashboard");
+
+  const [orders, setOrders] = useState<DinerOrder[]>([]);
+  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [settings, setSettings] = useState<RestaurantSettings>(getRestaurantSettings());
+  const [menuAvailability, setMenuAvailability] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    if (!authenticated) return;
+    setOrders(getDinerOrders());
+    setReservations(getReservations());
+    setSettings(getRestaurantSettings());
+    try {
+      const stored = JSON.parse(localStorage.getItem("elite-diner-availability") || "{}");
+      setMenuAvailability(stored);
+    } catch { /* empty */ }
+  }, [authenticated]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      setAuthenticated(true);
+      setError("");
+    } else {
+      setError("Incorrect password");
+    }
+  };
+
+  const handleOrderStatus = (id: string, status: DinerOrder["status"]) => {
+    updateDinerOrderStatus(id, status);
+    setOrders(getDinerOrders());
+  };
+
+  const handleReservationStatus = (id: string, status: Reservation["status"]) => {
+    updateReservationStatus(id, status);
+    setReservations(getReservations());
+  };
+
+  const toggleAvailability = (slug: string) => {
+    const next = { ...menuAvailability, [slug]: !menuAvailability[slug] };
+    setMenuAvailability(next);
+    localStorage.setItem("elite-diner-availability", JSON.stringify(next));
+  };
+
+  const handleSaveSettings = () => {
+    saveRestaurantSettings(settings);
+  };
+
+  // ── Login ──────────────────────────────────────────────
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "var(--bg-primary)" }}>
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          onSubmit={handleLogin}
+          className="w-full max-w-sm p-8 rounded-2xl border"
+          style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+        >
+          <h1 className="font-montserrat text-2xl font-bold text-center mb-2" style={{ color: "var(--fg)" }}>
+            Merchant Portal
+          </h1>
+          <p className="font-montserrat text-xs text-center mb-6" style={{ color: "var(--fg-40)" }}>
+            Password:{" "}
+            <code
+              className="px-1.5 py-0.5 rounded text-[10px]"
+              style={{ background: "var(--fg-06)", color: "var(--accent)" }}
+            >
+              elitediner2024
+            </code>
+          </p>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+            className="w-full px-4 py-3 rounded-xl font-montserrat text-sm outline-none mb-4"
+            style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
+          />
+          {error && (
+            <p className="font-montserrat text-xs mb-3" style={{ color: "#ff6b6b" }}>
+              {error}
+            </p>
+          )}
+          <button
+            type="submit"
+            className="w-full py-3 rounded-xl font-montserrat text-sm font-semibold uppercase tracking-wider"
+            style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
+          >
+            Sign In
+          </button>
+        </motion.form>
+      </div>
+    );
+  }
+
+  // ── Dashboard Stats ────────────────────────────────────
+  const activeOrders = orders.filter((o) => o.status === "Preparing" || o.status === "Ready").length;
+  const totalRevenue = orders
+    .filter((o) => o.status !== "Cancelled")
+    .reduce((s, o) => s + o.total, 0);
+  const confirmedReservations = reservations.filter((r) => r.status === "Confirmed").length;
+  const todayStr = new Date().toISOString().split("T")[0];
+  const todayReservations = reservations.filter((r) => r.date === todayStr && r.status === "Confirmed").length;
+
+  const TABS: { id: Tab; label: string }[] = [
+    { id: "dashboard", label: "Dashboard" },
+    { id: "orders", label: "Orders" },
+    { id: "reservations", label: "Reservations" },
+    { id: "menu", label: "Menu" },
+    { id: "settings", label: "Settings" },
+  ];
+
+  const statusColour: Record<DinerOrder["status"], string> = {
+    Preparing: "#f59e0b",
+    Ready: "#10b981",
+    Delivered: "var(--fg-40)",
+    Cancelled: "#ef4444",
+  };
+
   return (
-    <div className="pt-32 pb-24 px-6 min-h-screen" style={{ background: "var(--bg-primary)" }}>
-      <div className="max-w-[1200px] mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
-            <h1 className="font-montserrat text-3xl md:text-5xl font-black mb-2">Merchant <span className="text-accent">Insights</span></h1>
-            <p className="text-fg-40">Manage your establishment and monitor AI-driven growth.</p>
-          </div>
-          <div className="flex items-center gap-3">
-             <button className="px-5 py-2.5 rounded-xl border border-border-subtle text-[10px] font-bold uppercase tracking-widest hover:bg-fg-05 transition-all">
-                Export Data
-             </button>
-              <button className="px-5 py-2.5 rounded-xl bg-accent text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-accent/20" style={{ color: "var(--bg-primary)" }}>
-                 Menu Editor
-              </button>
-          </div>
+    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-12 py-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="font-montserrat text-2xl font-bold" style={{ color: "var(--fg)" }}>
+            Merchant Portal
+          </h1>
+          <button
+            onClick={() => setAuthenticated(false)}
+            className="font-montserrat text-xs uppercase tracking-wider"
+            style={{ color: "var(--fg-40)" }}
+          >
+            Sign Out
+          </button>
         </div>
 
-        {/* ── Stats Grid ─────────────────────────────────── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {STATS.map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="p-8 rounded-[2rem] border"
-              style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+        {/* Tabs */}
+        <div className="flex gap-1 mb-8 p-1 rounded-xl overflow-x-auto" style={{ background: "var(--fg-06)" }}>
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className="flex-1 py-2.5 rounded-lg font-montserrat text-xs uppercase tracking-[2px] transition-all whitespace-nowrap px-3"
+              style={{
+                background: activeTab === tab.id ? "var(--bg-surface)" : "transparent",
+                color: activeTab === tab.id ? "var(--accent)" : "var(--fg-40)",
+              }}
             >
-              <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
-                {stat.icon}
-              </div>
-              <div className="text-sm font-bold opacity-30 uppercase tracking-[2px] mb-1">{stat.label}</div>
-              <div className="flex items-end gap-3">
-                <div className="text-4xl font-montserrat font-black">{stat.value}</div>
-                <div className={`text-[10px] font-bold mb-2 ${stat.change.startsWith("+") ? "text-green-500" : "opacity-40"}`}>
-                  {stat.change}
-                </div>
-              </div>
-            </motion.div>
+              {tab.label}
+            </button>
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
-          {/* ── Recent Orders ─────────────────────────────── */}
-          <div className="lg:col-span-2">
-            <div className="p-10 rounded-[2.5rem] border h-full" style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}>
-              <h2 className="font-montserrat font-bold text-xl mb-8 flex justify-between items-center">
-                Active Orders
-                <span className="text-[10px] uppercase font-bold tracking-widest text-accent">Real-time Sync</span>
-              </h2>
-              <div className="space-y-4">
-                {RECENT_ORDERS.map((order) => (
-                  <div key={order.id} className="flex items-center gap-6 p-5 rounded-2xl bg-tertiary border border-border-subtle group transition-all hover:border-accent/20" style={{ background: "var(--bg-tertiary)" }}>
-                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-accent font-bold text-xs shrink-0">
-                      {order.id.split('-')[1]}
+        {/* ── Dashboard ─────────────────────────────────── */}
+        <AnimatePresence mode="wait">
+          {activeTab === "dashboard" && (
+            <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: "Total Revenue", value: `£${totalRevenue.toFixed(0)}` },
+                  { label: "Active Orders", value: activeOrders },
+                  { label: "Today's Tables", value: todayReservations },
+                  { label: "Confirmed Bookings", value: confirmedReservations },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    className="p-5 rounded-xl border text-center"
+                    style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+                  >
+                    <div className="font-montserrat text-3xl font-bold" style={{ color: "var(--accent)" }}>
+                      {s.value}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between mb-1">
-                        <h4 className="font-bold text-sm truncate">{order.customer}</h4>
-                        <span className="font-black text-sm">{order.total}</span>
-                      </div>
-                      <p className="text-[10px] text-fg-40 uppercase tracking-wider mb-2">{order.items}</p>
-                      <div className="flex items-center gap-2">
-                         <div className={`w-1.5 h-1.5 rounded-full ${order.status === 'Preparing' ? 'bg-orange-500 animate-pulse' : order.status === 'Cancelled' ? 'bg-red-500' : 'bg-green-500'}`} />
-                         <span className="text-[10px] font-bold uppercase opacity-60 tracking-widest">{order.status}</span>
-                      </div>
+                    <div
+                      className="font-montserrat text-[10px] uppercase tracking-[2px] mt-1"
+                      style={{ color: "var(--fg-40)" }}
+                    >
+                      {s.label}
                     </div>
-                    <button className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/10">
-                       <Icons.ChevronRight className="w-4 h-4" />
-                    </button>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
 
-          {/* ── Top Dish ──────────────────────────────────── */}
-          <div className="lg:col-span-1">
-            <div className="p-10 rounded-[2.5rem] border h-full flex flex-col" style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}>
-              <h2 className="font-montserrat font-bold text-xl mb-8">AI Spotlight</h2>
-               <div className="mb-8 p-6 rounded-3xl bg-accent shadow-2xl shadow-accent/20" style={{ color: "var(--bg-primary)" }}>
-                  <div className="flex items-center gap-2 mb-4">
-                     <Icons.Sparkles className="w-4 h-4" />
-                     <span className="text-[10px] uppercase font-bold tracking-[2px]">Trending Now</span>
+              {/* Recent Orders */}
+              <div className="p-6 rounded-xl border" style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}>
+                <h3 className="font-montserrat text-sm font-bold mb-4" style={{ color: "var(--fg)" }}>
+                  Recent Orders
+                </h3>
+                {orders.length === 0 ? (
+                  <p className="font-montserrat text-xs" style={{ color: "var(--fg-40)" }}>
+                    No orders yet. Place an order to see data here.
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {orders.slice().reverse().slice(0, 5).map((o) => (
+                      <div
+                        key={o.id}
+                        className="flex items-center justify-between py-2 border-b"
+                        style={{ borderColor: "var(--border-subtle)" }}
+                      >
+                        <div>
+                          <p className="font-montserrat text-sm font-semibold" style={{ color: "var(--fg)" }}>
+                            {o.id} — {o.customer}
+                          </p>
+                          <p className="font-montserrat text-xs" style={{ color: "var(--fg-40)" }}>
+                            {o.items.map((i) => `${i.quantity}× ${i.name}`).join(", ")}
+                          </p>
+                        </div>
+                        <div className="text-right shrink-0 ml-4">
+                          <p className="font-montserrat text-sm font-bold" style={{ color: "var(--fg)" }}>
+                            £{o.total.toFixed(2)}
+                          </p>
+                          <span className="font-montserrat text-[10px] font-bold" style={{ color: statusColour[o.status] }}>
+                            {o.status}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <h3 className="text-2xl font-black mb-2">Truffle Pasta</h3>
-                  <p className="text-xs opacity-80 leading-relaxed mb-6">Trending among 'romantic occasion' searchers in the last 6 hours.</p>
-                  <button className="w-full py-3 rounded-xl bg-fg-10 font-bold uppercase tracking-widest text-[9px] hover:bg-fg-20 transition-all">
-                     Boost visibility
-                  </button>
-               </div>
-
-              <div className="flex-1">
-                <h4 className="text-[10px] uppercase font-bold tracking-widest opacity-30 mb-6">Popular Tag Mix</h4>
-                <div className="space-y-4">
-                   {[
-                     { label: "Gluten-Free + Lobster", pct: 64 },
-                     { label: "Romantic + Red Wine", pct: 42 },
-                     { label: "Vegan + Spicy", pct: 28 },
-                   ].map((mix, i) => (
-                     <div key={i} className="space-y-2">
-                        <div className="flex justify-between text-xs font-bold">
-                           <span>{mix.label}</span>
-                           <span className="text-accent">{mix.pct}%</span>
-                        </div>
-                        <div className="h-1 w-full bg-fg-05 rounded-full overflow-hidden">
-                           <div className="h-full bg-accent" style={{ width: `${mix.pct}%` }} />
-                        </div>
-                     </div>
-                   ))}
-                </div>
+                )}
               </div>
 
-              <p className="mt-8 text-[9px] text-fg-30 italic leading-relaxed text-center font-bold uppercase tracking-widest">
-                Analytics processed locally. <br /> Private. Secure. Fast.
+              {/* Upcoming Reservations */}
+              <div className="p-6 rounded-xl border" style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}>
+                <h3 className="font-montserrat text-sm font-bold mb-4" style={{ color: "var(--fg)" }}>
+                  Upcoming Reservations
+                </h3>
+                {reservations.filter((r) => r.status === "Confirmed").length === 0 ? (
+                  <p className="font-montserrat text-xs" style={{ color: "var(--fg-40)" }}>
+                    No reservations yet. Book a table to see data here.
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {reservations
+                      .filter((r) => r.status === "Confirmed")
+                      .slice().reverse().slice(0, 5)
+                      .map((r) => (
+                        <div
+                          key={r.id}
+                          className="flex items-center justify-between py-2 border-b"
+                          style={{ borderColor: "var(--border-subtle)" }}
+                        >
+                          <div>
+                            <p className="font-montserrat text-sm font-semibold" style={{ color: "var(--fg)" }}>
+                              {r.name}
+                            </p>
+                            <p className="font-montserrat text-xs" style={{ color: "var(--fg-40)" }}>
+                              {r.date} at {r.time} · {r.partySize} guests{r.occasion ? ` · ${r.occasion}` : ""}
+                            </p>
+                          </div>
+                          <span
+                            className="font-montserrat text-[10px] font-bold px-2 py-0.5 rounded"
+                            style={{ background: "rgba(0,241,241,0.12)", color: "var(--accent)" }}
+                          >
+                            Confirmed
+                          </span>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ── Orders ──────────────────────────────────── */}
+          {activeTab === "orders" && (
+            <motion.div key="orders" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <h3 className="font-montserrat text-sm font-bold mb-6" style={{ color: "var(--fg)" }}>
+                {orders.length} Order{orders.length !== 1 ? "s" : ""}
+              </h3>
+              {orders.length === 0 ? (
+                <div className="text-center py-16">
+                  <p className="font-montserrat text-sm" style={{ color: "var(--fg-40)" }}>
+                    No orders yet. Place an order through the Order page.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {orders.slice().reverse().map((o) => (
+                    <div
+                      key={o.id}
+                      className="p-5 rounded-xl border"
+                      style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <p className="font-montserrat text-sm font-bold" style={{ color: "var(--fg)" }}>
+                            {o.id} — {o.customer}
+                          </p>
+                          <p className="font-montserrat text-xs mt-1" style={{ color: "var(--fg-50)" }}>
+                            {o.email} · {o.type}
+                          </p>
+                          <p className="font-montserrat text-xs mt-1" style={{ color: "var(--fg-40)" }}>
+                            {o.items.map((i) => `${i.quantity}× ${i.name}`).join(", ")}
+                          </p>
+                          <p className="font-montserrat text-[10px] mt-1" style={{ color: "var(--fg-30)" }}>
+                            {o.date}
+                          </p>
+                        </div>
+                        <div className="shrink-0 text-right flex flex-col items-end gap-2">
+                          <p className="font-montserrat font-bold text-lg" style={{ color: "var(--fg)" }}>
+                            £{o.total.toFixed(2)}
+                          </p>
+                          <select
+                            value={o.status}
+                            onChange={(e) => handleOrderStatus(o.id, e.target.value as DinerOrder["status"])}
+                            className="px-3 py-1.5 rounded-lg border text-[10px] font-montserrat font-bold uppercase outline-none transition-all"
+                            style={{
+                              background: "var(--bg-primary)",
+                              borderColor: "var(--border-subtle)",
+                              color: statusColour[o.status],
+                            }}
+                          >
+                            <option value="Preparing">Preparing</option>
+                            <option value="Ready">Ready</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* ── Reservations ────────────────────────────── */}
+          {activeTab === "reservations" && (
+            <motion.div key="reservations" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <h3 className="font-montserrat text-sm font-bold mb-6" style={{ color: "var(--fg)" }}>
+                {reservations.length} Reservation{reservations.length !== 1 ? "s" : ""}
+              </h3>
+              {reservations.length === 0 ? (
+                <div className="text-center py-16">
+                  <p className="font-montserrat text-sm" style={{ color: "var(--fg-40)" }}>
+                    No reservations yet. Book a table through the Book page.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {reservations.slice().reverse().map((r) => (
+                    <div
+                      key={r.id}
+                      className="flex items-center gap-4 p-5 rounded-xl border"
+                      style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="font-montserrat text-sm font-bold" style={{ color: "var(--fg)" }}>
+                          {r.name}
+                        </p>
+                        <p className="font-montserrat text-xs mt-1" style={{ color: "var(--fg-50)" }}>
+                          {r.email}
+                        </p>
+                        <p className="font-montserrat text-xs mt-1" style={{ color: "var(--fg-40)" }}>
+                          {r.date} at {r.time} · {r.partySize} guest{r.partySize !== 1 ? "s" : ""}
+                          {r.occasion ? ` · ${r.occasion}` : ""}
+                        </p>
+                      </div>
+                      <div className="shrink-0 flex flex-col items-end gap-2">
+                        <span
+                          className="font-montserrat text-[10px] font-bold px-2 py-0.5 rounded"
+                          style={{
+                            background: r.status === "Confirmed" ? "rgba(0,241,241,0.12)" : "rgba(239,68,68,0.12)",
+                            color: r.status === "Confirmed" ? "var(--accent)" : "#ef4444",
+                          }}
+                        >
+                          {r.status}
+                        </span>
+                        {r.status === "Confirmed" && (
+                          <button
+                            onClick={() => handleReservationStatus(r.id, "Cancelled")}
+                            className="font-montserrat text-[10px] uppercase tracking-wider transition-colors"
+                            style={{ color: "#ef4444" }}
+                          >
+                            Cancel
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* ── Menu ────────────────────────────────────── */}
+          {activeTab === "menu" && (
+            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <p className="font-montserrat text-xs mb-6" style={{ color: "var(--fg-40)" }}>
+                Toggle item availability. Unavailable items are hidden from customers.
               </p>
-            </div>
-          </div>
-        </div>
+              {(["starters", "mains", "desserts", "drinks", "wine"] as MenuItem["category"][]).map((cat) => {
+                const items = menuItems.filter((m) => m.category === cat);
+                if (!items.length) return null;
+                return (
+                  <div key={cat} className="mb-8">
+                    <h3
+                      className="font-montserrat text-xs font-bold uppercase tracking-[3px] mb-3"
+                      style={{ color: "var(--accent)" }}
+                    >
+                      {cat}
+                    </h3>
+                    <div className="space-y-2">
+                      {items.map((item) => {
+                        const available = menuAvailability[item.slug] !== false;
+                        return (
+                          <div
+                            key={item.slug}
+                            className="flex items-center gap-4 p-4 rounded-xl border"
+                            style={{
+                              background: "var(--bg-surface)",
+                              borderColor: "var(--border-card)",
+                              opacity: available ? 1 : 0.5,
+                            }}
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-12 h-12 rounded-lg object-cover shrink-0"
+                              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                            />
+                            <div className="flex-1 min-w-0">
+                              <p className="font-montserrat text-sm font-semibold truncate" style={{ color: "var(--fg)" }}>
+                                {item.name}
+                              </p>
+                              <p className="font-montserrat text-xs" style={{ color: "var(--fg-40)" }}>
+                                £{item.price.toFixed(2)}
+                                {item.dietaryTags.length > 0 && ` · ${item.dietaryTags.join(", ")}`}
+                              </p>
+                            </div>
+                            <button
+                              onClick={() => toggleAvailability(item.slug)}
+                              className="shrink-0 w-12 h-6 rounded-full transition-colors relative"
+                              style={{ background: available ? "var(--accent)" : "var(--fg-15)" }}
+                              aria-label={available ? "Mark unavailable" : "Mark available"}
+                            >
+                              <span
+                                className="absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all"
+                                style={{ left: available ? "calc(100% - 1.375rem)" : "0.125rem" }}
+                              />
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+          )}
+
+          {/* ── Settings ────────────────────────────────── */}
+          {activeTab === "settings" && (
+            <motion.div key="settings" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <div
+                className="p-8 rounded-xl border space-y-6"
+                style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+              >
+                <h3 className="font-montserrat text-lg font-bold" style={{ color: "var(--fg)" }}>
+                  Restaurant Details
+                </h3>
+                {(
+                  [
+                    { key: "name" as const, label: "Restaurant Name" },
+                    { key: "tagline" as const, label: "Tagline" },
+                    { key: "phone" as const, label: "Phone" },
+                    { key: "email" as const, label: "Email" },
+                    { key: "address" as const, label: "Address" },
+                  ] as { key: keyof RestaurantSettings; label: string }[]
+                ).map(({ key, label }) => (
+                  <div key={key}>
+                    <label
+                      className="font-montserrat text-[10px] uppercase tracking-[2px] block mb-2"
+                      style={{ color: "var(--fg-40)" }}
+                    >
+                      {label}
+                    </label>
+                    <input
+                      type="text"
+                      value={settings[key]}
+                      onChange={(e) => setSettings((s) => ({ ...s, [key]: e.target.value }))}
+                      className="w-full px-4 py-3 rounded-xl font-montserrat text-sm outline-none"
+                      style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
+                    />
+                  </div>
+                ))}
+                <button
+                  onClick={handleSaveSettings}
+                  className="px-6 py-3 rounded-xl font-montserrat text-sm font-semibold uppercase tracking-wider"
+                  style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
+                >
+                  Save Settings
+                </button>
+                <p className="font-montserrat text-[10px]" style={{ color: "var(--fg-30)" }}>
+                  Settings are stored in localStorage. In production, these would sync to your backend.
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { label: "AI Tools", href: "/buy/elite-diner/ai-tools" },
   { label: "About", href: "/buy/elite-diner/about" },
   { label: "Contact", href: "/buy/elite-diner/contact" },
+  { label: "Admin", href: "/buy/elite-diner/admin" },
 ];
 
 export function EliteDinerNav() {

@@ -558,13 +558,34 @@ export default function AdminClient() {
                   </div>
                   <div>
                     <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Address</label>
-                    <input 
+                    <input
                       required
-                      className="w-full px-4 py-2 rounded-lg outline-none" 
+                      className="w-full px-4 py-2 rounded-lg outline-none"
                       style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
                       value={newProp.address}
                       onChange={e => setNewProp({...newProp, address: e.target.value})}
                     />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider mb-2" style={{ color: "var(--fg-40)" }}>Image URL</label>
+                    <input
+                      type="url"
+                      className="w-full px-4 py-2 rounded-lg outline-none"
+                      style={{ background: "var(--bg-tertiary)", color: "var(--fg)", border: "1px solid var(--border-subtle)" }}
+                      placeholder="https://images.unsplash.com/..."
+                      value={(newProp.images || [])[0] || ""}
+                      onChange={e => setNewProp({ ...newProp, images: [e.target.value] })}
+                    />
+                    {(newProp.images || [])[0] && (
+                      <div className="mt-2 rounded-lg overflow-hidden h-32 border" style={{ borderColor: "var(--border-subtle)" }}>
+                        <img
+                          src={(newProp.images || [])[0]}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>

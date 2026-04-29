@@ -108,7 +108,15 @@ export default function AdminClient() {
         >
           <div className="text-center mb-8">
             <h1 className="text-3xl font-montserrat font-black tracking-tight" style={{ color: "var(--fg)" }}>Oxford Admin</h1>
-            <p className="text-sm mt-2 font-montserrat" style={{ color: "var(--fg-40)" }}>Enter password to access the dashboard</p>
+            <p className="text-sm mt-2 font-montserrat" style={{ color: "var(--fg-40)" }}>
+              Password:{" "}
+              <code
+                className="px-1.5 py-0.5 rounded text-[11px]"
+                style={{ background: "var(--fg-06)", color: "var(--accent)" }}
+              >
+                oxfordadmin2024
+              </code>
+            </p>
           </div>
           
           <form onSubmit={handleLogin} className="space-y-4">
@@ -352,10 +360,10 @@ export default function AdminClient() {
                           value={order.status}
                           onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
                         >
-                          <option value="pending">Pending</option>
-                          <option value="processing">Processing</option>
-                          <option value="shipped">Shipped</option>
-                          <option value="delivered">Delivered</option>
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
                         </select>
                       </div>
                     </div>
@@ -437,12 +445,17 @@ export default function AdminClient() {
                   </div>
                   <div>
                     <label className="text-[10px] font-bold uppercase tracking-[2px] opacity-40 mb-2 block">Image URL</label>
-                    <input 
+                    <input
                       className="w-full px-4 py-3 rounded-xl border outline-none font-montserrat text-sm"
                       style={{ background: "var(--bg-primary)", borderColor: "var(--border-subtle)", color: "var(--fg)" }}
                       value={newProduct.image}
                       onChange={e => setNewProduct({...newProduct, image: e.target.value})}
                     />
+                    {newProduct.image && (
+                      <div className="mt-2 rounded-xl overflow-hidden aspect-square w-full border" style={{ borderColor: "var(--border-subtle)" }}>
+                        <img src={newProduct.image} alt="Preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label className="text-[10px] font-bold uppercase tracking-[2px] opacity-40 mb-2 block">Stock Level</label>

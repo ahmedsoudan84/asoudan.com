@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
 import { useCart } from "@/lib/elite-diner/cart-store";
+import { addDinerOrder } from "@/lib/elite-diner/storage";
 
 export default function OrderClient() {
   const { items, addItem, updateQuantity, removeItem, getTotal, clearCart } = useCart();
@@ -25,8 +26,17 @@ export default function OrderClient() {
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
+    addDinerOrder({
+      id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+      customer: formData.name,
+      email: formData.email,
+      type: orderType,
+      items: items.map((i) => ({ name: i.name, price: i.price, quantity: i.quantity })),
+      total,
+      status: "Preparing",
+      date: new Date().toISOString().split("T")[0],
+    });
     setOrderComplete(true);
-    // In a real app, send data to backend or Stripe
   };
 
   if (orderComplete) {

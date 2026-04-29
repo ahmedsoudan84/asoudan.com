@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
+import { addReservation } from "@/lib/elite-diner/storage";
 
 const TIME_SLOTS = [
   { id: "12:00", label: "12:00 PM", type: "Lunch" },
@@ -37,6 +38,19 @@ export default function BookClient() {
   }
 
   const handleBooking = () => {
+    if (selectedDate && selectedTime) {
+      addReservation({
+        id: `RES-${Math.floor(1000 + Math.random() * 9000)}`,
+        name: details.name,
+        email: details.email,
+        date: selectedDate.toISOString().split("T")[0],
+        time: selectedTime,
+        partySize,
+        occasion: details.occasion,
+        status: "Confirmed",
+        createdAt: Date.now(),
+      });
+    }
     setIsBooked(true);
   };
 
