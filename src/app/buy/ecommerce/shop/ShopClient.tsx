@@ -8,6 +8,7 @@ import { EcomIcons } from "@/components/ecommerce/Icons";
 import ProductImage from "@/components/ecommerce/ProductImage";
 import {
   CATEGORY_META,
+  type Product,
   type ProductCategory,
 } from "@/lib/ecommerce/products";
 import { getAllProducts } from "@/lib/ecommerce/storage";
@@ -434,7 +435,7 @@ function ProductCard({
   product: p,
   onAdd,
 }: {
-  product: (typeof products)[number];
+  product: Product;
   onAdd: () => void;
 }) {
   const [justAdded, setJustAdded] = useState(false);

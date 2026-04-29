@@ -207,7 +207,7 @@ export default function AdminClient() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { label: "Total Sales", value: `£${orders.reduce((sum, o) => sum + o.total, 0).toLocaleString()}`, change: "+12.5%" },
-                { label: "Active Orders", value: orders.filter(o => o.status !== 'delivered').length, change: "Real-time" },
+                { label: "Active Orders", value: orders.filter(o => o.status !== 'Delivered').length, change: "Real-time" },
                 { label: "Total Products", value: products.length, change: "Live" }
               ].map((stat, i) => (
                 <div key={i} className="p-6 rounded-3xl border" style={{ background: "var(--bg-surface)", borderColor: "var(--border-subtle)" }}>

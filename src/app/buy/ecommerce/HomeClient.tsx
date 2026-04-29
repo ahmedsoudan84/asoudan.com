@@ -219,7 +219,7 @@ export default function HomeClient() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {(Object.keys(CATEGORY_META) as ProductCategory[]).map((cat, i) => {
               const meta = CATEGORY_META[cat];
-              const count = products.filter((p) => p.category === cat).length;
+              const count = allProducts.filter((p) => p.category === cat).length;
               return (
                 <motion.div
                   key={cat}
@@ -723,7 +723,7 @@ function NewArrivalCard({
   product: p,
   onAdd,
 }: {
-  product: (typeof products)[number];
+  product: Product;
   onAdd: () => void;
 }) {
   const [justAdded, setJustAdded] = useState(false);
