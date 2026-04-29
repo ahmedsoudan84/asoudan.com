@@ -390,13 +390,14 @@ export default function HomeClient() {
             >
               Book a Table
             </Link>
+            <Link
+              href="/buy/elite-diner/admin"
+              className="w-full sm:w-auto px-10 py-5 rounded-2xl border font-montserrat text-xs font-bold uppercase tracking-[2px] transition-all hover:scale-105"
+              style={{ borderColor: "var(--accent)", color: "var(--accent)" }}
+            >
+              Admin Panel
+            </Link>
           </div>
-          <Link
-            href="/buy/elite-diner/admin"
-            className="inline-block mt-10 font-montserrat text-[10px] uppercase tracking-[2px] font-bold opacity-50 hover:opacity-100 hover:text-accent transition"
-          >
-            Admin Panel →
-          </Link>
         </div>
       </section>
     </div>

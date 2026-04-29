@@ -418,13 +418,17 @@ export default function RealEstateHomeClient() {
             >
               Contact About Pricing
             </Link>
+            <Link
+              href="/buy/real-estate/admin"
+              className="px-8 py-3 rounded-xl font-montserrat text-sm font-semibold uppercase tracking-wider transition-all duration-300 border"
+              style={{
+                borderColor: "var(--accent)",
+                color: "var(--accent)",
+              }}
+            >
+              Admin Panel
+            </Link>
           </div>
-          <Link
-            href="/buy/real-estate/admin"
-            className="inline-block mt-10 font-montserrat text-[10px] uppercase tracking-[2px] font-bold opacity-50 hover:opacity-100 hover:text-accent transition"
-          >
-            Admin Panel →
-          </Link>
         </div>
       </section>
     </div>

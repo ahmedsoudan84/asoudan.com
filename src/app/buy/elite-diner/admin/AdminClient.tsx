@@ -136,7 +136,9 @@ export default function AdminClient() {
               <Icons.ChefHat className="w-7 h-7 text-accent" />
             </div>
             <h1 className="text-3xl font-montserrat font-black tracking-tight">Elite Diner Admin</h1>
-            <p className="text-sm mt-2 font-montserrat opacity-50">Enter password to access the kitchen panel</p>
+            <p className="text-xs mt-3 font-montserrat opacity-50">
+              Password: <code className="px-1.5 py-0.5 rounded text-[10px]" style={{ background: "var(--fg-06)", color: "var(--accent)" }}>elitediner2024</code>
+            </p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
@@ -161,7 +163,6 @@ export default function AdminClient() {
               Back to restaurant
             </Link>
           </div>
-          <p className="mt-4 text-[10px] text-center opacity-30 font-montserrat">Demo password: elitediner2024</p>
         </motion.div>
       </div>
     );

@@ -700,13 +700,17 @@ export default function HomeClient() {
               >
                 Meet the AI stylist
               </Link>
+              <Link
+                href="/buy/ecommerce/admin"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] border transition-all hover:scale-[1.03]"
+                style={{
+                  borderColor: "var(--accent)",
+                  color: "var(--accent)",
+                }}
+              >
+                Admin Panel
+              </Link>
             </div>
-            <Link
-              href="/buy/ecommerce/admin"
-              className="inline-block mt-10 font-montserrat text-[10px] uppercase tracking-[2px] font-bold opacity-50 hover:opacity-100 hover:text-accent transition"
-            >
-              Admin Panel →
-            </Link>
           </div>
         </div>
       </section>

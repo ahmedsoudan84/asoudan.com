@@ -108,7 +108,9 @@ export default function AdminClient() {
         >
           <div className="text-center mb-8">
             <h1 className="text-3xl font-montserrat font-black tracking-tight" style={{ color: "var(--fg)" }}>Oxford Admin</h1>
-            <p className="text-sm mt-2 font-montserrat" style={{ color: "var(--fg-40)" }}>Enter password to access the dashboard</p>
+            <p className="text-xs mt-3 font-montserrat" style={{ color: "var(--fg-40)" }}>
+              Password: <code className="px-1.5 py-0.5 rounded text-[10px]" style={{ background: "var(--fg-06)", color: "var(--accent)" }}>oxfordadmin2024</code>
+            </p>
           </div>
           
           <form onSubmit={handleLogin} className="space-y-4">
