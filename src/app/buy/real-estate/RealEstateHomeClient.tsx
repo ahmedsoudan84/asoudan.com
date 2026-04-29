@@ -408,6 +408,16 @@ export default function RealEstateHomeClient() {
               Live Demo
             </Link>
             <Link
+              href="/buy/real-estate/admin"
+              className="px-8 py-3 rounded-xl font-montserrat text-sm font-semibold uppercase tracking-wider transition-all duration-300 border"
+              style={{
+                borderColor: "var(--border-card)",
+                color: "var(--fg-60)",
+              }}
+            >
+              Admin Dashboard
+            </Link>
+            <Link
               href="/buy/real-estate/contact"
               className="px-8 py-3 rounded-xl font-montserrat text-sm font-semibold uppercase tracking-wider transition-all duration-300 border"
               style={{

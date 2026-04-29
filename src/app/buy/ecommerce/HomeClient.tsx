@@ -700,6 +700,16 @@ export default function HomeClient() {
               >
                 Meet the AI stylist
               </Link>
+              <Link
+                href="/buy/ecommerce/admin"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] border transition-all"
+                style={{
+                  borderColor: "var(--border-card)",
+                  color: "var(--fg-60)",
+                }}
+              >
+                Admin Dashboard
+              </Link>
             </div>
           </div>
         </div>
