@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { EcomIcons } from "@/components/ecommerce/Icons";
 import { useCart } from "@/lib/ecommerce/cart-store";
+import { addOrder, type Order } from "@/lib/ecommerce/storage";
 
 type Step = "cart" | "details" | "payment" | "confirmed";
 
@@ -50,8 +51,6 @@ export default function CartClient() {
       setStep("payment");
     }
     else if (step === "payment") {
-      // Save order to storage
-      const { addOrder, type Order } from "@/lib/ecommerce/storage";
       const order: Order = {
         id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
         customer: `${formData.firstName} ${formData.lastName}`,

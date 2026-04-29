@@ -9,6 +9,7 @@ import ProductImage from "@/components/ecommerce/ProductImage";
 import {
   CATEGORY_META,
   type ProductCategory,
+  type Product,
 } from "@/lib/ecommerce/products";
 import { getAllProducts } from "@/lib/ecommerce/storage";
 import { searchProducts, type SearchFilters } from "@/lib/ecommerce/smart-logic";
@@ -434,7 +435,7 @@ function ProductCard({
   product: p,
   onAdd,
 }: {
-  product: (typeof products)[number];
+  product: Product;
   onAdd: () => void;
 }) {
   const [justAdded, setJustAdded] = useState(false);
