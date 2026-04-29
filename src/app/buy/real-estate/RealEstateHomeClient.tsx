@@ -3,6 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
+import PricingSection from "@/components/buy/PricingSection";
+import { categories } from "@/lib/templates-data";
 import dynamic from "next/dynamic";
 const LondonSkylineParallax = dynamic(() => import("@/components/parallax/LondonSkylineParallax"), { ssr: false });
 
@@ -379,6 +381,18 @@ export default function RealEstateHomeClient() {
           ))}
         </div>
       </section>
+
+      {/* ── Pricing ──────────────────────────────────────── */}
+      {(() => {
+        const tpl = categories.find((c) => c.slug === "real-estate");
+        return tpl?.pricing ? (
+          <PricingSection
+            templateLabel="Real Estate"
+            templateSlug="real-estate"
+            tiers={tpl.pricing}
+          />
+        ) : null;
+      })()}
 
       {/* ── CTA ──────────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-12 text-center">

@@ -10,6 +10,8 @@ import { getAllProducts } from "@/lib/ecommerce/storage";
 import { OCCASION_BUNDLES, getBundleProducts } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
 import { useEffect } from "react";
+import PricingSection from "@/components/buy/PricingSection";
+import { categories } from "@/lib/templates-data";
 
 const HERO_CHIPS = [
   { label: "Gift under £150", query: "gift under 150" },
@@ -640,6 +642,19 @@ export default function HomeClient() {
           ))}
         </div>
       </section>
+
+      {/* ── Pricing ─────────────────────────────────────────── */}
+      {(() => {
+        const tpl = categories.find((c) => c.slug === "ecommerce");
+        return tpl?.pricing ? (
+          <PricingSection
+            templateLabel="Kurator (E-Commerce)"
+            templateSlug="ecommerce"
+            tiers={tpl.pricing}
+            contactHref="/buy/ecommerce/contact"
+          />
+        ) : null;
+      })()}
 
       {/* ── Bottom CTA ──────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-10">

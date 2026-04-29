@@ -208,16 +208,44 @@ export default function BuyCategoriesClient() {
                     ))}
                   </div>
 
+                  {isLive && cat.startingPrice && (
+                    <div
+                      className="mt-5 flex items-center justify-between gap-3 pt-5 border-t"
+                      style={{ borderColor: "var(--border-subtle)" }}
+                    >
+                      <div className="flex flex-col">
+                        <span
+                          className="text-[9px] font-montserrat font-bold uppercase tracking-[2px]"
+                          style={{ color: "var(--fg-40)" }}
+                        >
+                          From
+                        </span>
+                        <span
+                          className="font-montserrat text-xl font-black tracking-tight"
+                          style={{ color: "var(--fg)" }}
+                        >
+                          {cat.startingPrice}
+                        </span>
+                      </div>
+                      <span
+                        className="text-[10px] font-montserrat font-bold uppercase tracking-[1.5px] opacity-60 text-right"
+                        style={{ color: "var(--fg-50)" }}
+                      >
+                        Branded &amp;<br />deployed
+                      </span>
+                    </div>
+                  )}
+
                   {isLive && (
                     <div
-                      className="mt-6 text-center py-2.5 rounded-lg font-montserrat text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(0,241,241,0.2)]"
+                      className="mt-5 text-center py-2.5 rounded-lg font-montserrat text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(0,241,241,0.2)]"
                       style={{
                         background: "rgba(0,241,241,0.1)",
                         color: "var(--accent)",
                         border: "1px solid rgba(0,241,241,0.3)",
                       }}
                     >
-                      View Template &rarr;
+                      View Template &amp; Pricing &rarr;
                     </div>
                   )}
                 </div>
