@@ -1,6 +1,10 @@
+import { menuItems as staticMenuItems, type MenuItem } from "./menu-data";
+
 const RESERVATIONS_KEY = "elite-diner-reservations";
 const ORDERS_KEY = "elite-diner-orders";
 const SETTINGS_KEY = "elite-diner-settings";
+const CUSTOM_ITEMS_KEY = "elite-diner-custom-items";
+const AVAILABILITY_KEY = "elite-diner-availability";
 
 export interface Reservation {
   id: string;
@@ -86,4 +90,38 @@ export function getRestaurantSettings(): RestaurantSettings {
 
 export function saveRestaurantSettings(s: RestaurantSettings): void {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+}
+
+// ── Menu availability (per-item on/off toggle) ─────────────────
+export function getMenuAvailability(): Record<string, boolean> {
+  return safeGet<Record<string, boolean>>(AVAILABILITY_KEY, {});
+}
+
+export function setMenuAvailability(map: Record<string, boolean>): void {
+  localStorage.setItem(AVAILABILITY_KEY, JSON.stringify(map));
+}
+
+// ── Custom menu items (admin-added, localStorage-only) ─────────
+export function getCustomMenuItems(): MenuItem[] {
+  return safeGet<MenuItem[]>(CUSTOM_ITEMS_KEY, []);
+}
+
+export function addCustomMenuItem(item: MenuItem): void {
+  localStorage.setItem(CUSTOM_ITEMS_KEY, JSON.stringify([...getCustomMenuItems(), item]));
+}
+
+export function deleteCustomMenuItem(id: string): void {
+  localStorage.setItem(
+    CUSTOM_ITEMS_KEY,
+    JSON.stringify(getCustomMenuItems().filter((i) => i.id !== id))
+  );
+}
+
+/** Returns static + custom items, with unavailable ones filtered out.
+ *  Called by MenuClient so admin changes propagate to the public menu. */
+export function getAllMenuItems(): MenuItem[] {
+  if (typeof window === "undefined") return staticMenuItems;
+  const avail = getMenuAvailability();
+  const custom = getCustomMenuItems();
+  return [...staticMenuItems, ...custom].filter((item) => avail[item.slug] !== false);
 }

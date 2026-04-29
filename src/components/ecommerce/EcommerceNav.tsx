@@ -13,7 +13,6 @@ const NAV_LINKS = [
   { label: "AI Stylist", href: "/buy/ecommerce/ai-tools" },
   { label: "About", href: "/buy/ecommerce/about" },
   { label: "Contact", href: "/buy/ecommerce/contact" },
-  { label: "Admin", href: "/buy/ecommerce/admin" },
 ];
 
 export default function EcommerceNav() {

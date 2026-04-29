@@ -11,7 +11,6 @@ const TEMPLATE_NAV = [
   { label: "AI Tools", href: "/buy/real-estate/ai-tools" },
   { label: "About", href: "/buy/real-estate/about" },
   { label: "Contact", href: "/buy/real-estate/contact" },
-  { label: "Admin", href: "/buy/real-estate/admin" },
 ];
 
 export default function TopNav() {

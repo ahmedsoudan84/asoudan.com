@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
-import { menuItems, categoryLabels, dietaryFilters, type MenuItem } from "@/lib/elite-diner/menu-data";
+import { menuItems as staticMenuItems, categoryLabels, dietaryFilters, type MenuItem } from "@/lib/elite-diner/menu-data";
+import { getAllMenuItems } from "@/lib/elite-diner/storage";
 import { searchMenu } from "@/lib/elite-diner/smart-logic";
 import { useCart } from "@/lib/elite-diner/cart-store";
 
@@ -31,6 +32,10 @@ export default function MenuClient() {
   const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
   const [pulseId, setPulseId] = useState<string | null>(null);
   const addItem = useCart((state) => state.addItem);
+
+  // Load from localStorage so admin availability/custom items are reflected
+  const [liveItems, setLiveItems] = useState<MenuItem[]>(staticMenuItems);
+  useEffect(() => { setLiveItems(getAllMenuItems()); }, []);
 
   const handleAddToCart = useCallback(
     (item: MenuItem, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -68,7 +73,7 @@ export default function MenuClient() {
   );
 
   const filteredItems = useMemo(() => {
-    let results = searchMenu(query, menuItems);
+    let results = searchMenu(query, liveItems);
 
     if (activeCategory !== "all") {
       results = results.filter((item) => item.category === activeCategory);
