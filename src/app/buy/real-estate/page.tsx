@@ -10,14 +10,22 @@ export const metadata: Metadata = {
   description:
     "Branded estate-agent website with AI semantic property search, area insights, chatbot, and an admin portal. Productized service from £1,495 — branded, deployed, and live.",
   keywords: [
-    "estate agent website template",
-    "real estate website template",
+    "estate agent website template UK",
+    "buy estate agent website UK",
+    "estate agent website design UK",
+    "property website template UK",
+    "AI property search website",
+    "estate agency website UK",
+    "letting agent website UK",
     "London estate agent website",
-    "AI property search",
-    "property portal template",
+    "independent estate agent website",
+    "property portal website UK",
+    "Rightmove alternative UK",
+    "Zoopla alternative UK",
+    "estate agent web design London",
     "Next.js real estate template",
-    "estate agency web design",
-    "letting agent website",
+    "property website cost UK",
+    "small estate agency website UK",
   ],
   alternates: { canonical: "https://asoudan.com/buy/real-estate" },
   openGraph: {
@@ -28,10 +36,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: tpl?.coverImage || "/images/og-image.jpg",
+        url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop",
         width: 1200,
         height: 630,
-        alt: "AIEstate real estate template",
+        alt: "AIEstate — Premium London Estate Agent Website Template",
       },
     ],
   },
@@ -40,7 +48,7 @@ export const metadata: Metadata = {
     title: "AIEstate — Premium London Estate Agent Website Template",
     description:
       "AI property search, area insights, admin portal. From £1,495 — branded and deployed.",
-    images: [tpl?.coverImage || "/images/og-image.jpg"],
+    images: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop"],
   },
 };
 
@@ -65,12 +73,26 @@ const productJsonLd = {
   },
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://asoudan.com" },
+    { "@type": "ListItem", position: 2, name: "Templates", item: "https://asoudan.com/buy" },
+    { "@type": "ListItem", position: 3, name: "AIEstate — Estate Agent Template", item: "https://asoudan.com/buy/real-estate" },
+  ],
+};
+
 export default function RealEstateHomePage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <script
         type="application/ld+json"
