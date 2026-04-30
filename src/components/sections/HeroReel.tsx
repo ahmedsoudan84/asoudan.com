@@ -2,132 +2,199 @@
 
 import styles from "./HeroReel.module.css";
 
+const d = (s: number): React.CSSProperties => ({ animationDelay: `${s}s` });
+
 export function HeroReel() {
   return (
     <div className={styles.reel} aria-hidden="true">
       <svg viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <radialGradient id="reelAccentGlow" cx="50%" cy="46%" r="38%">
-            <stop offset="0" stopColor="rgba(var(--accent-rgb),0.16)" />
+          <radialGradient id="reelGlow" cx="50%" cy="55%" r="35%">
+            <stop offset="0" stopColor="rgba(var(--accent-rgb),0.18)" />
             <stop offset="1" stopColor="rgba(var(--accent-rgb),0)" />
           </radialGradient>
+          <marker id="reelArrow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+            <path d="M0,0.5 L0,4.5 L4.5,2.5 z" fill="var(--reel-stroke)" opacity="0.45" />
+          </marker>
         </defs>
 
-        {/* ── Beat 1 · Construction guides — far layer, slow drift ── */}
+        {/* ── Beat 1 · Sparse dot grid — far layer ── */}
         <g className={styles.layerFar}>
           <g className={styles.beatConstruct}>
-            {/* Center vertical axis */}
-            <line x1="200" y1="0" x2="200" y2="900"
-                  stroke="var(--reel-stroke)" strokeWidth="0.35"
-                  strokeDasharray="3 11" opacity="0.3" />
-            {/* Horizontal axis */}
-            <line x1="0" y1="397" x2="400" y2="397"
-                  stroke="var(--reel-stroke)" strokeWidth="0.35"
-                  strokeDasharray="3 11" opacity="0.3" />
-            {/* Diagonal gesture — rough sketch feel */}
-            <line x1="22" y1="172" x2="378" y2="618"
-                  stroke="var(--reel-stroke)" strokeWidth="0.25"
-                  strokeDasharray="2 16" opacity="0.12" />
+            {([
+              [136,216],[176,216],[216,216],[256,216],[296,216],
+              [136,256],[296,256],
+              [136,296],[176,296],[216,296],[256,296],[296,296],
+              [136,376],[216,376],[296,376],
+              [136,416],[176,416],[256,416],[296,416],
+              [136,456],[216,456],[296,456],
+              [136,496],[176,496],[216,496],[256,496],
+              [136,536],[296,536],
+              [176,576],[216,576],[256,576],
+            ] as [number, number][]).map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r="1" fill="var(--reel-stroke)" opacity="0.22" />
+            ))}
+            {/* Two faint guide lines */}
+            <line x1="90" y1="336" x2="310" y2="336"
+                  stroke="var(--reel-stroke)" strokeWidth="0.3" strokeDasharray="2 9" opacity="0.16" />
+            <line x1="216" y1="180" x2="216" y2="620"
+                  stroke="var(--reel-stroke)" strokeWidth="0.3" strokeDasharray="2 9" opacity="0.16" />
           </g>
         </g>
 
-        {/* ── Beat 2 · Card wireframe — mid layer ── */}
+        {/* ── Beat 2 · Scattered micro-elements — mid layer, staggered ── */}
         <g className={styles.layerMid}>
-          {/* Card fill — fades in with wireframe beat */}
-          <rect x="72" y="215" width="256" height="365" rx="6"
-                fill="var(--reel-fill)"
-                className={styles.beatWireframe} />
-          {/* Card border — draws in along its perimeter */}
-          <rect x="72" y="215" width="256" height="365" rx="6"
-                fill="none" stroke="var(--reel-stroke)" strokeWidth="1"
-                className={styles.drawIn} />
 
-          <g className={styles.beatWireframe}>
-            {/* Avatar circle */}
-            <circle cx="200" cy="322" r="40"
+          {/* Toggle (off) */}
+          <g className={styles.beatWireframe} style={d(0)}>
+            <rect x="112" y="226" width="40" height="20" rx="10"
+                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <circle cx="122" cy="236" r="7"
                     fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.75" />
-            {/* Head */}
-            <circle cx="200" cy="311" r="13"
-                    fill="var(--reel-stroke)" opacity="0.2" />
-            {/* Shoulders */}
-            <path d="M168,347 a32,22 0 0 1 64,0"
-                  fill="var(--reel-stroke)" opacity="0.18" />
-
-            {/* Name bar */}
-            <rect x="153" y="378" width="94" height="7" rx="2"
-                  fill="var(--reel-stroke)" opacity="0.5" />
-            {/* Role bar */}
-            <rect x="168" y="393" width="64" height="4" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.26" />
-
-            {/* Divider */}
-            <line x1="92" y1="418" x2="308" y2="418"
-                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.2" />
-
-            {/* Content lines — two only, breathing room */}
-            <rect x="92" y="432" width="172" height="4" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.18" />
-            <rect x="92" y="444" width="128" height="4" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.18" />
           </g>
+
+          {/* Input field with cursor */}
+          <g className={styles.beatWireframe} style={d(0.28)}>
+            <rect x="200" y="222" width="110" height="22" rx="3"
+                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <line x1="212" y1="229" x2="212" y2="237"
+                  stroke="var(--reel-stroke)" strokeWidth="1" opacity="0.55" />
+          </g>
+
+          {/* Chip */}
+          <g className={styles.beatWireframe} style={d(0.48)}>
+            <rect x="112" y="276" width="56" height="18" rx="9"
+                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.8" />
+            <rect x="124" y="284" width="32" height="3.5" rx="1"
+                  fill="var(--reel-stroke)" opacity="0.32" />
+          </g>
+
+          {/* Small card (top-right cluster) */}
+          <g className={styles.beatWireframe} style={d(0.18)}>
+            <rect x="262" y="268" width="82" height="58" rx="4"
+                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            {/* thumbnail strip */}
+            <rect x="272" y="277" width="62" height="16" rx="2"
+                  fill="var(--reel-stroke)" opacity="0.14" />
+            {/* title bar */}
+            <rect x="272" y="300" width="44" height="5" rx="1"
+                  fill="var(--reel-stroke)" opacity="0.38" />
+            {/* sub bar */}
+            <rect x="272" y="311" width="32" height="3.5" rx="1"
+                  fill="var(--reel-stroke)" opacity="0.2" />
+          </g>
+
+          {/* Radio pair */}
+          <g className={styles.beatWireframe} style={d(0.62)}>
+            {/* selected */}
+            <circle cx="116" cy="384" r="7"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <circle cx="116" cy="384" r="2.5"
+                    fill="var(--reel-stroke)" opacity="0.65" />
+            <rect x="129" y="381" width="34" height="4" rx="1"
+                  fill="var(--reel-stroke)" opacity="0.28" />
+            {/* unselected */}
+            <circle cx="116" cy="404" r="7"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <rect x="129" y="401" width="26" height="4" rx="1"
+                  fill="var(--reel-stroke)" opacity="0.28" />
+          </g>
+
+          {/* Progress bar */}
+          <g className={styles.beatWireframe} style={d(0.14)}>
+            {/* track */}
+            <rect x="196" y="384" width="152" height="7" rx="3.5"
+                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.7" />
+            {/* 42% fill — wireframe hatch */}
+            <rect x="196" y="384" width="64" height="7" rx="3.5"
+                  fill="var(--reel-stroke)" opacity="0.28" />
+          </g>
+
+          {/* Avatar group — 3 overlapping */}
+          <g className={styles.beatWireframe} style={d(0.52)}>
+            <circle cx="194" cy="456" r="16"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <circle cx="210" cy="456" r="16"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <circle cx="226" cy="456" r="16"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            {/* subtle head marks */}
+            <circle cx="194" cy="450" r="5" fill="var(--reel-stroke)" opacity="0.16" />
+            <circle cx="210" cy="450" r="5" fill="var(--reel-stroke)" opacity="0.16" />
+            <circle cx="226" cy="450" r="5" fill="var(--reel-stroke)" opacity="0.16" />
+          </g>
+
+          {/* Flow — 3 nodes with connectors */}
+          <g className={styles.beatWireframe} style={d(0.76)}>
+            <circle cx="130" cy="516" r="9"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <line x1="139" y1="516" x2="172" y2="516"
+                  stroke="var(--reel-stroke)" strokeWidth="0.65" opacity="0.4"
+                  markerEnd="url(#reelArrow)" />
+            <circle cx="181" cy="516" r="9"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+            <line x1="190" y1="516" x2="223" y2="516"
+                  stroke="var(--reel-stroke)" strokeWidth="0.65" opacity="0.4"
+                  markerEnd="url(#reelArrow)" />
+            <circle cx="232" cy="516" r="9"
+                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
+          </g>
+
         </g>
 
-        {/* ── Beat 2.5 · Anchor points + measurements — near layer ── */}
+        {/* ── Beat 2.5 · Spacing annotations — near layer ── */}
         <g className={styles.layerNear}>
           <g className={styles.beatMeasure}>
-            {/* Corner crosshairs — TL */}
-            <line x1="61" y1="215" x2="83" y2="215" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <line x1="72" y1="204" x2="72" y2="226" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <circle cx="72" cy="215" r="2.5" fill="none" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            {/* TR */}
-            <line x1="317" y1="215" x2="339" y2="215" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <line x1="328" y1="204" x2="328" y2="226" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <circle cx="328" cy="215" r="2.5" fill="none" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            {/* BL */}
-            <line x1="61" y1="580" x2="83" y2="580" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <line x1="72" y1="569" x2="72" y2="591" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <circle cx="72" cy="580" r="2.5" fill="none" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            {/* BR */}
-            <line x1="317" y1="580" x2="339" y2="580" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <line x1="328" y1="569" x2="328" y2="591" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
-            <circle cx="328" cy="580" r="2.5" fill="none" stroke="var(--reel-stroke)" strokeWidth="0.7" opacity="0.6" />
+            {/* Gap bracket: toggle ↔ input */}
+            <line x1="153" y1="236" x2="199" y2="236"
+                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
+            <line x1="153" y1="233" x2="153" y2="239"
+                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
+            <line x1="199" y1="233" x2="199" y2="239"
+                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
+            <text x="167" y="231" fontFamily="'JetBrains Mono', monospace" fontSize="6.5"
+                  fill="var(--reel-stroke)" opacity="0.4" letterSpacing="0.04em">8</text>
 
-            {/* Height dimension — right of card */}
-            <line x1="350" y1="215" x2="350" y2="580" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.4" />
-            <line x1="346" y1="215" x2="354" y2="215" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.4" />
-            <line x1="346" y1="580" x2="354" y2="580" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.4" />
-            <text x="357" y="400" fontFamily="'JetBrains Mono', monospace" fontSize="7.5"
-                  fill="var(--reel-stroke)" opacity="0.45" letterSpacing="0.03em">365</text>
+            {/* Gap bracket: radio rows */}
+            <line x1="170" y1="384" x2="170" y2="404"
+                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
+            <line x1="167" y1="384" x2="173" y2="384"
+                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
+            <line x1="167" y1="404" x2="173" y2="404"
+                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
+            <text x="175" y="396" fontFamily="'JetBrains Mono', monospace" fontSize="6.5"
+                  fill="var(--reel-stroke)" opacity="0.4" letterSpacing="0.04em">20</text>
 
-            {/* Width dimension — below card */}
-            <line x1="72" y1="596" x2="328" y2="596" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.4" />
-            <line x1="72" y1="592" x2="72" y2="600" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.4" />
-            <line x1="328" y1="592" x2="328" y2="600" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.4" />
-            <text x="188" y="612" fontFamily="'JetBrains Mono', monospace" fontSize="7.5"
-                  fill="var(--reel-stroke)" opacity="0.45" letterSpacing="0.03em">256</text>
+            {/* Center crosshair on avatar group */}
+            <line x1="200" y1="446" x2="220" y2="446"
+                  stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.32" />
+            <line x1="210" y1="436" x2="210" y2="466"
+                  stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.32" />
+            <circle cx="210" cy="456" r="2"
+                    fill="none" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.32" />
           </g>
         </g>
 
-        {/* ── Beat 3 · Single accent moment: the CTA button ── */}
+        {/* ── Beat 3 · Single accent: CTA pill ── */}
         <g className={styles.layerMid}>
           {/* Wireframe state */}
-          <rect x="92" y="468" width="216" height="44" rx="22"
-                fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="1"
-                className={styles.beatWireframe} />
-          {/* The ONE cyan fill — apex of the loop */}
-          <rect x="92" y="468" width="216" height="44" rx="22"
+          <rect x="162" y="564" width="92" height="28" rx="14"
+                fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.9"
+                className={styles.beatWireframe} style={d(0.62)} />
+          {/* The one cyan fill */}
+          <rect x="162" y="564" width="92" height="28" rx="14"
                 fill="var(--accent)"
                 className={styles.beatAccentFill} />
-          {/* Label bar on accent button */}
-          <rect x="172" y="488" width="56" height="5" rx="2"
+          {/* Label bar */}
+          <rect x="191" y="576" width="34" height="4" rx="1"
                 fill="var(--bg-primary)"
                 className={styles.beatAccentLabel} />
         </g>
 
-        {/* Ambient glow — blooms only at accent apex */}
+        {/* Glow blooms at accent apex only */}
         <rect className={styles.beatAccentGlow}
-              x="0" y="250" width="400" height="430"
-              fill="url(#reelAccentGlow)" />
+              x="0" y="380" width="400" height="320"
+              fill="url(#reelGlow)" />
       </svg>
     </div>
   );

@@ -53,22 +53,6 @@
   100%     { opacity: 0; }
 }
 
-/* Card border draws in along its perimeter (2*(256+365) ≈ 1300) */
-
-.drawIn {
-  stroke-dasharray: 1300;
-  animation: drawIn var(--reel-loop) ease-out infinite;
-}
-
-@keyframes drawIn {
-  0%, 28%  { stroke-dashoffset: 1300; opacity: 0; }
-  32%      { stroke-dashoffset: 1300; opacity: 1; }
-  50%      { stroke-dashoffset: 0; }
-  74%      { stroke-dashoffset: 0;    opacity: 1; }
-  88%      { stroke-dashoffset: 0;    opacity: 0; }
-  100%     { stroke-dashoffset: 1300; opacity: 0; }
-}
-
 /* ── Beat 2.5: Anchor points + measurement marks ── */
 
 .beatMeasure { animation: beatMeasure var(--reel-loop) ease-in-out infinite; }
@@ -119,7 +103,6 @@
   .layerNear,
   .beatConstruct,
   .beatWireframe,
-  .drawIn,
   .beatMeasure,
   .beatAccentFill,
   .beatAccentLabel,
@@ -127,9 +110,8 @@
     animation: none !important;
   }
 
-  .beatWireframe  { opacity: 0.85 !important; }
-  .beatMeasure    { opacity: 0.6  !important; }
-  .drawIn         { stroke-dashoffset: 0 !important; opacity: 0.85 !important; }
+  .beatWireframe { opacity: 0.85 !important; }
+  .beatMeasure   { opacity: 0.6  !important; }
 
   .beatConstruct,
   .beatAccentFill,
