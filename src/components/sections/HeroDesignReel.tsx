@@ -32,13 +32,36 @@ function useCycle(startMs: number, showMs: number, hideMs: number) {
   return on;
 }
 
-// ── Entry/exit variants per element (rotation differs) ──────────
-const variantsFor = (rot: number) => ({
-  hidden:  { opacity: 0, scale: 0.38, y: 14, rotate: 0 },
-  visible: { opacity: 1, scale: 1, y: 0, rotate: rot,
-    transition: { type: "spring" as const, stiffness: 260, damping: 19 } },
-  exit:    { opacity: 0, scale: 0.5, y: -10, rotate: 0,
-    transition: { duration: 0.28, ease: [0.4, 0, 1, 1] as [number, number, number, number] } },
+// ── Entry/exit variants per element (rotation + glow color differ) ─
+// Pop in from far away (small + blurred), settle, then on exit
+// rocket TOWARD the viewer — scale way up while fading + blurring out.
+const glow = (g: string) =>
+  `drop-shadow(0 0 16px ${g}) drop-shadow(0 8px 28px rgba(0,0,0,0.55))`;
+
+const variantsFor = (rot: number, g: string) => ({
+  hidden: {
+    opacity: 0, scale: 0.18, y: 28, rotate: 0,
+    filter: `blur(8px) ${glow(g)}`,
+  },
+  visible: {
+    opacity: 1, scale: 1, y: 0, rotate: rot,
+    filter: `blur(0px) ${glow(g)}`,
+    transition: {
+      scale:   { type: "spring" as const, stiffness: 320, damping: 16, mass: 0.9 },
+      y:       { type: "spring" as const, stiffness: 320, damping: 18 },
+      rotate:  { type: "spring" as const, stiffness: 220, damping: 14 },
+      opacity: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+      filter:  { duration: 0.55, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+    },
+  },
+  exit: {
+    opacity: 0, scale: 2.6, y: -24, rotate: 0,
+    filter: `blur(14px) ${glow(g)}`,
+    transition: {
+      duration: 0.65,
+      ease: [0.55, 0, 0.85, 0.2] as [number, number, number, number],
+    },
+  },
 });
 
 // ── Shell: AnimatePresence + colored glow + breathing float ─────
@@ -59,12 +82,8 @@ function Shell({
       {on && (
         <motion.div
           className="absolute"
-          style={{
-            ...style,
-            willChange: "transform, filter",
-            filter: `drop-shadow(0 0 16px ${theme.g}) drop-shadow(0 8px 28px rgba(0,0,0,0.55))`,
-          }}
-          variants={variantsFor(rot)}
+          style={{ ...style, willChange: "transform, filter" }}
+          variants={variantsFor(rot, theme.g)}
           initial="hidden"
           animate="visible"
           exit="exit"
