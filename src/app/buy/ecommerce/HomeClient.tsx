@@ -659,7 +659,7 @@ export default function HomeClient() {
       })()}
 
       {/* ── FAQ ─────────────────────────────────────────────── */}
-      <FAQSection items={ECOMMERCE_FAQ} contactHref="/buy/ecommerce/contact" />
+      <FAQSection items={ECOMMERCE_FAQ} templateSlug="ecommerce" />
 
       {/* ── Bottom CTA ──────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-10">

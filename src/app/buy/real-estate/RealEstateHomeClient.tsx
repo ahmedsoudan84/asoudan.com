@@ -397,7 +397,7 @@ export default function RealEstateHomeClient() {
       })()}
 
       {/* ── FAQ ──────────────────────────────────────────── */}
-      <FAQSection items={REAL_ESTATE_FAQ} contactHref="/buy/real-estate/contact" />
+      <FAQSection items={REAL_ESTATE_FAQ} templateSlug="real-estate" />
 
       {/* ── CTA ──────────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-12 text-center">

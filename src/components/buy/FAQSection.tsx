@@ -11,14 +11,20 @@ export interface FAQItem {
 
 interface FAQSectionProps {
   items: FAQItem[];
-  contactHref: string;
+  templateSlug: string;
+  /**
+   * @deprecated Pass `templateSlug` instead. The CTA now links to
+   * `/buy/contact?template=<slug>` so enquiries land on the purchase form.
+   */
+  contactHref?: string;
 }
 
 /**
  * Collapsible FAQ section. Pair with `buildFAQJsonLd(items)` from
  * `@/lib/seo/faq` in the page server component to emit FAQPage schema.
  */
-export default function FAQSection({ items, contactHref }: FAQSectionProps) {
+export default function FAQSection({ items, templateSlug }: FAQSectionProps) {
+  const contactHref = `/buy/contact?template=${encodeURIComponent(templateSlug)}`;
   const [open, setOpen] = useState<number | null>(0);
 
   return (

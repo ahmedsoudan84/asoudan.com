@@ -8,7 +8,12 @@ interface PricingSectionProps {
   templateLabel: string;
   templateSlug: string;
   tiers: PricingTier[];
-  /** Optional: override the contact link (defaults to /buy/<slug>/contact) */
+  /**
+   * @deprecated Kept for backwards compatibility. Per-tier links are now
+   * generated automatically as `/buy/contact?template=<slug>&tier=<name>`
+   * so the visitor lands on the buy-the-template form rather than the
+   * demo brand's contact page.
+   */
   contactHref?: string;
 }
 
@@ -33,9 +38,9 @@ export default function PricingSection({
   templateLabel,
   templateSlug,
   tiers,
-  contactHref,
 }: PricingSectionProps) {
-  const href = contactHref || `/buy/${templateSlug}/contact`;
+  const buildHref = (tierName: string) =>
+    `/buy/contact?template=${encodeURIComponent(templateSlug)}&tier=${encodeURIComponent(tierName)}`;
 
   return (
     <section
@@ -156,7 +161,7 @@ export default function PricingSection({
                 </ul>
 
                 <Link
-                  href={href}
+                  href={buildHref(tier.name)}
                   className="mt-8 block text-center px-6 py-3.5 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all hover:scale-[1.02] active:scale-[0.98]"
                   style={
                     isHighlight

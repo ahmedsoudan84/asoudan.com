@@ -380,7 +380,7 @@ export default function HomeClient() {
       })()}
 
       {/* ── FAQ ─────────────────────────────────────────── */}
-      <FAQSection items={ELITE_DINER_FAQ} contactHref="/buy/elite-diner/contact" />
+      <FAQSection items={ELITE_DINER_FAQ} templateSlug="elite-diner" />
 
       {/* ── Bottom CTA ───────────────────────────────────── */}
       <section className="py-32 px-6">
