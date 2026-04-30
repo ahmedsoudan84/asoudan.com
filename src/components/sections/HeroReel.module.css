@@ -1,0 +1,82 @@
+/* Hero reel — locked: Pixel rain (Reel C).
+   Reuses --accent and --accent-rgb from src/app/globals.css.
+   Pauses on prefers-reduced-motion. */
+
+:root,
+[data-theme="dark"] {
+  --reel-blend:   overlay;
+  --reel-opacity: 1;
+  --reel-loop:    7.7s;
+  --reel-stroke:  rgba(255, 255, 255, 0.85);
+  --reel-fill:    rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] {
+  --reel-blend:   overlay;
+  --reel-opacity: 0.55;
+  --reel-stroke:  rgba(22, 25, 42, 0.78);
+  --reel-fill:    rgba(22, 25, 42, 0.05);
+}
+
+.reel {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: var(--reel-blend);
+  opacity: var(--reel-opacity);
+  transition: opacity 0.4s ease;
+}
+
+.reel svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stream {
+  animation: reel-fall var(--reel-loop) linear infinite;
+}
+
+.crystal {
+  transform-origin: center;
+  animation: reel-form var(--reel-loop) cubic-bezier(0.6, 0, 0.2, 1) infinite;
+}
+
+.pulse {
+  animation: reel-pulse var(--reel-loop) ease-in-out infinite;
+}
+
+@keyframes reel-fall {
+  0%   { transform: translateY(-30%); opacity: 0; }
+  10%  { opacity: 0.8; }
+  60%  { opacity: 0.4; }
+  100% { transform: translateY(110%); opacity: 0; }
+}
+
+@keyframes reel-form {
+  0%, 35%  { transform: scale(0);    opacity: 0; }
+  50%      { transform: scale(1.05); opacity: 1; }
+  60%      { transform: scale(1); }
+  85%      { transform: scale(1);    opacity: 1; }
+  95%      { transform: scale(0);    opacity: 0; }
+  100%     {                          opacity: 0; }
+}
+
+@keyframes reel-pulse {
+  0%, 100% { opacity: 0; }
+  45%, 90% { opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stream,
+  .crystal,
+  .pulse {
+    animation: none !important;
+  }
+  .crystal { transform: none !important; opacity: 0.85 !important; }
+  .stream  { opacity: 0 !important; }
+  .pulse   { opacity: 0.25 !important; }
+}

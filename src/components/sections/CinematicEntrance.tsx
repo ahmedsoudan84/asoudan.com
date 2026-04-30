@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
+import { HeroReel } from "./HeroReel";
 
 /* ── Glitch text effect ── */
 function GlitchText({ text, className }: { text: string; className?: string }) {
@@ -256,6 +257,7 @@ export default function CinematicEntrance() {
                   className="object-contain object-bottom drop-shadow-[0_0_60px_rgba(61,155,155,0.08)]"
                   priority
                 />
+                <HeroReel />
               </div>
             </motion.div>
 
