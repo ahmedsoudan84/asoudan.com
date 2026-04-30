@@ -10,6 +10,10 @@ import { getAllProducts } from "@/lib/ecommerce/storage";
 import { OCCASION_BUNDLES, getBundleProducts } from "@/lib/ecommerce/smart-logic";
 import { useCart } from "@/lib/ecommerce/cart-store";
 import { useEffect } from "react";
+import PricingSection from "@/components/buy/PricingSection";
+import FAQSection from "@/components/buy/FAQSection";
+import { ECOMMERCE_FAQ } from "@/lib/buy/faqs";
+import { categories } from "@/lib/templates-data";
 
 const HERO_CHIPS = [
   { label: "Gift under £150", query: "gift under 150" },
@@ -641,6 +645,22 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* ── Pricing ─────────────────────────────────────────── */}
+      {(() => {
+        const tpl = categories.find((c) => c.slug === "ecommerce");
+        return tpl?.pricing ? (
+          <PricingSection
+            templateLabel="Kurator (E-Commerce)"
+            templateSlug="ecommerce"
+            tiers={tpl.pricing}
+            contactHref="/buy/ecommerce/contact"
+          />
+        ) : null;
+      })()}
+
+      {/* ── FAQ ─────────────────────────────────────────────── */}
+      <FAQSection items={ECOMMERCE_FAQ} templateSlug="ecommerce" />
+
       {/* ── Bottom CTA ──────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-10">
         <div
@@ -699,6 +719,16 @@ export default function HomeClient() {
                 }}
               >
                 Meet the AI stylist
+              </Link>
+              <Link
+                href="/buy/ecommerce/admin"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2.5px] border transition-all hover:scale-[1.03]"
+                style={{
+                  borderColor: "var(--accent)",
+                  color: "var(--accent)",
+                }}
+              >
+                Admin Panel
               </Link>
             </div>
           </div>

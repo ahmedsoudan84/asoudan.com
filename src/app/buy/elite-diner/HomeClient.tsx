@@ -5,6 +5,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Icons } from "@/components/elite-diner/Icons";
 import { menuItems } from "@/lib/elite-diner/menu-data";
+import PricingSection from "@/components/buy/PricingSection";
+import FAQSection from "@/components/buy/FAQSection";
+import { ELITE_DINER_FAQ } from "@/lib/buy/faqs";
+import { categories } from "@/lib/templates-data";
 
 const HERO_CHIPS = [
   { label: "Date Night", query: "romantic" },
@@ -363,6 +367,21 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* ── Pricing ─────────────────────────────────────── */}
+      {(() => {
+        const tpl = categories.find((c) => c.slug === "elite-diner");
+        return tpl?.pricing ? (
+          <PricingSection
+            templateLabel="Restaurant"
+            templateSlug="elite-diner"
+            tiers={tpl.pricing}
+          />
+        ) : null;
+      })()}
+
+      {/* ── FAQ ─────────────────────────────────────────── */}
+      <FAQSection items={ELITE_DINER_FAQ} templateSlug="elite-diner" />
+
       {/* ── Bottom CTA ───────────────────────────────────── */}
       <section className="py-32 px-6">
         <div className="max-w-[800px] mx-auto text-center">
@@ -389,6 +408,13 @@ export default function HomeClient() {
               style={{ borderColor: "var(--secondary)", color: "var(--secondary)", boxShadow: "0 0 0 1px rgba(var(--secondary-rgb),0.1), 0 0 18px rgba(var(--secondary-rgb),0.15)" }}
             >
               Book a Table
+            </Link>
+            <Link
+              href="/buy/elite-diner/admin"
+              className="w-full sm:w-auto px-10 py-5 rounded-2xl border font-montserrat text-xs font-bold uppercase tracking-[2px] transition-all hover:scale-105"
+              style={{ borderColor: "var(--accent)", color: "var(--accent)" }}
+            >
+              Admin Panel
             </Link>
           </div>
         </div>

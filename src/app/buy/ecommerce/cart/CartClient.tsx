@@ -51,7 +51,6 @@ export default function CartClient() {
       setStep("payment");
     }
     else if (step === "payment") {
-      // Save order to storage
       const order: Order = {
         id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
         customer: `${formData.firstName} ${formData.lastName}`,

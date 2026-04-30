@@ -117,6 +117,60 @@ export default function RootLayout({
             }),
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Ahmed Soudan — Website Templates & Design",
+              "description": "Done-for-you branded website templates for restaurants, estate agents, and e-commerce businesses. AI features, admin panel, branding, content, and deployment included. From £1,495.",
+              "url": "https://asoudan.com/buy",
+              "priceRange": "£1,495–£4,995",
+              "currenciesAccepted": "GBP",
+              "areaServed": [
+                { "@type": "Country", "name": "United Kingdom" },
+                { "@type": "Country", "name": "Ireland" }
+              ],
+              "serviceType": [
+                "Website Design",
+                "Website Development",
+                "Brand Identity",
+                "Restaurant Website",
+                "Estate Agent Website",
+                "E-Commerce Website"
+              ],
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Premium Website Templates",
+                "url": "https://asoudan.com/buy"
+              },
+              "sameAs": [
+                "https://linkedin.com/in/ahmedsoudan"
+              ]
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Ahmed Soudan",
+              "url": "https://asoudan.com",
+              "description": "Portfolio and premium website templates by Ahmed Soudan — Digital Product Designer.",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://asoudan.com/buy?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            }),
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col font-montserrat">
         <ThemeProvider>

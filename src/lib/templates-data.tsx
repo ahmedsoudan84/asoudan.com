@@ -2,6 +2,14 @@ import React from "react";
 
 export type TemplateStatus = "live" | "coming-soon";
 
+export interface PricingTier {
+  name: string;
+  price: string;
+  tagline: string;
+  features: string[];
+  highlight?: boolean;
+}
+
 export interface TemplateCategory {
   slug: string | null;
   title: string;
@@ -11,6 +19,59 @@ export interface TemplateCategory {
   status: TemplateStatus;
   coverImage: string | null;
   icon: React.ReactNode;
+  startingPrice?: string;
+  pricing?: PricingTier[];
+}
+
+const COMMON_FEATURES_STARTER = [
+  "Full source code, your repo",
+  "Your branding: logo, colours, typography",
+  "Custom copy across all pages",
+  "Deploy to Vercel on your domain",
+  "30 days post-launch bug-fix support",
+];
+
+const COMMON_FEATURES_STUDIO = [
+  "Everything in Starter",
+  "Premium image swap (AI-generated or stock)",
+  "Up to 30 catalogue / listing imports",
+  "2 rounds of design revisions",
+  "Custom domain + transactional email setup",
+  "Analytics & SEO baseline (sitemap, OG, schema)",
+  "Light Google Business Profile setup",
+];
+
+const COMMON_FEATURES_BESPOKE = [
+  "Everything in Studio",
+  "Bespoke features & integrations (Stripe, CRM, calendars…)",
+  "Full content production (photography, copywriting)",
+  "Multi-language or multi-region setup",
+  "3 months priority support & iteration",
+  "Quarterly performance & SEO check-in",
+];
+
+function tiersFor(domainStarterFeature: string, domainStudioFeature: string): PricingTier[] {
+  return [
+    {
+      name: "Starter",
+      price: "£1,495",
+      tagline: "Your brand on the live template, deployed to your domain.",
+      features: [domainStarterFeature, ...COMMON_FEATURES_STARTER],
+    },
+    {
+      name: "Studio",
+      price: "£2,995",
+      tagline: "Done-for-you launch with content and SEO essentials.",
+      features: [domainStudioFeature, ...COMMON_FEATURES_STUDIO],
+      highlight: true,
+    },
+    {
+      name: "Bespoke",
+      price: "From £4,995",
+      tagline: "Custom features, integrations, and full content production.",
+      features: COMMON_FEATURES_BESPOKE,
+    },
+  ];
 }
 
 export const categories: TemplateCategory[] = [
@@ -22,6 +83,11 @@ export const categories: TemplateCategory[] = [
       "Elegant menu, online ordering, table booking, AI recommender & chatbot. Fully client-side — no API keys ever.",
     tags: ["Next.js 15", "AI-Powered", "Online Ordering", "Reservations"],
     status: "live",
+    startingPrice: "£1,495",
+    pricing: tiersFor(
+      "Full menu, ordering, and reservations flow",
+      "Up to 30 dishes uploaded with photos, allergens, and pairings",
+    ),
     coverImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -41,6 +107,11 @@ export const categories: TemplateCategory[] = [
       "Semantic property search, AI chatbot, area insights, admin portal. Fully client-side — no API keys required.",
     tags: ["Next.js 15", "AI-Powered", "Admin Portal", "12 Listings"],
     status: "live",
+    startingPrice: "£1,495",
+    pricing: tiersFor(
+      "Listings, semantic search, and admin portal",
+      "Up to 30 properties imported with photos, floor plans, and area data",
+    ),
     coverImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -58,6 +129,11 @@ export const categories: TemplateCategory[] = [
       "Semantic product search, AI stylist with occasion bundles, persistent cart, 3-step checkout. Twenty-two curated products across six categories. Fully client-side.",
     tags: ["Next.js 15", "AI Stylist", "Cart + Checkout", "22 Products"],
     status: "live",
+    startingPrice: "£1,495",
+    pricing: tiersFor(
+      "Catalogue, cart, AI stylist, and checkout flow",
+      "Up to 30 products imported with images, variants, and copy",
+    ),
     coverImage: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=400&fit=crop",
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

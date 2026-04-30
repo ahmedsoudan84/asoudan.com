@@ -3,6 +3,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
+import PricingSection from "@/components/buy/PricingSection";
+import FAQSection from "@/components/buy/FAQSection";
+import { REAL_ESTATE_FAQ } from "@/lib/buy/faqs";
+import { categories } from "@/lib/templates-data";
 import dynamic from "next/dynamic";
 const LondonSkylineParallax = dynamic(() => import("@/components/parallax/LondonSkylineParallax"), { ssr: false });
 
@@ -380,6 +384,21 @@ export default function RealEstateHomeClient() {
         </div>
       </section>
 
+      {/* ── Pricing ──────────────────────────────────────── */}
+      {(() => {
+        const tpl = categories.find((c) => c.slug === "real-estate");
+        return tpl?.pricing ? (
+          <PricingSection
+            templateLabel="Real Estate"
+            templateSlug="real-estate"
+            tiers={tpl.pricing}
+          />
+        ) : null;
+      })()}
+
+      {/* ── FAQ ──────────────────────────────────────────── */}
+      <FAQSection items={REAL_ESTATE_FAQ} templateSlug="real-estate" />
+
       {/* ── CTA ──────────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-12 text-center">
         <div className="max-w-[600px] mx-auto">
@@ -417,6 +436,16 @@ export default function RealEstateHomeClient() {
               }}
             >
               Contact About Pricing
+            </Link>
+            <Link
+              href="/buy/real-estate/admin"
+              className="px-8 py-3 rounded-xl font-montserrat text-sm font-semibold uppercase tracking-wider transition-all duration-300 border"
+              style={{
+                borderColor: "var(--accent)",
+                color: "var(--accent)",
+              }}
+            >
+              Admin Panel
             </Link>
           </div>
         </div>
