@@ -32,34 +32,34 @@ function useCycle(startMs: number, showMs: number, hideMs: number) {
   return on;
 }
 
-// ── Entry/exit variants per element (rotation + glow color differ) ─
-// Pop in from far away (small + blurred), settle, then on exit
-// rocket TOWARD the viewer — scale way up while fading + blurring out.
+// ── Cinematic entry / fly-past-camera exit ─────────────────────
+// Entry: focus-pull from distance — small + blurred + offset, decelerates
+// into focus (expo-out). Exit: accelerating zoom TOWARD the viewer —
+// huge scale, heavy blur, drift up toward the face, fade as it passes
+// (expo-in). No springs — springs read as bouncy/amateur.
 const glow = (g: string) =>
   `drop-shadow(0 0 16px ${g}) drop-shadow(0 8px 28px rgba(0,0,0,0.55))`;
 
+const EXPO_OUT = [0.16, 1, 0.3, 1]   as [number, number, number, number];
+const EXPO_IN  = [0.7,  0, 0.84, 0]  as [number, number, number, number];
+
 const variantsFor = (rot: number, g: string) => ({
   hidden: {
-    opacity: 0, scale: 0.18, y: 28, rotate: 0,
-    filter: `blur(8px) ${glow(g)}`,
+    opacity: 0, scale: 0.12, y: 90, rotate: 0,
+    filter: `blur(18px) ${glow(g)}`,
   },
   visible: {
     opacity: 1, scale: 1, y: 0, rotate: rot,
     filter: `blur(0px) ${glow(g)}`,
-    transition: {
-      scale:   { type: "spring" as const, stiffness: 320, damping: 16, mass: 0.9 },
-      y:       { type: "spring" as const, stiffness: 320, damping: 18 },
-      rotate:  { type: "spring" as const, stiffness: 220, damping: 14 },
-      opacity: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-      filter:  { duration: 0.55, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-    },
+    transition: { duration: 1.1, ease: EXPO_OUT },
   },
   exit: {
-    opacity: 0, scale: 2.6, y: -24, rotate: 0,
-    filter: `blur(14px) ${glow(g)}`,
+    opacity: 0, scale: 4.2, y: -140, rotate: rot * 0.4,
+    filter: `blur(32px) ${glow(g)}`,
     transition: {
-      duration: 0.65,
-      ease: [0.55, 0, 0.85, 0.2] as [number, number, number, number],
+      duration: 1.35,
+      ease: EXPO_IN,
+      opacity: { duration: 1.35, ease: [0.55, 0, 1, 0.45] as [number, number, number, number] },
     },
   },
 });
@@ -89,8 +89,8 @@ function Shell({
           exit="exit"
         >
           <motion.div
-            animate={{ y: [0, -fy, 0], scale: [1, 1.02, 1] }}
-            transition={{ duration: fd, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ y: [0, -fy * 0.6, -fy * 1.4], scale: [1, 1.07, 1.18] }}
+            transition={{ duration: fd * 1.6, ease: "easeOut" }}
             style={{ willChange: "transform" }}
           >
             {children}
