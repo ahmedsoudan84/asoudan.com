@@ -207,7 +207,7 @@ export default function AdminClient() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { label: "Total Sales", value: `£${orders.reduce((sum, o) => sum + o.total, 0).toLocaleString()}`, change: "+12.5%" },
-                { label: "Active Orders", value: orders.filter(o => o.status !== 'delivered').length, change: "Real-time" },
+                { label: "Active Orders", value: orders.filter(o => o.status !== 'Delivered').length, change: "Real-time" },
                 { label: "Total Products", value: products.length, change: "Live" }
               ].map((stat, i) => (
                 <div key={i} className="p-6 rounded-3xl border" style={{ background: "var(--bg-surface)", borderColor: "var(--border-subtle)" }}>
@@ -352,10 +352,10 @@ export default function AdminClient() {
                           value={order.status}
                           onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
                         >
-                          <option value="pending">Pending</option>
-                          <option value="processing">Processing</option>
-                          <option value="shipped">Shipped</option>
-                          <option value="delivered">Delivered</option>
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
                         </select>
                       </div>
                     </div>
