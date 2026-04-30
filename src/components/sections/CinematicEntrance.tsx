@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
+import HeroDesignReel from "./HeroDesignReel";
 
 /* ── Glitch text effect ── */
 function GlitchText({ text, className }: { text: string; className?: string }) {
@@ -379,6 +380,9 @@ export default function CinematicEntrance() {
               </motion.div>
             </motion.div>
           </div>
+
+          {/* Floating design reel — desktop only, avoids face area */}
+          <HeroDesignReel />
         </div>
       )}
 
