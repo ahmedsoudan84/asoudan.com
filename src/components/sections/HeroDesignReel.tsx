@@ -32,69 +32,65 @@ function useCycle(startMs: number, showMs: number, hideMs: number) {
   return on;
 }
 
-// ── Cinematic entry / fly-past-camera exit ─────────────────────
-// Entry: focus-pull from distance — small + blurred + offset, decelerates
-// into focus (expo-out). Exit: accelerating zoom TOWARD the viewer —
-// huge scale, heavy blur, drift up toward the face, fade as it passes
-// (expo-in). No springs — springs read as bouncy/amateur.
+// ── Cinematic flythrough ─────────────────────────────────────
+// Each element does ONE continuous arc while mounted: appears far
+// away (small, heavily blurred), focuses as it approaches, then
+// rockets past the camera (huge scale, heavy blur, fade). No
+// static hold, no separate entry/exit phases — it's one shot.
 const glow = (g: string) =>
-  `drop-shadow(0 0 16px ${g}) drop-shadow(0 8px 28px rgba(0,0,0,0.55))`;
+  `drop-shadow(0 0 18px ${g}) drop-shadow(0 10px 32px rgba(0,0,0,0.55))`;
 
-const EXPO_OUT = [0.16, 1, 0.3, 1]   as [number, number, number, number];
-const EXPO_IN  = [0.7,  0, 0.84, 0]  as [number, number, number, number];
+// Per-element directional drift toward the face anchor in the
+// hero photo (right-center of viewport on desktop). dx negative
+// = drifts left, dy negative = drifts up. Tuned by element
+// position so each one converges on the face.
+type Drift = { dx: number; dy: number };
 
-const variantsFor = (rot: number, g: string) => ({
-  hidden: {
-    opacity: 0, scale: 0.12, y: 90, rotate: 0,
-    filter: `blur(18px) ${glow(g)}`,
-  },
-  visible: {
-    opacity: 1, scale: 1, y: 0, rotate: rot,
-    filter: `blur(0px) ${glow(g)}`,
-    transition: { duration: 1.1, ease: EXPO_OUT },
-  },
-  exit: {
-    opacity: 0, scale: 4.2, y: -140, rotate: rot * 0.4,
-    filter: `blur(32px) ${glow(g)}`,
-    transition: {
-      duration: 1.35,
-      ease: EXPO_IN,
-      opacity: { duration: 1.35, ease: [0.55, 0, 1, 0.45] as [number, number, number, number] },
-    },
-  },
-});
-
-// ── Shell: AnimatePresence + colored glow + breathing float ─────
 function Shell({
-  children, style, on, theme, rot,
-  fy = 7, fd = 5.5,
+  children, style, on, theme, rot, dur, drift,
 }: {
   children: ReactNode;
   style: CSSProperties;
   on: boolean;
   theme: Theme;
   rot: number;
-  fy?: number;
-  fd?: number;
+  dur: number;        // seconds — full visible arc duration
+  drift: Drift;       // direction toward face
 }) {
+  const g = glow(theme.g);
+  const { dx, dy } = drift;
   return (
     <AnimatePresence>
       {on && (
         <motion.div
           className="absolute"
-          style={{ ...style, willChange: "transform, filter" }}
-          variants={variantsFor(rot, theme.g)}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
+          style={{ ...style, willChange: "transform, filter, opacity" }}
+          initial={{
+            scale: 0.16, x: -dx * 0.35, y: -dy * 0.35 + 60, rotate: 0,
+            opacity: 0, filter: `blur(20px) ${g}`,
+          }}
+          animate={{
+            scale:   [0.16, 0.55, 1.0,   1.85,        4.0],
+            x:       [-dx * 0.35, -dx * 0.15, 0, dx * 0.55, dx * 1.6],
+            y:       [-dy * 0.35 + 60, -dy * 0.15 + 25, 0, dy * 0.55 - 30, dy * 1.6 - 90],
+            rotate:  [0, rot * 0.5, rot, rot * 0.65, rot * 0.2],
+            opacity: [0, 1, 1, 0.92, 0],
+            filter: [
+              `blur(20px) ${g}`,
+              `blur(5px) ${g}`,
+              `blur(0px) ${g}`,
+              `blur(7px) ${g}`,
+              `blur(34px) ${g}`,
+            ],
+          }}
+          transition={{
+            duration: dur,
+            times:    [0, 0.22, 0.45, 0.78, 1],
+            ease:     [0.4, 0, 0.6, 1] as [number, number, number, number],
+          }}
+          exit={{ opacity: 0, transition: { duration: 0.18 } }}
         >
-          <motion.div
-            animate={{ y: [0, -fy * 0.6, -fy * 1.4], scale: [1, 1.07, 1.18] }}
-            transition={{ duration: fd * 1.6, ease: "easeOut" }}
-            style={{ willChange: "transform" }}
-          >
-            {children}
-          </motion.div>
+          {children}
         </motion.div>
       )}
     </AnimatePresence>
@@ -426,53 +422,69 @@ function WFSlider({ t }: { t: Theme }) {
 // ════════════════════════════════════════════════════════════════
 // MAIN EXPORT
 // ════════════════════════════════════════════════════════════════
+// Per-element flythrough timing (visible duration in ms) and the
+// drift vector pointing toward the face anchor (right-center of
+// the photo). dx/dy are the px offset added at the END of the arc;
+// the keyframes interpolate from -dx*0.35 → +dx*1.6.
+const SHOW = {
+  mobile:     5500,
+  browser:    6500,
+  toggles:    5500,
+  buttons:    4500,
+  form:       5200,
+  card:       6000,
+  navbar:     5000,
+  checkboxes: 5000,
+  slider:     4500,
+};
+
 export default function HeroDesignReel() {
-  const mobile     = useCycle(1500, 5500, 3500);
-  const browser    = useCycle(2000, 6500, 2800);
-  const toggles    = useCycle(3200, 5500, 3200);
-  const buttons    = useCycle(1800, 4500, 4000);
-  const form       = useCycle(4200, 5200, 3000);
-  const card       = useCycle(2700, 6000, 2500);
-  const navbar     = useCycle(3800, 5000, 3500);
-  const checkboxes = useCycle(5200, 5000, 3000);
-  const slider     = useCycle(6500, 4500, 3500);
+  const mobile     = useCycle(1500, SHOW.mobile,     3500);
+  const browser    = useCycle(2000, SHOW.browser,    2800);
+  const toggles    = useCycle(3200, SHOW.toggles,    3200);
+  const buttons    = useCycle(1800, SHOW.buttons,    4000);
+  const form       = useCycle(4200, SHOW.form,       3000);
+  const card       = useCycle(2700, SHOW.card,       2500);
+  const navbar     = useCycle(3800, SHOW.navbar,     3500);
+  const checkboxes = useCycle(5200, SHOW.checkboxes, 3000);
+  const slider     = useCycle(6500, SHOW.slider,     3500);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-[25] hidden lg:block select-none">
 
-      <Shell on={mobile}     style={{ right: "4.5%", top: "6%" }}     theme={TH.teal}   rot={-3} fy={6} fd={5.5}>
+      <Shell on={mobile}     style={{ right: "4.5%", top: "6%" }}     theme={TH.teal}   rot={-3} dur={SHOW.mobile     / 1000} drift={{ dx: -110, dy:  60 }}>
         <WFMobile t={TH.teal} />
       </Shell>
 
-      <Shell on={browser}    style={{ right: "22%",  top: "3%" }}     theme={TH.orange} rot={2}  fy={5} fd={6.5}>
+      <Shell on={browser}    style={{ right: "22%",  top: "3%" }}     theme={TH.orange} rot={2}  dur={SHOW.browser    / 1000} drift={{ dx:   30, dy:  80 }}>
         <WFBrowser t={TH.orange} />
       </Shell>
 
-      <Shell on={toggles}    style={{ right: "4.5%", top: "49%" }}    theme={TH.violet} rot={-4} fy={5} fd={6.2}>
+      <Shell on={toggles}    style={{ right: "4.5%", top: "49%" }}    theme={TH.violet} rot={-4} dur={SHOW.toggles    / 1000} drift={{ dx: -140, dy:   0 }}>
         <WFToggles t={TH.violet} />
       </Shell>
 
-      <Shell on={buttons}    style={{ right: "4.5%", bottom: "24%" }} theme={TH.pink}   rot={3}  fy={7} fd={5.0}>
+      <Shell on={buttons}    style={{ right: "4.5%", bottom: "24%" }} theme={TH.pink}   rot={3}  dur={SHOW.buttons    / 1000} drift={{ dx: -130, dy: -50 }}>
         <WFButtons t={TH.pink} />
       </Shell>
 
-      <Shell on={form}       style={{ right: "18%",  bottom: "9%" }}  theme={TH.blue}   rot={-2} fy={8} fd={5.5}>
+      <Shell on={form}       style={{ right: "18%",  bottom: "9%" }}  theme={TH.blue}   rot={-2} dur={SHOW.form       / 1000} drift={{ dx:    0, dy:-130 }}>
         <WFForm t={TH.blue} />
       </Shell>
 
-      <Shell on={card}       style={{ right: "38%",  bottom: "7%" }}  theme={TH.teal}   rot={4}  fy={6} fd={6.0}>
+      <Shell on={card}       style={{ right: "38%",  bottom: "7%" }}  theme={TH.teal}   rot={4}  dur={SHOW.card       / 1000} drift={{ dx:   60, dy:-140 }}>
         <WFCard t={TH.teal} />
       </Shell>
 
-      <Shell on={navbar}     style={{ right: "34%",  top: "2%" }}     theme={TH.orange} rot={-3} fy={4} fd={7.0}>
+      <Shell on={navbar}     style={{ right: "34%",  top: "2%" }}     theme={TH.orange} rot={-3} dur={SHOW.navbar     / 1000} drift={{ dx:   30, dy: 130 }}>
         <WFNavBar t={TH.orange} />
       </Shell>
 
-      <Shell on={checkboxes} style={{ right: "4.5%", top: "22%" }}    theme={TH.violet} rot={2}  fy={6} fd={5.5}>
+      <Shell on={checkboxes} style={{ right: "4.5%", top: "22%" }}    theme={TH.violet} rot={2}  dur={SHOW.checkboxes / 1000} drift={{ dx: -140, dy:  30 }}>
         <WFCheckboxes t={TH.violet} />
       </Shell>
 
-      <Shell on={slider}     style={{ right: "52%",  bottom: "12%" }} theme={TH.pink}   rot={-4} fy={5} fd={6.5}>
+      <Shell on={slider}     style={{ right: "52%",  bottom: "12%" }} theme={TH.pink}   rot={-4} dur={SHOW.slider     / 1000} drift={{ dx:  130, dy:-100 }}>
         <WFSlider t={TH.pink} />
       </Shell>
     </div>
