@@ -1,22 +1,6 @@
-/* Hero reel — locked: Pixel rain (Reel C).
-   Reuses --accent and --accent-rgb from src/app/globals.css.
+/* Hero reel — locked: Pixel rain.
+   --reel-* tokens live in globals.css (dark + light theme blocks).
    Pauses on prefers-reduced-motion. */
-
-:root,
-[data-theme="dark"] {
-  --reel-blend:   overlay;
-  --reel-opacity: 1;
-  --reel-loop:    7.7s;
-  --reel-stroke:  rgba(255, 255, 255, 0.85);
-  --reel-fill:    rgba(255, 255, 255, 0.06);
-}
-
-[data-theme="light"] {
-  --reel-blend:   overlay;
-  --reel-opacity: 0.55;
-  --reel-stroke:  rgba(22, 25, 42, 0.78);
-  --reel-fill:    rgba(22, 25, 42, 0.05);
-}
 
 .reel {
   position: absolute;
