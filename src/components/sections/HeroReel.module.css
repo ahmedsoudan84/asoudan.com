@@ -1,6 +1,5 @@
-/* Hero reel — locked: Pixel rain.
-   --reel-* tokens live in globals.css (dark + light theme blocks).
-   Pauses on prefers-reduced-motion. */
+/* Hero reel — 3-beat choreography: sketch → wireframe → component.
+   --reel-* tokens live in globals.css. Pauses on prefers-reduced-motion. */
 
 .reel {
   position: absolute;
@@ -20,47 +19,120 @@
   display: block;
 }
 
-.stream {
-  animation: reel-fall var(--reel-loop) linear infinite;
+/* ── Parallax: three depth layers at different vertical amplitudes ── */
+
+.layerFar  { animation: driftFar  var(--reel-loop) ease-in-out infinite; }
+.layerMid  { animation: driftMid  var(--reel-loop) ease-in-out infinite; }
+.layerNear { animation: driftNear var(--reel-loop) ease-in-out infinite; }
+
+@keyframes driftFar  { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px);  } }
+@keyframes driftMid  { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes driftNear { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-21px); } }
+
+/* ── Beat 1: Construction guides ── */
+
+.beatConstruct { animation: beatConstruct var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatConstruct {
+  0%       { opacity: 0; }
+  7%       { opacity: 1; }
+  33%      { opacity: 1; }
+  50%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
 
-.crystal {
-  transform-origin: center;
-  animation: reel-form var(--reel-loop) cubic-bezier(0.6, 0, 0.2, 1) infinite;
+/* ── Beat 2: Wireframe elements ── */
+
+.beatWireframe { animation: beatWireframe var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatWireframe {
+  0%, 28%  { opacity: 0; }
+  42%      { opacity: 1; }
+  74%      { opacity: 1; }
+  88%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
 
-.pulse {
-  animation: reel-pulse var(--reel-loop) ease-in-out infinite;
+/* Card border draws in along its perimeter (2*(256+365) ≈ 1300) */
+
+.drawIn {
+  stroke-dasharray: 1300;
+  animation: drawIn var(--reel-loop) ease-out infinite;
 }
 
-@keyframes reel-fall {
-  0%   { transform: translateY(-30%); opacity: 0; }
-  10%  { opacity: 0.8; }
-  60%  { opacity: 0.4; }
-  100% { transform: translateY(110%); opacity: 0; }
+@keyframes drawIn {
+  0%, 28%  { stroke-dashoffset: 1300; opacity: 0; }
+  32%      { stroke-dashoffset: 1300; opacity: 1; }
+  50%      { stroke-dashoffset: 0; }
+  74%      { stroke-dashoffset: 0;    opacity: 1; }
+  88%      { stroke-dashoffset: 0;    opacity: 0; }
+  100%     { stroke-dashoffset: 1300; opacity: 0; }
 }
 
-@keyframes reel-form {
-  0%, 35%  { transform: scale(0);    opacity: 0; }
-  50%      { transform: scale(1.05); opacity: 1; }
-  60%      { transform: scale(1); }
-  85%      { transform: scale(1);    opacity: 1; }
-  95%      { transform: scale(0);    opacity: 0; }
-  100%     {                          opacity: 0; }
+/* ── Beat 2.5: Anchor points + measurement marks ── */
+
+.beatMeasure { animation: beatMeasure var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatMeasure {
+  0%, 40%  { opacity: 0; }
+  54%      { opacity: 1; }
+  76%      { opacity: 1; }
+  88%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
 
-@keyframes reel-pulse {
-  0%, 100% { opacity: 0; }
-  45%, 90% { opacity: 0.8; }
+/* ── Beat 3: Single cyan accent ── */
+
+.beatAccentFill { animation: beatAccent var(--reel-loop) ease-in-out infinite; }
+.beatAccentLabel { animation: beatAccentLabel var(--reel-loop) ease-in-out infinite; }
+.beatAccentGlow  { animation: beatAccentGlow  var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatAccent {
+  0%, 63%  { opacity: 0; }
+  74%      { opacity: 1; }
+  84%      { opacity: 1; }
+  93%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
+
+@keyframes beatAccentLabel {
+  0%, 63%  { opacity: 0; }
+  74%      { opacity: 0.55; }
+  84%      { opacity: 0.55; }
+  93%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
+
+@keyframes beatAccentGlow {
+  0%, 62%  { opacity: 0; }
+  74%      { opacity: 1; }
+  84%      { opacity: 1; }
+  93%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
+
+/* ── Reduced motion: freeze on a settled wireframe frame ── */
 
 @media (prefers-reduced-motion: reduce) {
-  .stream,
-  .crystal,
-  .pulse {
+  .layerFar,
+  .layerMid,
+  .layerNear,
+  .beatConstruct,
+  .beatWireframe,
+  .drawIn,
+  .beatMeasure,
+  .beatAccentFill,
+  .beatAccentLabel,
+  .beatAccentGlow {
     animation: none !important;
   }
-  .crystal { transform: none !important; opacity: 0.85 !important; }
-  .stream  { opacity: 0 !important; }
-  .pulse   { opacity: 0.25 !important; }
+
+  .beatWireframe  { opacity: 0.85 !important; }
+  .beatMeasure    { opacity: 0.6  !important; }
+  .drawIn         { stroke-dashoffset: 0 !important; opacity: 0.85 !important; }
+
+  .beatConstruct,
+  .beatAccentFill,
+  .beatAccentLabel,
+  .beatAccentGlow { opacity: 0 !important; }
 }
