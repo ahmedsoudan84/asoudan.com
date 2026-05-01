@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
@@ -87,7 +87,20 @@ const TRUST = [
 
 export default function RealEstateHomeClient() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [placeholder, setPlaceholder] = useState("Try: 'family home near good schools with garden'");
   const featured = properties.slice(0, 3);
+
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    setPlaceholder(isMobile ? "Try: 'family home...'" : "Try: 'family home near good schools with garden'");
+
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPlaceholder(e.matches ? "Try: 'family home...'" : "Try: 'family home near good schools with garden'");
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   return (
     <div>
@@ -166,7 +179,7 @@ export default function RealEstateHomeClient() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Try: 'family home near good schools with garden'"
+                placeholder={placeholder}
                 className="flex-1 bg-transparent font-montserrat text-sm outline-none placeholder:opacity-40"
                 style={{ color: "var(--fg)" }}
                 onKeyDown={(e) => {

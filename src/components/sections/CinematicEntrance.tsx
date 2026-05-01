@@ -3,6 +3,44 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
+import { HeroReel } from "./HeroReel";
+
+/* ── Floating ambient particles ── */
+const PARTICLES = [
+  { x: "14%", y: "20%", size: 2,   dur: 13, delay: 0   },
+  { x: "30%", y: "70%", size: 1.5, dur: 17, delay: 2.5 },
+  { x: "46%", y: "38%", size: 2.5, dur: 15, delay: 1   },
+  { x: "60%", y: "80%", size: 1.5, dur: 19, delay: 4   },
+  { x: "72%", y: "24%", size: 2,   dur: 12, delay: 1.5 },
+  { x: "82%", y: "57%", size: 3,   dur: 16, delay: 3   },
+  { x: "90%", y: "32%", size: 1.5, dur: 21, delay: 0.5 },
+  { x: "20%", y: "52%", size: 2,   dur: 14, delay: 5   },
+  { x: "52%", y: "16%", size: 1.5, dur: 18, delay: 2   },
+  { x: "64%", y: "67%", size: 2.5, dur: 13, delay: 3.5 },
+  { x: "38%", y: "86%", size: 2,   dur: 20, delay: 1   },
+  { x: "94%", y: "74%", size: 1.5, dur: 15, delay: 4.5 },
+];
+
+function FloatingParticles() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden z-10">
+      {PARTICLES.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: p.x, top: p.y,
+            width: p.size, height: p.size,
+            background: "rgba(61,155,155,0.9)",
+            boxShadow: `0 0 ${p.size * 3}px ${p.size}px rgba(61,155,155,0.3)`,
+          }}
+          animate={{ y: [-8, -24, -8], opacity: [0, 0.55, 0.3, 0.55, 0] }}
+          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+    </div>
+  );
+}
 
 /* ── Glitch text effect ── */
 function GlitchText({ text, className }: { text: string; className?: string }) {
@@ -131,6 +169,9 @@ export default function CinematicEntrance() {
 
   return (
     <div ref={containerRef} className="font-montserrat relative min-h-screen overflow-hidden" style={{ background: "var(--bg-primary)" }}>
+      {/* ── Floating particles ── */}
+      <FloatingParticles />
+
       {/* ── Vignette overlay ── */}
       <div className="pointer-events-none absolute inset-0 z-20" style={{
         background: "var(--bg-primary)",
@@ -227,27 +268,29 @@ export default function CinematicEntrance() {
       {phase === 3 && (
         <div className="relative z-30 flex min-h-screen items-center">
           {/* Photo — full viewport, positioned to the right */}
-          <motion.div
-            className="absolute inset-0 overflow-hidden"
-            initial={{ opacity: 0, scale: 1.05, filter: "blur(20px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* Glow behind photo — static, no continuous animation */}
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Breathing glow behind photo */}
             <div className="absolute inset-0 flex items-center justify-end">
-              <div
-                className="w-[500px] h-[500px] lg:w-[700px] lg:h-[700px] rounded-full"
+              <motion.div
+                className="w-[520px] h-[520px] lg:w-[740px] lg:h-[740px] rounded-full"
                 style={{
-                  background: "radial-gradient(circle, rgba(61,155,155,0.10) 0%, rgba(61,155,155,0.03) 40%, transparent 70%)",
-                  filter: "blur(80px)",
-                  marginRight: "5%",
-                  opacity: 0.75,
+                  background: "radial-gradient(circle, rgba(61,155,155,0.14) 0%, rgba(61,155,155,0.05) 38%, transparent 70%)",
+                  filter: "blur(90px)",
+                  marginRight: "4%",
                 }}
+                animate={{ scale: [1, 1.1, 1], opacity: [0.55, 1, 0.55] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
 
-            {/* Photo container — pushed to right side */}
-            <motion.div className="absolute inset-0 flex items-center justify-center lg:justify-end" style={{ x: sPx, y: sPy, willChange: "transform" }}>
+            {/* Photo container — cinematic rising reveal */}
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center lg:justify-end"
+              style={{ x: sPx, y: sPy, willChange: "transform" }}
+              initial={{ clipPath: "inset(100% 0 0 0)", filter: "blur(12px)" }}
+              animate={{ clipPath: "inset(0% 0 0 0)",   filter: "blur(0px)" }}
+              transition={{ duration: 1.4, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            >
               <div className="relative w-[100vw] h-[90vh] max-w-[550px] lg:w-[50vw] lg:max-w-[700px] lg:h-[100vh] lg:mr-[5%] translate-y-[5%]">
                 <Image
                   src="/images/ahmed-cutout.png"
@@ -256,6 +299,7 @@ export default function CinematicEntrance() {
                   className="object-contain object-bottom drop-shadow-[0_0_60px_rgba(61,155,155,0.08)]"
                   priority
                 />
+                <HeroReel />
               </div>
             </motion.div>
 
@@ -314,7 +358,7 @@ export default function CinematicEntrance() {
                 maskImage: "linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 50%, transparent 100%)",
               }}
             />
-          </motion.div>
+          </div>
 
           {/* Text content — overlaid on photo */}
           <div className="relative mx-auto flex w-full max-w-7xl px-6 lg:px-16">

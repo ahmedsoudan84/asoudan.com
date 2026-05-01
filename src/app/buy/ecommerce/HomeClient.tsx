@@ -55,11 +55,24 @@ const STATS = [
 
 export default function HomeClient() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [placeholder, setPlaceholder] = useState("Describe what you need — the AI knows the rest");
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const addItem = useCart((s) => s.addItem);
 
   useEffect(() => {
     setAllProducts(getAllProducts());
+  }, []);
+
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    setPlaceholder(isMobile ? "What do you need?" : "Describe what you need — the AI knows the rest");
+
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPlaceholder(e.matches ? "What do you need?" : "Describe what you need — the AI knows the rest");
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   const bestsellers = allProducts.filter((p) => p.isBestseller).slice(0, 4);
@@ -144,7 +157,7 @@ export default function HomeClient() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Describe what you need — the AI knows the rest"
+                  placeholder={placeholder}
                   className="flex-1 bg-transparent px-2 py-3 outline-none font-montserrat text-sm"
                   style={{ color: "var(--fg)" }}
                   onKeyDown={(e) => {

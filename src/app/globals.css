@@ -56,6 +56,12 @@
 
   --background: #141620;
   --foreground: #ffffff;
+
+  --reel-blend:   overlay;
+  --reel-opacity: 1;
+  --reel-loop:    7.7s;
+  --reel-stroke:  rgba(255, 255, 255, 0.85);
+  --reel-fill:    rgba(255, 255, 255, 0.06);
 }
 
 /* ── Light theme ────────────────────────────────────────────── */
@@ -106,6 +112,11 @@
 
   --background: #f8f8f8;
   --foreground: rgba(22,25,42,1);
+
+  --reel-blend:   overlay;
+  --reel-opacity: 0.55;
+  --reel-stroke:  rgba(22, 25, 42, 0.78);
+  --reel-fill:    rgba(22, 25, 42, 0.05);
 }
 
 @theme inline {
