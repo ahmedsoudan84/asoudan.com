@@ -1,171 +1,275 @@
 "use client";
 
-import styles from "./HeroReel.module.css";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const d = (s: number): React.CSSProperties => ({ animationDelay: `${s}s` });
+// ── Animation Variants ──────────────────────────────────────────
+const drawAnim = {
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: (i: number) => {
+    const delay = i * 0.12;
+    return {
+      pathLength: 1,
+      opacity: 1,
+      transition: {
+        pathLength: { delay, duration: 1.4, ease: "easeOut" as const },
+        opacity: { delay, duration: 0.1 },
+      },
+    };
+  },
+};
+
+// ── Cycle visibility hook ────────────────────────────────────────
+function useCycle(startMs: number, showMs: number, hideMs: number) {
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout>;
+    const show = () => { setOn(true);  t = setTimeout(hide, showMs); };
+    const hide = () => { setOn(false); t = setTimeout(show, hideMs); };
+    t = setTimeout(show, startMs);
+    return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return on;
+}
+
+// ── Cinematic flythrough Shell ───────────────────────────────────
+function Shell({
+  children, style, on, dur,
+}: {
+  children: React.ReactNode;
+  style: React.CSSProperties;
+  on: boolean;
+  dur: number;
+}) {
+  return (
+    <AnimatePresence>
+      {on && (
+        <motion.div
+          className="absolute flex items-center justify-center pointer-events-none"
+          style={{
+            ...style,
+            willChange: "transform, opacity",
+          }}
+          initial={{ scale: 0.4, opacity: 0 }}
+          animate={{
+            scale:   [0.4, 2.4],
+            opacity: [0, 1, 1, 0],
+          }}
+          transition={{
+            scale: { duration: dur, ease: "linear" as const },
+            opacity: { duration: dur, times: [0, 0.15, 0.8, 1], ease: "linear" as const }
+          }}
+          exit={{ opacity: 0, transition: { duration: 0.4 } }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// ── Shared Colors using CSS variables ────────────────────────────
+// These map directly to globals.css [data-theme] variables so they 
+// instantly adapt to light/dark mode without needing class variants.
+const PRIMARY = "var(--fg-60)";
+const SECONDARY = "var(--fg-30)";
+const TERTIARY = "var(--fg-15)";
+
+// Shared Glassmorphism Wrapper
+function GlassWrapper({ width, height, children }: { width: number, height: number, children: React.ReactNode }) {
+  return (
+    <div 
+      className="backdrop-blur-md rounded-xl shadow-xl overflow-hidden" 
+      style={{ 
+        width, 
+        height, 
+        background: "var(--fg-05)", 
+        border: "1px solid var(--fg-10)" 
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// 1 · Mobile phone — 80×148 (Pure Wireframe)
+// ════════════════════════════════════════════════════════════════
+function WFMobile() {
+  return (
+    <GlassWrapper width={80} height={148}>
+      <svg width="80" height="148" viewBox="0 0 80 148" fill="none">
+        <motion.rect x="1" y="1" width="78" height="146" rx="12" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.rect x="28" y="5" width="24" height="6" rx="3" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="20" width="64" height="48" rx="6" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 20 L72 68 M8 68 L72 20" style={{ stroke: TERTIARY }} strokeWidth="0.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 80 L52 80" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 88 L66 88" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 96 L40 96" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="110" width="64" height="18" rx="9" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M30 119 L50 119" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// 2 · Browser — 200×128 (Pure Wireframe)
+// ════════════════════════════════════════════════════════════════
+function WFBrowser() {
+  return (
+    <GlassWrapper width={200} height={128}>
+      <svg width="200" height="128" viewBox="0 0 200 128" fill="none">
+        <motion.rect x="1" y="1" width="198" height="126" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M1 25 L199 25" style={{ stroke: TERTIARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.circle cx="12" cy="13" r="3.5" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.circle cx="23" cy="13" r="3.5" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.circle cx="34" cy="13" r="3.5" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="48" y="6" width="104" height="14" rx="4" style={{ stroke: SECONDARY }} strokeWidth="1" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M56 13 L116 13" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="34" width="118" height="66" rx="5" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 34 L126 100 M8 100 L126 34" style={{ stroke: TERTIARY }} strokeWidth="0.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M134 40 L180 40" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M134 50 L184 50" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M134 58 L170 58" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="134" y="74" width="56" height="16" rx="8" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={9} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M148 82 L166 82" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={10} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// 3 · Card — 144×172 (Pure Wireframe)
+// ════════════════════════════════════════════════════════════════
+function WFCard() {
+  return (
+    <GlassWrapper width={144} height={172}>
+      <svg width="144" height="172" viewBox="0 0 144 172" fill="none">
+        <motion.rect x="1" y="1" width="142" height="170" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="8" width="128" height="80" rx="4" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 8 L136 88 M8 88 L136 8" style={{ stroke: TERTIARY }} strokeWidth="0.5" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 104 L114 104" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 114 L132 114" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 122 L106 122" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 142 L136 142" style={{ stroke: TERTIARY }} strokeWidth="1" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 156 L60 156" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.circle cx="122" cy="156" r="6" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// 4 · Form — 176×124 (Pure Wireframe)
+// ════════════════════════════════════════════════════════════════
+function WFForm() {
+  return (
+    <GlassWrapper width={176} height={124}>
+      <svg width="176" height="124" viewBox="0 0 176 124" fill="none">
+        <motion.rect x="1" y="1" width="174" height="122" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M12 16 L48 16" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="12" y="24" width="152" height="22" rx="4" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M20 35 L90 35" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="12" y="54" width="152" height="22" rx="4" style={{ stroke: SECONDARY }} strokeWidth="1" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M20 65 L72 65" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="12" y="88" width="152" height="24" rx="12" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M68 100 L108 100" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// 5 · Checkboxes — 164×116 (Pure Wireframe)
+// ════════════════════════════════════════════════════════════════
+function WFCheckboxes() {
+  return (
+    <GlassWrapper width={164} height={116}>
+      <svg width="164" height="116" viewBox="0 0 164 116" fill="none">
+        <motion.rect x="1" y="1" width="162" height="114" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M12 16 L72 16" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        {/* Checked box */}
+        <motion.rect x="12" y="30" width="16" height="16" rx="2" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M15 38 L18 41 L24 34" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M38 38 L138 38" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        {/* Unchecked box */}
+        <motion.rect x="12" y="58" width="16" height="16" rx="2" style={{ stroke: SECONDARY }} strokeWidth="1.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M38 66 L124 66" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        {/* Checked box */}
+        <motion.rect x="12" y="86" width="16" height="16" rx="2" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M15 94 L18 97 L24 90" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M38 94 L108 94" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// MAIN EXPORT
+// ════════════════════════════════════════════════════════════════
+const SHOW = {
+  mobile:     4500,
+  browser:    4200,
+  form:       4500,
+  card:       4000,
+  checkboxes: 4300,
+};
 
 export function HeroReel() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const mobile     = useCycle(0,    SHOW.mobile,     1000);
+  const browser    = useCycle(900,  SHOW.browser,    1200);
+  const form       = useCycle(1800, SHOW.form,       1500);
+  const card       = useCycle(2700, SHOW.card,       1400);
+  const checkboxes = useCycle(3600, SHOW.checkboxes, 1300);
+
+  if (!mounted) return null;
+
   return (
-    <div className={styles.reel} aria-hidden="true">
-      <svg viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <radialGradient id="reelGlow" cx="50%" cy="55%" r="35%">
-            <stop offset="0" stopColor="rgba(var(--accent-rgb),0.18)" />
-            <stop offset="1" stopColor="rgba(var(--accent-rgb),0)" />
-          </radialGradient>
-          <marker id="reelArrow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
-            <path d="M0,0.5 L0,4.5 L4.5,2.5 z" fill="var(--reel-stroke)" opacity="0.45" />
-          </marker>
-        </defs>
+    <div className="absolute inset-0 pointer-events-none z-[25] hidden lg:block select-none overflow-hidden">
+      <Shell on={mobile}     style={{ right: "12%",  top: "15%" }}     dur={SHOW.mobile     / 1000}>
+        <WFMobile />
+      </Shell>
 
-        {/* ── Beat 1 · Sparse dot grid — far layer ── */}
-        <g className={styles.layerFar}>
-          <g className={styles.beatConstruct}>
-            {([
-              [136,216],[176,216],[216,216],[256,216],[296,216],
-              [136,256],[296,256],
-              [136,296],[176,296],[216,296],[256,296],[296,296],
-              [136,376],[216,376],[296,376],
-              [136,416],[176,416],[256,416],[296,416],
-              [136,456],[216,456],[296,456],
-              [136,496],[176,496],[216,496],[256,496],
-              [136,536],[296,536],
-              [176,576],[216,576],[256,576],
-            ] as [number, number][]).map(([x, y], i) => (
-              <circle key={i} cx={x} cy={y} r="1" fill="var(--reel-stroke)" opacity="0.22" />
-            ))}
-            {/* Two faint guide lines */}
-            <line x1="90" y1="336" x2="310" y2="336"
-                  stroke="var(--reel-stroke)" strokeWidth="0.3" strokeDasharray="2 9" opacity="0.16" />
-            <line x1="216" y1="180" x2="216" y2="620"
-                  stroke="var(--reel-stroke)" strokeWidth="0.3" strokeDasharray="2 9" opacity="0.16" />
-          </g>
-        </g>
+      <Shell on={browser}    style={{ right: "30%", top: "8%" }}      dur={SHOW.browser    / 1000}>
+        <WFBrowser />
+      </Shell>
 
-        {/* ── Beat 2 · Scattered micro-elements — mid layer, staggered ── */}
-        <g className={styles.layerMid}>
+      <Shell on={form}       style={{ right: "20%", bottom: "18%" }}  dur={SHOW.form       / 1000}>
+        <WFForm />
+      </Shell>
 
-          {/* Toggle (off) */}
-          <g className={styles.beatWireframe} style={d(0)}>
-            <rect x="112" y="226" width="40" height="20" rx="10"
-                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <circle cx="122" cy="236" r="7"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.75" />
-          </g>
+      <Shell on={card}       style={{ right: "45%", bottom: "12%" }}  dur={SHOW.card       / 1000}>
+        <WFCard />
+      </Shell>
 
-          {/* Input field with cursor */}
-          <g className={styles.beatWireframe} style={d(0.28)}>
-            <rect x="200" y="222" width="110" height="22" rx="3"
-                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <line x1="212" y1="229" x2="212" y2="237"
-                  stroke="var(--reel-stroke)" strokeWidth="1" opacity="0.55" />
-          </g>
-
-          {/* Chip */}
-          <g className={styles.beatWireframe} style={d(0.48)}>
-            <rect x="112" y="276" width="56" height="18" rx="9"
-                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.8" />
-            <rect x="124" y="284" width="32" height="3.5" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.32" />
-          </g>
-
-          {/* Small card (top-right cluster) */}
-          <g className={styles.beatWireframe} style={d(0.18)}>
-            <rect x="262" y="268" width="82" height="58" rx="4"
-                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            {/* thumbnail strip */}
-            <rect x="272" y="277" width="62" height="16" rx="2"
-                  fill="var(--reel-stroke)" opacity="0.14" />
-            {/* title bar */}
-            <rect x="272" y="300" width="44" height="5" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.38" />
-            {/* sub bar */}
-            <rect x="272" y="311" width="32" height="3.5" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.2" />
-          </g>
-
-          {/* Radio pair */}
-          <g className={styles.beatWireframe} style={d(0.62)}>
-            {/* selected */}
-            <circle cx="116" cy="384" r="7"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <circle cx="116" cy="384" r="2.5"
-                    fill="var(--reel-stroke)" opacity="0.65" />
-            <rect x="129" y="381" width="34" height="4" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.28" />
-            {/* unselected */}
-            <circle cx="116" cy="404" r="7"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <rect x="129" y="401" width="26" height="4" rx="1"
-                  fill="var(--reel-stroke)" opacity="0.28" />
-          </g>
-
-          {/* Progress bar */}
-          <g className={styles.beatWireframe} style={d(0.14)}>
-            {/* track */}
-            <rect x="196" y="384" width="152" height="7" rx="3.5"
-                  fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.7" />
-            {/* 42% fill — wireframe hatch */}
-            <rect x="196" y="384" width="64" height="7" rx="3.5"
-                  fill="var(--reel-stroke)" opacity="0.28" />
-          </g>
-
-        </g>
-
-        {/* ── Beat 2.5 · Spacing annotations — near layer ── */}
-        <g className={styles.layerNear}>
-          <g className={styles.beatMeasure}>
-            {/* Gap bracket: toggle ↔ input */}
-            <line x1="153" y1="236" x2="199" y2="236"
-                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
-            <line x1="153" y1="233" x2="153" y2="239"
-                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
-            <line x1="199" y1="233" x2="199" y2="239"
-                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
-            <text x="167" y="231" fontFamily="'JetBrains Mono', monospace" fontSize="6.5"
-                  fill="var(--reel-stroke)" opacity="0.4" letterSpacing="0.04em">8</text>
-
-            {/* Gap bracket: radio rows */}
-            <line x1="170" y1="384" x2="170" y2="404"
-                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
-            <line x1="167" y1="384" x2="173" y2="384"
-                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
-            <line x1="167" y1="404" x2="173" y2="404"
-                  stroke="var(--reel-stroke)" strokeWidth="0.5" opacity="0.35" />
-            <text x="175" y="396" fontFamily="'JetBrains Mono', monospace" fontSize="6.5"
-                  fill="var(--reel-stroke)" opacity="0.4" letterSpacing="0.04em">20</text>
-
-            {/* Center crosshair on avatar group */}
-            <line x1="200" y1="446" x2="220" y2="446"
-                  stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.32" />
-            <line x1="210" y1="436" x2="210" y2="466"
-                  stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.32" />
-            <circle cx="210" cy="456" r="2"
-                    fill="none" stroke="var(--reel-stroke)" strokeWidth="0.55" opacity="0.32" />
-          </g>
-        </g>
-
-        {/* ── Beat 3 · Single accent: CTA pill ── */}
-        <g className={styles.layerMid}>
-          {/* Wireframe state */}
-          <rect x="162" y="564" width="92" height="28" rx="14"
-                fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.9"
-                className={styles.beatWireframe} style={d(0.62)} />
-          {/* The one cyan fill */}
-          <rect x="162" y="564" width="92" height="28" rx="14"
-                fill="var(--accent)"
-                className={styles.beatAccentFill} />
-          {/* Label bar */}
-          <rect x="191" y="576" width="34" height="4" rx="1"
-                fill="var(--bg-primary)"
-                className={styles.beatAccentLabel} />
-        </g>
-
-        {/* Glow blooms at accent apex only */}
-        <rect className={styles.beatAccentGlow}
-              x="0" y="380" width="400" height="320"
-              fill="url(#reelGlow)" />
-      </svg>
+      <Shell on={checkboxes} style={{ right: "8%",  top: "35%" }}     dur={SHOW.checkboxes / 1000}>
+        <WFCheckboxes />
+      </Shell>
     </div>
   );
 }

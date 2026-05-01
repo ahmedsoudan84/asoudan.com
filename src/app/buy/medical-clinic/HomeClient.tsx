@@ -68,7 +68,7 @@ export default function HomeClient() {
   return (
     <div className="w-full">
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex items-center justify-center pt-20 px-6 lg:px-12 overflow-hidden">
+      <section className="relative min-h-[92vh] flex items-center justify-center pt-20 px-6 lg:px-12">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&q=80&w=2000"
