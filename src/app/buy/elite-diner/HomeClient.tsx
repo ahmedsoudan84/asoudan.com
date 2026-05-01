@@ -45,13 +45,26 @@ const TRUST_STATS = [
 
 export default function HomeClient() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [placeholder, setPlaceholder] = useState("Tell us what you crave... 'something spicy' or 'date night'");
+
+  React.useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    setPlaceholder(isMobile ? "Tell us what you crave..." : "Tell us what you crave... 'something spicy' or 'date night'");
+
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPlaceholder(e.matches ? "Tell us what you crave..." : "Tell us what you crave... 'something spicy' or 'date night'");
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   const featuredDishes = menuItems.filter((m) => m.dietaryTags.includes("chef-special")).slice(0, 3);
 
   return (
     <div className="w-full">
       {/* ── Hero Section ─────────────────────────────────── */}
-      <section className="relative min-h-[90vh] flex items-center justify-center pt-20 px-6 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center justify-center pt-20 px-6 lg:px-12 overflow-hidden">
         {/* Ambient background with warm overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -121,7 +134,7 @@ export default function HomeClient() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Tell us what you crave... 'something spicy' or 'date night'"
+                  placeholder={placeholder}
                   className="flex-1 bg-transparent py-3 font-montserrat text-sm outline-none"
                   style={{ color: "var(--fg)" }}
                   onKeyDown={(e) => {
