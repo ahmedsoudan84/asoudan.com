@@ -144,6 +144,27 @@ export const categories: TemplateCategory[] = [
     ),
   },
   {
+    slug: "medical-clinic",
+    title: "Medical Clinic",
+    subtitle: "VitalCare — Premium Private Clinic Template with AI",
+    description:
+      "AI symptom checker, online booking, patient portal with medical records, 6 specialist doctors, admin dashboard. Fully client-side — no API keys required.",
+    tags: ["Next.js 15", "AI Symptom Checker", "Patient Portal", "Booking System"],
+    status: "live",
+    startingPrice: "£1,495",
+    pricing: tiersFor(
+      "Booking system, patient portal, AI triage, and admin panel",
+      "Up to 30 services & doctors imported with photos, bios, and availability",
+    ),
+    coverImage: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=600&h=400&fit=crop",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2v20M2 12h20" />
+        <rect x="3" y="3" width="18" height="18" rx="4" />
+      </svg>
+    ),
+  },
+  {
     slug: null,
     title: "SaaS Dashboard",
     subtitle: "Analytics & subscription management template",

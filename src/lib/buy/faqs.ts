@@ -60,6 +60,26 @@ const REAL_ESTATE_SPECIFIC: FAQItem[] = [
   },
 ];
 
+const MEDICAL_CLINIC_SPECIFIC: FAQItem[] = [
+  {
+    q: "How does the AI symptom checker work without an API key?",
+    a: "The symptom checker uses a client-side rule engine with semantic keyword matching and synonym expansion — no external API calls, no latency, no per-query cost. It analyses your symptoms, maps them to likely conditions, and recommends the right specialist and urgency level. If you want a more sophisticated LLM-powered version, we can integrate Claude or GPT as a Bespoke add-on.",
+  },
+  {
+    q: "Can the booking system connect to a real calendar or practice management system?",
+    a: "Out of the box, bookings are stored client-side — ideal for demo and early-stage use. For live operations, we can integrate Google Calendar, Calendly, or practice management systems like Cliniko, Jane App, or Pabau as a Bespoke add-on. Typically 2–4 weeks of work depending on the platform.",
+  },
+  {
+    q: "Is the patient portal GDPR-compliant?",
+    a: "The demo stores data in the browser's localStorage for demonstration purposes. In a production deployment, patient data would be stored on a secure, GDPR-compliant backend (we recommend Supabase or a managed Postgres instance with row-level security). Setting up the full backend stack is included in the Bespoke tier.",
+  },
+];
+
+export const MEDICAL_CLINIC_FAQ: FAQItem[] = [
+  ...MEDICAL_CLINIC_SPECIFIC,
+  ...COMMON,
+];
+
 export const ELITE_DINER_FAQ: FAQItem[] = [
   ...ELITE_DINER_SPECIFIC,
   ...COMMON,
