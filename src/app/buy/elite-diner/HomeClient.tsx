@@ -45,13 +45,26 @@ const TRUST_STATS = [
 
 export default function HomeClient() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [placeholder, setPlaceholder] = useState("Tell us what you crave... 'something spicy' or 'date night'");
+
+  React.useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    setPlaceholder(isMobile ? "Tell us what you crave..." : "Tell us what you crave... 'something spicy' or 'date night'");
+
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPlaceholder(e.matches ? "Tell us what you crave..." : "Tell us what you crave... 'something spicy' or 'date night'");
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   const featuredDishes = menuItems.filter((m) => m.dietaryTags.includes("chef-special")).slice(0, 3);
 
   return (
     <div className="w-full">
       {/* ── Hero Section ─────────────────────────────────── */}
-      <section className="relative min-h-[90vh] flex items-center justify-center pt-20 px-6 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center justify-center pt-20 px-6 lg:px-12 overflow-hidden">
         {/* Ambient background with warm overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -121,7 +134,7 @@ export default function HomeClient() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Tell us what you crave... 'something spicy' or 'date night'"
+                  placeholder={placeholder}
                   className="flex-1 bg-transparent py-3 font-montserrat text-sm outline-none"
                   style={{ color: "var(--fg)" }}
                   onKeyDown={(e) => {
@@ -164,7 +177,7 @@ export default function HomeClient() {
       </section>
 
       {/* ── Introduction ─────────────────────────────────── */}
-      <section className="py-32 px-6" style={{ background: "var(--bg-primary)" }}>
+      <section className="py-32 px-6 lg:px-12" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -278,7 +291,7 @@ export default function HomeClient() {
       </section>
 
       {/* ── Featured Menu ────────────────────────────────── */}
-      <section className="py-32 px-6 bg-secondary" style={{ background: "var(--bg-secondary)" }}>
+      <section className="py-32 px-6 lg:px-12 bg-secondary" style={{ background: "var(--bg-secondary)" }}>
         <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div>
@@ -352,7 +365,7 @@ export default function HomeClient() {
       </section>
 
       {/* ── Trust Signals ────────────────────────────────── */}
-      <section className="py-24 px-6 border-y" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-subtle)" }}>
+      <section className="py-24 px-6 lg:px-12 border-y" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-subtle)" }}>
         <div className="max-w-[1200px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-12">
           {TRUST_STATS.map((stat, i) => (
             <div key={i} className="text-center group">
@@ -383,7 +396,7 @@ export default function HomeClient() {
       <FAQSection items={ELITE_DINER_FAQ} templateSlug="elite-diner" />
 
       {/* ── Bottom CTA ───────────────────────────────────── */}
-      <section className="py-32 px-6">
+      <section className="py-32 px-6 lg:px-12">
         <div className="max-w-[800px] mx-auto text-center">
           <div className="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center text-accent mx-auto mb-10">
             <Icons.ChefHat className="w-10 h-10" />
