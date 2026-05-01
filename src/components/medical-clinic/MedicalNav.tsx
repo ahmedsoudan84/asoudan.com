@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "./Icons";
 
 const NAV_LINKS = [
-  { label: "Home", href: "/buy/medical-clinic" },
   { label: "Services", href: "/buy/medical-clinic/services" },
   { label: "Doctors", href: "/buy/medical-clinic/doctors" },
   { label: "Book", href: "/buy/medical-clinic/book" },
@@ -94,16 +93,8 @@ export function MedicalNav() {
         {/* CTA + Mobile Toggle */}
         <div className="flex items-center gap-3">
           <Link
-            href="/buy/medical-clinic/patient"
-            className="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-xl border font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:border-accent/60"
-            style={{ borderColor: "var(--border-subtle)", background: "var(--fg-05)", color: "var(--fg)" }}
-          >
-            <Icons.User className="w-3.5 h-3.5" style={{ color: "var(--accent)" }} />
-            Portal
-          </Link>
-          <Link
             href="/buy/medical-clinic/book"
-            className="hidden sm:flex px-5 py-2.5 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.35)] hover:-translate-y-0.5"
+            className="flex px-4 sm:px-5 py-2.5 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-wider transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.35)] hover:-translate-y-0.5 whitespace-nowrap"
             style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
           >
             Book Now
