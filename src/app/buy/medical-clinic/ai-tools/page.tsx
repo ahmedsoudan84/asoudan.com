@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import AIToolsClient from "./AIToolsClient";
 
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function AIToolsPage() {
-  return <AIToolsClient />;
+  return (
+    <Suspense fallback={null}>
+      <AIToolsClient />
+    </Suspense>
+  );
 }
