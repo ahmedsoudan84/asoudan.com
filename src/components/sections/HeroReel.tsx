@@ -110,36 +110,6 @@ export function HeroReel() {
                   fill="var(--reel-stroke)" opacity="0.28" />
           </g>
 
-          {/* Avatar group — 3 overlapping */}
-          <g className={styles.beatWireframe} style={d(0.52)}>
-            <circle cx="194" cy="456" r="16"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <circle cx="210" cy="456" r="16"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <circle cx="226" cy="456" r="16"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            {/* subtle head marks */}
-            <circle cx="194" cy="450" r="5" fill="var(--reel-stroke)" opacity="0.16" />
-            <circle cx="210" cy="450" r="5" fill="var(--reel-stroke)" opacity="0.16" />
-            <circle cx="226" cy="450" r="5" fill="var(--reel-stroke)" opacity="0.16" />
-          </g>
-
-          {/* Flow — 3 nodes with connectors */}
-          <g className={styles.beatWireframe} style={d(0.76)}>
-            <circle cx="130" cy="516" r="9"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <line x1="139" y1="516" x2="172" y2="516"
-                  stroke="var(--reel-stroke)" strokeWidth="0.65" opacity="0.4"
-                  markerEnd="url(#reelArrow)" />
-            <circle cx="181" cy="516" r="9"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-            <line x1="190" y1="516" x2="223" y2="516"
-                  stroke="var(--reel-stroke)" strokeWidth="0.65" opacity="0.4"
-                  markerEnd="url(#reelArrow)" />
-            <circle cx="232" cy="516" r="9"
-                    fill="var(--reel-fill)" stroke="var(--reel-stroke)" strokeWidth="0.85" />
-          </g>
-
         </g>
 
         {/* ── Beat 2.5 · Spacing annotations — near layer ── */}
