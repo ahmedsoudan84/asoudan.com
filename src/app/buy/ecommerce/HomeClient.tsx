@@ -141,7 +141,7 @@ export default function HomeClient() {
             {/* AI search */}
             <div className="max-w-xl mx-auto mt-12">
               <div
-                className="flex items-center gap-2 px-2 py-2 rounded-2xl border"
+                className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 rounded-2xl border"
                 style={{
                   background: "var(--bg-surface)",
                   borderColor: "var(--border-card)",
@@ -150,7 +150,7 @@ export default function HomeClient() {
                 }}
               >
                 <EcomIcons.Search
-                  className="w-5 h-5 ml-3 shrink-0"
+                  className="w-4 sm:w-5 h-4 sm:h-5 shrink-0 ml-1 sm:ml-3"
                   style={{ color: "var(--fg-40)" }}
                 />
                 <input
@@ -158,7 +158,7 @@ export default function HomeClient() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={placeholder}
-                  className="flex-1 bg-transparent px-2 py-3 outline-none font-montserrat text-sm"
+                  className="flex-1 bg-transparent px-1 sm:px-2 py-2 sm:py-3 outline-none font-montserrat text-xs sm:text-sm"
                   style={{ color: "var(--fg)" }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && searchQuery.trim()) {
@@ -168,13 +168,15 @@ export default function HomeClient() {
                 />
                 <Link
                   href={`/buy/ecommerce/shop${searchQuery ? `?q=${encodeURIComponent(searchQuery)}` : ""}`}
-                  className="px-5 py-2.5 rounded-xl font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all hover:scale-[1.03]"
+                  className="flex items-center justify-center shrink-0 px-2.5 sm:px-5 py-1.5 sm:py-2.5 rounded-xl font-montserrat text-[9px] sm:text-[11px] font-bold uppercase tracking-[1px] sm:tracking-[2px] transition-all hover:scale-[1.03]"
                   style={{
                     background: "var(--accent)",
                     color: "var(--bg-primary)",
                   }}
+                  title="Search"
                 >
-                  Search
+                  <span className="hidden sm:inline">Search</span>
+                  <EcomIcons.Search className="w-4 h-4 sm:hidden" />
                 </Link>
               </div>
 

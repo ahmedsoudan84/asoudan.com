@@ -596,7 +596,7 @@ function ProductCard({
         type="button"
         onClick={handleAdd}
         aria-label={`Add ${p.name} to cart`}
-        className="sm:hidden mx-4 mb-4 flex items-center justify-center py-3 rounded-xl border font-montserrat text-[11px] font-bold uppercase tracking-[2px] transition-all active:scale-[0.97]"
+        className="sm:hidden mx-3 mb-3 flex items-center justify-center w-10 h-10 rounded-lg border font-montserrat transition-all active:scale-[0.95]"
         style={{
           background: justAdded
             ? "var(--fg)"
@@ -608,9 +608,9 @@ function ProductCard({
         }}
       >
         {justAdded ? (
-          <EcomIcons.Check className="w-4 h-4" />
+          <EcomIcons.Check className="w-5 h-5" />
         ) : (
-          <EcomIcons.Plus className="w-4 h-4" />
+          <EcomIcons.Plus className="w-5 h-5" />
         )}
       </button>
     </div>

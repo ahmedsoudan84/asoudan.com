@@ -125,17 +125,17 @@ export default function HomeClient() {
 
             {/* AI Search Bar */}
             <div className="max-w-2xl mx-auto relative mb-6">
-              <div 
-                className="flex items-center gap-3 px-5 py-4 rounded-2xl border group transition-all"
+              <div
+                className="flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-4 rounded-2xl border group transition-all"
                 style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
               >
-                <Icons.Search className="w-5 h-5 shrink-0" style={{ color: "var(--fg-40)" }} />
+                <Icons.Search className="w-4 sm:w-5 h-4 sm:h-5 shrink-0" style={{ color: "var(--fg-40)" }} />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={placeholder}
-                  className="flex-1 bg-transparent py-3 font-montserrat text-sm outline-none"
+                  className="flex-1 bg-transparent py-2 sm:py-3 font-montserrat text-xs sm:text-sm outline-none"
                   style={{ color: "var(--fg)" }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && searchQuery.trim()) {
@@ -145,10 +145,12 @@ export default function HomeClient() {
                 />
                 <Link
                   href={`/buy/elite-diner/menu?q=${encodeURIComponent(searchQuery)}`}
-                  className="px-6 py-3 rounded-xl font-montserrat text-xs font-bold uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] active:scale-95"
+                  className="flex items-center justify-center shrink-0 px-3 sm:px-6 py-2 sm:py-3 rounded-xl font-montserrat text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)] active:scale-95"
                   style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
+                  title="Explore"
                 >
-                  Explore
+                  <span className="hidden sm:inline">Explore</span>
+                  <Icons.Search className="w-4 h-4 sm:hidden" />
                 </Link>
               </div>
 

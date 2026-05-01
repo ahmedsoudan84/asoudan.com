@@ -156,20 +156,20 @@ export default function RealEstateHomeClient() {
             className="mt-12 max-w-2xl mx-auto"
           >
             <div
-              className="flex items-center gap-3 rounded-2xl px-5 py-4 border"
+              className="flex items-center gap-2 sm:gap-3 rounded-2xl px-3 sm:px-5 py-2.5 sm:py-4 border"
               style={{
                 background: "var(--bg-surface)",
                 borderColor: "var(--border-card)",
               }}
             >
               <svg
-                width="20"
-                height="20"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="shrink-0"
+                className="w-4 sm:w-5 h-4 sm:h-5 shrink-0"
                 style={{ color: "var(--fg-40)" }}
               >
                 <circle cx="11" cy="11" r="8" />
@@ -180,7 +180,7 @@ export default function RealEstateHomeClient() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={placeholder}
-                className="flex-1 bg-transparent font-montserrat text-sm outline-none placeholder:opacity-40"
+                className="flex-1 bg-transparent font-montserrat text-xs sm:text-sm outline-none placeholder:opacity-40"
                 style={{ color: "var(--fg)" }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && searchQuery.trim()) {
@@ -190,13 +190,26 @@ export default function RealEstateHomeClient() {
               />
               <Link
                 href={`/buy/real-estate/listings${searchQuery ? `?q=${encodeURIComponent(searchQuery)}` : ""}`}
-                className="px-5 py-2 rounded-xl font-montserrat text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,241,241,0.3)]"
+                className="flex items-center justify-center shrink-0 px-3 sm:px-5 py-2 sm:py-2 rounded-xl font-montserrat text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,241,241,0.3)]"
                 style={{
                   background: "var(--accent)",
                   color: "var(--bg-primary)",
                 }}
+                title="Search"
               >
-                Search
+                <span className="hidden sm:inline">Search</span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  className="w-4 h-4 sm:hidden"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="M21 21l-4.35-4.35" />
+                </svg>
               </Link>
             </div>
 
