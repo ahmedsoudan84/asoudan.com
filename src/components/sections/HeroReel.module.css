@@ -1,0 +1,132 @@
+/* Hero reel — 3-beat choreography: sketch → wireframe → component.
+   --reel-* tokens live in globals.css. Pauses on prefers-reduced-motion. */
+
+.reel {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: var(--reel-blend);
+  opacity: var(--reel-opacity);
+  transition: opacity 0.4s ease;
+}
+
+.reel svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Enable centre-based transforms on all SVG beat groups */
+.beatConstruct,
+.beatWireframe,
+.beatMeasure,
+.beatAccentFill,
+.beatAccentLabel,
+.beatAccentGlow {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* ── Parallax: three depth layers — vertical + subtle horizontal drift ── */
+
+.layerFar  { animation: driftFar  var(--reel-loop) ease-in-out infinite; }
+.layerMid  { animation: driftMid  var(--reel-loop) ease-in-out infinite; }
+.layerNear { animation: driftNear var(--reel-loop) ease-in-out infinite; }
+
+@keyframes driftFar  { 0%, 100% { transform: translate(0px,  0px); } 50% { transform: translate( 3px,  -5px); } }
+@keyframes driftMid  { 0%, 100% { transform: translate(0px,  0px); } 50% { transform: translate(-4px, -12px); } }
+@keyframes driftNear { 0%, 100% { transform: translate(0px,  0px); } 50% { transform: translate( 5px, -21px); } }
+
+/* ── Beat 1: Construction guides — scale up + fade in ── */
+
+.beatConstruct { animation: beatConstruct var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatConstruct {
+  0%       { opacity: 0; transform: scale(0.94); }
+  7%       { opacity: 1; transform: scale(1); }
+  33%      { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0; transform: scale(1.03); }
+  100%     { opacity: 0; transform: scale(1.03); }
+}
+
+/* ── Beat 2: Wireframe elements — rise up from below on entry, drift up on exit ── */
+
+.beatWireframe { animation: beatWireframe var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatWireframe {
+  0%, 28%  { opacity: 0; transform: translateY(9px); }
+  42%      { opacity: 1; transform: translateY(0px); }
+  74%      { opacity: 1; transform: translateY(0px); }
+  88%      { opacity: 0; transform: translateY(-6px); }
+  100%     { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ── Beat 2.5: Measurement marks — slide in from left ── */
+
+.beatMeasure { animation: beatMeasure var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatMeasure {
+  0%, 40%  { opacity: 0; transform: translateX(-4px); }
+  54%      { opacity: 1; transform: translateX(0px); }
+  76%      { opacity: 1; transform: translateX(0px); }
+  88%      { opacity: 0; transform: translateX(3px); }
+  100%     { opacity: 0; transform: translateX(3px); }
+}
+
+/* ── Beat 3: CTA accent — scale in from centre, pulse out ── */
+
+.beatAccentFill  { animation: beatAccent      var(--reel-loop) ease-in-out infinite; }
+.beatAccentLabel { animation: beatAccentLabel var(--reel-loop) ease-in-out infinite; }
+.beatAccentGlow  { animation: beatAccentGlow  var(--reel-loop) ease-in-out infinite; }
+
+@keyframes beatAccent {
+  0%, 63%  { opacity: 0; transform: scaleX(0.55); }
+  72%      { opacity: 1; transform: scaleX(1.04); }
+  75%      { opacity: 1; transform: scaleX(1); }
+  84%      { opacity: 1; transform: scaleX(1); }
+  93%      { opacity: 0; transform: scaleX(0.88); }
+  100%     { opacity: 0; }
+}
+
+@keyframes beatAccentLabel {
+  0%, 65%  { opacity: 0; }
+  75%      { opacity: 0.55; }
+  84%      { opacity: 0.55; }
+  93%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
+
+@keyframes beatAccentGlow {
+  0%, 62%  { opacity: 0; }
+  74%      { opacity: 1; }
+  84%      { opacity: 1; }
+  93%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
+
+/* ── Reduced motion: freeze on a settled wireframe frame ── */
+
+@media (prefers-reduced-motion: reduce) {
+  .layerFar,
+  .layerMid,
+  .layerNear,
+  .beatConstruct,
+  .beatWireframe,
+  .beatMeasure,
+  .beatAccentFill,
+  .beatAccentLabel,
+  .beatAccentGlow {
+    animation: none !important;
+  }
+
+  .beatWireframe { opacity: 0.85 !important; transform: none !important; }
+  .beatMeasure   { opacity: 0.6  !important; transform: none !important; }
+
+  .beatConstruct,
+  .beatAccentFill,
+  .beatAccentLabel,
+  .beatAccentGlow { opacity: 0 !important; }
+}
