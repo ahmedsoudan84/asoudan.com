@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ── Animation Variants ──────────────────────────────────────────
-// Smooth, elegant drawing of the wireframes
 const drawAnim = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: (i: number) => {
@@ -70,35 +69,51 @@ function Shell({
   );
 }
 
-// ── Shared Colors ────────────────────────────────────────────────
-const PRIMARY_STROKE = "stroke-black/50 dark:stroke-white/50";
-const SECONDARY_STROKE = "stroke-black/30 dark:stroke-white/30";
-const TERTIARY_STROKE = "stroke-black/20 dark:stroke-white/20";
+// ── Shared Colors using CSS variables ────────────────────────────
+// These map directly to globals.css [data-theme] variables so they 
+// instantly adapt to light/dark mode without needing class variants.
+const PRIMARY = "var(--fg-60)";
+const SECONDARY = "var(--fg-30)";
+const TERTIARY = "var(--fg-15)";
+
+// Shared Glassmorphism Wrapper
+function GlassWrapper({ width, height, children }: { width: number, height: number, children: React.ReactNode }) {
+  return (
+    <div 
+      className="backdrop-blur-md rounded-xl shadow-xl overflow-hidden" 
+      style={{ 
+        width, 
+        height, 
+        background: "var(--fg-05)", 
+        border: "1px solid var(--fg-10)" 
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 // ════════════════════════════════════════════════════════════════
 // 1 · Mobile phone — 80×148 (Pure Wireframe)
 // ════════════════════════════════════════════════════════════════
 function WFMobile() {
   return (
-    <svg width="80" height="148" viewBox="0 0 80 148" fill="none">
-      {/* Phone chassis */}
-      <motion.rect x="1" y="1" width="78" height="146" rx="12" className={TERTIARY_STROKE} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
-      {/* Notch */}
-      <motion.rect x="28" y="5" width="24" height="6" rx="3" className={SECONDARY_STROKE} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Image hero wire */}
-      <motion.rect x="8" y="20" width="64" height="48" rx="6" className={PRIMARY_STROKE} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M8 20 L72 68 M8 68 L72 20" className={TERTIARY_STROKE} strokeWidth="0.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Text lines */}
-      <motion.path d="M8 80 L52 80" className={PRIMARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M8 88 L66 88" className={SECONDARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M8 96 L40 96" className={TERTIARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Button wire */}
-      <motion.rect x="8" y="110" width="64" height="18" rx="9" className={PRIMARY_STROKE} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M30 119 L50 119" className={PRIMARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
-    </svg>
+    <GlassWrapper width={80} height={148}>
+      <svg width="80" height="148" viewBox="0 0 80 148" fill="none">
+        <motion.rect x="1" y="1" width="78" height="146" rx="12" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.rect x="28" y="5" width="24" height="6" rx="3" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="20" width="64" height="48" rx="6" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 20 L72 68 M8 68 L72 20" style={{ stroke: TERTIARY }} strokeWidth="0.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 80 L52 80" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 88 L66 88" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 96 L40 96" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="110" width="64" height="18" rx="9" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M30 119 L50 119" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
   );
 }
 
@@ -107,33 +122,29 @@ function WFMobile() {
 // ════════════════════════════════════════════════════════════════
 function WFBrowser() {
   return (
-    <svg width="200" height="128" viewBox="0 0 200 128" fill="none">
-      {/* Browser window */}
-      <motion.rect x="1" y="1" width="198" height="126" rx="8" className={TERTIARY_STROKE} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M1 25 L199 25" className={TERTIARY_STROKE} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Dots */}
-      <motion.circle cx="12" cy="13" r="3.5" className={SECONDARY_STROKE} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.circle cx="23" cy="13" r="3.5" className={SECONDARY_STROKE} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.circle cx="34" cy="13" r="3.5" className={SECONDARY_STROKE} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* URL bar */}
-      <motion.rect x="48" y="6" width="104" height="14" rx="4" className={SECONDARY_STROKE} strokeWidth="1" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M56 13 L116 13" className={TERTIARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Hero image wire */}
-      <motion.rect x="8" y="34" width="118" height="66" rx="5" className={PRIMARY_STROKE} strokeWidth="1.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M8 34 L126 100 M8 100 L126 34" className={TERTIARY_STROKE} strokeWidth="0.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Side text */}
-      <motion.path d="M134 40 L180 40" className={PRIMARY_STROKE} strokeWidth="3" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M134 50 L184 50" className={SECONDARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M134 58 L170 58" className={TERTIARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Button wire */}
-      <motion.rect x="134" y="74" width="56" height="16" rx="8" className={PRIMARY_STROKE} strokeWidth="1.5" custom={9} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M148 82 L166 82" className={PRIMARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={10} variants={drawAnim} initial="hidden" animate="visible" />
-    </svg>
+    <GlassWrapper width={200} height={128}>
+      <svg width="200" height="128" viewBox="0 0 200 128" fill="none">
+        <motion.rect x="1" y="1" width="198" height="126" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M1 25 L199 25" style={{ stroke: TERTIARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.circle cx="12" cy="13" r="3.5" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.circle cx="23" cy="13" r="3.5" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.circle cx="34" cy="13" r="3.5" style={{ stroke: SECONDARY }} strokeWidth="1" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="48" y="6" width="104" height="14" rx="4" style={{ stroke: SECONDARY }} strokeWidth="1" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M56 13 L116 13" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="34" width="118" height="66" rx="5" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 34 L126 100 M8 100 L126 34" style={{ stroke: TERTIARY }} strokeWidth="0.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M134 40 L180 40" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M134 50 L184 50" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M134 58 L170 58" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="134" y="74" width="56" height="16" rx="8" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={9} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M148 82 L166 82" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={10} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
   );
 }
 
@@ -142,21 +153,23 @@ function WFBrowser() {
 // ════════════════════════════════════════════════════════════════
 function WFCard() {
   return (
-    <svg width="144" height="172" viewBox="0 0 144 172" fill="none">
-      <motion.rect x="1" y="1" width="142" height="170" rx="8" className={TERTIARY_STROKE} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.rect x="8" y="8" width="128" height="80" rx="4" className={PRIMARY_STROKE} strokeWidth="1.5" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M8 8 L136 88 M8 88 L136 8" className={TERTIARY_STROKE} strokeWidth="0.5" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.path d="M8 104 L114 104" className={PRIMARY_STROKE} strokeWidth="3" strokeLinecap="round" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M8 114 L132 114" className={SECONDARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M8 122 L106 122" className={TERTIARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.path d="M8 142 L136 142" className={TERTIARY_STROKE} strokeWidth="1" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.path d="M8 156 L60 156" className={TERTIARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.circle cx="122" cy="156" r="6" className={PRIMARY_STROKE} strokeWidth="1.5" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
-    </svg>
+    <GlassWrapper width={144} height={172}>
+      <svg width="144" height="172" viewBox="0 0 144 172" fill="none">
+        <motion.rect x="1" y="1" width="142" height="170" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="8" y="8" width="128" height="80" rx="4" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 8 L136 88 M8 88 L136 8" style={{ stroke: TERTIARY }} strokeWidth="0.5" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 104 L114 104" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 114 L132 114" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M8 122 L106 122" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 142 L136 142" style={{ stroke: TERTIARY }} strokeWidth="1" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M8 156 L60 156" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.circle cx="122" cy="156" r="6" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
   );
 }
 
@@ -165,20 +178,22 @@ function WFCard() {
 // ════════════════════════════════════════════════════════════════
 function WFForm() {
   return (
-    <svg width="176" height="124" viewBox="0 0 176 124" fill="none">
-      <motion.rect x="1" y="1" width="174" height="122" rx="8" className={TERTIARY_STROKE} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.path d="M12 16 L48 16" className={PRIMARY_STROKE} strokeWidth="3" strokeLinecap="round" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.rect x="12" y="24" width="152" height="22" rx="4" className={PRIMARY_STROKE} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M20 35 L90 35" className={SECONDARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.rect x="12" y="54" width="152" height="22" rx="4" className={SECONDARY_STROKE} strokeWidth="1" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M20 65 L72 65" className={TERTIARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.rect x="12" y="88" width="152" height="24" rx="12" className={PRIMARY_STROKE} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M68 100 L108 100" className={PRIMARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
-    </svg>
+    <GlassWrapper width={176} height={124}>
+      <svg width="176" height="124" viewBox="0 0 176 124" fill="none">
+        <motion.rect x="1" y="1" width="174" height="122" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M12 16 L48 16" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="12" y="24" width="152" height="22" rx="4" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M20 35 L90 35" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="12" y="54" width="152" height="22" rx="4" style={{ stroke: SECONDARY }} strokeWidth="1" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M20 65 L72 65" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.rect x="12" y="88" width="152" height="24" rx="12" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M68 100 L108 100" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
   );
 }
 
@@ -187,32 +202,33 @@ function WFForm() {
 // ════════════════════════════════════════════════════════════════
 function WFCheckboxes() {
   return (
-    <svg width="164" height="116" viewBox="0 0 164 116" fill="none">
-      <motion.rect x="1" y="1" width="162" height="114" rx="8" className={TERTIARY_STROKE} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      <motion.path d="M12 16 L72 16" className={PRIMARY_STROKE} strokeWidth="3" strokeLinecap="round" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Checked box */}
-      <motion.rect x="12" y="30" width="16" height="16" rx="2" className={PRIMARY_STROKE} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M15 38 L18 41 L24 34" className={PRIMARY_STROKE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M38 38 L138 38" className={SECONDARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Unchecked box */}
-      <motion.rect x="12" y="58" width="16" height="16" rx="2" className={SECONDARY_STROKE} strokeWidth="1.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M38 66 L124 66" className={TERTIARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
-      
-      {/* Checked box */}
-      <motion.rect x="12" y="86" width="16" height="16" rx="2" className={PRIMARY_STROKE} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M15 94 L18 97 L24 90" className={PRIMARY_STROKE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
-      <motion.path d="M38 94 L108 94" className={SECONDARY_STROKE} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
-    </svg>
+    <GlassWrapper width={164} height={116}>
+      <svg width="164" height="116" viewBox="0 0 164 116" fill="none">
+        <motion.rect x="1" y="1" width="162" height="114" rx="8" style={{ stroke: TERTIARY }} strokeWidth="1.5" custom={1} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        <motion.path d="M12 16 L72 16" style={{ stroke: PRIMARY }} strokeWidth="3" strokeLinecap="round" custom={2} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        {/* Checked box */}
+        <motion.rect x="12" y="30" width="16" height="16" rx="2" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={3} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M15 38 L18 41 L24 34" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M38 38 L138 38" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={4} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        {/* Unchecked box */}
+        <motion.rect x="12" y="58" width="16" height="16" rx="2" style={{ stroke: SECONDARY }} strokeWidth="1.5" custom={5} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M38 66 L124 66" style={{ stroke: TERTIARY }} strokeWidth="2" strokeLinecap="round" custom={6} variants={drawAnim} initial="hidden" animate="visible" />
+        
+        {/* Checked box */}
+        <motion.rect x="12" y="86" width="16" height="16" rx="2" style={{ stroke: PRIMARY }} strokeWidth="1.5" custom={7} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M15 94 L18 97 L24 90" style={{ stroke: PRIMARY }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+        <motion.path d="M38 94 L108 94" style={{ stroke: SECONDARY }} strokeWidth="2" strokeLinecap="round" custom={8} variants={drawAnim} initial="hidden" animate="visible" />
+      </svg>
+    </GlassWrapper>
   );
 }
 
 // ════════════════════════════════════════════════════════════════
 // MAIN EXPORT
 // ════════════════════════════════════════════════════════════════
-// Extended durations to make the linear fly-through feel natural and give time for the draw
 const SHOW = {
   mobile:     4500,
   browser:    4200,
