@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { properties } from "@/lib/real-estate/properties";
@@ -90,7 +90,7 @@ export default function RealEstateHomeClient() {
   const [placeholder, setPlaceholder] = useState("Try: 'family home near good schools with garden'");
   const featured = properties.slice(0, 3);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const isMobile = window.matchMedia("(max-width: 640px)").matches;
     setPlaceholder(isMobile ? "Try: 'family home...'" : "Try: 'family home near good schools with garden'");
 
