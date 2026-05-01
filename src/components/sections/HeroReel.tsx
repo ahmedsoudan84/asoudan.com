@@ -13,7 +13,7 @@ const drawAnim = {
       pathLength: 1,
       opacity: 1,
       transition: {
-        pathLength: { delay, duration: 1.4, ease: "easeOut" },
+        pathLength: { delay, duration: 1.4, ease: "easeOut" as const },
         opacity: { delay, duration: 0.1 },
       },
     };
@@ -58,8 +58,8 @@ function Shell({
             opacity: [0, 1, 1, 0],
           }}
           transition={{
-            scale: { duration: dur, ease: "linear" },
-            opacity: { duration: dur, times: [0, 0.15, 0.8, 1], ease: "linear" }
+            scale: { duration: dur, ease: "linear" as const },
+            opacity: { duration: dur, times: [0, 0.15, 0.8, 1], ease: "linear" as const }
           }}
           exit={{ opacity: 0, transition: { duration: 0.4 } }}
         >
