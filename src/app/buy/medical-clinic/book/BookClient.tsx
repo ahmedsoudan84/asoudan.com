@@ -23,6 +23,40 @@ function generateId() {
   return `APT-${String(Date.now()).slice(-6)}`;
 }
 
+function SelectionChip({
+  icon,
+  label,
+  value,
+  onEdit,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  onEdit: () => void;
+}) {
+  return (
+    <motion.button
+      layout
+      initial={{ opacity: 0, scale: 0.85, y: -6 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.85, y: -6 }}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+      onClick={onEdit}
+      className="group flex items-center gap-2.5 px-3.5 py-2 rounded-xl border text-left transition-colors hover:border-accent/40"
+      style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)" }}
+    >
+      <span style={{ color: "var(--accent)" }}>{icon}</span>
+      <div className="min-w-0">
+        <p className="text-[9px] font-bold uppercase tracking-[1.5px]" style={{ color: "var(--fg-30)" }}>{label}</p>
+        <p className="text-xs font-montserrat font-bold truncate max-w-[160px]" style={{ color: "var(--fg)" }}>{value}</p>
+      </div>
+      <span className="text-[9px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-60 transition-opacity shrink-0" style={{ color: "var(--accent)" }}>
+        edit
+      </span>
+    </motion.button>
+  );
+}
+
 export default function BookClient() {
   const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>(1);
@@ -164,6 +198,35 @@ export default function BookClient() {
             </React.Fragment>
           ))}
         </div>
+
+        {/* Running selection summary — visible on steps 2 & 3 only */}
+        {step >= 2 && step <= 3 && (
+          <motion.div
+            layout
+            className="flex flex-wrap gap-2 justify-center mb-8"
+          >
+            <AnimatePresence>
+              {selectedService && (
+                <SelectionChip
+                  key="service-chip"
+                  icon={<Icons.Clock className="w-3.5 h-3.5" />}
+                  label="Service"
+                  value={`${service?.name} · £${service?.price}`}
+                  onEdit={() => setStep(1)}
+                />
+              )}
+              {selectedDoctor && step === 3 && (
+                <SelectionChip
+                  key="doctor-chip"
+                  icon={<Icons.Star className="w-3.5 h-3.5" />}
+                  label="Doctor"
+                  value={doctor?.name ?? ""}
+                  onEdit={() => setStep(2)}
+                />
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
 
         <AnimatePresence mode="wait">
           {/* Step 1: Choose Service */}
