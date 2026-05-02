@@ -16,8 +16,9 @@ export default function FixedThemeToggle() {
 
   if (!mounted) return null;
 
-  // Templates (under /buy) ship their own chrome — keep the portfolio toggle off those pages.
-  if (pathname?.startsWith("/buy")) return null;
+  // Template pages ship their own chrome — hide the global toggle on them.
+  // The /buy catalogue root (pathname === "/buy") is not a template and shows the toggle.
+  if (pathname?.startsWith("/buy/")) return null;
 
   return (
     <motion.button
