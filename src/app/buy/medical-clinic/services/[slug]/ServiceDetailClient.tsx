@@ -118,7 +118,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                 ))}
               </div>
               <Link
-                href={`/buy/medical-clinic/book`}
+                href={`/buy/medical-clinic/book?service=${service.id}`}
                 className="block w-full text-center py-4 rounded-2xl font-montserrat font-bold uppercase tracking-[2px] text-xs transition-all hover:scale-105 shadow-lg shadow-accent/20"
                 style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
               >

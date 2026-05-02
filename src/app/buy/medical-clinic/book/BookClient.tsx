@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icons } from "@/components/medical-clinic/Icons";
 import { doctors, services, AVAILABLE_TIMES } from "@/lib/medical-clinic/data";
@@ -23,15 +24,30 @@ function generateId() {
 }
 
 export default function BookClient() {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>(1);
   const [selectedService, setSelectedService] = useState("");
   const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [preFilledDoctor, setPreFilledDoctor] = useState(false);
+  const [preFilledService, setPreFilledService] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [apptType, setApptType] = useState<AppointmentType>("in-person");
   const [form, setForm] = useState({ name: "", email: "", phone: "", notes: "" });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const doctorParam = searchParams.get("doctor");
+    const serviceParam = searchParams.get("service");
+    const validDoctor = doctorParam && doctors.find((d) => d.id === doctorParam);
+    const validService = serviceParam && services.find((s) => s.id === serviceParam);
+    if (validDoctor) { setSelectedDoctor(doctorParam!); setPreFilledDoctor(true); }
+    if (validService) { setSelectedService(serviceParam!); setPreFilledService(true); }
+    if (validDoctor && validService) setStep(3);
+    else if (validService) setStep(2);
+    // only doctor pre-filled → stay at step 1, step 2 will be skipped after service selection
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const service = services.find((s) => s.id === selectedService);
   const doctor = doctors.find((d) => d.id === selectedDoctor);
@@ -158,7 +174,7 @@ export default function BookClient() {
                 {services.map((svc) => (
                   <button
                     key={svc.id}
-                    onClick={() => { setSelectedService(svc.id); setStep(2); }}
+                    onClick={() => { setSelectedService(svc.id); setStep(preFilledDoctor ? 3 : 2); }}
                     className="group p-6 rounded-2xl border text-left transition-all hover:-translate-y-1 hover:shadow-lg hover:border-accent/40"
                     style={{
                       background: selectedService === svc.id ? "rgba(var(--accent-rgb),0.08)" : "var(--bg-surface)",
@@ -235,7 +251,7 @@ export default function BookClient() {
             <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
               <div className="flex items-center justify-between mb-8">
                 <h2 className="font-montserrat text-2xl font-bold">Select date & time</h2>
-                <button onClick={() => setStep(2)} className="text-xs font-bold uppercase tracking-wider opacity-50 hover:opacity-100 transition">
+                <button onClick={() => setStep(preFilledDoctor && !preFilledService ? 1 : 2)} className="text-xs font-bold uppercase tracking-wider opacity-50 hover:opacity-100 transition">
                   ← Back
                 </button>
               </div>

@@ -58,7 +58,7 @@ export default function DoctorDetailClient({ doctor }: { doctor: Doctor }) {
                 ))}
               </div>
               <Link
-                href="/buy/medical-clinic/book"
+                href={`/buy/medical-clinic/book?doctor=${doctor.id}`}
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-montserrat font-bold uppercase tracking-[2px] text-xs transition-all hover:scale-105"
                 style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
               >
@@ -138,7 +138,7 @@ export default function DoctorDetailClient({ doctor }: { doctor: Doctor }) {
                 ))}
               </div>
               <Link
-                href="/buy/medical-clinic/book"
+                href={`/buy/medical-clinic/book?doctor=${doctor.id}`}
                 className="block w-full text-center py-4 rounded-2xl font-montserrat font-bold uppercase tracking-[2px] text-xs transition-all hover:scale-105"
                 style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
               >
