@@ -20,7 +20,7 @@ export default function EcommerceLayout({
   return (
     <>
       <EcommerceNav />
-      <DemoBanner />
+      <DemoBanner href="/buy/contact?template=ecommerce" />
       <div className="min-h-screen">{children}</div>
       <Footer />
       <CartDrawer />

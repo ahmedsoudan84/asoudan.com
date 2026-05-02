@@ -100,6 +100,15 @@ export default function BuyCategoriesClient() {
           >
             Ready-to-use, customisable, built with Next.js + AI
           </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.28 }}
+            className="font-montserrat text-[11px] font-bold uppercase tracking-[3px] mt-5"
+            style={{ color: "var(--accent)", opacity: 0.75 }}
+          >
+            ✦ Every template is personalised to your brand guidelines after purchase
+          </motion.p>
         </div>
       </section>
 

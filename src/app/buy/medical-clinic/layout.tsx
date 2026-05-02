@@ -15,7 +15,7 @@ export default function MedicalClinicLayout({ children }: { children: React.Reac
   return (
     <>
       <MedicalNav />
-      <DemoBanner />
+      <DemoBanner href="/buy/contact?template=medical-clinic" />
       <div className="min-h-screen overflow-x-hidden">{children}</div>
       <Footer />
       <AIChatWidget />

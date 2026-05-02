@@ -18,7 +18,7 @@ export default function EliteDinerLayout({
   return (
     <>
       <EliteDinerNav />
-      <DemoBanner />
+      <DemoBanner href="/buy/contact?template=elite-diner" />
       <div className="min-h-screen">
         {children}
       </div>

@@ -10,7 +10,7 @@ export default function RealEstateLayout({
   return (
     <>
       <TopNav />
-      <DemoBanner />
+      <DemoBanner href="/buy/contact?template=real-estate" />
       <div className="min-h-screen">{children}</div>
       <Footer />
     </>

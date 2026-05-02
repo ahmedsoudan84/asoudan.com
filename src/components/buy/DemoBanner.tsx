@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-export function DemoBanner() {
+interface DemoBannerProps {
+  href: string;
+}
+
+export function DemoBanner({ href }: DemoBannerProps) {
   return (
     <div
       className="w-full px-6 py-2.5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5"
@@ -18,7 +22,7 @@ export function DemoBanner() {
         your version is personalised to your brand: logo, colours, content &amp; domain
       </p>
       <Link
-        href="/buy"
+        href={href}
         className="shrink-0 px-3.5 py-1.5 rounded-lg font-montserrat text-[10px] font-black uppercase tracking-[2px] transition-all hover:opacity-80 whitespace-nowrap"
         style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
       >
