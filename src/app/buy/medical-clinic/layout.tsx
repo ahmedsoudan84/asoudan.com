@@ -14,7 +14,7 @@ export default function MedicalClinicLayout({ children }: { children: React.Reac
   return (
     <>
       <MedicalNav />
-      <div className="min-h-screen">{children}</div>
+      <div className="min-h-screen overflow-x-hidden">{children}</div>
       <Footer />
       <AIChatWidget />
     </>
