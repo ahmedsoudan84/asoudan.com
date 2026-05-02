@@ -81,7 +81,7 @@ export const categories: TemplateCategory[] = [
     subtitle: "Premium Restaurant Template with AI",
     description:
       "Elegant menu, online ordering, table booking, AI recommender & chatbot. Fully client-side — no API keys ever.",
-    tags: ["Next.js 15", "AI Recommender", "Online Ordering", "Reservations"],
+    tags: ["Next.js 15", "AI Recommender", "Online Ordering", "Reservations", "Delivery"],
     status: "live",
     startingPrice: "£1,495",
     pricing: tiersFor(
@@ -105,7 +105,7 @@ export const categories: TemplateCategory[] = [
     subtitle: "London Estate Agent Template with AI Features",
     description:
       "Semantic property search, AI chatbot, area insights, admin portal. Fully client-side — no API keys required.",
-    tags: ["Next.js 15", "AI Search", "Admin Portal", "12 Listings"],
+    tags: ["Next.js 15", "AI Features", "Admin Portal", "Modern Listings", "Viewing Booking"],
     status: "live",
     startingPrice: "£1,495",
     pricing: tiersFor(
@@ -127,7 +127,7 @@ export const categories: TemplateCategory[] = [
     subtitle: "Kurator — Premium Shop Template with AI Stylist",
     description:
       "Semantic product search, AI stylist with occasion bundles, persistent cart, 3-step checkout. Twenty-two curated products across six categories. Fully client-side.",
-    tags: ["Next.js 15", "AI Stylist", "Cart + Checkout", "22 Products"],
+    tags: ["Next.js 15", "AI Stylist", "Cart + Checkout", "Various Categories"],
     status: "live",
     startingPrice: "£1,495",
     pricing: tiersFor(
