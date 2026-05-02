@@ -8,6 +8,7 @@ import { Icons } from "@/components/medical-clinic/Icons";
 import { doctors, services, AVAILABLE_TIMES } from "@/lib/medical-clinic/data";
 import { addAppointment } from "@/lib/medical-clinic/storage";
 import type { Appointment } from "@/lib/medical-clinic/data";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type Step = 1 | 2 | 3 | 4;
 type AppointmentType = "in-person" | "video" | "phone";
@@ -59,6 +60,7 @@ function SelectionChip({
 
 export default function BookClient() {
   const searchParams = useSearchParams();
+  const { theme } = useTheme();
   const [step, setStep] = useState<Step>(1);
   const [selectedService, setSelectedService] = useState("");
   const [selectedDoctor, setSelectedDoctor] = useState("");
@@ -328,7 +330,7 @@ export default function BookClient() {
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                     className="w-full px-5 py-4 rounded-2xl border outline-none font-montserrat transition-all focus:border-accent"
-                    style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)", color: "var(--fg)" }}
+                    style={{ background: "var(--bg-surface)", borderColor: "var(--border-card)", color: "var(--fg)", colorScheme: theme }}
                   />
 
                   <div className="mt-6">
