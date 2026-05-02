@@ -12,6 +12,14 @@ export default function DoctorDetailClient({ doctor }: { doctor: Doctor }) {
     (s) => s.category.split("-")[0] === doctor.specialty.split(" ")[0].toLowerCase() || s.category === "general"
   ).slice(0, 3);
 
+  // Find the most specific service for this doctor (non-general first, fallback to GP consultation)
+  const primaryService =
+    services.find((s) => s.category !== "general" && doctor.specialty.toLowerCase().includes(s.category.split("-")[0])) ??
+    services.find((s) => s.category === "general");
+  const bookHref = primaryService
+    ? `/buy/medical-clinic/book?doctor=${doctor.id}&service=${primaryService.id}`
+    : `/buy/medical-clinic/book?doctor=${doctor.id}`;
+
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
       {/* Hero */}
@@ -58,7 +66,7 @@ export default function DoctorDetailClient({ doctor }: { doctor: Doctor }) {
                 ))}
               </div>
               <Link
-                href={`/buy/medical-clinic/book?doctor=${doctor.id}`}
+                href={bookHref}
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-montserrat font-bold uppercase tracking-[2px] text-xs transition-all hover:scale-105"
                 style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
               >
@@ -138,7 +146,7 @@ export default function DoctorDetailClient({ doctor }: { doctor: Doctor }) {
                 ))}
               </div>
               <Link
-                href={`/buy/medical-clinic/book?doctor=${doctor.id}`}
+                href={bookHref}
                 className="block w-full text-center py-4 rounded-2xl font-montserrat font-bold uppercase tracking-[2px] text-xs transition-all hover:scale-105"
                 style={{ background: "var(--accent)", color: "var(--bg-primary)" }}
               >
