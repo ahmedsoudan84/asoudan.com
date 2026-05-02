@@ -3,6 +3,7 @@ import React from "react";
 import { MedicalNav } from "@/components/medical-clinic/MedicalNav";
 import { AIChatWidget } from "@/components/medical-clinic/AIChatWidget";
 import Footer from "@/components/sections/Footer";
+import { DemoBanner } from "@/components/buy/DemoBanner";
 
 export const metadata: Metadata = {
   title: "VitalCare | Private Medical Clinic Template",
@@ -14,6 +15,7 @@ export default function MedicalClinicLayout({ children }: { children: React.Reac
   return (
     <>
       <MedicalNav />
+      <DemoBanner />
       <div className="min-h-screen overflow-x-hidden">{children}</div>
       <Footer />
       <AIChatWidget />

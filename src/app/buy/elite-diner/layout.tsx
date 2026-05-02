@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { EliteDinerNav } from "@/components/elite-diner/EliteDinerNav";
 import { AIChatWidget } from "@/components/elite-diner/AIChatWidget";
 import Footer from "@/components/sections/Footer";
+import { DemoBanner } from "@/components/buy/DemoBanner";
 
 export const metadata: Metadata = {
   title: "Elite Diner | premium Fine Dining in London",
@@ -17,6 +18,7 @@ export default function EliteDinerLayout({
   return (
     <>
       <EliteDinerNav />
+      <DemoBanner />
       <div className="min-h-screen">
         {children}
       </div>

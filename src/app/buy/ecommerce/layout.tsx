@@ -4,6 +4,7 @@ import CartDrawer from "@/components/ecommerce/CartDrawer";
 import AIChatWidget from "@/components/ecommerce/AIChatWidget";
 import AddedToast from "@/components/ecommerce/AddedToast";
 import Footer from "@/components/sections/Footer";
+import { DemoBanner } from "@/components/buy/DemoBanner";
 
 export const metadata: Metadata = {
   title: "Kurator — Premium E-Commerce Template",
@@ -19,6 +20,7 @@ export default function EcommerceLayout({
   return (
     <>
       <EcommerceNav />
+      <DemoBanner />
       <div className="min-h-screen">{children}</div>
       <Footer />
       <CartDrawer />

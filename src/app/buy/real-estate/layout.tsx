@@ -1,5 +1,6 @@
 import TopNav from "@/components/real-estate/TopNav";
 import Footer from "@/components/sections/Footer";
+import { DemoBanner } from "@/components/buy/DemoBanner";
 
 export default function RealEstateLayout({
   children,
@@ -9,6 +10,7 @@ export default function RealEstateLayout({
   return (
     <>
       <TopNav />
+      <DemoBanner />
       <div className="min-h-screen">{children}</div>
       <Footer />
     </>
