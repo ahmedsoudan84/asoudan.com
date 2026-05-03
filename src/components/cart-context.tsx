@@ -1,8 +1,10 @@
+"use client"
+
 import { createContext, useContext, useReducer, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { ShoppingCart } from 'lucide-react'
 
-type CartItem = {
+export type CartItem = {
   id: string
   name: string
   price: number
@@ -16,7 +18,16 @@ type CartState = {
   total: number
 }
 
-const CartContext = createContext<any>(undefined)
+type CartContextType = {
+  state: CartState
+  dispatch: React.Dispatch<any>
+  addItem: (item: CartItem) => void
+  removeItem: (id: string) => void
+  updateQuantity: (id: string, quantity: number) => void
+  clearCart: () => void
+}
+
+const CartContext = createContext<CartContextType | undefined>(undefined)
 
 const cartReducer = (state: CartState, action: any): CartState => {
   switch (action.type) {
@@ -63,8 +74,14 @@ const cartReducer = (state: CartState, action: any): CartState => {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, { items: [], total: 0 })
+
+  const addItem = (item: CartItem) => dispatch({ type: 'ADD_ITEM', payload: item })
+  const removeItem = (id: string) => dispatch({ type: 'REMOVE_ITEM', payload: id })
+  const updateQuantity = (id: string, quantity: number) => dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } })
+  const clearCart = () => dispatch({ type: 'CLEAR_CART' })
+
   return (
-    <CartContext.Provider value={{ state, dispatch }}>
+    <CartContext.Provider value={{ state, dispatch, addItem, removeItem, updateQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   )

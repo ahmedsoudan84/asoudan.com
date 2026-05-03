@@ -3,18 +3,20 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { ChevronLeft, Star, Heart, Share2, Minus, Plus, ShoppingCart } from 'lucide-react'
 import { products } from '@/data/products'
 import { useCart } from '@/components/cart-context'
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default function ProductPage() {
   const router = useRouter()
+  const params = useParams()
+  const productId = params?.id as string
   const { addItem, state } = useCart()
   const [quantity, setQuantity] = useState(1)
   const [selectedVariant, setSelectedVariant] = useState('')
 
-  const product = products.find(p => p.id === params.id)
+  const product = products.find(p => p.id === productId)
   if (!product) return null
 
   const handleAddToCart = () => {
