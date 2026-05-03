@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { CartProvider } from '@/components/cart-context'
-import { MotionConfig } from 'motion/react'
+import { MotionConfig } from 'framer-motion'
 
 const inter = Inter({ subsets: ['latin'] })
 

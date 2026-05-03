@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Filter, ChevronDown } from 'lucide-react'
 import { ProductCard } from '@/components/product-card'
 import { CategoryFilter } from '@/components/category-filter'

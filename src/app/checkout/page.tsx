@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, CreditCard, Apple, Smartphone, Lock } from 'lucide-react'
 import { useCart } from '@/components/cart-context'
 

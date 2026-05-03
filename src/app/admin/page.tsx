@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { motion } from 'framer-motion'
 import { BarChart3, Package, ShoppingCart, Users, Settings, LogOut } from 'lucide-react'
 import { useState } from 'react'
 

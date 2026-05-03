@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingCart, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 

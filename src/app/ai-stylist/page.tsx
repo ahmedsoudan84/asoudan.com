@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { Sparkles, ChevronRight, ShoppingCart } from 'lucide-react'
 import { products } from '@/data/products'

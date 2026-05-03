@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { motion } from 'framer-motion'
 import { Sparkles, ShoppingBag, Heart } from 'lucide-react'
 import Link from 'next/link'
 
