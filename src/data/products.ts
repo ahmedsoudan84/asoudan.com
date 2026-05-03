@@ -1,0 +1,102 @@
+export const products = [
+  {
+    id: 'audio-001',
+    name: 'Studio Headphones',
+    price: 245,
+    category: 'audio',
+    image: '/images/products/headphones.jpg',
+    rating: 4.8,
+    reviews: 128,
+    description: 'Professional-grade headphones with active noise cancellation',
+    variants: ['Black', 'Silver', 'Rose Gold'],
+    stock: 'In Stock',
+    features: ['Active Noise Cancellation', '40hr Battery', 'Premium Materials'],
+    aiScore: 92,
+    bundleWith: ['workspace-001', 'accessories-001']
+  },
+  {
+    id: 'wearables-001',
+    name: 'Smart Watch',
+    price: 320,
+    category: 'wearables',
+    image: '/images/products/watch.jpg',
+    rating: 4.7,
+    reviews: 256,
+    description: 'Health-focused smartwatch with 7-day battery',
+    variants: ['42mm', '46mm'],
+    stock: 'Limited Stock',
+    features: ['Heart Rate Monitor', 'Sleep Tracking', 'Water Resistant'],
+    aiScore: 88,
+    bundleWith: ['accessories-002']
+  },
+  {
+    id: 'workspace-001',
+    name: 'Minimal Desk Lamp',
+    price: 89,
+    category: 'workspace',
+    image: '/images/products/lamp.jpg',
+    rating: 4.9,
+    reviews: 84,
+    description: 'Adjustable LED desk lamp with wireless charging base',
+    variants: ['Matte Black', 'White'],
+    stock: 'In Stock',
+    features: ['Wireless Charging', 'Touch Control', 'Warm/Cool Light'],
+    aiScore: 95,
+    bundleWith: ['audio-001', 'lighting-001']
+  },
+  {
+    id: 'lighting-001',
+    name: 'Ambient Floor Light',
+    price: 195,
+    category: 'lighting',
+    image: '/images/products/floor-light.jpg',
+    rating: 4.6,
+    reviews: 67,
+    description: 'Smart floor lamp with app control and scenes',
+    variants: ['Black', 'Brass'],
+    stock: 'In Stock',
+    features: ['App Control', '16 Million Colors', 'Music Sync'],
+    aiScore: 87,
+    bundleWith: ['living-001']
+  },
+  {
+    id: 'living-001',
+    name: 'Textured Throw Pillow',
+    price: 65,
+    category: 'living',
+    image: '/images/products/pillow.jpg',
+    rating: 4.8,
+    reviews: 142,
+    description: 'Hand-woven linen blend pillow with natural dyes',
+    variants: ['Oatmeal', 'Terracotta', 'Sage'],
+    stock: 'In Stock',
+    features: ['Sustainable Linen', 'Removable Cover', 'Ethically Made'],
+    aiScore: 91,
+    bundleWith: ['lighting-001']
+  },
+  {
+    id: 'accessories-001',
+    name: 'Leather Crossbody',
+    price: 180,
+    category: 'accessories',
+    image: '/images/products/bag.jpg',
+    rating: 4.7,
+    reviews: 98,
+    description: 'Full-grain leather bag with adjustable strap',
+    variants: ['Black', 'Tan', 'Navy'],
+    stock: 'In Stock',
+    features: ['RFID Protection', 'Water Resistant', 'Lifetime Warranty'],
+    aiScore: 93,
+    bundleWith: ['wearables-001']
+  }
+]
+
+export const categories = [
+  { id: 'all', name: 'All Products', icon: 'grid' },
+  { id: 'audio', name: 'Audio', icon: 'headphones' },
+  { id: 'wearables', name: 'Wearables', icon: 'watch' },
+  { id: 'workspace', name: 'Workspace', icon: 'desk' },
+  { id: 'lighting', name: 'Lighting', icon: 'lightbulb' },
+  { id: 'living', name: 'Living', icon: 'sofa' },
+  { id: 'accessories', name: 'Accessories', icon: 'bag' }
+]
